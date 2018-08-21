@@ -1,0 +1,32 @@
+<!-- Shipping and payment methods -->
+<div class="aw-onestep aw-onestep-main">
+
+    <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    <!--/ko-->
+    <!-- ko foreach: getRegion('authentication') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    <!--/ko-->
+    <!-- ko foreach: getRegion('customer-email') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    <!--/ko-->
+    <div class="opc-wrapper one-step-checkout-wrapper">
+        <div class="opc one-step-checkout-container" id="checkoutSteps">
+            <div class="col-mp mp-4 mp-sm-6 mp-xs-12 hoverable">
+                <div class="row-mp">
+                    <div class="col-mp mp-12" data-bind="scope: 'checkout.billingAddress'">
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    </div>
+                    <div class="col-mp mp-12" data-bind="scope: 'checkout.shippingAddress'">
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    </div>
+                    <div class="mp-clear"></div>
+                </div>
+            </div>
+
+            <div class="mp-clear"></div>
+        </div>
+    </div>
+</div>
+
+
