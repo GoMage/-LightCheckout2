@@ -144,10 +144,9 @@
                                         <item name="config" xsi:type="array">
                                             <item name="deps" xsi:type="array">
                                                 <item name="0" xsi:type="string">checkoutProvider</item>
-                                                <item name="1" xsi:type="string">checkout.configuration</item>
                                             </item>
                                         </item>
-                                        <item name="component" xsi:type="string">Magento_Checkout/js/view/shipping</item>
+                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/shipping</item>
                                         <item name="template" xsi:type="string">GoMage_LightCheckout/form/shipping-address.html</item>
                                         <item name="displayArea" xsi:type="string">shippingAddress</item>
                                         <item name="provider" xsi:type="string">checkoutProvider</item>

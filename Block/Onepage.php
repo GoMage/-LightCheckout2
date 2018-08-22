@@ -8,10 +8,7 @@ use Magento\Framework\Data\Form\FormKey;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 
-/**
- * Class Checkout
- * @package GoMage\LightCheckout\Block
- */
+
 class Onepage extends Template
 {
     /**

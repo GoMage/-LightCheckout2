@@ -19,6 +19,7 @@ class ConfigProvider implements ConfigProviderInterface
 
     /**
      * @param PaymentMethodList $paymentMethodsProvider
+     * @param CheckoutSession $session
      */
     public function __construct(
         PaymentMethodList $paymentMethodsProvider,

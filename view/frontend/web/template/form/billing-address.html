@@ -1,29 +1,18 @@
-<div id="billing" class="checkout-billing-address" data-bind="visible: !isAddressSameAsShipping()">
+<div id="billing" class="checkout-billing-address">
     <div class="step-title" data-role="title">
-        <i class="fa fa-home"></i>
-
         <span data-bind="i18n: 'Billing Address'"></span>
     </div>
     <div id="checkout-step-billing" class="step-content" data-role="content">
-        <!-- ko if: (quoteIsVirtual) -->
-            <!-- ko foreach: getRegion('customer-email') -->
-                <!-- ko template: getTemplate() --><!-- /ko -->
-            <!--/ko-->
-        <!--/ko-->
-
         <!-- ko if: (addressOptions.length > 1) -->
             <!-- ko template: 'Magento_Checkout/billing-address/list' --><!-- /ko -->
         <!-- /ko -->
 
         <!-- ko template: 'Magento_Checkout/billing-address/form' --><!-- /ko -->
 
-        <div class="mp-clear"></div>
-
-        <div class="billing-address-same-as-shipping-block field choice col-mp mp-12" data-bind="visible: canUseShippingAddress()">
+        <div class="billing-address-same-as-shipping-block" data-bind="visible: canUseShippingAddress()">
             <input type="checkbox" name="billing-address-same-as-shipping" data-bind="checked: isAddressSameAsShipping, click: useShippingAddress, attr: {id: 'billing-address-same-as-shipping'}"/>
             <label data-bind="attr: {for: 'billing-address-same-as-shipping'}"><span data-bind="i18n: 'My billing and shipping address are the same'"></span></label>
         </div>
 
-        <div class="mp-clear"></div>
     </div>
 </div>

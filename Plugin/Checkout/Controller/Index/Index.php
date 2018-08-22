@@ -1,4 +1,5 @@
 <?php
+
 namespace GoMage\LightCheckout\Plugin\Checkout\Controller\Index;
 
 use Magento\Framework\Controller\ResultInterface;

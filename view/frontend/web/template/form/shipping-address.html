@@ -1,15 +1,9 @@
 
-<div id="shipping" class="checkout-shipping-address" data-bind="fadeVisible: visible()">
+<div id="shipping" class="checkout-shipping-address" data-bind="visible: !isAddressSameAsShipping()">
     <div class="step-title" data-bind="i18n: 'Shipping Address'" data-role="title"></div>
     <div id="checkout-step-shipping"
          class="step-content"
          data-role="content">
-
-        <!-- ko if: (!quoteIsVirtual) -->
-            <!-- ko foreach: getRegion('customer-email') -->
-                <!-- ko template: getTemplate() --><!-- /ko -->
-            <!--/ko-->
-        <!--/ko-->
 
         <!-- ko foreach: getRegion('address-list') -->
         <!-- ko template: getTemplate() --><!-- /ko -->

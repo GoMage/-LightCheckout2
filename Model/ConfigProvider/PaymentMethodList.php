@@ -4,10 +4,6 @@ namespace GoMage\LightCheckout\Model\ConfigProvider;
 
 use Magento\Quote\Api\PaymentMethodManagementInterface;
 
-/**
- * Class PaymentMethodList
- * @package GoMage\LightCheckout\Model\ConfigProvider
- */
 class PaymentMethodList
 {
     /**
@@ -24,7 +20,7 @@ class PaymentMethodList
     }
 
     /**
-     * Get payment methods config data
+     * Get payment methods config data.
      *
      * @param int $cartId
      * @return array
