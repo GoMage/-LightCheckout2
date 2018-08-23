@@ -6,19 +6,26 @@
     <!-- ko foreach: getRegion('authentication') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
     <!--/ko-->
+    <div class="third-part">
     <!-- ko foreach: getRegion('customer-email') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
     <!--/ko-->
+    </div>
 
     <div class="opc-wrapper">
-        <ol class="opc" id="checkoutSteps">
-            <li data-bind="scope: 'checkout.billingAddress'">
-                <!-- ko template: getTemplate() --><!-- /ko -->
-            </li>
-            <li data-bind="scope: 'checkout.shippingAddress'">
-                <!-- ko template: getTemplate() --><!-- /ko -->
-            </li>
-        </ol>
+        <div class="opc" id="checkoutSteps">
+            <div class="third-part left">
+                <div data-bind="scope: 'checkout.billingAddress'">
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                </div>
+                <div data-bind="scope: 'checkout.shippingAddress'">
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                </div>
+            </div>
+            <div class="third-part right" data-bind="scope: 'checkout.shippingAddress'">
+                <!-- ko template: getShippingMethodsTemplate() --><!-- /ko -->
+            </div>
+        </div>
     </div>
 </div>
 

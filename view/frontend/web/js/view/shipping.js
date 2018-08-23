@@ -3,8 +3,10 @@ define(
         'Magento_Checkout/js/view/shipping',
         'Magento_Checkout/js/model/quote'
     ],
-    function (Component,
-              quote) {
+    function (
+        Component,
+        quote
+    ) {
         'use strict';
 
         return Component.extend({
@@ -27,6 +29,10 @@ define(
                 }, this);
 
                 return this;
+            },
+
+            getShippingMethodsTemplate: function () {
+                return 'GoMage_LightCheckout/form/shipping-methods';
             }
         });
     }

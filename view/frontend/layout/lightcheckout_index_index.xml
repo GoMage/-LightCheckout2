@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="checkout" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="GoMage_LightCheckout::css/style.css"/>
+    </head>
     <body>
         <referenceContainer name="content">
             <block class="GoMage\LightCheckout\Block\Onepage" name="checkout.root"
@@ -177,6 +180,10 @@
                                                     <!-- address-list-additional-addresses -->
                                                 </item>
                                             </item>
+                                            <item name="price" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Tax/js/view/checkout/shipping_method/price</item>
+                                                <item name="displayArea" xsi:type="string">price</item>
+                                            </item>
                                             <item name="shipping-address-fieldset" xsi:type="array">
                                                 <item name="component" xsi:type="string">uiComponent</item>
                                                 <item name="config" xsi:type="array">
@@ -238,29 +245,6 @@
                                             </item>
                                         </item>
                                     </item>
-                                    <!--<item name="shippingMethod" xsi:type="array">-->
-                                        <!--<item name="config" xsi:type="array">-->
-                                            <!--<item name="deps" xsi:type="array">-->
-                                                <!--<item name="0" xsi:type="string">checkoutProvider</item>-->
-                                                <!--<item name="1" xsi:type="string">checkout.configuration</item>-->
-                                            <!--</item>-->
-                                        <!--</item>-->
-                                        <!--<item name="component" xsi:type="string">GoMage_LightCheckout/js/view/shipping</item>-->
-                                        <!--<item name="template" xsi:type="string">GoMage_LightCheckout/shipping-method.html</item>-->
-                                        <!--<item name="displayArea" xsi:type="string">shippingMethod</item>-->
-                                        <!--<item name="provider" xsi:type="string">checkoutProvider</item>-->
-                                        <!--<item name="sortOrder" xsi:type="string">5</item>-->
-                                        <!--<item name="children" xsi:type="array">-->
-                                            <!--<item name="before-shipping-method-form" xsi:type="array">-->
-                                                <!--<item name="component" xsi:type="string">uiComponent</item>-->
-                                                <!--<item name="displayArea" xsi:type="string">before-shipping-method-form-->
-                                                <!--</item>-->
-                                                <!--<item name="children" xsi:type="array">-->
-                                                    <!--&lt;!&ndash; address-list-additional-addresses &ndash;&gt;-->
-                                                <!--</item>-->
-                                            <!--</item>-->
-                                        <!--</item>-->
-                                    <!--</item>-->
                                 </item>
                             </item>
                             <item name="checkoutProvider" xsi:type="array">
