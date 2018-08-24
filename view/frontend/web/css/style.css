@@ -1,9 +1,18 @@
-.third-part {
-    width: 33.3333333333%;
+.one-third {
+    width: 33%;
+}
+
+.two-thirds {
+    width: 66%
+}
+
+.half {
+    width: 49.5%
 }
 
 .left {
-    float:left
+    float:left;
+    margin-right: 1%;
 }
 
 .right {
@@ -12,4 +21,12 @@
 
 .opc-wrapper {
     width: 100% !important;
+}
+
+.payment-method-content .actions-toolbar {
+    display: none
+}
+
+.table-checkout-shipping-method {
+    min-width: 10px;
 }
