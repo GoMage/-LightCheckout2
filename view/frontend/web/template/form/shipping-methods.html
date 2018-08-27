@@ -27,7 +27,7 @@
                         <tbody>
 
                         <!--ko foreach: { data: rates(), as: 'method'}-->
-                        <tr class="row" data-bind="click: $parent.selectShippingMethod">
+                        <tr class="row" data-bind="click: $parent.selectShippingMethod, style: {cursor: 'pointer'}">
                             <td class="col col-method">
                                 <!-- ko ifnot: method.error_message -->
                                 <!-- ko if: $parent.rates().length == 1 -->

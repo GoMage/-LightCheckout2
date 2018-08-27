@@ -152,6 +152,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         if (isset($jsLayout['components']['checkout']['children']['configuration']['children']
             ['shipping-rates-validation']['children']
         )) {
+
             $jsLayout['components']['checkout']['children']['configuration']['children']
             ['shipping-rates-validation']['children'] =
                 $this->processShippingRates(
@@ -189,7 +190,9 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         }
 
         $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
-            = $this->mergePaymentMethodsRenders();
+            = $this->mergePaymentMethodsRenders(
+                $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
+        );
 
         return $jsLayout;
     }
@@ -197,9 +200,11 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     /**
      * Merge payment method renders from standard path to new path.
      *
+     * @param array $renders
+     *
      * @return array
      */
-    private function mergePaymentMethodsRenders()
+    private function mergePaymentMethodsRenders(array $renders)
     {
         $path = '//referenceBlock[@name="checkout.root"]/arguments/argument[@name="jsLayout"]'
             . '/item[@name="components"]/item[@name="checkout"]/item[@name="children"]'
@@ -207,9 +212,9 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
             . '/item[@name="children"]/item[@name="payment"]/item[@name="children"]'
             . '/item[@name="renders"]/item[@name="children"]';
 
-        $definitions = $this->fetchArgs->execute('checkout_index_index', $path);
+        $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
-        return $definitions;
+        return array_merge($renders, $args);
     }
 
     /**
@@ -221,6 +226,8 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      */
     private function processShippingRates($shippingRatesLayout)
     {
+        $shippingRatesLayout = $this->mergeShippingRatesValidations($shippingRatesLayout);
+
         $activeCarriers = $this->shippingConfig->getActiveCarriers(
             $this->storeResolver->getCurrentStoreId()
         );
@@ -233,5 +240,25 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         }
 
         return $shippingRatesLayout;
+    }
+
+    /**
+     * Merge shipping rates from standard path to new path.
+     *
+     * @param $shippingRatesLayout
+     *
+     * @return array
+     */
+    private function mergeShippingRatesValidations($shippingRatesLayout)
+    {
+        $path = '//referenceBlock[@name="checkout.root"]/arguments/argument[@name="jsLayout"]'
+            . '/item[@name="components"]/item[@name="checkout"]/item[@name="children"]'
+            . '/item[@name="steps"]/item[@name="children"]/item[@name="shipping-step"]'
+            . '/item[@name="children"]/item[@name="step-config"]/item[@name="children"]'
+            . '/item[@name="shipping-rates-validation"]/item[@name="children"]';
+
+        $args = $this->fetchArgs->execute('checkout_index_index', $path);
+
+        return array_merge($shippingRatesLayout, $args);
     }
 }
