@@ -18,7 +18,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Magento_Checkout/payment'
+                template: 'GoMage_LightCheckout/form/payment'
             },
             isVisible: ko.observable(true),
             errorValidationMessage: ko.observable(false),

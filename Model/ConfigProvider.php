@@ -2,7 +2,8 @@
 
 namespace GoMage\LightCheckout\Model;
 
-use GoMage\LightCheckout\Model\ConfigProvider\PaymentMethodList;
+use GoMage\LightCheckout\Model\ConfigProvider\AddressFieldsProvider;
+use GoMage\LightCheckout\Model\ConfigProvider\PaymentMethodsListProvider;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
 
@@ -13,20 +14,27 @@ class ConfigProvider implements ConfigProviderInterface
      */
     private $checkoutSession;
     /**
-     * @var PaymentMethodList
+     * @var PaymentMethodsListProvider
      */
-    private $paymentMethodsProvider;
+    private $paymentMethodsListProvider;
 
     /**
-     * @param PaymentMethodList $paymentMethodsProvider
+     * @var AddressFieldsProvider
+     */
+    private $addressFieldsProvider;
+
+    /**
+     * @param PaymentMethodsListProvider $paymentMethodsListProvider
      * @param CheckoutSession $session
      */
     public function __construct(
-        PaymentMethodList $paymentMethodsProvider,
-        CheckoutSession $session
+        PaymentMethodsListProvider $paymentMethodsListProvider,
+        CheckoutSession $session,
+        AddressFieldsProvider $addressFieldsProvider
     ) {
-        $this->paymentMethodsProvider = $paymentMethodsProvider;
+        $this->paymentMethodsListProvider = $paymentMethodsListProvider;
         $this->checkoutSession = $session;
+        $this->addressFieldsProvider = $addressFieldsProvider;
     }
 
     /**
@@ -36,9 +44,17 @@ class ConfigProvider implements ConfigProviderInterface
     {
         $quoteId = $this->checkoutSession->getQuoteId();
         $config = [
-            'paymentMethods' => $this->paymentMethodsProvider->getPaymentMethods($quoteId),
+            'paymentMethods' => $this->paymentMethodsListProvider->get($quoteId),
+            'lightCheckoutConfig' => $this->getLightCheckoutConfig(),
         ];
 
         return $config;
+    }
+
+    private function getLightCheckoutConfig()
+    {
+        return [
+            'addressFields' => $this->addressFieldsProvider->get(),
+        ];
     }
 }

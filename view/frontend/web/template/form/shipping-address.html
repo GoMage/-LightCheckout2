@@ -1,3 +1,7 @@
+<div class="billing-address-same-as-shipping-block" data-bind="visible: canUseShippingAddress()">
+    <input type="checkbox" name="billing-address-same-as-shipping" data-bind="checked: isAddressSameAsShipping, click: useShippingAddress, attr: {id: 'billing-address-same-as-shipping'}"/>
+    <label data-bind="attr: {for: 'billing-address-same-as-shipping'}"><span data-bind="i18n: 'Ship to this address'"></span></label>
+</div>
 
 <div id="shipping" class="checkout-shipping-address" data-bind="visible: !isAddressSameAsShipping()">
     <div class="step-title" data-bind="i18n: 'Shipping Address'" data-role="title"></div>

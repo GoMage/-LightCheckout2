@@ -194,6 +194,16 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
                 $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
         );
 
+        $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
+            = $this->mergePaymentMethodsRenders(
+            $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
+        );
+
+        $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
+            = $this->mergePaymentAfterMethods(
+            $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
+        );
+
         return $jsLayout;
     }
 
@@ -260,5 +270,25 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
         return array_merge($shippingRatesLayout, $args);
+    }
+
+    /**
+     * Merge payment after methods from standard path to new path.
+     *
+     * @param $afterMethodsLayout
+     *
+     * @return array
+     */
+    private function mergePaymentAfterMethods($afterMethodsLayout)
+    {
+        $path = '//referenceBlock[@name="checkout.root"]/arguments/argument[@name="jsLayout"]'
+            . '/item[@name="components"]/item[@name="checkout"]/item[@name="children"]'
+            . '/item[@name="steps"]/item[@name="children"]/item[@name="billing-step"]'
+            . '/item[@name="children"]/item[@name="payment"]/item[@name="children"]'
+            . '/item[@name="afterMethods"]/item[@name="children"]';
+
+        $args = $this->fetchArgs->execute('checkout_index_index', $path);
+
+        return array_merge($afterMethodsLayout, $args);
     }
 }

@@ -1,26 +1,45 @@
 define(
     [
+        'ko',
         'jquery',
         'Magento_Checkout/js/view/shipping',
         'Magento_Checkout/js/model/quote',
         'uiRegistry',
         'Magento_Checkout/js/checkout-data',
         'Magento_Checkout/js/model/shipping-rates-validator',
-        'Magento_Checkout/js/action/set-shipping-information'
+        'Magento_Checkout/js/action/set-shipping-information',
+        'Magento_Checkout/js/action/select-shipping-address',
+        'Magento_Checkout/js/action/set-billing-address',
+        'Magento_Ui/js/model/messageList',
+        'Magento_Checkout/js/model/payment/additional-validators',
+        'Magento_Customer/js/model/customer',
+        'Magento_Checkout/js/model/address-converter',
+        'Magento_Checkout/js/action/create-shipping-address'
     ],
     function (
+        ko,
         $,
         Component,
         quote,
         registry,
         checkoutData,
         shippingRatesValidator,
-        setShippingInformationAction
+        setShippingInformationAction,
+        selectShippingAddress,
+        setBillingAddressAction,
+        globalMessageList,
+        additionalValidators,
+        customer,
+        addressConverter,
+        createShippingAddress
     ) {
         'use strict';
 
+        var observedElements = [];
+
         return Component.extend({
             initialize: function () {
+                var self = this;
                 var fieldsetName = 'checkout.shippingAddress.shipping-address-fieldset';
 
                 this._super();
@@ -40,6 +59,15 @@ define(
                     shippingRatesValidator.initFields(fieldsetName);
                 });
 
+                quote.billingAddress.subscribe(function (newAddress) {
+                    if (self.isAddressSameAsShipping()) {
+                        selectShippingAddress(newAddress);
+                    }
+                });
+
+                additionalValidators.registerValidator(this);
+                this.initFields();
+
                 return this;
             },
 
@@ -49,16 +77,7 @@ define(
                         isAddressSameAsShipping: false
                     });
 
-                quote.billingAddress.subscribe(function (newAddress) {
-                    if (quote.isVirtual()) {
-                        this.isAddressSameAsShipping(false);
-                    } else {
-                        this.isAddressSameAsShipping(
-                            newAddress != null &&
-                            newAddress.getCacheKey() == quote.shippingAddress().getCacheKey()
-                        );
-                    }
-                }, this);
+
 
                 quote.shippingMethod.subscribe(function (oldValue) {
                     this.currentMethod = oldValue;
@@ -76,6 +95,126 @@ define(
 
             getShippingMethodsTemplate: function () {
                 return 'GoMage_LightCheckout/form/shipping-methods';
+            },
+
+            canUseShippingAddress: ko.computed(function () {
+                return !quote.isVirtual() && quote.shippingAddress() && quote.shippingAddress().canUseForBilling();
+            }),
+
+            /**
+             * @inheritDoc
+             */
+            useShippingAddress: function () {
+                if (this.isAddressSameAsShipping()) {
+                    selectShippingAddress(quote.billingAddress());
+
+                    if (window.checkoutConfig.reloadOnBillingAddress ||
+                        !window.checkoutConfig.displayBillingOnPaymentMethod
+                    ) {
+                        setBillingAddressAction(globalMessageList);
+                    }
+                } else {
+                    var addressData = this.source.get('shippingAddress');
+
+                    this.isAddressSameAsShipping(false);
+
+                    selectShippingAddress(createShippingAddress(addressData));
+                }
+
+                return true;
+            },
+
+            validate: function () {
+                if (quote.isVirtual()) {
+                    return true;
+                }
+
+                var shippingMethodValidationResult = true,
+                    shippingAddressValidationResult = true,
+                    loginFormSelector = 'form[data-role=email-with-possible-login]',
+                    emailValidationResult = customer.isLoggedIn();
+
+                if (!quote.shippingMethod()) {
+                    this.errorValidationMessage('Please specify a shipping method.');
+
+                    shippingMethodValidationResult = false;
+                }
+
+                if (!customer.isLoggedIn()) {
+                    $(loginFormSelector).validation();
+                    emailValidationResult = Boolean($(loginFormSelector + ' input[name=username]').valid());
+                }
+
+                if (!this.isAddressSameAsShipping()) {
+                    this.source.set('params.invalid', false);
+                    this.source.trigger('shippingAddress.data.validate');
+
+                    if (this.source.get('shippingAddress.custom_attributes')) {
+                        this.source.trigger('shippingAddress.custom_attributes.data.validate');
+                    }
+
+                    if (this.source.get('params.invalid')) {
+                        shippingAddressValidationResult = false;
+                    }
+
+                    var addressData = addressConverter.formAddressDataToQuoteAddress(
+                        this.source.get('shippingAddress')
+                    );
+                    selectShippingAddress(addressData);
+                }
+
+                if (!emailValidationResult) {
+                    $(loginFormSelector + ' input[name=username]').focus();
+                }
+
+                return shippingMethodValidationResult && shippingAddressValidationResult && emailValidationResult;
+            },
+
+            initFields: function () {
+                var self = this,
+                    addressFields = window.checkoutConfig.lightCheckoutConfig.addressFields,
+                    fieldsetName = 'checkout.shippingAddress.shipping-address-fieldset';
+
+                $.each(addressFields, function (index, field) {
+                    registry.async(fieldsetName + '.' + field)(self.bindHandler.bind(self));
+                });
+
+                return this;
+            },
+
+            bindHandler: function (element) {
+                var self = this;
+                if (element.component.indexOf('/group') !== -1) {
+                    $.each(element.elems(), function (index, elem) {
+                        self.bindHandler(elem);
+                    });
+                } else {
+                    element.on('value', this.saveShippingAddress.bind(this));
+                    observedElements.push(element);
+                }
+            },
+
+            saveShippingAddress: function () {
+                var addressFlat = addressConverter.formDataProviderToFlatData(
+                    this.collectObservedData(),
+                    'shippingAddress'
+                );
+                selectShippingAddress(addressConverter.formAddressDataToQuoteAddress(addressFlat));
+            },
+
+            /**
+             * Collect observed fields data to object
+             *
+             * @returns {*}
+             */
+            collectObservedData: function () {
+                var observedValues = {};
+
+                $.each(observedElements, function (index, field) {
+                    observedValues[field.dataScope] = field.value();
+                });
+
+                return observedValues;
             }
         });
     }

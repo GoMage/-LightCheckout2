@@ -2,9 +2,11 @@
 
 namespace GoMage\LightCheckout\Controller\Index;
 
+use GoMage\LightCheckout\Model\InitDefaultMethodsForQuote;
 use Magento\Checkout\Model\Session;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Quote\Api\CartRepositoryInterface;
 
 class Index extends \Magento\Checkout\Controller\Onepage
 {
@@ -13,6 +15,29 @@ class Index extends \Magento\Checkout\Controller\Onepage
      */
     private $session;
 
+    /**
+     * @var InitDefaultMethodsForQuote
+     */
+    private $initDefaultMethodsForQuote;
+
+    /**
+     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param AccountManagementInterface $accountManagement
+     * @param \Magento\Framework\Registry $coreRegistry
+     * @param \Magento\Framework\Translate\InlineInterface $translateInline
+     * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Framework\View\LayoutFactory $layoutFactory
+     * @param CartRepositoryInterface $quoteRepository
+     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory
+     * @param \Magento\Framework\Controller\Result\RawFactory $resultRawFactory
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param Session $session
+     * @param InitDefaultMethodsForQuote $initDefaultMethodsForQuote
+     */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Customer\Model\Session $customerSession,
@@ -23,12 +48,13 @@ class Index extends \Magento\Checkout\Controller\Onepage
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
-        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
+        CartRepositoryInterface $quoteRepository,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
         \Magento\Framework\Controller\Result\RawFactory $resultRawFactory,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        Session $session
+        Session $session,
+        InitDefaultMethodsForQuote $initDefaultMethodsForQuote
     ) {
         parent::__construct(
             $context,
@@ -48,6 +74,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
         );
 
         $this->session = $session;
+        $this->initDefaultMethodsForQuote = $initDefaultMethodsForQuote;
     }
 
     /**
@@ -63,6 +90,9 @@ class Index extends \Magento\Checkout\Controller\Onepage
         $this->_customerSession->regenerateId();
         $this->session->setCartWasUpdated(false);
         $this->getOnepage()->initCheckout();
+
+        $this->initDefaultMethodsForQuote->execute($quote);
+
         $resultPage = $this->resultPageFactory->create();
         $resultPage->getConfig()->getTitle()->set(__('Checkout'));
 
