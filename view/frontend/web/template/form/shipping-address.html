@@ -3,7 +3,7 @@
     <label data-bind="attr: {for: 'billing-address-same-as-shipping'}"><span data-bind="i18n: 'Ship to this address'"></span></label>
 </div>
 
-<div id="shipping" class="checkout-shipping-address" data-bind="visible: !isAddressSameAsShipping()">
+<div id="shipping" class="checkout-shipping-address" data-bind="visible: !isAddressSameAsShipping() && canUseShippingAddress()">
     <div class="step-title" data-bind="i18n: 'Shipping Address'" data-role="title"></div>
     <div id="checkout-step-shipping"
          class="step-content"

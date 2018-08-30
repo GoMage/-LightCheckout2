@@ -50,7 +50,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      * @param \Magento\Customer\Model\AttributeMetadataDataProvider $attributeMetadataDataProvider
      * @param \Magento\Ui\Component\Form\AttributeMapper $attributeMapper
      * @param AttributeMerger $merger
-     * @param FetchArgs $definitionFetcher
+     * @param FetchArgs $fetchArgs
      * @param \Magento\Shipping\Model\Config $shippingConfig
      * @param StoreResolverInterface $storeResolver
      */

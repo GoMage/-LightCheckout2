@@ -35,8 +35,6 @@ define(
     ) {
         'use strict';
 
-        var observedElements = [];
-
         return Component.extend({
             initialize: function () {
                 var self = this;
@@ -66,7 +64,6 @@ define(
                 });
 
                 additionalValidators.registerValidator(this);
-                this.initFields();
 
                 return this;
             },
@@ -76,8 +73,6 @@ define(
                     .observe({
                         isAddressSameAsShipping: false
                     });
-
-
 
                 quote.shippingMethod.subscribe(function (oldValue) {
                     this.currentMethod = oldValue;
@@ -168,53 +163,6 @@ define(
                 }
 
                 return shippingMethodValidationResult && shippingAddressValidationResult && emailValidationResult;
-            },
-
-            initFields: function () {
-                var self = this,
-                    addressFields = window.checkoutConfig.lightCheckoutConfig.addressFields,
-                    fieldsetName = 'checkout.shippingAddress.shipping-address-fieldset';
-
-                $.each(addressFields, function (index, field) {
-                    registry.async(fieldsetName + '.' + field)(self.bindHandler.bind(self));
-                });
-
-                return this;
-            },
-
-            bindHandler: function (element) {
-                var self = this;
-                if (element.component.indexOf('/group') !== -1) {
-                    $.each(element.elems(), function (index, elem) {
-                        self.bindHandler(elem);
-                    });
-                } else {
-                    element.on('value', this.saveShippingAddress.bind(this));
-                    observedElements.push(element);
-                }
-            },
-
-            saveShippingAddress: function () {
-                var addressFlat = addressConverter.formDataProviderToFlatData(
-                    this.collectObservedData(),
-                    'shippingAddress'
-                );
-                selectShippingAddress(addressConverter.formAddressDataToQuoteAddress(addressFlat));
-            },
-
-            /**
-             * Collect observed fields data to object
-             *
-             * @returns {*}
-             */
-            collectObservedData: function () {
-                var observedValues = {};
-
-                $.each(observedElements, function (index, field) {
-                    observedValues[field.dataScope] = field.value();
-                });
-
-                return observedValues;
             }
         });
     }
