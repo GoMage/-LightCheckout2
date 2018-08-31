@@ -2,7 +2,8 @@
 
 namespace GoMage\LightCheckout\Controller\Index;
 
-use GoMage\LightCheckout\Model\InitDefaultMethodsForQuote;
+use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
+use GoMage\LightCheckout\Model\InitDefaultShippingForQuote;
 use Magento\Checkout\Model\Session;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
@@ -16,9 +17,9 @@ class Index extends \Magento\Checkout\Controller\Onepage
     private $session;
 
     /**
-     * @var InitDefaultMethodsForQuote
+     * @var CheckoutConfigurationsProvider
      */
-    private $initDefaultMethodsForQuote;
+    private $checkoutConfigurationsProvider;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
@@ -36,7 +37,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
      * @param \Magento\Framework\Controller\Result\RawFactory $resultRawFactory
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param Session $session
-     * @param InitDefaultMethodsForQuote $initDefaultMethodsForQuote
+     * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -54,7 +55,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
         \Magento\Framework\Controller\Result\RawFactory $resultRawFactory,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         Session $session,
-        InitDefaultMethodsForQuote $initDefaultMethodsForQuote
+        CheckoutConfigurationsProvider $checkoutConfigurationsProvider
     ) {
         parent::__construct(
             $context,
@@ -74,7 +75,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
         );
 
         $this->session = $session;
-        $this->initDefaultMethodsForQuote = $initDefaultMethodsForQuote;
+        $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
     }
 
     /**
@@ -84,17 +85,16 @@ class Index extends \Magento\Checkout\Controller\Onepage
     {
         $quote = $this->getOnepage()->getQuote();
         if (!$quote->hasItems() || $quote->getHasError() || !$quote->validateMinimumAmount()) {
-            return $this->resultRedirectFactory->create()->setPath('checkout/cart');
+            //redirect not to cart, because if cart is off in configuration it will come to endless redirect.
+            return $this->resultRedirectFactory->create()->setPath('home');
         }
 
         $this->_customerSession->regenerateId();
         $this->session->setCartWasUpdated(false);
         $this->getOnepage()->initCheckout();
 
-        $this->initDefaultMethodsForQuote->execute($quote);
-
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->set(__('Checkout'));
+        $resultPage->getConfig()->getTitle()->set($this->checkoutConfigurationsProvider->getPageTitle());
 
         return $resultPage;
     }

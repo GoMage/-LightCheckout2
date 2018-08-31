@@ -40,6 +40,10 @@ define(
                 var self = this;
                 var fieldsetName = 'checkout.shippingAddress.shipping-address-fieldset';
 
+                if (!checkoutData.getSelectedShippingRate() && window.checkoutConfig.defaultShippingMethod) {
+                    checkoutData.setSelectedShippingRate(window.checkoutConfig.defaultShippingMethod);
+                }
+
                 this._super();
 
                 registry.async('checkoutProvider')(function (checkoutProvider) {
@@ -74,6 +78,14 @@ define(
                         isAddressSameAsShipping: false
                     });
 
+                var enableDifferentShippingAddress = parseInt(window.checkoutConfig.enableDifferentShippingAddress);
+
+                if (enableDifferentShippingAddress === 0 || enableDifferentShippingAddress === 1) {
+                    this.isAddressSameAsShipping(true);
+                } else if (enableDifferentShippingAddress === 2) {
+                    this.isAddressSameAsShipping(false);
+                }
+
                 quote.shippingMethod.subscribe(function (oldValue) {
                     this.currentMethod = oldValue;
                 }, this, 'beforeChange');
@@ -93,7 +105,10 @@ define(
             },
 
             canUseShippingAddress: ko.computed(function () {
-                return !quote.isVirtual() && quote.shippingAddress() && quote.shippingAddress().canUseForBilling();
+                var enableDifferentShippingAddress = parseInt(window.checkoutConfig.enableDifferentShippingAddress);
+
+                return !quote.isVirtual() && quote.shippingAddress() && quote.shippingAddress().canUseForBilling()
+                    && enableDifferentShippingAddress;
             }),
 
             /**

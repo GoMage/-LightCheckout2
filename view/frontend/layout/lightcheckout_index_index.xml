@@ -34,8 +34,14 @@
                                         <item name="component" xsi:type="string">Magento_Ui/js/view/messages</item>
                                         <item name="displayArea" xsi:type="string">messages</item>
                                     </item>
+                                    <item name="page_content" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">5</item>
+                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/element/page_content</item>
+                                        <item name="template" xsi:type="string">GoMage_LightCheckout/element/page_content</item>
+                                        <item name="displayArea" xsi:type="string">page_content</item>
+                                    </item>
                                     <item name="authentication" xsi:type="array">
-                                        <item name="sortOrder" xsi:type="string">2</item>
+                                        <item name="sortOrder" xsi:type="string">10</item>
                                         <item name="component" xsi:type="string">Magento_Checkout/js/view/authentication</item>
                                         <item name="displayArea" xsi:type="string">authentication</item>
                                         <item name="children" xsi:type="array">
@@ -50,7 +56,7 @@
                                     <item name="customer-email" xsi:type="array">
                                         <item name="component" xsi:type="string">Magento_Checkout/js/view/form/element/email</item>
                                         <item name="displayArea" xsi:type="string">customer-email</item>
-                                        <item name="sortOrder" xsi:type="string">4</item>
+                                        <item name="sortOrder" xsi:type="string">20</item>
                                         <item name="tooltip" xsi:type="array">
                                             <item name="description" xsi:type="string" translate="true">We'll send your order confirmation here.</item>
                                         </item>
@@ -80,7 +86,7 @@
                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/billing-address</item>
                                         <item name="template" xsi:type="string">GoMage_LightCheckout/form/billing-address</item>
                                         <item name="provider" xsi:type="string">checkoutProvider</item>
-                                        <item name="sortOrder" xsi:type="string">1</item>
+                                        <item name="sortOrder" xsi:type="string">30</item>
                                         <item name="children" xsi:type="array">
                                             <item name="billing-address-fieldset" xsi:type="array">
                                                 <item name="component" xsi:type="string">uiComponent</item>
@@ -153,7 +159,7 @@
                                         <item name="template" xsi:type="string">GoMage_LightCheckout/form/shipping-address.html</item>
                                         <item name="displayArea" xsi:type="string">shippingAddress</item>
                                         <item name="provider" xsi:type="string">checkoutProvider</item>
-                                        <item name="sortOrder" xsi:type="string">5</item>
+                                        <item name="sortOrder" xsi:type="string">40</item>
                                         <item name="children" xsi:type="array">
                                             <item name="before-form" xsi:type="array">
                                                 <item name="component" xsi:type="string">uiComponent</item>

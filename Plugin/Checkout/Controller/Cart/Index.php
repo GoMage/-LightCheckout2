@@ -1,9 +1,9 @@
 <?php
 
-namespace GoMage\LightCheckout\Plugin\Checkout\Controller\Index;
+namespace GoMage\LightCheckout\Plugin\Checkout\Controller\Cart;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
-use Magento\Checkout\Controller\Index\Index as CheckoutIndex;
+use Magento\Checkout\Controller\Cart\Index as CartIndex;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 
@@ -32,17 +32,19 @@ class Index
     }
 
     /**
-     * Forward to Light Checkout if it is needed.
+     * Redirect from cart to checkout according to configuration.
      *
-     * @param CheckoutIndex $subject
+     * @param CartIndex $subject
      * @param \Closure $proceed
      *
      * @return ResultInterface
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function aroundExecute(CheckoutIndex $subject, \Closure $proceed)
+    public function aroundExecute(CartIndex $subject, \Closure $proceed)
     {
-        if ($this->checkoutConfigurationsProvider->isLightCheckoutEnabled()) {
+        if ($this->checkoutConfigurationsProvider->isLightCheckoutEnabled()
+            && $this->checkoutConfigurationsProvider->getIsDisabledCart()
+        ) {
             $resultForward = $this->resultFactory->create(ResultFactory::TYPE_FORWARD);
             $result = $resultForward
                 ->setModule('lightcheckout')

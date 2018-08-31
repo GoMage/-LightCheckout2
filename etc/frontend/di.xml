@@ -19,24 +19,7 @@
     <type name="Magento\Checkout\Controller\Index\Index">
         <plugin name="gomage_light_checkout_checkout_controller_index_index" type="GoMage\LightCheckout\Plugin\Checkout\Controller\Index\Index"/>
     </type>
-    <virtualType name="GoMage\LightCheckout\Model\Address\Form\AttributeMeta\Modifier\Attribute\Prefix"
-                 type="GoMage\LightCheckout\Model\Address\Form\AttributeMeta\Modifier\Attribute\PrefixSuffix">
-        <arguments>
-            <argument name="attributeCode" xsi:type="string">prefix</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="GoMage\LightCheckout\Model\Address\Form\AttributeMeta\Modifier\Attribute\Suffix"
-                 type="GoMage\LightCheckout\Model\Address\Form\AttributeMeta\Modifier\Attribute\PrefixSuffix">
-        <arguments>
-            <argument name="attributeCode" xsi:type="string">suffix</argument>
-        </arguments>
-    </virtualType>
-    <type name="GoMage\LightCheckout\Model\Page\Initializer\ThirdPartyModuleList">
-        <arguments>
-            <argument name="modules" xsi:type="array">
-                <item name="0" xsi:type="string">Ebizmarts_SagePaySuite</item>
-                <item name="1" xsi:type="string">Adyen_Payment</item>
-            </argument>
-        </arguments>
+    <type name="Magento\Checkout\Controller\Cart\Index">
+        <plugin name="gomage_light_checkout_checkout_controller_cart_index" type="GoMage\LightCheckout\Plugin\Checkout\Controller\Cart\Index"/>
     </type>
 </config>

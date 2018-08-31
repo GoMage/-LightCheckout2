@@ -2,6 +2,7 @@
 
 namespace GoMage\LightCheckout\Block\Checkout;
 
+use GoMage\LightCheckout\Model\Block\DisableBlockByJsLayout;
 use GoMage\LightCheckout\Model\Layout\FetchArgs;
 use Magento\Checkout\Block\Checkout\AttributeMerger;
 use Magento\Store\Api\StoreResolverInterface;
@@ -47,12 +48,19 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private $fetchArgs;
 
     /**
+     * @var DisableBlockByJsLayout
+     */
+    private $disableBlockByJsLayout;
+
+    /**
      * @param \Magento\Customer\Model\AttributeMetadataDataProvider $attributeMetadataDataProvider
      * @param \Magento\Ui\Component\Form\AttributeMapper $attributeMapper
      * @param AttributeMerger $merger
      * @param FetchArgs $fetchArgs
      * @param \Magento\Shipping\Model\Config $shippingConfig
      * @param StoreResolverInterface $storeResolver
+     * @param \Magento\Customer\Model\Options $options
+     * @param DisableBlockByJsLayout $disableBlockByJsLayout
      */
     public function __construct(
         \Magento\Customer\Model\AttributeMetadataDataProvider $attributeMetadataDataProvider,
@@ -61,7 +69,8 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         FetchArgs $fetchArgs,
         \Magento\Shipping\Model\Config $shippingConfig,
         StoreResolverInterface $storeResolver,
-        \Magento\Customer\Model\Options $options
+        \Magento\Customer\Model\Options $options,
+        DisableBlockByJsLayout $disableBlockByJsLayout
     ) {
         $this->attributeMetadataDataProvider = $attributeMetadataDataProvider;
         $this->attributeMapper = $attributeMapper;
@@ -70,6 +79,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $this->shippingConfig = $shippingConfig;
         $this->storeResolver = $storeResolver;
         $this->options = $options;
+        $this->disableBlockByJsLayout = $disableBlockByJsLayout;
     }
 
     /**
@@ -194,15 +204,12 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
                 $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
         );
 
-        $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
-            = $this->mergePaymentMethodsRenders(
-            $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
-        );
-
         $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
             = $this->mergePaymentAfterMethods(
             $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
         );
+
+        $jsLayout = $this->disableBlockByJsLayout->execute($jsLayout);
 
         return $jsLayout;
     }

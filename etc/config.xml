@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <light_checkout_configuration>
+            <general>
+                <page_title>GoMage LightCheckout</page_title>
+                <enable_discount_codes>1</enable_discount_codes>
+            </general>
+        </light_checkout_configuration>
+    </default>
+</config>

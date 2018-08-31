@@ -5,14 +5,16 @@ define(
         'Magento_Checkout/js/view/payment',
         'Magento_Checkout/js/model/quote',
         'Magento_Checkout/js/model/step-navigator',
-        'Magento_Checkout/js/model/payment/additional-validators'
+        'Magento_Checkout/js/model/payment/additional-validators',
+        'Magento_Checkout/js/checkout-data'
     ],
     function (
         ko,
         Component,
         quote,
         stepNavigator,
-        additionalValidators
+        additionalValidators,
+        checkoutData
     ) {
         'use strict';
 
@@ -25,6 +27,10 @@ define(
 
             initialize: function () {
                 var self = this;
+
+                if (!checkoutData.getSelectedPaymentMethod() && window.checkoutConfig.defaultPaymentMethod) {
+                    checkoutData.setSelectedPaymentMethod(window.checkoutConfig.defaultPaymentMethod);
+                }
 
                 this._super();
 
