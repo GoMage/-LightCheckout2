@@ -80,4 +80,12 @@ class Onepage extends Template
     {
         return $this->configProvider->getConfig();
     }
+
+    /**
+     * @return bool|string
+     */
+    public function getSerializedCheckoutConfig()
+    {
+        return json_encode($this->getCheckoutConfig(), JSON_HEX_TAG);
+    }
 }
