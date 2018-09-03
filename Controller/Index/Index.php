@@ -3,7 +3,6 @@
 namespace GoMage\LightCheckout\Controller\Index;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
-use GoMage\LightCheckout\Model\InitDefaultShippingForQuote;
 use Magento\Checkout\Model\Session;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;

@@ -29,11 +29,61 @@ class DisableBlockByJsLayout
      */
     public function execute($jsLayout)
     {
+        $jsLayout = $this->disableDiscountCodesAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->disableDeletingItemOnCheckoutAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->disableChangingQtyOnCheckoutAccordingToTheConfiguration($jsLayout);
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function disableDiscountCodesAccordingToTheConfiguration($jsLayout)
+    {
         $isEnabledDiscountCodes = $this->checkoutConfigProvider->getIsEnabledDiscountCodes();
 
         if (!$isEnabledDiscountCodes) {
             unset($jsLayout["components"]["checkout"]["children"]["payment"]["children"]["afterMethods"]
                 ["children"]["discount"]);
+        }
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function disableDeletingItemOnCheckoutAccordingToTheConfiguration($jsLayout)
+    {
+        $isEnabledRemoveItemFromCheckout = $this->checkoutConfigProvider->getIsAllowedToRemoveItemFromCheckout();
+
+        if (!$isEnabledRemoveItemFromCheckout) {
+            unset($jsLayout["components"]["checkout"]["children"]["sidebar"]["children"]["summary"]
+                ["children"]["cart_items"]["children"]["details"]["children"]["delete_item"]);
+        }
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function disableChangingQtyOnCheckoutAccordingToTheConfiguration($jsLayout)
+    {
+        $isEnabledChangeQty = $this->checkoutConfigProvider->getIsAllowedToChangeQty();
+
+        if (!$isEnabledChangeQty) {
+            unset($jsLayout["components"]["checkout"]["children"]["sidebar"]["children"]["summary"]
+                ["children"]["cart_items"]["children"]["details"]["children"]["increase_item_qty"]);
+            unset($jsLayout["components"]["checkout"]["children"]["sidebar"]["children"]["summary"]
+                ["children"]["cart_items"]["children"]["details"]["children"]["decrease_item_qty"]);
         }
 
         return $jsLayout;
