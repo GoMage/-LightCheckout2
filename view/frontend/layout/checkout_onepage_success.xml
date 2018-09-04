@@ -10,7 +10,7 @@
         <referenceContainer name="content">
             <block class="\Magento\Framework\View\Element\Template" name="order_review_title"
                    template="GoMage_LightCheckout::order_review_title.phtml" after="checkout.success"/>
-            <block class="GoMage\LightCheckout\Block\Checkout\Summary" name="order_items"
+            <block class="GoMage\LightCheckout\Block\Checkout\Summary" name="order_items_success_page"
                    template="Magento_Sales::order/items.phtml"
                    cacheable="false" >
                 <block class="Magento\Framework\View\Element\RendererList" name="sales.order.items.renderers" as="renderer.list"/>
