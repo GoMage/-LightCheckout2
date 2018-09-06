@@ -111,6 +111,7 @@ class ConfigProvider implements ConfigProviderInterface
             'passwordSettings' => $this->passwordSettingProvider->get(),
             'checkoutMode' => $this->checkoutConfigurationsProvider->getCheckoutMode(),
             'isCreateAnAccountCheckboxChecked' => $this->checkoutConfigurationsProvider->getCreateAnAccountCheckbox(),
+            'autoRegistration' => $this->checkoutConfigurationsProvider->getIsAutoRegistration(),
         ];
 
         return $config;
