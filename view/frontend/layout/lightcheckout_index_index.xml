@@ -145,6 +145,10 @@
                                                             </item>
                                                         </item>
                                                     </item>
+                                                    <item name="createAccount" xsi:type="array">
+                                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/billing-address/create-account</item>
+                                                        <item name="displayArea" xsi:type="string">create-account</item>
+                                                    </item>
                                                 </item>
                                             </item>
                                         </item>

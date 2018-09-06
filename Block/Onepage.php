@@ -8,7 +8,6 @@ use Magento\Framework\Data\Form\FormKey;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 
-
 class Onepage extends Template
 {
     /**

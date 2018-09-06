@@ -9,7 +9,8 @@ define(
         'Magento_Checkout/js/action/select-billing-address',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Checkout/js/model/shipping-rates-validation-rules',
-        'Magento_Checkout/js/model/postcode-validator'
+        'Magento_Checkout/js/model/postcode-validator',
+        'mage/translate'
     ],
     function (
         $,
@@ -21,7 +22,8 @@ define(
         selectBillingAddress,
         additionalValidators,
         shippingRatesValidationRules,
-        postcodeValidator
+        postcodeValidator,
+        $t
     ) {
         'use strict';
 

@@ -4,6 +4,7 @@ namespace GoMage\LightCheckout\Model;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\AddressFieldsProvider;
+use GoMage\LightCheckout\Model\ConfigProvider\PasswordSettingProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\PaymentMethodsListProvider;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
@@ -56,6 +57,11 @@ class ConfigProvider implements ConfigProviderInterface
     private $totalsCollector;
 
     /**
+     * @var PasswordSettingProvider
+     */
+    private $passwordSettingProvider;
+
+    /**
      * @param PaymentMethodsListProvider $paymentMethodsListProvider
      * @param CheckoutSession $session
      * @param AddressFieldsProvider $addressFieldsProvider
@@ -64,6 +70,7 @@ class ConfigProvider implements ConfigProviderInterface
      * @param ShippingMethodConverter $shippingMethodConverter
      * @param DirectoryHelper $directoryHelper
      * @param TotalsCollector $totalsCollector
+     * @param PasswordSettingProvider $passwordSettingProvider
      */
     public function __construct(
         PaymentMethodsListProvider $paymentMethodsListProvider,
@@ -73,7 +80,8 @@ class ConfigProvider implements ConfigProviderInterface
         PaymentMethodManagementInterface $paymentMethodManagement,
         ShippingMethodConverter $shippingMethodConverter,
         DirectoryHelper $directoryHelper,
-        TotalsCollector $totalsCollector
+        TotalsCollector $totalsCollector,
+        PasswordSettingProvider $passwordSettingProvider
     ) {
         $this->paymentMethodsListProvider = $paymentMethodsListProvider;
         $this->checkoutSession = $session;
@@ -83,6 +91,7 @@ class ConfigProvider implements ConfigProviderInterface
         $this->shippingMethodConverter = $shippingMethodConverter;
         $this->directoryHelper = $directoryHelper;
         $this->totalsCollector = $totalsCollector;
+        $this->passwordSettingProvider = $passwordSettingProvider;
     }
 
     /**
@@ -99,6 +108,9 @@ class ConfigProvider implements ConfigProviderInterface
                 $this->checkoutConfigurationsProvider->getEnableDifferentShippingAddress(),
             'defaultPaymentMethod' => $this->getDefaultPaymentMethod($this->checkoutSession->getQuote()),
             'defaultShippingMethod' => $this->getDefaultShippingMethod($this->checkoutSession->getQuote()),
+            'passwordSettings' => $this->passwordSettingProvider->get(),
+            'checkoutMode' => $this->checkoutConfigurationsProvider->getCheckoutMode(),
+            'isCreateAnAccountCheckboxChecked' => $this->checkoutConfigurationsProvider->getCreateAnAccountCheckbox(),
         ];
 
         return $config;

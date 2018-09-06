@@ -4,4 +4,5 @@
     <preference for="GoMage\LightCheckout\Api\GuestQuoteItemManagementInterface" type="GoMage\LightCheckout\Model\GuestQuoteItemManagement" />
     <preference for="GoMage\LightCheckout\Api\QuoteItemManagementInterface" type="GoMage\LightCheckout\Model\QuoteItemManagement" />
     <preference for="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface" type="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseData" />
+    <preference for="GoMage\LightCheckout\Api\CheckoutAdditionalManagementInterface" type="GoMage\LightCheckout\Model\CheckoutAdditionalManagement" />
 </config>

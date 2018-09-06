@@ -31,4 +31,10 @@
             <parameter name="cartId" force="true">%cart_id%</parameter>
         </data>
     </route>
+    <route url="/V1/light_checkout/additional-checkout-information" method="POST">
+        <service class="GoMage\LightCheckout\Api\CheckoutAdditionalManagementInterface" method="saveAdditionalInformation"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
 </routes>

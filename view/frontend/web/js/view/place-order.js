@@ -5,7 +5,8 @@ define(
         'ko',
         'uiComponent',
         'Magento_Checkout/js/model/payment/additional-validators',
-        'Magento_Checkout/js/action/set-shipping-information'
+        'Magento_Checkout/js/action/set-shipping-information',
+        'GoMage_LightCheckout/js/action/save-additional-information'
     ],
     function (
         $,
@@ -13,7 +14,8 @@ define(
         ko,
         Component,
         additionalValidators,
-        setShippingInformation
+        setShippingInformation,
+        saveAdditionalInformation
     ) {
         "use strict";
 
@@ -25,11 +27,12 @@ define(
 
             placeOrder: function () {
                 var self = this;
-                if (additionalValidators.validate()) {
-                    this.prepareToPlaceOrder().done(function () {
-                        self._placeOrder();
-                    });
-                }
+
+                 if (additionalValidators.validate()) {
+                     this.prepareToPlaceOrder().done(function () {
+                         self._placeOrder();
+                     });
+                 }
 
                 return this;
             },
@@ -40,7 +43,9 @@ define(
 
             prepareToPlaceOrder: function () {
                 return $.when(setShippingInformation()).done(function () {
-                    $("body").animate({ scrollTop: 0 }, "slow");
+                    $.when(saveAdditionalInformation()).done(function () {
+                        $("body").animate({scrollTop: 0}, "slow");
+                    });
                 });
             }
         });
