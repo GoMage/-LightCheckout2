@@ -28,7 +28,6 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_REGISTRATION_CHECKOUT_MODE = 'light_checkout_configuration/registration/checkout_mode';
     const XML_PATH_LIGHT_CHECKOUT_REGISTRATION_AUTO_REGISTRATION = 'light_checkout_configuration/registration/auto_registration';
     const XML_PATH_LIGHT_CHECKOUT_REGISTRATION_CREATE_AN_ACCOUNT_CHECKBOX = 'light_checkout_configuration/registration/create_an_account_checkbox';
-    const XML_PATH_LIGHT_CHECKOUT_REGISTRATION_ALLOW_GUEST_REGISTRATION_ON_SUCCESS_PAGE = 'light_checkout_configuration/registration/allow_guest_registration_on_success_page';
     /**#@-*/
 
     /**
@@ -112,10 +111,5 @@ class CheckoutConfigurationsProvider
     public function getCreateAnAccountCheckbox()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_REGISTRATION_CREATE_AN_ACCOUNT_CHECKBOX);
-    }
-
-    public function getAllowGuestRegistrationOnSuccessPage()
-    {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_REGISTRATION_ALLOW_GUEST_REGISTRATION_ON_SUCCESS_PAGE);
     }
 }

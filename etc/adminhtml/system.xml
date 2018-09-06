@@ -86,11 +86,6 @@
                         <field id="auto_registration">0</field>
                     </depends>
                 </field>
-                <field id="allow_guest_registration_on_success_page" translate="label" type="select" sortOrder="40"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Allow Guest Registration on Success Page</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
             </group>
         </section>
     </system>
