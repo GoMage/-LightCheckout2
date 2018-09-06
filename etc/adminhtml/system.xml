@@ -40,27 +40,27 @@
                     <source_model>GoMage\LightCheckout\Model\Config\Source\EnableDifferentShippingAddress</source_model>
                 </field>
                 <field id="allow_to_change_qty" translate="label" type="select" sortOrder="80"
-                       showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                       showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Allow to change Qty</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="allow_to_remove_item_from_checkout" translate="label" type="select" sortOrder="90"
-                       showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                       showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Allow to Remove Item from Checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="disable_cart" translate="label" type="select" sortOrder="100"
-                       showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                       showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Disable Cart</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="enable_discount_codes" translate="label" type="select" sortOrder="110"
-                       showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                       showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable Discount Codes</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="show_order_summary_on_success_page" translate="label" type="select" sortOrder="120"
-                       showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                       showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Show Order Summary on Success Page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
