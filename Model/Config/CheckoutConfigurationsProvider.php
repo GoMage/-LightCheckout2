@@ -30,6 +30,14 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_REGISTRATION_CREATE_AN_ACCOUNT_CHECKBOX = 'light_checkout_configuration/registration/create_an_account_checkbox';
     /**#@-*/
 
+    /**#@+
+     * Light Checkout configuration Devices.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_DEVICES_DESKTOP = 'light_checkout_configuration/devices/desktop';
+    const XML_PATH_LIGHT_CHECKOUT_DEVICES_TABLET = 'light_checkout_configuration/devices/tablet';
+    const XML_PATH_LIGHT_CHECKOUT_DEVICES_SMARTPHONE = 'light_checkout_configuration/devices/smartphone';
+    /**#@-*/
+
     /**
      * @var ScopeConfigInterface
      */
@@ -111,5 +119,20 @@ class CheckoutConfigurationsProvider
     public function getCreateAnAccountCheckbox()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_REGISTRATION_CREATE_AN_ACCOUNT_CHECKBOX);
+    }
+
+    public function isShowOnDesktopAndLaptop()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DEVICES_DESKTOP);
+    }
+
+    public function getShowOnTabletOperationSystems()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DEVICES_TABLET);
+    }
+
+    public function getShowOnSmartphoneOperationSystems()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DEVICES_TABLET);
     }
 }

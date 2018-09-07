@@ -9,10 +9,10 @@ class CheckoutMode
      */
     public function toOptionArray()
     {
-        return array(
-            array('value' => 0, 'label' => __('Registered and guest customers')),
-            array('value' => 1, 'label' => __('Only registered customers')),
-            array('value' => 2, 'label' => __('Only guest customers')),
-        );
+        return [
+            ['value' => 0, 'label' => __('Registered and guest customers')],
+            ['value' => 1, 'label' => __('Only registered customers')],
+            ['value' => 2, 'label' => __('Only guest customers')],
+        ];
     }
 }

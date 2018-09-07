@@ -4,14 +4,14 @@
         <tab id="light_checkout" translate="label" sortOrder="250">
             <label>GoMage Light Checkout</label>
         </tab>
-        <section id="light_checkout_configuration" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="light_checkout_configuration" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Configuration</label>
             <tab>light_checkout</tab>
             <resource>GoMage_LightCheckout::light_checkout</resource>
-            <group id="general" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1"
+            <group id="general" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>General</label>
-                <field id="is_enabled" translate="label" type="select" sortOrder="10" showInDefault="1"
+                <field id="is_enabled" translate="label" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <label>Enable GoMage Light Checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -65,10 +65,10 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
-            <group id="registration" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1"
+            <group id="registration" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>Registration</label>
-                <field id="checkout_mode" translate="label" type="select" sortOrder="10" showInDefault="1"
+                <field id="checkout_mode" translate="label" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <label>Checkout Mode</label>
                     <source_model>GoMage\LightCheckout\Model\Config\Source\CheckoutMode</source_model>
@@ -85,6 +85,25 @@
                     <depends>
                         <field id="auto_registration">0</field>
                     </depends>
+                </field>
+            </group>
+            <group id="devices" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Devices</label>
+                <field id="desktop" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Show on Desktops and Laptops</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="tablet" translate="label" type="multiselect" sortOrder="30"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Show on Tablet Devices with Full Browser</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\OperationSystemsForDevices</source_model>
+                </field>
+                <field id="smartphone" translate="label" type="multiselect" sortOrder="40"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Show on Smartphones</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\OperationSystemsForDevices</source_model>
                 </field>
             </group>
         </section>

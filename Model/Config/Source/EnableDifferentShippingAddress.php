@@ -9,10 +9,10 @@ class EnableDifferentShippingAddress
      */
     public function toOptionArray()
     {
-        return array(
-            array('value' => 0, 'label' => __('No')),
-            array('value' => 1, 'label' => __('Yes, checkbox is checked')),
-            array('value' => 2, 'label' => __('Yes, checkbox is unchecked')),
-        );
+        return [
+            ['value' => 0, 'label' => __('No')],
+            ['value' => 1, 'label' => __('Yes, checkbox is checked')],
+            ['value' => 2, 'label' => __('Yes, checkbox is unchecked')],
+        ];
     }
 }

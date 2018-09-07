@@ -9,9 +9,9 @@ class CreateAnAccountCheckbox
      */
     public function toOptionArray()
     {
-        return array(
-            array('value' => 0, 'label' => __('Unchecked')),
-            array('value' => 1, 'label' => __('Checked')),
-        );
+        return [
+            ['value' => 0, 'label' => __('Unchecked')],
+            ['value' => 1, 'label' => __('Checked')],
+        ];
     }
 }
