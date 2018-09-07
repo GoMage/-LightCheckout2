@@ -26,6 +26,10 @@ class IsEnableLightCheckoutForDevice
      */
     public function execute()
     {
+        if (!class_exists(\Mobile_Detect::class)) {
+            return true;
+        }
+
         $detect = new \Mobile_Detect();
 
         if (!$detect->isMobile()) {
