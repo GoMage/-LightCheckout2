@@ -19,12 +19,12 @@
                 <field id="default_shipping_method" translate="label" type="select" sortOrder="30"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Default Shipping Method</label>
-                    <source_model>GoMage\LightCheckout\Model\Config\Source\DefaultShippingMethod</source_model>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\ShippingMethodsWithEmptyValue</source_model>
                 </field>
                 <field id="default_payment_method" translate="label" type="select" sortOrder="40"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Default Payment Method</label>
-                    <source_model>GoMage\LightCheckout\Model\Config\Source\DefaultPaymentMethod</source_model>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\PaymentMethodsWithEmptyValue</source_model>
                 </field>
                 <field id="page_title" translate="label" type="text" sortOrder="50"
                        showInDefault="1" showInWebsite="0" showInStore="0">
@@ -81,7 +81,7 @@
                 <field id="create_an_account_checkbox" translate="label" type="select" sortOrder="40"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Create an Account checkbox</label>
-                    <source_model>GoMage\LightCheckout\Model\Config\Source\CreateAnAccountCheckbox</source_model>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\CheckboxOptions</source_model>
                     <depends>
                         <field id="auto_registration">0</field>
                     </depends>
@@ -104,6 +104,56 @@
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Show on Smartphones</label>
                     <source_model>GoMage\LightCheckout\Model\Config\Source\OperationSystemsForDevices</source_model>
+                </field>
+            </group>
+            <group id="delivery_date" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Delivery Date</label>
+                <field id="enable_delivery_date" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Delivery Date</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="show_time" translate="label" type="select" sortOrder="30"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Show Time</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="delivery_days" translate="label" type="select" sortOrder="40"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Delivery Days</label>
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\DeliveryDate\DeliveryDays</frontend_model>
+                    <backend_model>GoMage\LightCheckout\Model\Config\Backend\DeliveryDate\Days</backend_model>
+                </field>
+                <field id="non_working_days" translate="label" type="select" sortOrder="50"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Non-Working Days</label>
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\DeliveryDate\NonWorkingDays</frontend_model>
+                    <backend_model>GoMage\LightCheckout\Model\Config\Backend\DeliveryDate\Days</backend_model>
+                </field>
+                <field id="set_interval_for_delivery" translate="label" type="select" sortOrder="60"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Set Interval for Delivery, days</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\IntervalForDelivery</source_model>
+                </field>
+                <field id="date_format" translate="label" type="select" sortOrder="70"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Date Format</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\DateFormats</source_model>
+                </field>
+                <field id="use_delivery_date_for" translate="label" type="multiselect" sortOrder="80"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use Delivery Date for</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\ShippingMethods</source_model>
+                </field>
+                <field id="display_delivery_date_text" translate="label" type="select" sortOrder="90"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Display Delivery Date Text</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="delivery_date_text" translate="label" type="textarea" sortOrder="100"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Delivery Date Text</label>
                 </field>
             </group>
         </section>

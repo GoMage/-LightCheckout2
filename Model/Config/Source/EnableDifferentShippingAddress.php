@@ -2,7 +2,9 @@
 
 namespace GoMage\LightCheckout\Model\Config\Source;
 
-class EnableDifferentShippingAddress
+use Magento\Framework\Data\OptionSourceInterface;
+
+class EnableDifferentShippingAddress implements OptionSourceInterface
 {
     /**
      * @inheritdoc

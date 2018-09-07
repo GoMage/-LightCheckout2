@@ -2,7 +2,9 @@
 
 namespace GoMage\LightCheckout\Model\Config\Source;
 
-class OperationSystemsForDevices
+use Magento\Framework\Data\OptionSourceInterface;
+
+class OperationSystemsForDevices implements OptionSourceInterface
 {
     /**#@+
      * Devices OS.

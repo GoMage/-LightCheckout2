@@ -2,7 +2,9 @@
 
 namespace GoMage\LightCheckout\Model\Config\Source;
 
-class CheckoutMode
+use Magento\Framework\Data\OptionSourceInterface;
+
+class CheckoutMode implements OptionSourceInterface
 {
     /**
      * @inheritdoc

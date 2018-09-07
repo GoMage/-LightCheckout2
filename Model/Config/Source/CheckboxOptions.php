@@ -2,7 +2,9 @@
 
 namespace GoMage\LightCheckout\Model\Config\Source;
 
-class CreateAnAccountCheckbox
+use Magento\Framework\Data\OptionSourceInterface;
+
+class CheckboxOptions implements OptionSourceInterface
 {
     /**
      * @inheritdoc

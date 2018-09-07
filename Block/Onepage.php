@@ -50,7 +50,7 @@ class Onepage extends Template
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getJsLayout()
     {

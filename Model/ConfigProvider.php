@@ -95,7 +95,7 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getConfig()
     {

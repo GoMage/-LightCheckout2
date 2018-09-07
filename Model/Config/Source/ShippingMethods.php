@@ -3,9 +3,13 @@
 namespace GoMage\LightCheckout\Model\Config\Source;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Shipping\Model\Config as ShippingConfig;
 
-class DefaultShippingMethod
+/**
+ * Return Options array of shipping methods.
+ */
+class ShippingMethods implements OptionSourceInterface
 {
     /**
      * @var ScopeConfigInterface
@@ -34,12 +38,7 @@ class DefaultShippingMethod
      */
     public function toOptionArray()
     {
-        $shippingMethodsOptionArray = [
-            [
-                'label' => __('-- Please select --'),
-                'value' => '',
-            ],
-        ];
+        $shippingMethodsOptionArray = [];
         $carrierMethodsList = $this->shippingConfig->getActiveCarriers();
 
         foreach ($carrierMethodsList as $carrierMethodCode => $carrierModel) {

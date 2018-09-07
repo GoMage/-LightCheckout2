@@ -3,9 +3,13 @@
 namespace GoMage\LightCheckout\Model\Config\Source;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Payment\Model\Method\Factory as PaymentMethodFactory;
 
-class DefaultPaymentMethod
+/**
+ * Return Options array of payment methods.
+ */
+class PaymentMethodsWithEmptyValue implements OptionSourceInterface
 {
     /**
      * @var ScopeConfigInterface
