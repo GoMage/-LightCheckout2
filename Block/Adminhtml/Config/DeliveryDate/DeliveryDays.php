@@ -157,4 +157,24 @@ class DeliveryDays extends AbstractFieldArray
             ['data' => ['is_render_to_js_template' => true]]
         );
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getArrayRows()
+    {
+        $arrayRows = parent::getArrayRows();
+        $sortedArray = [];
+
+        foreach ($arrayRows as $arrayRow) {
+            if ($arrayRow->getDeliverySort()) {
+                $sortedArray[$arrayRow->getDeliverySort()] = $arrayRow;
+            } else {
+                $sortedArray[] = $arrayRow;
+            }
+        }
+        ksort($sortedArray);
+
+        return $sortedArray;
+    }
 }

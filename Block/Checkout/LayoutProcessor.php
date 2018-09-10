@@ -201,13 +201,21 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
             = $this->mergePaymentMethodsRenders(
-                $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
+            $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
         );
 
         $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
             = $this->mergePaymentAfterMethods(
             $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
         );
+
+        if (isset($jsLayout['components']['checkout']['children']['deliveryDate']['children']
+            ['selectTime']
+        )) {
+            $jsLayout['components']['checkout']['children']['deliveryDate']['children']
+            ['selectTime']['options'] = [];
+        }
+
 
         $jsLayout = $this->disableBlockByJsLayout->execute($jsLayout);
 

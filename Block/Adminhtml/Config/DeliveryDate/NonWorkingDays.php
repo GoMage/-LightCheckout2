@@ -104,4 +104,20 @@ class NonWorkingDays extends AbstractFieldArray
             ['data' => ['is_render_to_js_template' => true]]
         );
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getArrayRows()
+    {
+        $arrayRows = parent::getArrayRows();
+        $sortedArray = [];
+
+        foreach ($arrayRows as $key => $arrayRow) {
+            $sortedArray[$arrayRow->getSortNonworking()] = $arrayRow;
+        }
+        ksort($sortedArray);
+
+        return $sortedArray;
+    }
 }

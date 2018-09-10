@@ -1,0 +1,20 @@
+<div data-bind="visible: useForShippingMethod()">
+    <div>
+        <div class="step-title" data-bind="i18n: 'Delivery Date'" data-role="title"></div>
+        <div class="left">
+            <!-- ko foreach: getRegion('selectDate') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="right">
+            <!-- ko foreach: getRegion('selectTime') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+    </div>
+    <div class="left">
+        <!-- ko if: (displayDeliveryDateText == 1) -->
+         <div data-bind="text: deliveryDateText"></div>
+        <!-- /ko -->
+    </div>
+</div>

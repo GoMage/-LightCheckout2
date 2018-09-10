@@ -4,6 +4,7 @@ namespace GoMage\LightCheckout\Model;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\AddressFieldsProvider;
+use GoMage\LightCheckout\Model\ConfigProvider\DeliveryDateConfigProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\PasswordSettingProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\PaymentMethodsListProvider;
 use Magento\Checkout\Model\ConfigProviderInterface;
@@ -62,6 +63,11 @@ class ConfigProvider implements ConfigProviderInterface
     private $passwordSettingProvider;
 
     /**
+     * @var DeliveryDateConfigProvider
+     */
+    private $deliveryDateConfigProvider;
+
+    /**
      * @param PaymentMethodsListProvider $paymentMethodsListProvider
      * @param CheckoutSession $session
      * @param AddressFieldsProvider $addressFieldsProvider
@@ -71,6 +77,7 @@ class ConfigProvider implements ConfigProviderInterface
      * @param DirectoryHelper $directoryHelper
      * @param TotalsCollector $totalsCollector
      * @param PasswordSettingProvider $passwordSettingProvider
+     * @param DeliveryDateConfigProvider $deliveryDateConfigProvider
      */
     public function __construct(
         PaymentMethodsListProvider $paymentMethodsListProvider,
@@ -81,7 +88,8 @@ class ConfigProvider implements ConfigProviderInterface
         ShippingMethodConverter $shippingMethodConverter,
         DirectoryHelper $directoryHelper,
         TotalsCollector $totalsCollector,
-        PasswordSettingProvider $passwordSettingProvider
+        PasswordSettingProvider $passwordSettingProvider,
+        DeliveryDateConfigProvider $deliveryDateConfigProvider
     ) {
         $this->paymentMethodsListProvider = $paymentMethodsListProvider;
         $this->checkoutSession = $session;
@@ -92,6 +100,7 @@ class ConfigProvider implements ConfigProviderInterface
         $this->directoryHelper = $directoryHelper;
         $this->totalsCollector = $totalsCollector;
         $this->passwordSettingProvider = $passwordSettingProvider;
+        $this->deliveryDateConfigProvider = $deliveryDateConfigProvider;
     }
 
     /**
@@ -103,15 +112,10 @@ class ConfigProvider implements ConfigProviderInterface
         $config = [
             'paymentMethods' => $this->paymentMethodsListProvider->get($quoteId),
             'addressFields' => $this->addressFieldsProvider->get(),
-            'pageContent' => $this->checkoutConfigurationsProvider->getPageContent(),
-            'enableDifferentShippingAddress' =>
-                $this->checkoutConfigurationsProvider->getEnableDifferentShippingAddress(),
-            'defaultPaymentMethod' => $this->getDefaultPaymentMethod($this->checkoutSession->getQuote()),
-            'defaultShippingMethod' => $this->getDefaultShippingMethod($this->checkoutSession->getQuote()),
+            'general' => $this->getGeneralConfig(),
             'passwordSettings' => $this->passwordSettingProvider->get(),
-            'checkoutMode' => $this->checkoutConfigurationsProvider->getCheckoutMode(),
-            'isCreateAnAccountCheckboxChecked' => $this->checkoutConfigurationsProvider->getCreateAnAccountCheckbox(),
-            'autoRegistration' => $this->checkoutConfigurationsProvider->getIsAutoRegistration(),
+            'registration' => $this->getRegistrationConfig(),
+            'deliveryDate' => $this->deliveryDateConfigProvider->get(),
         ];
 
         return $config;
@@ -198,5 +202,31 @@ class ConfigProvider implements ConfigProviderInterface
         }
 
         return $allowedShippingMethods;
+    }
+
+    /**
+     * @return array
+     */
+    private function getGeneralConfig()
+    {
+        return [
+            'pageContent' => $this->checkoutConfigurationsProvider->getPageContent(),
+            'enableDifferentShippingAddress' =>
+                $this->checkoutConfigurationsProvider->getEnableDifferentShippingAddress(),
+            'defaultPaymentMethod' => $this->getDefaultPaymentMethod($this->checkoutSession->getQuote()),
+            'defaultShippingMethod' => $this->getDefaultShippingMethod($this->checkoutSession->getQuote()),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getRegistrationConfig()
+    {
+        return [
+            'checkoutMode' => $this->checkoutConfigurationsProvider->getCheckoutMode(),
+            'isCreateAnAccountCheckboxChecked' => $this->checkoutConfigurationsProvider->getCreateAnAccountCheckbox(),
+            'autoRegistration' => $this->checkoutConfigurationsProvider->getIsAutoRegistration(),
+        ];
     }
 }

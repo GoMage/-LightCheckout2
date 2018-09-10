@@ -25,8 +25,13 @@
                 </div>
             </div>
             <div class="two-thirds right">
-                <div class="half left" data-bind="scope: 'checkout.shippingAddress'">
-                    <!-- ko template: getShippingMethodsTemplate() --><!-- /ko -->
+                <div class="half left">
+                    <div data-bind="scope: 'checkout.shippingAddress'">
+                        <!-- ko template: getShippingMethodsTemplate() --><!-- /ko -->
+                    </div>
+                    <div id="delivery-date" data-bind="scope: 'checkout.deliveryDate'">
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    </div>
                 </div>
                 <div class="half right" data-bind="scope: 'checkout.payment'">
                     <!-- ko template: getTemplate() --><!-- /ko -->

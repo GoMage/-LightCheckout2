@@ -32,6 +32,7 @@ class DisableBlockByJsLayout
         $jsLayout = $this->disableDiscountCodesAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->disableDeletingItemOnCheckoutAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->disableChangingQtyOnCheckoutAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->disableDeliveryDateOnCheckoutAccordingToTheConfiguration($jsLayout);
 
         return $jsLayout;
     }
@@ -84,6 +85,22 @@ class DisableBlockByJsLayout
                 ["children"]["cart_items"]["children"]["details"]["children"]["increase_item_qty"]);
             unset($jsLayout["components"]["checkout"]["children"]["sidebar"]["children"]["summary"]
                 ["children"]["cart_items"]["children"]["details"]["children"]["decrease_item_qty"]);
+        }
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function disableDeliveryDateOnCheckoutAccordingToTheConfiguration($jsLayout)
+    {
+        $isEnabledDeliveryDate = $this->checkoutConfigProvider->getIsEnabledDeliveryDate();
+
+        if (!$isEnabledDeliveryDate) {
+            unset($jsLayout["components"]["checkout"]["children"]["deliveryDate"]);
         }
 
         return $jsLayout;

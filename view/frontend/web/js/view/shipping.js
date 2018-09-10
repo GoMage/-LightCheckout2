@@ -40,8 +40,8 @@ define(
                 var self = this;
                 var fieldsetName = 'checkout.shippingAddress.shipping-address-fieldset';
 
-                if (!checkoutData.getSelectedShippingRate() && window.checkoutConfig.defaultShippingMethod) {
-                    checkoutData.setSelectedShippingRate(window.checkoutConfig.defaultShippingMethod);
+                if (!checkoutData.getSelectedShippingRate() && window.checkoutConfig.general.defaultShippingMethod) {
+                    checkoutData.setSelectedShippingRate(window.checkoutConfig.general.defaultShippingMethod);
                 }
 
                 this._super();
@@ -78,7 +78,7 @@ define(
                         isAddressSameAsShipping: false
                     });
 
-                var enableDifferentShippingAddress = parseInt(window.checkoutConfig.enableDifferentShippingAddress);
+                var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
 
                 if (enableDifferentShippingAddress === 0 || enableDifferentShippingAddress === 1) {
                     this.isAddressSameAsShipping(true);
@@ -105,7 +105,7 @@ define(
             },
 
             canUseShippingAddress: ko.computed(function () {
-                var enableDifferentShippingAddress = parseInt(window.checkoutConfig.enableDifferentShippingAddress);
+                var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
 
                 return !quote.isVirtual() && quote.shippingAddress() && quote.shippingAddress().canUseForBilling()
                     && enableDifferentShippingAddress;

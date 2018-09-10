@@ -255,6 +255,22 @@
                                             </item>
                                         </item>
                                     </item>
+                                    <item name="deliveryDate" xsi:type="array">
+                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/delivery-date</item>
+                                        <item name="displayArea" xsi:type="string">deliveryDate</item>
+                                        <item name="children" xsi:type="array">
+                                            <item name="selectDate" xsi:type="array">
+                                                <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/delivery-date/date</item>
+                                                <item name="template" xsi:type="string">GoMage_LightCheckout/form/delivery-date/date</item>
+                                                <item name="displayArea" xsi:type="string">selectDate</item>
+                                            </item>
+                                            <item name="selectTime" xsi:type="array">
+                                                <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/delivery-date/time</item>
+                                                <item name="displayArea" xsi:type="string">selectTime</item>
+                                                <item name="template" xsi:type="string">ui/form/element/select</item>
+                                            </item>
+                                        </item>
+                                    </item>
                                     <item name="payment" xsi:type="array">
                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/payment</item>
                                         <item name="config" xsi:type="array">

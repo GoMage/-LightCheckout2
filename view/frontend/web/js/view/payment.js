@@ -28,8 +28,8 @@ define(
             initialize: function () {
                 var self = this;
 
-                if (!checkoutData.getSelectedPaymentMethod() && window.checkoutConfig.defaultPaymentMethod) {
-                    checkoutData.setSelectedPaymentMethod(window.checkoutConfig.defaultPaymentMethod);
+                if (!checkoutData.getSelectedPaymentMethod() && window.checkoutConfig.general.defaultPaymentMethod) {
+                    checkoutData.setSelectedPaymentMethod(window.checkoutConfig.general.defaultPaymentMethod);
                 }
 
                 this._super();

@@ -38,6 +38,20 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_DEVICES_SMARTPHONE = 'light_checkout_configuration/devices/smartphone';
     /**#@-*/
 
+    /**#@+
+     * Light Checkout configuration Delivery Date.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_ENABLE = 'light_checkout_configuration/delivery_date/enable_delivery_date';
+    const XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_SHOW_TIME = 'light_checkout_configuration/delivery_date/show_time';
+    const XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_DELIVERY_DAYS = 'light_checkout_configuration/delivery_date/delivery_days';
+    const XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_NON_WORKING_DAYS = 'light_checkout_configuration/delivery_date/non_working_days';
+    const XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_INTERVAL = 'light_checkout_configuration/delivery_date/set_interval_for_delivery';
+    const XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_FORMAT = 'light_checkout_configuration/delivery_date/date_format';
+    const XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_USE_FOR = 'light_checkout_configuration/delivery_date/use_delivery_date_for';
+    const XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_DISPLAY_TEXT = 'light_checkout_configuration/delivery_date/display_delivery_date_text';
+    const XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_TEXT = 'light_checkout_configuration/delivery_date/delivery_date_text';
+    /**#@-*/
+
     /**
      * @var ScopeConfigInterface
      */
@@ -134,5 +148,50 @@ class CheckoutConfigurationsProvider
     public function getShowOnSmartphoneOperationSystems()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DEVICES_TABLET);
+    }
+
+    public function getIsEnabledDeliveryDate()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_ENABLE);
+    }
+
+    public function getIsShowTime()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_SHOW_TIME);
+    }
+
+    public function getDeliveryDays()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_DELIVERY_DAYS);
+    }
+
+    public function getNonWorkingDays()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_NON_WORKING_DAYS);
+    }
+
+    public function getIntervalForDelivery()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_INTERVAL);
+    }
+
+    public function getDateFormat()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_FORMAT);
+    }
+
+    public function getUseDeliveryDateFor()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_USE_FOR);
+    }
+
+    public function getIsDisplayDeliveryDateText()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_DISPLAY_TEXT);
+    }
+
+    public function getDeliveryDateText()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_TEXT);
     }
 }

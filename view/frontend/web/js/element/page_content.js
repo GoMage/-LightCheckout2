@@ -5,7 +5,7 @@ define([
 
     return Abstract.extend({
         defaults: {
-            text: window.checkoutConfig.pageContent
+            text: window.checkoutConfig.general.pageContent
         }
     });
 });
