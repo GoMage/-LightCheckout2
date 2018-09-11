@@ -3,6 +3,7 @@
 namespace GoMage\LightCheckout\Model;
 
 use GoMage\LightCheckout\Api\CheckoutAdditionalManagementInterface;
+use GoMage\LightCheckout\Model\CheckoutAdditionalManagement\DeliveryDateSaverToQuote;
 use Magento\Checkout\Model\Session;
 
 class CheckoutAdditionalManagement implements CheckoutAdditionalManagementInterface
@@ -13,11 +14,20 @@ class CheckoutAdditionalManagement implements CheckoutAdditionalManagementInterf
     private $checkoutSession;
 
     /**
-     * @param Session $checkoutSession
+     * @var DeliveryDateSaverToQuote
      */
-    public function __construct(Session $checkoutSession)
-    {
+    private $deliveryDateSaverToQuote;
+
+    /**
+     * @param Session $checkoutSession
+     * @param DeliveryDateSaverToQuote $deliveryDateSaverToQuote
+     */
+    public function __construct(
+        Session $checkoutSession,
+        DeliveryDateSaverToQuote $deliveryDateSaverToQuote
+    ) {
         $this->checkoutSession = $checkoutSession;
+        $this->deliveryDateSaverToQuote = $deliveryDateSaverToQuote;
     }
 
     /**
@@ -26,6 +36,8 @@ class CheckoutAdditionalManagement implements CheckoutAdditionalManagementInterf
     public function saveAdditionalInformation($additionInformation)
     {
         $this->checkoutSession->setAdditionalInformation($additionInformation);
+
+        $this->deliveryDateSaverToQuote->execute($additionInformation);
 
         return true;
     }

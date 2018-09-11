@@ -31,7 +31,7 @@ define(
             initObservable: function () {
                 var shouldCreateAccountBeVisible = false,
                     shouldCheckboxBeVisible = false,
-                    shouldIsCreateAnAccountCheckboxChecked = window.checkoutConfig.registration.isCreateAnAccountCheckboxChecked,
+                    shouldIsCreateAnAccountCheckboxChecked = parseInt(window.checkoutConfig.registration.isCreateAnAccountCheckboxChecked),
                     autoRegistration = window.checkoutConfig.registration.autoRegistration,
                     checkoutMode = window.checkoutConfig.registration.checkoutMode;
 

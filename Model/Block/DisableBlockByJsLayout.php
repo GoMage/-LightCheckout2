@@ -47,8 +47,8 @@ class DisableBlockByJsLayout
         $isEnabledDiscountCodes = $this->checkoutConfigProvider->getIsEnabledDiscountCodes();
 
         if (!$isEnabledDiscountCodes) {
-            unset($jsLayout["components"]["checkout"]["children"]["payment"]["children"]["afterMethods"]
-                ["children"]["discount"]);
+            unset($jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']
+                ['children']['discount']);
         }
 
         return $jsLayout;
@@ -64,8 +64,8 @@ class DisableBlockByJsLayout
         $isEnabledRemoveItemFromCheckout = $this->checkoutConfigProvider->getIsAllowedToRemoveItemFromCheckout();
 
         if (!$isEnabledRemoveItemFromCheckout) {
-            unset($jsLayout["components"]["checkout"]["children"]["sidebar"]["children"]["summary"]
-                ["children"]["cart_items"]["children"]["details"]["children"]["delete_item"]);
+            unset($jsLayout['components']['checkout']['children']['sidebar']['children']['summary']
+                ['children']['cart_items']['children']['details']['children']['delete_item']);
         }
 
         return $jsLayout;
@@ -81,10 +81,10 @@ class DisableBlockByJsLayout
         $isEnabledChangeQty = $this->checkoutConfigProvider->getIsAllowedToChangeQty();
 
         if (!$isEnabledChangeQty) {
-            unset($jsLayout["components"]["checkout"]["children"]["sidebar"]["children"]["summary"]
-                ["children"]["cart_items"]["children"]["details"]["children"]["increase_item_qty"]);
-            unset($jsLayout["components"]["checkout"]["children"]["sidebar"]["children"]["summary"]
-                ["children"]["cart_items"]["children"]["details"]["children"]["decrease_item_qty"]);
+            unset($jsLayout['components']['checkout']['children']['sidebar']['children']['summary']
+                ['children']['cart_items']['children']['details']['children']['increase_item_qty']);
+            unset($jsLayout['components']['checkout']['children']['sidebar']['children']['summary']
+                ['children']['cart_items']['children']['details']['children']['decrease_item_qty']);
         }
 
         return $jsLayout;
@@ -100,7 +100,12 @@ class DisableBlockByJsLayout
         $isEnabledDeliveryDate = $this->checkoutConfigProvider->getIsEnabledDeliveryDate();
 
         if (!$isEnabledDeliveryDate) {
-            unset($jsLayout["components"]["checkout"]["children"]["deliveryDate"]);
+            unset($jsLayout['components']['checkout']['children']['deliveryDate']);
+        } else {
+            $isShowTime = $this->checkoutConfigProvider->getIsShowTime();
+            if (!$isShowTime) {
+                unset($jsLayout['components']['checkout']['children']['deliveryDate']['children']['selectTime']);
+            }
         }
 
         return $jsLayout;

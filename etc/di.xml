@@ -5,4 +5,13 @@
     <preference for="GoMage\LightCheckout\Api\QuoteItemManagementInterface" type="GoMage\LightCheckout\Model\QuoteItemManagement" />
     <preference for="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface" type="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseData" />
     <preference for="GoMage\LightCheckout\Api\CheckoutAdditionalManagementInterface" type="GoMage\LightCheckout\Model\CheckoutAdditionalManagement" />
+
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="lc_delivery_date_time" xsi:type="string">sales_order.lc_delivery_date_time</item>
+                <item name="lc_delivery_date" xsi:type="string">sales_order.lc_delivery_date</item>
+            </argument>
+        </arguments>
+    </virtualType>
 </config>

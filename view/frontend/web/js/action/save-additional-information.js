@@ -5,7 +5,8 @@ define(
         'mage/storage',
         'Magento_Checkout/js/model/error-processor',
         'Magento_Checkout/js/model/full-screen-loader',
-        'GoMage_LightCheckout/js/model/resource-url-manager'
+        'GoMage_LightCheckout/js/model/resource-url-manager',
+        'underscore'
     ],
     function (
         $,
@@ -13,20 +14,32 @@ define(
         storage,
         errorProcessor,
         fullScreenLoader,
-        resourceUrlManager
+        resourceUrlManager,
+        _
     ) {
         'use strict';
 
         return function () {
             var serviceUrl = resourceUrlManager.getUrlForSaveAdditionalInformation(),
-                passwordSelector = $('#account-password'),
+                passwordVal = $('#account-password').val(),
                 isCheckboxChecked = $('input[name=create-account-checkbox]').is(":checked"),
                 isPasswordForLoginVisible = $('.form-login #customer-email-fieldset #customer-password').is(":visible"),
+                deliveryDateVal = $('#delivery-date input').val(),
+                deliveryTimeVal = $('#delivery-date select option:selected').text(),
                 payload = {
-                    additionInformation: {password: passwordSelector.val()}
+                    additionInformation: {}
                 };
 
-            if (!isCheckboxChecked || isPasswordForLoginVisible) {
+            if (isCheckboxChecked && !isPasswordForLoginVisible) {
+                payload.additionInformation.password = passwordVal;
+            }
+
+            if (deliveryDateVal) {
+                payload.additionInformation.deliveryDate = deliveryDateVal;
+                payload.additionInformation.deliveryDateTime = deliveryTimeVal;
+            }
+
+            if (_.isEmpty(payload.additionInformation)) {
                 return;
             }
 
