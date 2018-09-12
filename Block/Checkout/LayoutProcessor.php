@@ -3,6 +3,7 @@
 namespace GoMage\LightCheckout\Block\Checkout;
 
 use GoMage\LightCheckout\Model\Block\DisableBlockByJsLayout;
+use GoMage\LightCheckout\Model\InitGeoIpSettingsForCheckout;
 use GoMage\LightCheckout\Model\Layout\FetchArgs;
 use Magento\Checkout\Block\Checkout\AttributeMerger;
 use Magento\Store\Api\StoreResolverInterface;
@@ -53,6 +54,11 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private $disableBlockByJsLayout;
 
     /**
+     * @var InitGeoIpSettingsForCheckout
+     */
+    private $initGeoIpSettingsForCheckout;
+
+    /**
      * @param \Magento\Customer\Model\AttributeMetadataDataProvider $attributeMetadataDataProvider
      * @param \Magento\Ui\Component\Form\AttributeMapper $attributeMapper
      * @param AttributeMerger $merger
@@ -61,6 +67,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      * @param StoreResolverInterface $storeResolver
      * @param \Magento\Customer\Model\Options $options
      * @param DisableBlockByJsLayout $disableBlockByJsLayout
+     * @param InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout
      */
     public function __construct(
         \Magento\Customer\Model\AttributeMetadataDataProvider $attributeMetadataDataProvider,
@@ -70,7 +77,8 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         \Magento\Shipping\Model\Config $shippingConfig,
         StoreResolverInterface $storeResolver,
         \Magento\Customer\Model\Options $options,
-        DisableBlockByJsLayout $disableBlockByJsLayout
+        DisableBlockByJsLayout $disableBlockByJsLayout,
+        InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout
     ) {
         $this->attributeMetadataDataProvider = $attributeMetadataDataProvider;
         $this->attributeMapper = $attributeMapper;
@@ -80,6 +88,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $this->storeResolver = $storeResolver;
         $this->options = $options;
         $this->disableBlockByJsLayout = $disableBlockByJsLayout;
+        $this->initGeoIpSettingsForCheckout = $initGeoIpSettingsForCheckout;
     }
 
     /**
@@ -218,6 +227,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
 
         $jsLayout = $this->disableBlockByJsLayout->execute($jsLayout);
+        $jsLayout = $this->initGeoIpSettingsForCheckout->execute($jsLayout);
 
         return $jsLayout;
     }

@@ -52,6 +52,16 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_TEXT = 'light_checkout_configuration/delivery_date/delivery_date_text';
     /**#@-*/
 
+    /**#@+
+     * Light Checkout configuration GeoIP.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_COUNTRY = 'light_checkout_configuration/geoip/enable_for_country';
+    const XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_STATE = 'light_checkout_configuration/geoip/enable_for_state';
+    const XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_ZIP = 'light_checkout_configuration/geoip/enable_for_zip';
+    const XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_CITY = 'light_checkout_configuration/geoip/enable_for_city';
+
+    /**#@-*/
+
     /**
      * @var ScopeConfigInterface
      */
@@ -193,5 +203,25 @@ class CheckoutConfigurationsProvider
     public function getDeliveryDateText()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_TEXT);
+    }
+
+    public function getIsEnabledGeoIpForCountry()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_COUNTRY);
+    }
+
+    public function getIsEnabledGeoIpForState()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_STATE);
+    }
+
+    public function getIsEnabledGeoIpForZip()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_ZIP);
+    }
+
+    public function getIsEnabledGeoIpForCity()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_CITY);
     }
 }
