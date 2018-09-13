@@ -10,7 +10,9 @@ define(
         'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Checkout/js/model/shipping-rates-validation-rules',
         'Magento_Checkout/js/model/postcode-validator',
-        'mage/translate'
+        'mage/translate',
+        'underscore',
+        'Magento_Customer/js/model/customer',
     ],
     function (
         $,
@@ -23,11 +25,13 @@ define(
         additionalValidators,
         shippingRatesValidationRules,
         postcodeValidator,
-        $t
+        $t,
+        _,
+        customer
     ) {
         'use strict';
 
-            var observedElements = [],
+        var observedElements = [],
             postcodeElement = null,
             postcodeElementName = 'postcode';
 
@@ -54,6 +58,26 @@ define(
                 additionalValidators.registerValidator(this);
             },
 
+            initObservable: function () {
+                this._super()
+                    .observe({
+                        isAddressFormVisible: true,
+                        isAddressNew: false
+                    });
+
+                // check if not only new address present
+                if (this.addressOptions.length > 1) {
+                    for (var i = 0; i < this.addressOptions.length; i++) {
+                        if (this.addressOptions[i].isDefaultBilling()) {
+                            this.selectedAddress(this.addressOptions[i]);
+                            break;
+                        }
+                    }
+                }
+
+                return this;
+            },
+
             validate: function () {
                 this.source.set('params.invalid', false);
                 this.source.trigger('billingAddress.data.validate');
@@ -65,6 +89,14 @@ define(
                 var addressData = addressConverter.formAddressDataToQuoteAddress(
                     this.source.get('billingAddress')
                 );
+
+                if (customer.isLoggedIn() && !this.customerHasAddresses) {
+                    this.saveInAddressBook(1);
+                }
+
+                addressData['save_in_address_book'] = this.saveInAddressBook() ? 1 : 0;
+                addressData.saveInAddressBook = this.saveInAddressBook() ? 1 : 0;
+
                 selectBillingAddress(addressData);
 
                 return !this.source.get('params.invalid');
@@ -190,6 +222,32 @@ define(
                 });
 
                 return observedValues;
+            },
+
+            /**
+             * @inheritDoc
+             */
+            onAddressChange: function (address) {
+                var streetObj = {};
+
+                if (address.customerAddressId !== null) {
+                    this.isAddressNew(false);
+                    address.country_id = address.countryId;
+                    address.region_id = address.regionId;
+
+                    if (_.isArray(address.street)) {
+                        //convert array to object to display street values on frontend.
+                        for (var i = 0; i < address.street.length; i++) {
+                            streetObj[i] = address.street[i];
+                        }
+
+                        address.street = streetObj;
+                    }
+                } else {
+                    this.isAddressNew(true);
+                }
+
+                this.source.set('billingAddress', address);
             }
         });
     }

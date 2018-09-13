@@ -14,7 +14,10 @@ define(
         'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Customer/js/model/customer',
         'Magento_Checkout/js/model/address-converter',
-        'Magento_Checkout/js/action/create-shipping-address'
+        'Magento_Checkout/js/action/create-shipping-address',
+        'Magento_Customer/js/model/address-list',
+        'mage/translate',
+        'underscore'
     ],
     function (
         ko,
@@ -31,11 +34,35 @@ define(
         additionalValidators,
         customer,
         addressConverter,
-        createShippingAddress
+        createShippingAddress,
+        addressList,
+        $t,
+        _
     ) {
         'use strict';
 
+        var newAddressOption = {
+            /**
+             * Get new address label
+             * @returns {String}
+             */
+            getAddressInline: function () {
+                return $t('New Address');
+            },
+            customerAddressId: null
+        },
+            addressOptions = addressList().filter(function (address) {
+            return address.getType() == 'customer-address';
+        });
+
+        addressOptions.push(newAddressOption);
+
         return Component.extend({
+            addressOptions: addressOptions,
+
+            /**
+             * @inheritDoc
+             */
             initialize: function () {
                 var self = this;
                 var fieldsetName = 'checkout.shippingAddress.shipping-address-fieldset';
@@ -72,11 +99,26 @@ define(
                 return this;
             },
 
+            /**
+             * @inheritDoc
+             */
             initObservable: function () {
                 this._super()
                     .observe({
-                        isAddressSameAsShipping: false
+                        isAddressSameAsShipping: false,
+                        selectedAddress: null,
+                        isAddressNew: false
                     });
+
+                // check if not only new address present
+                if (this.addressOptions.length > 1) {
+                    for (var i = 0; i < this.addressOptions.length; i++) {
+                        if (this.addressOptions[i].isDefaultShipping()) {
+                            this.selectedAddress(this.addressOptions[i]);
+                            break;
+                        }
+                    }
+                }
 
                 var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
 
@@ -100,10 +142,16 @@ define(
                 return this;
             },
 
+            /**
+             * @returns {string}
+             */
             getShippingMethodsTemplate: function () {
                 return 'GoMage_LightCheckout/form/shipping-methods';
             },
 
+            /**
+             * @inheritDoc
+             */
             canUseShippingAddress: ko.computed(function () {
                 var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
 
@@ -134,6 +182,17 @@ define(
                 return true;
             },
 
+            /**
+             * @param {Object} address
+             * @return {*}
+             */
+            addressOptionsText: function (address) {
+                return address.getAddressInline();
+            },
+
+            /**
+             * @returns {boolean}
+             */
             validate: function () {
                 if (quote.isVirtual()) {
                     return true;
@@ -170,6 +229,13 @@ define(
                     var addressData = addressConverter.formAddressDataToQuoteAddress(
                         this.source.get('shippingAddress')
                     );
+
+                    if (customer.isLoggedIn() && this.addressOptions.length === 1) {
+                        this.saveInAddressBook = 1;
+                    }
+
+                    addressData['save_in_address_book'] = this.saveInAddressBook ? 1 : 0;
+
                     selectShippingAddress(addressData);
                 }
 
@@ -178,6 +244,32 @@ define(
                 }
 
                 return shippingMethodValidationResult && shippingAddressValidationResult && emailValidationResult;
+            },
+
+            /**
+             * @param {Object} address
+             */
+            onAddressChange: function (address) {
+                var streetObj = {};
+
+                if (address.customerAddressId !== null) {
+                    this.isAddressNew(false);
+                    address.country_id = address.countryId;
+                    address.region_id = address.regionId;
+
+                    if (_.isArray(address.street)) {
+                        //convert array to object to display street values on frontend.
+                        for (var i = 0; i < address.street.length; i++) {
+                            streetObj[i] = address.street[i];
+                        }
+
+                        address.street = streetObj;
+                    }
+                } else {
+                    this.isAddressNew(true);
+                }
+
+                this.source.set('shippingAddress', address);
             }
         });
     }

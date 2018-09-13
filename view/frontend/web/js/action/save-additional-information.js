@@ -21,11 +21,18 @@ define(
 
         return function () {
             var serviceUrl = resourceUrlManager.getUrlForSaveAdditionalInformation(),
-                passwordVal = $('#account-password').val(),
-                isCheckboxChecked = $('input[name=create-account-checkbox]').is(":checked"),
-                isPasswordForLoginVisible = $('.form-login #customer-email-fieldset #customer-password').is(":visible"),
-                deliveryDateVal = $('#delivery-date input').val(),
-                deliveryTimeVal = $('#delivery-date select option:selected').text(),
+                selectors = {
+                    password : '#account-password',
+                    accountCheckbox: 'input[name=create-account-checkbox]',
+                    passwordForLoginForm : '.form-login #customer-email-fieldset #customer-password',
+                    deliveryDate : '#delivery-date input',
+                    deliveryTime: '#delivery-date select option:selected'
+                },
+                passwordVal = $(selectors.password).val(),
+                isCheckboxChecked = $(selectors.accountCheckbox).is(":checked"),
+                isPasswordForLoginVisible = $(selectors.passwordForLoginForm).is(":visible"),
+                deliveryDateVal = $(selectors.deliveryDate).val(),
+                deliveryTimeVal = $(selectors.deliveryTime).text(),
                 payload = {
                     additionInformation: {}
                 };
