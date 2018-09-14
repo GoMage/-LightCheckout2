@@ -4,7 +4,7 @@ namespace GoMage\LightCheckout\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
 
-class EnableDifferentShippingAddress implements OptionSourceInterface
+class EnableCheckboxOptions implements OptionSourceInterface
 {
     /**
      * @inheritdoc

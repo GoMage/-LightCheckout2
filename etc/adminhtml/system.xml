@@ -37,7 +37,7 @@
                 <field id="enable_different_shipping_address" translate="label" type="select" sortOrder="70"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable Different Shipping Address</label>
-                    <source_model>GoMage\LightCheckout\Model\Config\Source\EnableDifferentShippingAddress</source_model>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\EnableCheckboxOptions</source_model>
                 </field>
                 <field id="allow_to_change_qty" translate="label" type="select" sortOrder="80"
                        showInDefault="1" showInWebsite="0" showInStore="0">
@@ -182,6 +182,54 @@
                     <label>Enable GeoIP for City</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
+                </field>
+            </group>
+            <group id="vat" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>EU VAT/Tax Settings</label>
+                <field id="enable" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable EU VAT Option</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="display" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Display Tax/VAT Field</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\DisplayVatTaxField</source_model>
+                </field>
+                <field id="verification_system" translate="label" type="select" sortOrder="30"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Verification System</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\VerificationSystem</source_model>
+                </field>
+                <field id="base_eu_country" translate="label" type="select" sortOrder="40"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Base EU Country</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                </field>
+                <field id="b2c_b2b_base_eu" translate="label" type="select" sortOrder="50"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>B2C &amp; B2B (Base EU Country)</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\CountryMode</source_model>
+                </field>
+                <field id="b2c_b2b_not_base_eu" translate="label" type="select" sortOrder="60"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>B2C &amp; B2B (within EU, not Base EU Country)</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\CountryMode</source_model>
+                </field>
+                <field id="vat_tax_rule" translate="label" type="select" sortOrder="70"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>VAT/Tax Rule</label><!--todo-->
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="show_buy_without_vat_checkbox" translate="label" type="select" sortOrder="80"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Show Buy without VAT checkbox</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\EnableCheckboxOptions</source_model>
+                </field>
+                <field id="text_under_vat_tax_field" translate="label" type="text" sortOrder="90"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Text under VAT/Tax field</label>
                 </field>
             </group>
         </section>
