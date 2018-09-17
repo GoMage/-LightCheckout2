@@ -26,7 +26,6 @@
                                                     <!-- Shipping rates validation components -->
                                                 </item>
                                             </item>
-
                                         </item>
                                     </item>
                                     <item name="errors" xsi:type="array">

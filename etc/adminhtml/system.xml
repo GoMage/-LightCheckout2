@@ -165,23 +165,33 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
                 </field>
-                <field id="enable_for_state" translate="label" type="select" sortOrder="20"
+                <field id="enable_for_state" translate="label" type="select" sortOrder="30"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable GeoIP for State/Province</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
                 </field>
-                <field id="enable_for_zip" translate="label" type="select" sortOrder="20"
+                <field id="enable_for_zip" translate="label" type="select" sortOrder="40"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable GeoIP for Zip/Postcode</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
                 </field>
-                <field id="enable_for_city" translate="label" type="select" sortOrder="20"
+                <field id="enable_for_city" translate="label" type="select" sortOrder="50"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable GeoIP for City</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
+                </field>
+            </group>
+            <group id="terms_and_conditions" translate="label" type="text" sortOrder="400" showInDefault="1"
+                   showInWebsite="1"
+                   showInStore="1">
+                <label>Terms And Conditions</label>
+                <field id="enable" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Terms and Conditions</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
             <group id="vat" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1"

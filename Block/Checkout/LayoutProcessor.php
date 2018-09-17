@@ -218,13 +218,22 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
             $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
         );
 
+        $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']['children']
+            = $this->mergeBeforePlaceOrder(
+            $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']['children']['before-place-order']
+        );
+
+        $jsLayout['components']['checkout']['children']['payment']['children']['additional-payment-validators']['children']
+            = $this->mergeAdditionalValidators(
+            $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
+        );
+
         if (isset($jsLayout['components']['checkout']['children']['deliveryDate']['children']
             ['selectTime']
         )) {
             $jsLayout['components']['checkout']['children']['deliveryDate']['children']
             ['selectTime']['options'] = [];
         }
-
 
         $jsLayout = $this->disableBlockByJsLayout->execute($jsLayout);
         $jsLayout = $this->initGeoIpSettingsForCheckout->execute($jsLayout);
@@ -315,5 +324,41 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
         return array_merge($afterMethodsLayout, $args);
+    }
+
+    /**
+     * @param $layout
+     *
+     * @return array
+     */
+    private function mergeBeforePlaceOrder($layout)
+    {
+        $path = '//referenceBlock[@name="checkout.root"]/arguments/argument[@name="jsLayout"]'
+            . '/item[@name="components"]/item[@name="checkout"]/item[@name="children"]'
+            . '/item[@name="steps"]/item[@name="children"]/item[@name="billing-step"]'
+            . '/item[@name="children"]/item[@name="payment"]/item[@name="children"]'
+            . '/item[@name="payments-list"]/item[@name="children"]/item[@name="before-place-order"]/item[@name="children"]';
+
+        $args = $this->fetchArgs->execute('checkout_index_index', $path);
+
+        return array_merge($layout, $args);
+    }
+
+    /**
+     * @param $layout
+     *
+     * @return array
+     */
+    private function mergeAdditionalValidators($layout)
+    {
+        $path = '//referenceBlock[@name="checkout.root"]/arguments/argument[@name="jsLayout"]'
+            . '/item[@name="components"]/item[@name="checkout"]/item[@name="children"]'
+            . '/item[@name="steps"]/item[@name="children"]/item[@name="billing-step"]'
+            . '/item[@name="children"]/item[@name="payment"]/item[@name="children"]'
+            . '/item[@name="additional-payment-validators"]/item[@name="children"]';
+
+        $args = $this->fetchArgs->execute('checkout_index_index', $path);
+
+        return array_merge($layout, $args);
     }
 }

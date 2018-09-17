@@ -62,6 +62,12 @@ class CheckoutConfigurationsProvider
 
     /**#@-*/
 
+    /**#@+
+     * Light Checkout configuration Terms and Conditions.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_TERMS_AND_CONDITIONS_ENABLE = 'light_checkout_configuration/terms_and_conditions/enable';
+    /**#@-*/
+
     /**
      * @var ScopeConfigInterface
      */
@@ -223,5 +229,10 @@ class CheckoutConfigurationsProvider
     public function getIsEnabledGeoIpForCity()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_CITY);
+    }
+
+    public function getIsEnabledTermsAndConditions()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TERMS_AND_CONDITIONS_ENABLE);
     }
 }
