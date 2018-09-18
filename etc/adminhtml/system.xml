@@ -222,10 +222,10 @@
                     <label>B2C &amp; B2B (within EU, not Base EU Country)</label>
                     <source_model>GoMage\LightCheckout\Model\Config\Source\CountryMode</source_model>
                 </field>
-                <field id="vat_tax_rule" translate="label" type="select" sortOrder="70"
+                <field id="vat_tax_rule" translate="label" type="multiselect" sortOrder="70"
                        showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>VAT/Tax Rule</label><!--todo-->
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <label>VAT/Tax Rule</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\TaxRules</source_model>
                 </field>
                 <field id="show_buy_without_vat_checkbox" translate="label" type="select" sortOrder="80"
                        showInDefault="1" showInWebsite="0" showInStore="0">
