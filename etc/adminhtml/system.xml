@@ -202,11 +202,6 @@
                     <label>Enable EU VAT Option</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="display" translate="label" type="select" sortOrder="20"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Display Tax/VAT Field</label>
-                    <source_model>GoMage\LightCheckout\Model\Config\Source\DisplayVatTaxField</source_model>
-                </field>
                 <field id="verification_system" translate="label" type="select" sortOrder="30"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Verification System</label>
