@@ -10,6 +10,9 @@
             <devices>
                 <desktop>1</desktop>
             </devices>
+            <vat>
+                <text_under_vat_tax_field>Buy without VAT (for EU only)</text_under_vat_tax_field>
+            </vat>
         </light_checkout_configuration>
     </default>
 </config>

@@ -17,7 +17,8 @@ define(
         'Magento_Checkout/js/action/create-shipping-address',
         'Magento_Customer/js/model/address-list',
         'mage/translate',
-        'underscore'
+        'underscore',
+        'GoMage_LightCheckout/js/action/update-sections'
     ],
     function (
         ko,
@@ -37,7 +38,8 @@ define(
         createShippingAddress,
         addressList,
         $t,
-        _
+        _,
+        updateSectionAction
     ) {
         'use strict';
 
@@ -136,6 +138,9 @@ define(
                     var isMethodChange = ($.type(this.currentMethod) !== 'object') ? true : this.currentMethod.method_code;
                     if ($.type(newValue) === 'object' && (isMethodChange !== newValue.method_code)) {
                         setShippingInformationAction();
+                    } else {
+                        //todo need to update totals section as tax can apeear or disappear
+                        //updateSectionAction();
                     }
                 }, this);
 

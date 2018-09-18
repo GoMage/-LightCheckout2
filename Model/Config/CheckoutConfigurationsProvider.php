@@ -63,6 +63,19 @@ class CheckoutConfigurationsProvider
     /**#@-*/
 
     /**#@+
+     * Light Checkout configuration EU Vat/Tax Settings.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_VAT_TAX_ENABLE = 'light_checkout_configuration/vat/enable';
+    const XML_PATH_LIGHT_CHECKOUT_VAT_TAX_VERIFICATION_SYSTEM = 'light_checkout_configuration/vat/verification_system';
+    const XML_PATH_LIGHT_CHECKOUT_VAT_TAX_BASE_EU_COUNTRY = 'light_checkout_configuration/vat/base_eu_country';
+    const XML_PATH_LIGHT_CHECKOUT_VAT_TAX_B2C_B2B_BASE_EU = 'light_checkout_configuration/vat/b2c_b2b_base_eu';
+    const XML_PATH_LIGHT_CHECKOUT_VAT_TAX_B2C_B2B_NOT_BASE_EU = 'light_checkout_configuration/vat/b2c_b2b_not_base_eu';
+    const XML_PATH_LIGHT_CHECKOUT_VAT_TAX_RULE = 'light_checkout_configuration/vat/vat_tax_rule';
+    const XML_PATH_LIGHT_CHECKOUT_VAT_TAX_SHOW_BUY_WITHOUT_VAT_CHECKBOX = 'light_checkout_configuration/vat/show_buy_without_vat_checkbox';
+    const XML_PATH_LIGHT_CHECKOUT_VAT_TAX_TEXT_UNDER_VAT_TAX_FIELD = 'light_checkout_configuration/vat/text_under_vat_tax_field';
+    /**#@-*/
+
+    /**#@+
      * Light Checkout configuration Terms and Conditions.
      */
     const XML_PATH_LIGHT_CHECKOUT_TERMS_AND_CONDITIONS_ENABLE = 'light_checkout_configuration/terms_and_conditions/enable';
@@ -234,5 +247,45 @@ class CheckoutConfigurationsProvider
     public function getIsEnabledTermsAndConditions()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TERMS_AND_CONDITIONS_ENABLE);
+    }
+
+    public function getIsEnabledVatTax()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_ENABLE);
+    }
+
+    public function getVatTaxVerificationSystem()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_VERIFICATION_SYSTEM);
+    }
+
+    public function getVatTaxBaseEuCountry()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_BASE_EU_COUNTRY);
+    }
+
+    public function getVatTaxB2Cb2BBaseEu()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_B2C_B2B_BASE_EU);
+    }
+
+    public function getVatTaxB2Cb2BNotBaseEu()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_B2C_B2B_NOT_BASE_EU);
+    }
+
+    public function getVatTaxRule()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_RULE);
+    }
+
+    public function getVatTaxShowCheckbox()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_SHOW_BUY_WITHOUT_VAT_CHECKBOX);
+    }
+
+    public function getVatTaxTextUnderTaxVatField()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_TEXT_UNDER_VAT_TAX_FIELD);
     }
 }

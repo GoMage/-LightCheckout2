@@ -49,4 +49,15 @@ class GuestQuoteItemManagement implements GuestQuoteItemManagementInterface
 
         return $this->quoteItemManagement->removeItemById($quoteIdMask->getQuoteId(), $itemId);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function updateSections($cartId)
+    {
+        /** @var $quoteIdMask \Magento\Quote\Model\QuoteIdMask */
+        $quoteIdMask = $this->quoteIdMaskFactory->create()->load($cartId, 'masked_id');
+
+        return $this->quoteItemManagement->updateSections($quoteIdMask->getQuoteId());
+    }
 }

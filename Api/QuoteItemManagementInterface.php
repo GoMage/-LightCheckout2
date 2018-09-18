@@ -21,4 +21,11 @@ interface QuoteItemManagementInterface
      * @return \GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface
      */
     public function removeItemById($cartId, $itemId);
+
+    /**
+     * @param int $cartId
+     *
+     * @return \GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface
+     */
+    public function updateSections($cartId);
 }

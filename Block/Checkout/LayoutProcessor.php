@@ -228,6 +228,11 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
             $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
         );
 
+        $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']['totals']['children']
+            = $this->mergeSummaryTotals(
+            $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']['totals']['children']
+        );
+
         if (isset($jsLayout['components']['checkout']['children']['deliveryDate']['children']
             ['selectTime']
         )) {
@@ -235,6 +240,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
             ['selectTime']['options'] = [];
         }
 
+        $jsLayout = $this->updateTemplateForVatIdField($jsLayout);
         $jsLayout = $this->disableBlockByJsLayout->execute($jsLayout);
         $jsLayout = $this->initGeoIpSettingsForCheckout->execute($jsLayout);
 
@@ -258,7 +264,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
-        return array_merge($renders, $args);
+        return array_merge($args, $renders);
     }
 
     /**
@@ -303,7 +309,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
-        return array_merge($shippingRatesLayout, $args);
+        return array_merge($args, $shippingRatesLayout);
     }
 
     /**
@@ -323,7 +329,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
-        return array_merge($afterMethodsLayout, $args);
+        return array_merge($args, $afterMethodsLayout);
     }
 
     /**
@@ -341,7 +347,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
-        return array_merge($layout, $args);
+        return array_merge($args, $layout);
     }
 
     /**
@@ -359,6 +365,43 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
-        return array_merge($layout, $args);
+        return array_merge($args, $layout);
+    }
+
+    /**
+     * @param $layout
+     *
+     * @return array
+     */
+    private function mergeSummaryTotals($layout)
+    {
+        $path = '//referenceBlock[@name="checkout.root"]/arguments/argument[@name="jsLayout"]'
+            . '/item[@name="components"]/item[@name="checkout"]/item[@name="children"]'
+            . '/item[@name="sidebar"]/item[@name="children"]/item[@name="summary"]'
+            . '/item[@name="children"]/item[@name="totals"]/item[@name="children"]';
+
+        $args = $this->fetchArgs->execute('checkout_index_index', $path);
+
+        return array_merge($args, $layout);
+    }
+
+    /**
+     * @param $jsLayout
+     *
+     * @return array
+     */
+    private function updateTemplateForVatIdField($jsLayout)
+    {
+        $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
+        ['children']['vat_id']['config']['template'] = 'GoMage_LightCheckout/element/vat-number';
+        $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
+        ['children']['vat_id']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/vat-number/element-template';
+
+        $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
+        ['children']['vat_id']['config']['template'] = 'GoMage_LightCheckout/element/vat-number';
+        $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
+        ['children']['vat_id']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/vat-number/element-template';
+
+        return $jsLayout;
     }
 }

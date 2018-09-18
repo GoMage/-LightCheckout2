@@ -1,11 +1,10 @@
 define(
     [
-        'Magento_Tax/js/view/checkout/summary/grand-total'
+        'Magento_Tax/js/view/checkout/summary/tax',
     ],
     function (Component) {
-        "use strict";
         return Component.extend({
-            isDisplayed: function() {
+            isFullMode: function() {
                 return true;
             }
         });

@@ -54,3 +54,11 @@
 #delivery-date .left .ui-datepicker-trigger {
     float: left;
 }
+
+.green-text {
+    color:green;
+}
+
+.red-text {
+    color:red;
+}

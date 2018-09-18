@@ -5,6 +5,7 @@
     <preference for="GoMage\LightCheckout\Api\QuoteItemManagementInterface" type="GoMage\LightCheckout\Model\QuoteItemManagement" />
     <preference for="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface" type="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseData" />
     <preference for="GoMage\LightCheckout\Api\CheckoutAdditionalManagementInterface" type="GoMage\LightCheckout\Model\CheckoutAdditionalManagement" />
+    <preference for="GoMage\LightCheckout\Api\CheckVatNumberInterface" type="GoMage\LightCheckout\Model\CheckVatNumber" />
 
     <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid">
         <arguments>
@@ -14,4 +15,8 @@
             </argument>
         </arguments>
     </virtualType>
+
+    <type name="Magento\Tax\Model\ResourceModel\Calculation">
+        <plugin name="gomage_light_checkout_tax_exclude_tax_rule" type="GoMage\LightCheckout\Plugin\Tax\ExcludeTaxRule"/>
+    </type>
 </config>

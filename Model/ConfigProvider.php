@@ -116,6 +116,7 @@ class ConfigProvider implements ConfigProviderInterface
             'passwordSettings' => $this->passwordSettingProvider->get(),
             'registration' => $this->getRegistrationConfig(),
             'deliveryDate' => $this->deliveryDateConfigProvider->get(),
+            'vatTax' => $this->getVatTaxConfig(),
         ];
 
         return $config;
@@ -227,6 +228,18 @@ class ConfigProvider implements ConfigProviderInterface
             'checkoutMode' => $this->checkoutConfigurationsProvider->getCheckoutMode(),
             'isCreateAnAccountCheckboxChecked' => $this->checkoutConfigurationsProvider->getCreateAnAccountCheckbox(),
             'autoRegistration' => $this->checkoutConfigurationsProvider->getIsAutoRegistration(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getVatTaxConfig()
+    {
+        return [
+            'enabled' => $this->checkoutConfigurationsProvider->getIsEnabledVatTax(),
+            'checkboxSettings' => $this->checkoutConfigurationsProvider->getVatTaxShowCheckbox(),
+            'checkboxText' => $this->checkoutConfigurationsProvider->getVatTaxTextUnderTaxVatField(),
         ];
     }
 }
