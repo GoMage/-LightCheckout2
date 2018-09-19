@@ -27,8 +27,9 @@ class ExcludeTaxRule
      */
     public function afterGetCalculationProcess($subject, $result)
     {
-        if ($this->session->getData('light_checkout_exclude_tax_rule_ids')) {
-            $ruleIds = explode(',', $this->session->getData('light_checkout_exclude_tax_rule_ids'));
+        $ruleIdsString = $this->session->getData('light_checkout_exclude_tax_rule_ids');
+        if ($ruleIdsString) {
+            $ruleIds = explode(',', $ruleIdsString);
 
             if ($ruleIds) {
                 foreach ($result as $key => $taxes) {

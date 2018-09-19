@@ -393,7 +393,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private function updateTemplateForVatIdField($jsLayout)
     {
         $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
-        ['children']['vat_id']['config']['template'] = 'GoMage_LightCheckout/element/vat-number';
+        ['children']['vat_id']['config']['template'] = 'GoMage_LightCheckout/element/vat-number-with-checkbox';
         $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
         ['children']['vat_id']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/vat-number/element-template';
 

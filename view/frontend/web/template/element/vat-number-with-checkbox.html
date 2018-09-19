@@ -43,6 +43,14 @@
         <div class="message warning" generated="true"><span data-bind="text: element.warn"></span></div>
         <!-- /ko -->
     </div>
+
+    <div class="buy-without-vat-checkbox" data-bind="visible: element.isCheckboxVisible">
+        <input type="checkbox" name="buy-without-vat-checkbox"
+               data-bind="checked: element.isCheckboxChecked, attr: {id: 'buy-without-vat-checkbox'}"/>
+        <label data-bind="attr: {for: 'buy-without-vat-checkbox'}">
+            <span data-bind="text: element.checkboxText"></span>
+        </label>
+    </div>
 </div>
 <!-- /ko -->
 

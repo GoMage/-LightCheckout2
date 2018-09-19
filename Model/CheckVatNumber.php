@@ -103,6 +103,8 @@ class CheckVatNumber implements CheckVatNumberInterface
                             case (1):
                                 if ($isValidVat) {
                                     $this->session->setData('light_checkout_exclude_tax_rule_ids', $ruleIds);
+                                } else {
+                                    $this->session->setData('light_checkout_exclude_tax_rule_ids', null);
                                 }
                                 break;
                             case (2):

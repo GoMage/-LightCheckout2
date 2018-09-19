@@ -139,8 +139,7 @@ define(
                     if ($.type(newValue) === 'object' && (isMethodChange !== newValue.method_code)) {
                         setShippingInformationAction();
                     } else {
-                        //todo need to update totals section as tax can apeear or disappear
-                        //updateSectionAction();
+                        updateSectionAction();
                     }
                 }, this);
 

@@ -6,7 +6,8 @@ define(
         'Magento_Checkout/js/model/payment/additional-validators',
         'GoMage_LightCheckout/js/action/vat-number-check',
         'mage/translate',
-        'uiRegistry'
+        'uiRegistry',
+        'GoMage_LightCheckout/js/action/update-sections'
     ],
     function (
         $,
@@ -15,7 +16,8 @@ define(
         additionalValidators,
         vatNumberCheckAction,
         $t,
-        uiRegistry
+        uiRegistry,
+        updateSectionAction
     ) {
         'use strict';
 
@@ -26,10 +28,6 @@ define(
                 }
             },
             isEnabledVatCheck: window.checkoutConfig.vatTax.enabled,
-            verifiedLabelText: ko.observable(''),
-            notVerifiedLabelText: ko.observable(''),
-            isCheckboxVisible: ko.observable(true),
-            isCheckboxChecked: ko.observable(true),
             checkboxText: ko.observable(window.checkoutConfig.vatTax.checkboxText),
             errorMessage: $t('Please specify valid VAT number.'),
 
@@ -62,6 +60,18 @@ define(
                 });
             },
 
+            initObservable: function () {
+                this._super()
+                    .observe({
+                        verifiedLabelText: '',
+                        notVerifiedLabelText: '',
+                        isCheckboxVisible: true,
+                        isCheckboxChecked: true
+                    });
+
+                return this;
+            },
+
             onFocusOut: function (element) {
                 var country = uiRegistry.get(this.parentName + '.' + 'country_id');
 
@@ -81,6 +91,7 @@ define(
                             } else {
                                 self.setNotVerified();
                             }
+                            updateSectionAction();
                         });
 
                     } else if (vatNumber && !country) {
@@ -89,12 +100,12 @@ define(
                         this.clearAdditionalLabels();
                     }
 
-                    if (this.customScope == 'shippingAddress') {
+                    if (this.customScope === 'shippingAddress') {
                         var billing = uiRegistry.get(this.name.replace(/shipping/g, 'billing'));
                         if (billing) {
-                        billing.value(this.value())
+                            billing.value(this.value())
                         }
-                    } else if (this.customScope == 'billingAddress') {
+                    } else if (this.customScope === 'billingAddress') {
                         var shipping = uiRegistry.get(this.name.replace(/billing/g, 'shipping'));
                         if (shipping) {
                             shipping.value(this.value())
