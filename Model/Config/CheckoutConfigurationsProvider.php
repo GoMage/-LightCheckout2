@@ -81,6 +81,12 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_TERMS_AND_CONDITIONS_ENABLE = 'light_checkout_configuration/terms_and_conditions/enable';
     /**#@-*/
 
+    /**#@+
+     * Light Checkout configuration Terms and Conditions.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM= 'light_checkout_configuration/checkout_address_fields_sorting/fields_form';
+    /**#@-*/
+
     /**
      * @var ScopeConfigInterface
      */
@@ -287,5 +293,10 @@ class CheckoutConfigurationsProvider
     public function getVatTaxTextUnderTaxVatField()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_TEXT_UNDER_VAT_TAX_FIELD);
+    }
+
+    public function getAddressFieldsForm()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM);
     }
 }

@@ -106,6 +106,14 @@
                     <source_model>GoMage\LightCheckout\Model\Config\Source\OperationSystemsForDevices</source_model>
                 </field>
             </group>
+            <group id="checkout_address_fields_sorting" translate="label" type="text" sortOrder="175" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Address fields sorting on checkout</label>
+                <field id="fields_form" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\CheckoutAddressFieldsSorting</frontend_model>
+                </field>
+            </group>
             <group id="delivery_date" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>Delivery Date</label>

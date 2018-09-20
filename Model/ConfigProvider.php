@@ -111,7 +111,6 @@ class ConfigProvider implements ConfigProviderInterface
         $quoteId = $this->checkoutSession->getQuoteId();
         $config = [
             'paymentMethods' => $this->paymentMethodsListProvider->get($quoteId),
-            'addressFields' => $this->addressFieldsProvider->get(),
             'general' => $this->getGeneralConfig(),
             'passwordSettings' => $this->passwordSettingProvider->get(),
             'registration' => $this->getRegistrationConfig(),

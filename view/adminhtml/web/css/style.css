@@ -1,9 +1,88 @@
-.section-config #light_checkout_configuration_delivery_date td.value
-{
+.section-config #light_checkout_configuration_delivery_date td.value {
     min-width: 700px;
     width: 100%;
 }
-.section-config #light_checkout_configuration_delivery_date td.value .time-select
-{
+
+.section-config #light_checkout_configuration_delivery_date td.value .time-select {
     min-width: 100px;
 }
+
+.field-wrapper .field ul .potential-position{
+    height: 40px;
+    float: left;
+    width: 48%;
+    background: #ccc;
+    margin: 1%;
+    padding: 0;
+}
+
+.column {
+    width: 49%;
+}
+.field-wrapper .field {
+    background: #fafafa;
+    width: 100%;
+    display: block;
+    text-align: center;
+    min-height: 50px;
+}
+
+.field-wrapper .field ul {
+    display: inline-block;
+    padding: 2% 0;
+    width: 100%;
+    min-height: 350px;
+}
+
+.field-wrapper .field ul li {
+    margin: 1%;
+    width: 48%;
+}
+.field-wrapper .field ul li .attribute-label{
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 10px 10px;
+    cursor: move;
+    background: #f1f1f1;
+    height: 20px !important;
+    box-sizing: content-box;
+}
+
+.available-wrapper .ui-resizable-handle{
+    display: none !important;
+}
+.ui-resizable-s{
+    display: none !important;
+}
+
+.sorted-wrapper .field ul li.wide{
+    width: 98%;
+}
+
+#sort-content {
+    padding: 0 30px;
+    margin-top: 20px;
+}
+
+.ui-resizable-border {
+    border: 1px dotted #ccc;
+}
+
+#sort-content .title {
+    font-weight: 600;
+    padding: 10px;
+    background-color: #C3C3C3;
+}
+
+#sort-content .title h2 {
+    margin: 0 0 0 35px;
+    text-align: center;
+}
+
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+ul.sortable-list{list-style: none !important;}
