@@ -206,6 +206,14 @@
                     <label>Enabled Zip Caching</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="download_library" translate="label comment" type="button" sortOrder="35" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\AutofillByZipcode\ClearPostcodeCacheButton</frontend_model>
+                    <label></label>
+                    <depends>
+                        <field id="enabled_zip_caching">1</field>
+                    </depends>
+                </field>
                 <field id="google_api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Google API Key</label>
                 </field>

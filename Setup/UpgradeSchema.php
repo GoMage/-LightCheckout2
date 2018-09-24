@@ -1,6 +1,6 @@
 <?php
 
-namespace GoMage\PostCode\Setup;
+namespace GoMage\LightCheckout\Setup;
 
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
