@@ -35,7 +35,7 @@ $notVisible = $block->geNotVisibleFields();
                 <div class="field field-visible">
                     <ul class="sortable-list">
                         <?php foreach ($visible as $field): ?>
-                            <li class="sortable-item <?php echo $field->getColspan() == 12 ? 'wide' : '' ?>"
+                            <li class="sortable-item <?php echo $field->getIsWide() ? 'wide' : '' ?>"
                                 id="<?php echo $field->getId() ?>"
                                 code="<?php echo $field->getAttributeCode() ?>">
                                 <div class="attribute-label">
@@ -51,18 +51,12 @@ $notVisible = $block->geNotVisibleFields();
 </div>
 <script>
     require(['jquery', 'jquery/ui'], function ($) {
-        var sectionId = 'row_light_checkout_configuration_checkout_address_fields' +
-            '_sorting_checkout_address_fields_sorting';
-        //remove column with value and empty space
-        $('#' + sectionId + ' .label').remove();
-        $('#' + sectionId + ' td')[1].remove();
-
         $(function () {
             //sort fields
             $("#checkout-address-fields .sortable-list").sortable({
                 helper: 'clone',
                 connectWith: '#checkout-address-fields .sortable-list',
-                placeholder: "potential-position",
+                placeholder: 'potential-position',
                 start: function (e, hash) {
                     if (hash.item.hasClass('wide')) {
                         hash.placeholder.addClass('wide');
@@ -70,14 +64,14 @@ $notVisible = $block->geNotVisibleFields();
                 }
             });
 
-            $("#checkout-address-fields .sortable-list").disableSelection();
-            $("#checkout-address-fields .sortable-list .sortable-item").addClass('left');
+            $('#checkout-address-fields .sortable-list').disableSelection();
+            $('#checkout-address-fields .sortable-list .sortable-item').addClass('left');
 
             //resize fields
-            $("#sort-content ul li .attribute-label").resizable({
+            $('#sort-content ul li .attribute-label').resizable({
                 maxHeight: 40,
                 minHeight: 40,
-                helper: "ui-resizable-border",
+                helper: 'ui-resizable-border',
                 stop: function (e, ui) {
                     var field = ui.element.parent();
                     (ui.element.width() * 2 > field.width()) ?
@@ -95,7 +89,7 @@ $notVisible = $block->geNotVisibleFields();
             $('.right .sortable-item').each(function (index, el) {
                 fields.push({
                     code: $(el).attr('code'),
-                    colspan: $(el).hasClass('wide') ? 12 : 6
+                    isWide: !!$(el).hasClass('wide')
                 });
             });
 

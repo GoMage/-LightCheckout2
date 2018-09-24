@@ -83,16 +83,18 @@ class FieldsProvider
         $fieldsConfig = json_decode($this->checkoutConfigurationsProvider->getAddressFieldsForm(), true);
         $sortOrder = 1;
         $isNewRow = true;
+        $lastWasWide = true;
         foreach ($fieldsConfig as $fieldConfig) {
             foreach ($notVisibleFields as $key => $visibleField) {
                 if ($fieldConfig['code'] == $visibleField->getAttributeCode()) {
-                    $isNewRow = $this->getIsNewRow($fieldConfig['colspan'], $isNewRow);
-                    $visibleField->setColspan($fieldConfig['colspan'])
-                        ->setSortOrder($sortOrder++)
+                    $isNewRow = $this->getIsNewRow($lastWasWide, $isNewRow);
+                    $visibleField->setIsWide($fieldConfig['isWide'])
+                        ->setSortOrder($sortOrder)
                         ->setIsNewRow($isNewRow);
                     $visibleFields[] = $visibleField;
                     unset($notVisibleFields[$key]);
-
+                    $lastWasWide = $fieldConfig['isWide'];
+                    $sortOrder += 5;
                     break;
                 }
             }
@@ -132,7 +134,7 @@ class FieldsProvider
      *e
      * @return bool
      */
-    public function isCustomerAttributeVisible(AttributeInterface $attribute)
+    private function isCustomerAttributeVisible(AttributeInterface $attribute)
     {
         $code = $attribute->getAttributeCode();
         if (in_array($code, ['gender', 'taxvat', 'dob'])) {
@@ -147,18 +149,21 @@ class FieldsProvider
     }
 
     /**
-     * @param $colspan
+     * @param $lastWasWide
      * @param $isNewRow
      *
      * @return bool
      */
-    private function getIsNewRow($colspan, $isNewRow)
+    private function getIsNewRow($lastWasWide, $isNewRow)
     {
-        if ($colspan == 6 && $isNewRow) {
+        if ($lastWasWide == true) {
+            $isNewRow = true;
+        } elseif (!$lastWasWide && $isNewRow) {
             $isNewRow = false;
-        } else if ($colspan == 12 || ($colspan == 6 && !$isNewRow)) {
+        } elseif (!$lastWasWide && !$isNewRow) {
             $isNewRow = true;
         }
+
         return $isNewRow;
     }
 }

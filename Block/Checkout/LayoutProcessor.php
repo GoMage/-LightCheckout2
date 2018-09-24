@@ -3,10 +3,15 @@
 namespace GoMage\LightCheckout\Block\Checkout;
 
 use GoMage\LightCheckout\Model\Block\DisableBlockByJsLayout;
+use GoMage\LightCheckout\Model\Block\PrepareAddressFieldsPositions;
 use GoMage\LightCheckout\Model\InitGeoIpSettingsForCheckout;
 use GoMage\LightCheckout\Model\Layout\FetchArgs;
 use Magento\Checkout\Block\Checkout\AttributeMerger;
+use Magento\Customer\Model\AttributeMetadataDataProvider;
+use Magento\Customer\Model\Options;
+use Magento\Shipping\Model\Config;
 use Magento\Store\Api\StoreResolverInterface;
+use Magento\Ui\Component\Form\AttributeMapper;
 
 /**
  * Class LayoutProcessor
@@ -14,12 +19,12 @@ use Magento\Store\Api\StoreResolverInterface;
 class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcessorInterface
 {
     /**
-     * @var \Magento\Customer\Model\AttributeMetadataDataProvider
+     * @var AttributeMetadataDataProvider
      */
     private $attributeMetadataDataProvider;
 
     /**
-     * @var \Magento\Ui\Component\Form\AttributeMapper
+     * @var AttributeMapper
      */
     protected $attributeMapper;
 
@@ -29,7 +34,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     protected $merger;
 
     /**
-     * @var \Magento\Customer\Model\Options
+     * @var Options
      */
     private $options;
 
@@ -39,7 +44,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private $storeResolver;
 
     /**
-     * @var \Magento\Shipping\Model\Config
+     * @var Config
      */
     private $shippingConfig;
 
@@ -59,26 +64,33 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private $initGeoIpSettingsForCheckout;
 
     /**
-     * @param \Magento\Customer\Model\AttributeMetadataDataProvider $attributeMetadataDataProvider
-     * @param \Magento\Ui\Component\Form\AttributeMapper $attributeMapper
+     * @var PrepareAddressFieldsPositions
+     */
+    private $prepareAddressFieldsPositions;
+
+    /**
+     * @param AttributeMetadataDataProvider $attributeMetadataDataProvider
+     * @param AttributeMapper $attributeMapper
      * @param AttributeMerger $merger
      * @param FetchArgs $fetchArgs
-     * @param \Magento\Shipping\Model\Config $shippingConfig
+     * @param Config $shippingConfig
      * @param StoreResolverInterface $storeResolver
-     * @param \Magento\Customer\Model\Options $options
+     * @param Options $options
      * @param DisableBlockByJsLayout $disableBlockByJsLayout
      * @param InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout
+     * @param PrepareAddressFieldsPositions $prepareAddressFieldsPositions
      */
     public function __construct(
-        \Magento\Customer\Model\AttributeMetadataDataProvider $attributeMetadataDataProvider,
-        \Magento\Ui\Component\Form\AttributeMapper $attributeMapper,
+        AttributeMetadataDataProvider $attributeMetadataDataProvider,
+        AttributeMapper $attributeMapper,
         AttributeMerger $merger,
         FetchArgs $fetchArgs,
-        \Magento\Shipping\Model\Config $shippingConfig,
+        Config $shippingConfig,
         StoreResolverInterface $storeResolver,
-        \Magento\Customer\Model\Options $options,
+        Options $options,
         DisableBlockByJsLayout $disableBlockByJsLayout,
-        InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout
+        InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout,
+        PrepareAddressFieldsPositions $prepareAddressFieldsPositions
     ) {
         $this->attributeMetadataDataProvider = $attributeMetadataDataProvider;
         $this->attributeMapper = $attributeMapper;
@@ -89,6 +101,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $this->options = $options;
         $this->disableBlockByJsLayout = $disableBlockByJsLayout;
         $this->initGeoIpSettingsForCheckout = $initGeoIpSettingsForCheckout;
+        $this->prepareAddressFieldsPositions = $prepareAddressFieldsPositions;
     }
 
     /**
@@ -243,6 +256,8 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $jsLayout = $this->updateTemplateForVatIdField($jsLayout);
         $jsLayout = $this->disableBlockByJsLayout->execute($jsLayout);
         $jsLayout = $this->initGeoIpSettingsForCheckout->execute($jsLayout);
+
+        $jsLayout = $this->prepareAddressFieldsPositions->execute($jsLayout);
 
         return $jsLayout;
     }
