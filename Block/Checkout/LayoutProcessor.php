@@ -2,7 +2,7 @@
 
 namespace GoMage\LightCheckout\Block\Checkout;
 
-use GoMage\LightCheckout\Model\Block\DisableBlockByJsLayout;
+use GoMage\LightCheckout\Model\Block\UpdateBlocksAccordingToConfigurationByJsLayout;
 use GoMage\LightCheckout\Model\Block\PrepareAddressFieldsPositions;
 use GoMage\LightCheckout\Model\InitGeoIpSettingsForCheckout;
 use GoMage\LightCheckout\Model\Layout\FetchArgs;
@@ -54,9 +54,9 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private $fetchArgs;
 
     /**
-     * @var DisableBlockByJsLayout
+     * @var UpdateBlocksAccordingToConfigurationByJsLayout
      */
-    private $disableBlockByJsLayout;
+    private $updateBlocksAccordingToConfigurationByJsLayout;
 
     /**
      * @var InitGeoIpSettingsForCheckout
@@ -76,7 +76,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      * @param Config $shippingConfig
      * @param StoreResolverInterface $storeResolver
      * @param Options $options
-     * @param DisableBlockByJsLayout $disableBlockByJsLayout
+     * @param UpdateBlocksAccordingToConfigurationByJsLayout $updateBlocksAccordingToConfigurationByJsLayout
      * @param InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout
      * @param PrepareAddressFieldsPositions $prepareAddressFieldsPositions
      */
@@ -88,7 +88,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         Config $shippingConfig,
         StoreResolverInterface $storeResolver,
         Options $options,
-        DisableBlockByJsLayout $disableBlockByJsLayout,
+        UpdateBlocksAccordingToConfigurationByJsLayout $updateBlocksAccordingToConfigurationByJsLayout,
         InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout,
         PrepareAddressFieldsPositions $prepareAddressFieldsPositions
     ) {
@@ -99,7 +99,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $this->shippingConfig = $shippingConfig;
         $this->storeResolver = $storeResolver;
         $this->options = $options;
-        $this->disableBlockByJsLayout = $disableBlockByJsLayout;
+        $this->updateBlocksAccordingToConfigurationByJsLayout = $updateBlocksAccordingToConfigurationByJsLayout;
         $this->initGeoIpSettingsForCheckout = $initGeoIpSettingsForCheckout;
         $this->prepareAddressFieldsPositions = $prepareAddressFieldsPositions;
     }
@@ -254,7 +254,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         }
 
         $jsLayout = $this->updateTemplateForVatIdField($jsLayout);
-        $jsLayout = $this->disableBlockByJsLayout->execute($jsLayout);
+        $jsLayout = $this->updateBlocksAccordingToConfigurationByJsLayout->execute($jsLayout);
         $jsLayout = $this->initGeoIpSettingsForCheckout->execute($jsLayout);
 
         $jsLayout = $this->prepareAddressFieldsPositions->execute($jsLayout);
@@ -410,12 +410,12 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
         ['children']['vat_id']['config']['template'] = 'GoMage_LightCheckout/element/vat-number-with-checkbox';
         $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
-        ['children']['vat_id']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/vat-number/element-template';
+        ['children']['vat_id']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/element-with-blur-template';
 
         $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
         ['children']['vat_id']['config']['template'] = 'GoMage_LightCheckout/element/vat-number';
         $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
-        ['children']['vat_id']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/vat-number/element-template';
+        ['children']['vat_id']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/element-with-blur-template';
 
         return $jsLayout;
     }

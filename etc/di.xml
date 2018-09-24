@@ -6,6 +6,8 @@
     <preference for="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface" type="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseData" />
     <preference for="GoMage\LightCheckout\Api\CheckoutAdditionalManagementInterface" type="GoMage\LightCheckout\Model\CheckoutAdditionalManagement" />
     <preference for="GoMage\LightCheckout\Api\CheckVatNumberInterface" type="GoMage\LightCheckout\Model\CheckVatNumber" />
+    <preference for="GoMage\LightCheckout\Api\GetAddressByPostCodeInterface" type="GoMage\LightCheckout\Model\GetAddressByPostCode" />
+    <preference for="GoMage\LightCheckout\Model\GetAddressByPostCode\ResponseDataInterface" type="GoMage\LightCheckout\Model\GetAddressByPostCode\ResponseData" />
 
     <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid">
         <arguments>

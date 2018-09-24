@@ -7,7 +7,7 @@ use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 /**
  * Unset blocks according to configuration.
  */
-class DisableBlockByJsLayout
+class UpdateBlocksAccordingToConfigurationByJsLayout
 {
     /**
      * @var CheckoutConfigurationsProvider
@@ -33,6 +33,8 @@ class DisableBlockByJsLayout
         $jsLayout = $this->disableDeletingItemOnCheckoutAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->disableChangingQtyOnCheckoutAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->disableDeliveryDateOnCheckoutAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->disableAddressFieldsAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->updateTemplateForPostcodeFieldAccordingToTheConfiguration($jsLayout);
 
         return $jsLayout;
     }
@@ -106,6 +108,56 @@ class DisableBlockByJsLayout
             if (!$isShowTime) {
                 unset($jsLayout['components']['checkout']['children']['deliveryDate']['children']['selectTime']);
             }
+        }
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function disableAddressFieldsAccordingToTheConfiguration($jsLayout)
+    {
+        $isEnabledAutofill = $this->checkoutConfigProvider->getIsEnabledAutoFillByZipCode();
+        $idDisableAddressFields = $this->checkoutConfigProvider->getAutoFillByZipCodeIsDisabledAddressFields();
+
+        if ($isEnabledAutofill && $idDisableAddressFields) {
+            $jsLayout['components']['checkout']['children']['billingAddress']['children']
+            ['billing-address-fieldset']['children']['region_id']['disabled'] = true;
+            $jsLayout['components']['checkout']['children']['billingAddress']['children']
+            ['billing-address-fieldset']['children']['city']['disabled'] = true;
+            $jsLayout['components']['checkout']['children']['billingAddress']['children']
+            ['billing-address-fieldset']['children']['country_id']['disabled'] = true;
+
+            $jsLayout['components']['checkout']['children']['shippingAddress']['children']
+            ['shipping-address-fieldset']['children']['region_id']['disabled'] = true;
+            $jsLayout['components']['checkout']['children']['shippingAddress']['children']
+            ['shipping-address-fieldset']['children']['city']['disabled'] = true;
+            $jsLayout['components']['checkout']['children']['shippingAddress']['children']
+            ['shipping-address-fieldset']['children']['country_id']['disabled'] = true;
+        }
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function updateTemplateForPostcodeFieldAccordingToTheConfiguration($jsLayout)
+    {
+        if ($this->checkoutConfigProvider->getIsEnabledAutoFillByZipCode()) {
+            $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
+            ['children']['postcode']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/element-with-blur-template';
+            $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
+            ['children']['postcode']['component'] = 'GoMage_LightCheckout/js/view/post-code';
+
+            $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
+            ['children']['postcode']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/element-with-blur-template';
+            $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
+            ['children']['postcode']['component'] = 'GoMage_LightCheckout/js/view/post-code';
         }
 
         return $jsLayout;

@@ -35,8 +35,8 @@
                                     </item>
                                     <item name="page_content" xsi:type="array">
                                         <item name="sortOrder" xsi:type="string">5</item>
-                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/element/page_content</item>
-                                        <item name="template" xsi:type="string">GoMage_LightCheckout/element/page_content</item>
+                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/page-content</item>
+                                        <item name="template" xsi:type="string">GoMage_LightCheckout/element/page-content</item>
                                         <item name="displayArea" xsi:type="string">page_content</item>
                                     </item>
                                     <item name="authentication" xsi:type="array">

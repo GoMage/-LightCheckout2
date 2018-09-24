@@ -192,6 +192,36 @@
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
                 </field>
             </group>
+            <group id="autofill_by_zipcode" translate="label" type="text" sortOrder="280" showInDefault="1"
+                   showInWebsite="1"
+                   showInStore="1">
+                <label>Google Autofill by Zip Code</label>
+                <field id="enable" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Zip Code Autofill</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enabled_zip_caching" translate="label" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enabled Zip Caching</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="google_api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google API Key</label>
+                </field>
+                <field id="api_mode" translate="label" type="multiselect" sortOrder="70" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>API Mode</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\AutofillByZipCode\Mode</source_model>
+                    <comment>If not selected, all apis will be used in order.</comment>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="disable_address_fields" translate="label" type="select" sortOrder="80" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Disable Address Fields</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
             <group id="terms_and_conditions" translate="label" type="text" sortOrder="400" showInDefault="1"
                    showInWebsite="1"
                    showInStore="1">

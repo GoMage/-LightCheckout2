@@ -58,6 +58,14 @@ define(
                 };
 
                 return this.getUrl(urls, params);
+            },
+
+            getUrlForGetAddressByPostCode: function () {
+                var urls = {
+                    'default': '/light_checkout/get-address-by-zip-code'
+                };
+
+                return this.getUrl(urls, {});
             }
 
         }, resourceUrlManager);
