@@ -65,3 +65,9 @@
 .address-half {
     width: 48%
 }
+
+#checkout #delivery-date,
+#checkout #checkout-step-payment #co-payment-form #checkout-payment-method-load,
+#checkout #opc-sidebar .opc-block-summary {
+    position: relative;
+}

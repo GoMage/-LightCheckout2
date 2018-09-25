@@ -1,6 +1,6 @@
 <?php
 
-namespace GoMage\LightCheckout\Model\Block;
+namespace GoMage\LightCheckout\Model\Block\LayoutProcessor;
 
 use GoMage\LightCheckout\Model\Config\CheckoutAddressFieldsSorting\FieldsProvider;
 

@@ -2,8 +2,8 @@
 
 namespace GoMage\LightCheckout\Block\Checkout;
 
-use GoMage\LightCheckout\Model\Block\UpdateBlocksAccordingToConfigurationByJsLayout;
-use GoMage\LightCheckout\Model\Block\PrepareAddressFieldsPositions;
+use GoMage\LightCheckout\Model\Block\LayoutProcessor\UpdateBlocksAccordingToConfigurationByJsLayout;
+use GoMage\LightCheckout\Model\Block\LayoutProcessor\PrepareAddressFieldsPositions;
 use GoMage\LightCheckout\Model\InitGeoIpSettingsForCheckout;
 use GoMage\LightCheckout\Model\Layout\FetchArgs;
 use Magento\Checkout\Block\Checkout\AttributeMerger;

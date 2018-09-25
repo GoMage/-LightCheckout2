@@ -65,7 +65,7 @@ class DeliveryDateConfigProvider
         $deliveryDays = [];
 
         if ($availableDays) {
-            $availableDays = @unserialize($availableDays);
+            $availableDays = json_decode($availableDays, true);
             if (is_array($availableDays) && count($availableDays)) {
                 foreach ($availableDays as $value) {
                     if ($value['delivery_available']) {
@@ -149,7 +149,7 @@ class DeliveryDateConfigProvider
         $nonWorkingDays = [];
 
         if ($nonWorkingDaysFromConfig) {
-            $nonWorkingDaysFromConfig = @unserialize($nonWorkingDaysFromConfig);
+            $nonWorkingDaysFromConfig = json_decode($nonWorkingDaysFromConfig, true);
             foreach ($nonWorkingDaysFromConfig as $nonWorkingDayFromConfig) {
                 $nonWorkingDays[] =
                     [

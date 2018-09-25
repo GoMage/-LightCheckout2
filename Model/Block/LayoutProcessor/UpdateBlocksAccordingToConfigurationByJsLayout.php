@@ -1,8 +1,9 @@
 <?php
 
-namespace GoMage\LightCheckout\Model\Block;
+namespace GoMage\LightCheckout\Model\Block\LayoutProcessor;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
+use GoMage\LightCheckout\Model\Config\Source\CheckoutFields;
 
 /**
  * Unset blocks according to configuration.
@@ -12,14 +13,14 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
     /**
      * @var CheckoutConfigurationsProvider
      */
-    private $checkoutConfigProvider;
+    private $checkoutConfigurationsProvider;
 
     /**
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      */
     public function __construct(CheckoutConfigurationsProvider $checkoutConfigurationsProvider)
     {
-        $this->checkoutConfigProvider = $checkoutConfigurationsProvider;
+        $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
     }
 
     /**
@@ -35,6 +36,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $jsLayout = $this->disableDeliveryDateOnCheckoutAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->disableAddressFieldsAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->updateTemplateForPostcodeFieldAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->addHelpMessagesAccordingToTheConfiguration($jsLayout);
 
         return $jsLayout;
     }
@@ -46,7 +48,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
      */
     private function disableDiscountCodesAccordingToTheConfiguration($jsLayout)
     {
-        $isEnabledDiscountCodes = $this->checkoutConfigProvider->getIsEnabledDiscountCodes();
+        $isEnabledDiscountCodes = $this->checkoutConfigurationsProvider->getIsEnabledDiscountCodes();
 
         if (!$isEnabledDiscountCodes) {
             unset($jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']
@@ -63,7 +65,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
      */
     private function disableDeletingItemOnCheckoutAccordingToTheConfiguration($jsLayout)
     {
-        $isEnabledRemoveItemFromCheckout = $this->checkoutConfigProvider->getIsAllowedToRemoveItemFromCheckout();
+        $isEnabledRemoveItemFromCheckout = $this->checkoutConfigurationsProvider->getIsAllowedToRemoveItemFromCheckout();
 
         if (!$isEnabledRemoveItemFromCheckout) {
             unset($jsLayout['components']['checkout']['children']['sidebar']['children']['summary']
@@ -80,7 +82,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
      */
     private function disableChangingQtyOnCheckoutAccordingToTheConfiguration($jsLayout)
     {
-        $isEnabledChangeQty = $this->checkoutConfigProvider->getIsAllowedToChangeQty();
+        $isEnabledChangeQty = $this->checkoutConfigurationsProvider->getIsAllowedToChangeQty();
 
         if (!$isEnabledChangeQty) {
             unset($jsLayout['components']['checkout']['children']['sidebar']['children']['summary']
@@ -99,12 +101,12 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
      */
     private function disableDeliveryDateOnCheckoutAccordingToTheConfiguration($jsLayout)
     {
-        $isEnabledDeliveryDate = $this->checkoutConfigProvider->getIsEnabledDeliveryDate();
+        $isEnabledDeliveryDate = $this->checkoutConfigurationsProvider->getIsEnabledDeliveryDate();
 
         if (!$isEnabledDeliveryDate) {
             unset($jsLayout['components']['checkout']['children']['deliveryDate']);
         } else {
-            $isShowTime = $this->checkoutConfigProvider->getIsShowTime();
+            $isShowTime = $this->checkoutConfigurationsProvider->getIsShowTime();
             if (!$isShowTime) {
                 unset($jsLayout['components']['checkout']['children']['deliveryDate']['children']['selectTime']);
             }
@@ -120,8 +122,8 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
      */
     private function disableAddressFieldsAccordingToTheConfiguration($jsLayout)
     {
-        $isEnabledAutofill = $this->checkoutConfigProvider->getIsEnabledAutoFillByZipCode();
-        $idDisableAddressFields = $this->checkoutConfigProvider->getAutoFillByZipCodeIsDisabledAddressFields();
+        $isEnabledAutofill = $this->checkoutConfigurationsProvider->getIsEnabledAutoFillByZipCode();
+        $idDisableAddressFields = $this->checkoutConfigurationsProvider->getAutoFillByZipCodeIsDisabledAddressFields();
 
         if ($isEnabledAutofill && $idDisableAddressFields) {
             $jsLayout['components']['checkout']['children']['billingAddress']['children']
@@ -148,7 +150,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
      */
     private function updateTemplateForPostcodeFieldAccordingToTheConfiguration($jsLayout)
     {
-        if ($this->checkoutConfigProvider->getIsEnabledAutoFillByZipCode()) {
+        if ($this->checkoutConfigurationsProvider->getIsEnabledAutoFillByZipCode()) {
             $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
             ['children']['postcode']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/element-with-blur-template';
             $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
@@ -159,6 +161,74 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
             $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
             ['children']['postcode']['component'] = 'GoMage_LightCheckout/js/view/post-code';
         }
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function addHelpMessagesAccordingToTheConfiguration($jsLayout)
+    {
+        $helpMessages = $this->checkoutConfigurationsProvider->getHelpMessages();
+
+        if ($helpMessages) {
+            $helpMessages = json_decode($helpMessages, true);
+
+            foreach ($helpMessages as $helpMessage) {
+                if (!is_numeric($helpMessage['field'])) {
+                    $jsLayout = $this->addToolTipMessageForFieldByAddressType(
+                        $jsLayout,
+                        'billing',
+                        $helpMessage['field'],
+                        $helpMessage['help_message']
+                    );
+                    $jsLayout = $this->addToolTipMessageForFieldByAddressType(
+                        $jsLayout,
+                        'shipping',
+                        $helpMessage['field'],
+                        $helpMessage['help_message']
+                    );
+                } else {
+                    switch ($helpMessage['field']) {
+                        case CheckoutFields::SHIPPING_METHODS :
+                            $jsLayout['components']['checkout']['children']['shippingAddress']
+                            ['tooltip']['description'] = $helpMessage['help_message'];
+                            break;
+                        case CheckoutFields::DELIVERY_DATE :
+                            $jsLayout['components']['checkout']['children']['deliveryDate']
+                            ['tooltip']['description'] = $helpMessage['help_message'];
+                            break;
+                        case CheckoutFields::PAYMENT_METHOD :
+                            $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']
+                            ['tooltip']['description'] = $helpMessage['help_message'];
+                            break;
+                        case CheckoutFields::ORDER_SUMMARY :
+                            $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']
+                            ['tooltip']['description'] = $helpMessage['help_message'];
+                            break;
+                    }
+                }
+            }
+        }
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     * @param string$addressType
+     * @param string$field
+     * @param string $message
+     *
+     * @return array
+     */
+    private function addToolTipMessageForFieldByAddressType($jsLayout, $addressType, $field, $message)
+    {
+        $jsLayout['components']['checkout']['children'][$addressType . 'Address']['children']
+        [$addressType . '-address-fieldset']['children'][$field]['config']['tooltip']['description'] = $message;
 
         return $jsLayout;
     }

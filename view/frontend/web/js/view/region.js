@@ -24,7 +24,12 @@ define([
     return Component.extend({
         initInput: function () {
 
-            layout([utils.template(_.extend(inputNode, {additionalClasses: this.additionalClasses}), this)]);
+            layout([utils.template(_.extend(inputNode,
+                {
+                    additionalClasses: this.additionalClasses,
+                    tooltip: this.tooltip
+                }
+            ), this)]);
 
             return this;
         }

@@ -137,13 +137,6 @@
                                                     <item name="country_id" xsi:type="array">
                                                         <item name="sortOrder" xsi:type="string">115</item>
                                                     </item>
-                                                    <item name="telephone" xsi:type="array">
-                                                        <item name="config" xsi:type="array">
-                                                            <item name="tooltip" xsi:type="array">
-                                                                <item name="description" xsi:type="string" translate="true">For delivery questions.</item>
-                                                            </item>
-                                                        </item>
-                                                    </item>
                                                     <item name="vat_id" xsi:type="array">
                                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/vat-number</item>
                                                     </item>
@@ -247,13 +240,6 @@
                                                     <item name="country_id" xsi:type="array">
                                                         <item name="sortOrder" xsi:type="string">115</item>
                                                     </item>
-                                                    <item name="telephone" xsi:type="array">
-                                                        <item name="config" xsi:type="array">
-                                                            <item name="tooltip" xsi:type="array">
-                                                                <item name="description" xsi:type="string" translate="true">For delivery questions.</item>
-                                                            </item>
-                                                        </item>
-                                                    </item>
                                                     <item name="vat_id" xsi:type="array">
                                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/vat-number</item>
                                                     </item>
@@ -311,6 +297,7 @@
                                             </item>
                                             <item name="payments-list" xsi:type="array">
                                                 <item name="component" xsi:type="string">Magento_Checkout/js/view/payment/list</item>
+                                                <item name="template" xsi:type="string">GoMage_LightCheckout/form/payment-methods/list</item>
                                                 <item name="displayArea" xsi:type="string">payment-methods-list</item>
                                                 <item name="config" xsi:type="array">
                                                     <item name="deps" xsi:type="array">
@@ -355,7 +342,7 @@
                                                 <item name="component" xsi:type="string">Magento_Checkout/js/view/summary</item>
                                                 <item name="displayArea" xsi:type="string">summary</item>
                                                 <item name="config" xsi:type="array">
-                                                    <item name="template" xsi:type="string">Magento_Checkout/summary</item>
+                                                    <item name="template" xsi:type="string">GoMage_LightCheckout/form/summary</item>
                                                 </item>
                                                 <item name="children" xsi:type="array">
                                                     <item name="totals" xsi:type="array">

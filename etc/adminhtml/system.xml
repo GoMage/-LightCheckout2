@@ -131,13 +131,13 @@
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Delivery Days</label>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\DeliveryDate\DeliveryDays</frontend_model>
-                    <backend_model>GoMage\LightCheckout\Model\Config\Backend\DeliveryDate\Days</backend_model>
+                    <backend_model>GoMage\LightCheckout\Model\Config\Backend\SelectFieldConverter</backend_model>
                 </field>
                 <field id="non_working_days" translate="label" type="select" sortOrder="50"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Non-Working Days</label>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\DeliveryDate\NonWorkingDays</frontend_model>
-                    <backend_model>GoMage\LightCheckout\Model\Config\Backend\DeliveryDate\Days</backend_model>
+                    <backend_model>GoMage\LightCheckout\Model\Config\Backend\SelectFieldConverter</backend_model>
                 </field>
                 <field id="set_interval_for_delivery" translate="label" type="select" sortOrder="60"
                        showInDefault="1" showInWebsite="0" showInStore="0">
@@ -281,6 +281,15 @@
                 <field id="text_under_vat_tax_field" translate="label" type="text" sortOrder="90"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Text under VAT/Tax field</label>
+                </field>
+            </group>
+            <group id="help_messages" translate="label" type="text" sortOrder="330" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Help messages</label>
+                <field id="message" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\HelpMessages\HelpMessages</frontend_model>
+                    <backend_model>GoMage\LightCheckout\Model\Config\Backend\SelectFieldConverter</backend_model>
                 </field>
             </group>
         </section>
