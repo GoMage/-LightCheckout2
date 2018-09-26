@@ -98,6 +98,13 @@ class CheckoutConfigurationsProvider
     /**#@-*/
 
     /**#@+
+     * Light Checkout configuration AutoComplete Street.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_AUTO_COMPLETE_BY_STREET_ENABLE = 'light_checkout_configuration/auto_complete_by_street/enable';
+    const XML_PATH_LIGHT_CHECKOUT_AUTO_COMPLETE_BY_STREET_GOOGLE_API_KEY = 'light_checkout_configuration/auto_complete_by_street/google_api_key';
+    /**#@-*/
+
+    /**#@+
      * Light Checkout configuration Help Messages.
      */
     const XML_PATH_LIGHT_CHECKOUT_HELP_MESSAGES = 'light_checkout_configuration/help_messages/message';
@@ -344,5 +351,15 @@ class CheckoutConfigurationsProvider
     public function getHelpMessages()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_HELP_MESSAGES);
+    }
+
+    public function getIsEnabledAutoCompleteByStreet()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTO_COMPLETE_BY_STREET_ENABLE);
+    }
+
+    public function getAutoCompleteByStreetGoogleApiKey()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTO_COMPLETE_BY_STREET_GOOGLE_API_KEY);
     }
 }

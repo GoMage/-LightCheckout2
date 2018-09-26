@@ -18,7 +18,9 @@ define(
         'Magento_Customer/js/model/address-list',
         'mage/translate',
         'underscore',
-        'GoMage_LightCheckout/js/action/update-sections'
+        'GoMage_LightCheckout/js/action/update-sections',
+        'GoMage_LightCheckout/js/model/address/auto-complete-register',
+        'rjsResolver'
     ],
     function (
         ko,
@@ -39,7 +41,9 @@ define(
         addressList,
         $t,
         _,
-        updateSectionAction
+        updateSectionAction,
+        autoCompleteRegister,
+        rjsResolver
     ) {
         'use strict';
 
@@ -98,7 +102,13 @@ define(
 
                 additionalValidators.registerValidator(this);
 
+                rjsResolver(this.registerAutoComplete.bind(this));
+
                 return this;
+            },
+
+            registerAutoComplete: function () {
+                autoCompleteRegister.register('shipping');
             },
 
             /**

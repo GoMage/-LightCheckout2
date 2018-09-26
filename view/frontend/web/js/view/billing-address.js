@@ -12,7 +12,9 @@ define(
         'Magento_Checkout/js/model/postcode-validator',
         'mage/translate',
         'underscore',
-        'Magento_Customer/js/model/customer'
+        'Magento_Customer/js/model/customer',
+        'GoMage_LightCheckout/js/model/address/auto-complete-register',
+        'rjsResolver'
     ],
     function (
         $,
@@ -27,7 +29,9 @@ define(
         postcodeValidator,
         $t,
         _,
-        customer
+        customer,
+        autoCompleteRegister,
+        rjsResolver
     ) {
         'use strict';
 
@@ -56,6 +60,14 @@ define(
                 this.initFields();
 
                 additionalValidators.registerValidator(this);
+
+                rjsResolver(this.registerAutoComplete.bind(this));
+
+                return this;
+            },
+
+            registerAutoComplete: function () {
+                autoCompleteRegister.register('billing');
             },
 
             initObservable: function () {

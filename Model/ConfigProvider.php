@@ -107,6 +107,7 @@ class ConfigProvider implements ConfigProviderInterface
             'registration' => $this->getRegistrationConfig(),
             'deliveryDate' => $this->deliveryDateConfigProvider->get(),
             'vatTax' => $this->getVatTaxConfig(),
+            'autoCompleteStreet' => $this->getAutoCompleteStreetConfig(),
         ];
 
         return $config;
@@ -230,6 +231,17 @@ class ConfigProvider implements ConfigProviderInterface
             'enabled' => $this->checkoutConfigurationsProvider->getIsEnabledVatTax(),
             'checkboxSettings' => $this->checkoutConfigurationsProvider->getVatTaxShowCheckbox(),
             'checkboxText' => $this->checkoutConfigurationsProvider->getVatTaxTextUnderTaxVatField(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getAutoCompleteStreetConfig()
+    {
+        return [
+            'enabled' => $this->checkoutConfigurationsProvider->getIsEnabledAutoCompleteByStreet(),
+            'apiKey' => $this->checkoutConfigurationsProvider->getAutoCompleteByStreetGoogleApiKey(),
         ];
     }
 }
