@@ -241,7 +241,6 @@ class ConfigProvider implements ConfigProviderInterface
     {
         return [
             'enabled' => $this->checkoutConfigurationsProvider->getIsEnabledAutoCompleteByStreet(),
-            'apiKey' => $this->checkoutConfigurationsProvider->getAutoCompleteByStreetGoogleApiKey(),
         ];
     }
 }

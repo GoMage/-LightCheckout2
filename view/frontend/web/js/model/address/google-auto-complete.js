@@ -1,9 +1,7 @@
 define([
     'jquery',
     'uiClass',
-    'uiRegistry',
-    'https://maps.googleapis.com/maps/api/js?key='
-    + window.checkoutConfig.autoCompleteStreet.apiKey + '&libraries=places'
+    'uiRegistry'
 ], function ($, Class, registry) {
     'use strict';
 

@@ -453,5 +453,11 @@
         </referenceContainer>
         <move element="logo" destination="checkout.header.wrapper"/>
         <referenceBlock name="page.main.title" remove="true"/>
+        <referenceBlock name="head.additional">
+            <block class="GoMage\LightCheckout\Block\Checkout\AddJsForGoogleAutoCompleteStreet"
+                   name="google-auto-complete-street"
+                   as="google-auto-complete-street"
+                   template="google_auto_complete_street.phtml"/>
+        </referenceBlock>
     </body>
 </page>
