@@ -7,14 +7,14 @@
              class="step-title"
              data-role="title">
         </div>
+        <!-- ko if: ($data.tooltip && tooltip.description) -->
         <div class="field-tooltip toggle">
             <span class="field-tooltip-action action-help" tabindex="0" data-toggle="dropdown" data-bind="mageInit: {'dropdown':{'activeClass': '_active'}}" aria-haspopup="true" aria-expanded="false"></span>
             <div class="field-tooltip-content" data-target="dropdown" aria-hidden="true">
-                <!-- ko if: ($data.tooltip && tooltip.description) -->
                     <!-- ko text: tooltip.description--><!-- /ko -->
-                <!-- /ko -->
             </div>
         </div>
+        <!-- /ko -->
         <each args="data: getRegion($group().displayArea), as: 'method'" render=""/>
     </div>
 </div>

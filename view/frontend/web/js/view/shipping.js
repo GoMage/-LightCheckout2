@@ -6,6 +6,7 @@ define(
         'Magento_Checkout/js/model/quote',
         'uiRegistry',
         'Magento_Checkout/js/checkout-data',
+        'GoMage_LightCheckout/js/light-checkout-data',
         'Magento_Checkout/js/model/shipping-rates-validator',
         'Magento_Checkout/js/action/set-shipping-information',
         'Magento_Checkout/js/action/select-shipping-address',
@@ -29,6 +30,7 @@ define(
         quote,
         registry,
         checkoutData,
+        lightCheckoutData,
         shippingRatesValidator,
         setShippingInformationAction,
         selectShippingAddress,
@@ -152,6 +154,17 @@ define(
                         updateSectionAction();
                     }
                 }, this);
+
+                //get if saved after page refreshed.
+                var isAddressSameAsShipping = lightCheckoutData.getIsAddressSameAsShipping();
+
+                if (isAddressSameAsShipping !== null) {
+                    this.isAddressSameAsShipping(isAddressSameAsShipping)
+                }
+
+                this.isAddressSameAsShipping.subscribe(function (newValue) {
+                    lightCheckoutData.setIsAddressSameAsShipping(newValue);
+                });
 
                 return this;
             },

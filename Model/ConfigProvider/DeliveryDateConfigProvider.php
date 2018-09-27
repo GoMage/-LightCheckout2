@@ -132,9 +132,9 @@ class DeliveryDateConfigProvider
     private function getDateFormat()
     {
         if (intval($this->checkoutConfigurationsProvider->getDateFormat()) === DateFormats::EUROPEAN) {
-            $format = 'dd.MM.yyyy';
+            $format = 'dd.MM.y';
         } else {
-            $format = 'MM.dd.yyyy';
+            $format = 'MM.dd.y';
         }
 
         return $format;

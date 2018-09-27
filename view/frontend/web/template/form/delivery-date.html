@@ -1,14 +1,14 @@
 <div data-bind="visible: useForShippingMethod()">
     <div>
         <div class="step-title" data-bind="i18n: 'Delivery Date'" data-role="title"></div>
+        <!-- ko if: ($data.tooltip && tooltip.description) -->
         <div class="field-tooltip toggle">
             <span class="field-tooltip-action action-help" tabindex="0" data-toggle="dropdown" data-bind="mageInit: {'dropdown':{'activeClass': '_active'}}" aria-haspopup="true" aria-expanded="false"></span>
             <div class="field-tooltip-content" data-target="dropdown" aria-hidden="true">
-                <!-- ko if: ($data.tooltip && tooltip.description) -->
-                    <!-- ko text: tooltip.description --><!-- /ko -->
-                <!--/ko-->
+                <!-- ko text: tooltip.description --><!-- /ko -->
             </div>
         </div>
+        <!--/ko-->
 
         <div class="left">
             <!-- ko foreach: getRegion('selectDate') -->

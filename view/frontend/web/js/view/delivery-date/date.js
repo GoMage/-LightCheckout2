@@ -14,6 +14,7 @@ define([
                 showOn: 'both'
             }
         },
+
         /**
          * @inheritdoc
          */
@@ -26,8 +27,14 @@ define([
         },
 
         beforeShowDay: function (date) {
+            var isAvailable = this.isDateAvailable(date);
+
+            if (isAvailable && !this.value()) {
+                this.value(date);
+            }
+
             return [
-                this.isDateAvailable(date),
+                isAvailable,
                 '',
                 ''
             ];
