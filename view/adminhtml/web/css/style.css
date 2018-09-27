@@ -101,3 +101,19 @@ ul.sortable-list{list-style: none !important;}
     padding: 0 0 0 0;
     width: 220%;
 }
+
+#light_checkout_configuration_trust_seals td.value {
+    width: 220%;
+}
+
+#light_checkout_configuration_trust_seals table td.value tbody td:nth-child(2) {
+    width: 35%;
+}
+
+#light_checkout_configuration_trust_seals table td.value tbody td:nth-child(3) {
+    width: 5%;
+}
+
+.accordion .config#light_checkout_configuration_trust_seals .label {
+    width: 15%;
+}

@@ -313,6 +313,24 @@
                     <backend_model>GoMage\LightCheckout\Model\Config\Backend\SelectFieldConverter</backend_model>
                 </field>
             </group>
+            <group id="trust_seals" translate="label" type="text" sortOrder="500" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Trust Seals</label>
+                <field id="enable" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Trust Seals</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="seals" type="text" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\TrustSeals\TrustSeals</frontend_model>
+                    <backend_model>GoMage\LightCheckout\Model\Config\Backend\SelectFieldConverter</backend_model>
+                    <label>Trust Seals</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+            </group>
         </section>
     </system>
 </config>
