@@ -93,7 +93,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
         $this->getOnepage()->initCheckout();
 
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->set($this->checkoutConfigurationsProvider->getPageTitle());
+        $resultPage->getConfig()->getTitle()->set(__($this->checkoutConfigurationsProvider->getPageTitle()));
 
         return $resultPage;
     }
