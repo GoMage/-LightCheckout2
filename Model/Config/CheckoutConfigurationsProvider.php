@@ -110,6 +110,13 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_HELP_MESSAGES = 'light_checkout_configuration/help_messages/message';
     /**#@-*/
 
+    /**#@+
+     * Light Checkout configuration Trust Seals.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_TRUST_SEALS_ENABLED = 'light_checkout_configuration/trust_seals/enable';
+    const XML_PATH_LIGHT_CHECKOUT_TRUST_SEALS_SEALS = 'light_checkout_configuration/trust_seals/seals';
+    /**#@-*/
+
     /**
      * @var ScopeConfigInterface
      */
@@ -361,5 +368,15 @@ class CheckoutConfigurationsProvider
     public function getAutoCompleteByStreetGoogleApiKey()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTO_COMPLETE_BY_STREET_GOOGLE_API_KEY);
+    }
+
+    public function getIsEnabledTrustSeals()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TRUST_SEALS_ENABLED);
+    }
+
+    public function getTrustSealsSeals()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TRUST_SEALS_SEALS);
     }
 }

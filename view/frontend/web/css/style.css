@@ -71,3 +71,8 @@
 #checkout #opc-sidebar .opc-block-summary {
     position: relative;
 }
+
+#trust-seals p:not(:last-child) {
+    float:left;
+    padding-right: 3%;
+}

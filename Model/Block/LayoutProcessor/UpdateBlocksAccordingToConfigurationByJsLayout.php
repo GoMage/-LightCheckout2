@@ -4,6 +4,7 @@ namespace GoMage\LightCheckout\Model\Block\LayoutProcessor;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\Config\Source\CheckoutFields;
+use GoMage\LightCheckout\Model\Config\Source\TrustSealsWhereToShow;
 
 /**
  * Unset blocks according to configuration.
@@ -37,6 +38,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $jsLayout = $this->disableAddressFieldsAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->updateTemplateForPostcodeFieldAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->addHelpMessagesAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->addTrustSealsAccordingToTheConfiguration($jsLayout);
 
         return $jsLayout;
     }
@@ -229,6 +231,46 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
     {
         $jsLayout['components']['checkout']['children'][$addressType . 'Address']['children']
         [$addressType . '-address-fieldset']['children'][$field]['config']['tooltip']['description'] = $message;
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function addTrustSealsAccordingToTheConfiguration($jsLayout)
+    {
+        if ($this->checkoutConfigurationsProvider->getIsEnabledTrustSeals()) {
+            $trustSeals = json_decode($this->checkoutConfigurationsProvider->getTrustSealsSeals(), true);
+
+            $trustSealTop = '';
+            $trustSealBeforePlaceOrderButton = '';
+            $trustSealAfterPlaceOrderButton = '';
+            foreach ($trustSeals as $trustSeal) {
+                $whereToShow = (int)$trustSeal['where_to_show'];
+                if ($whereToShow === TrustSealsWhereToShow::TOP_OF_THE_PAGE) {
+                    $trustSealTop .= $trustSeal['trust_seal'];
+                } elseif ($whereToShow === TrustSealsWhereToShow::ABOVE_PLACE_ORDER_BUTTON) {
+                    $trustSealBeforePlaceOrderButton .= $trustSeal['trust_seal'];
+                } elseif ($whereToShow === TrustSealsWhereToShow::UNDER_PLACE_ORDER_BUTTON) {
+                    $trustSealAfterPlaceOrderButton .= $trustSeal['trust_seal'];
+                }
+            }
+
+            $jsLayout['components']['checkout']['children']['trust_seals_top']['html'] = $trustSealTop;
+            $jsLayout['components']['checkout']['children']['sidebar']['children']
+            ['trust_seals_before_place_order_button']['html'] = $trustSealBeforePlaceOrderButton;
+            $jsLayout['components']['checkout']['children']['sidebar']['children']
+            ['trust_seals_after_place_order_button']['html'] = $trustSealAfterPlaceOrderButton;
+        } else {
+            unset($jsLayout['components']['checkout']['children']['trust_seals_top']);
+            unset($jsLayout['components']['checkout']['children']['sidebar']['children']
+                ['trust_seals_before_place_order_button']);
+            unset($jsLayout['components']['checkout']['children']['sidebar']['children']
+                ['trust_seals_after_place_order_button']);
+        }
 
         return $jsLayout;
     }

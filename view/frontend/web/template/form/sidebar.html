@@ -9,8 +9,18 @@
         <!--/ko-->
     </div>
 
+    <div class="full left">
+        <!-- ko foreach: getRegion('trust_seals_before_place_order_button') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+    </div>
     <!-- ko foreach: getRegion('placeOrderButton') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
     <!--/ko-->
+    <div class="full left">
+        <!-- ko foreach: getRegion('trust_seals_after_place_order_button') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+    </div>
 
 </div>
