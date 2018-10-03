@@ -2,7 +2,7 @@
 
 namespace GoMage\LightCheckout\Model\SocialCustomer;
 
-use Magento\Framework\UrlInterface;
+use Magento\Framework\Url;
 use Magento\Store\Model\StoreManagerInterface;
 
 class BaseAuthUrlProvider
@@ -13,15 +13,15 @@ class BaseAuthUrlProvider
     private $storeManager;
 
     /**
-     * @var UrlInterface
+     * @var Url
      */
     private $urlBuilder;
 
     /**
      * @param StoreManagerInterface $storeManager
-     * @param UrlInterface $urlBuilder
+     * @param Url $urlBuilder
      */
-    public function __construct(StoreManagerInterface $storeManager, UrlInterface $urlBuilder)
+    public function __construct(StoreManagerInterface $storeManager, Url $urlBuilder)
     {
         $this->storeManager = $storeManager;
         $this->urlBuilder = $urlBuilder;
@@ -35,7 +35,7 @@ class BaseAuthUrlProvider
         /** @var \Magento\Store\Model\Store $store */
         $store = $this->storeManager->getStore();
 
-        return $this->urlBuilder->getUrl(
+        $url = $this->urlBuilder->getUrl(
             'lightcheckout/social/callback',
             [
                 '_nosid' => true,
@@ -43,5 +43,7 @@ class BaseAuthUrlProvider
                 '_secure' => $store->isUrlSecure()
             ]
         );
+
+        return $url;
     }
 }
