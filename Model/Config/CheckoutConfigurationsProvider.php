@@ -117,6 +117,33 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_TRUST_SEALS_SEALS = 'light_checkout_configuration/trust_seals/seals';
     /**#@-*/
 
+    /**#@+
+     * Light Checkout configuration Social Login Facebook.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_ENABLE = 'light_checkout_configuration/social_login_facebook/enable';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_ID = 'light_checkout_configuration/social_login_facebook/app_id';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_SECRET = 'light_checkout_configuration/social_login_facebook/app_secret';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_REDIRECT_URL = 'light_checkout_configuration/social_login_facebook/redirect_url';
+    /**#@-*/
+
+    /**#@+
+     * Light Checkout configuration Social Login Google.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_ENABLE = 'light_checkout_configuration/social_login_google/enable';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_ID = 'light_checkout_configuration/social_login_google/app_id';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_SECRET = 'light_checkout_configuration/social_login_google/app_secret';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_REDIRECT_URL = 'light_checkout_configuration/social_login_google/redirect_url';
+    /**#@-*/
+
+    /**#@+
+     * Light Checkout configuration Social Login Twitter.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_ENABLE = 'light_checkout_configuration/social_login_twitter/enable';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_ID = 'light_checkout_configuration/social_login_twitter/app_id';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_SECRET = 'light_checkout_configuration/social_login_twitter/app_secret';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_REDIRECT_URL = 'light_checkout_configuration/social_login_twitter/redirect_url';
+    /**#@-*/
+
     /**
      * @var ScopeConfigInterface
      */
@@ -378,5 +405,65 @@ class CheckoutConfigurationsProvider
     public function getTrustSealsSeals()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TRUST_SEALS_SEALS);
+    }
+
+    public function getIsSocialLoginFacebookEnabled()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_ENABLE);
+    }
+
+    public function getSocialLoginFacebookAppId()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_ID);
+    }
+
+    public function getSocialLoginFacebookAppSecret()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_SECRET);
+    }
+
+    public function getSocialLoginFacebookAppRedirectUrl()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_REDIRECT_URL);
+    }
+
+    public function getIsSocialLoginGoogleEnabled()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_ENABLE);
+    }
+
+    public function getSocialLoginGoogleAppId()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_ID);
+    }
+
+    public function getSocialLoginGoogleAppSecret()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_SECRET);
+    }
+
+    public function getSocialLoginGoogleAppRedirectUrl()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_REDIRECT_URL);
+    }
+
+    public function getIsSocialLoginTwitterEnabled()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_ENABLE);
+    }
+
+    public function getSocialLoginTwitterAppId()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_ID);
+    }
+
+    public function getSocialLoginTwitterAppSecret()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_SECRET);
+    }
+
+    public function getSocialLoginTwitterAppRedirectUrl()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_REDIRECT_URL);
     }
 }

@@ -50,7 +50,7 @@
         </resources>
     </route>
     <route url="/V1/light_checkout/carts/mine/update-sections" method="POST">
-        <service class="GoMage\LightCheckout\Api\GuestQuoteItemManagementInterface" method="updateSections"/>
+        <service class="GoMage\LightCheckout\Api\QuoteItemManagementInterface" method="updateSections"/>
         <resources>
             <resource ref="self" />
         </resources>

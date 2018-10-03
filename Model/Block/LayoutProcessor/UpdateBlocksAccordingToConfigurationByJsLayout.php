@@ -5,6 +5,7 @@ namespace GoMage\LightCheckout\Model\Block\LayoutProcessor;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\Config\Source\CheckoutFields;
 use GoMage\LightCheckout\Model\Config\Source\TrustSealsWhereToShow;
+use Magento\Framework\UrlInterface;
 
 /**
  * Unset blocks according to configuration.
@@ -17,11 +18,20 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
     private $checkoutConfigurationsProvider;
 
     /**
-     * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     * @var UrlInterface
      */
-    public function __construct(CheckoutConfigurationsProvider $checkoutConfigurationsProvider)
-    {
+    private $urlBuilder;
+
+    /**
+     * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     * @param UrlInterface $urlBuilder
+     */
+    public function __construct(
+        CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
+        UrlInterface $urlBuilder
+    ) {
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
+        $this->urlBuilder = $urlBuilder;
     }
 
     /**
@@ -39,6 +49,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $jsLayout = $this->updateTemplateForPostcodeFieldAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->addHelpMessagesAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->addTrustSealsAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->addSocialNetworksAccordingToTheConfiguration($jsLayout);
 
         return $jsLayout;
     }
@@ -142,6 +153,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
             $jsLayout['components']['checkout']['children']['shippingAddress']['children']
             ['shipping-address-fieldset']['children']['country_id']['disabled'] = true;
         }
+
         return $jsLayout;
     }
 
@@ -221,8 +233,8 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
 
     /**
      * @param array $jsLayout
-     * @param string$addressType
-     * @param string$field
+     * @param string $addressType
+     * @param string $field
      * @param string $message
      *
      * @return array
@@ -270,6 +282,50 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
                 ['trust_seals_before_place_order_button']);
             unset($jsLayout['components']['checkout']['children']['sidebar']['children']
                 ['trust_seals_after_place_order_button']);
+        }
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function addSocialNetworksAccordingToTheConfiguration($jsLayout)
+    {
+        if ($this->checkoutConfigurationsProvider->getIsSocialLoginGoogleEnabled()) {
+
+            $jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
+            ['children']['google']['urlTo'] = $this->urlBuilder->getUrl(
+                'lightcheckout/social/login',
+                ['type' => 'google']
+            );
+        } else {
+            unset($jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
+                ['children']['google']);
+        }
+
+        if ($this->checkoutConfigurationsProvider->getIsSocialLoginFacebookEnabled()) {
+            $jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
+            ['children']['facebook']['urlTo'] = $this->urlBuilder->getUrl(
+                'lightcheckout/social/login',
+                ['type' => 'facebook']
+            );
+        } else {
+            unset($jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
+                ['children']['facebook']);
+        }
+
+        if ($this->checkoutConfigurationsProvider->getIsSocialLoginTwitterEnabled()) {
+            $jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
+            ['children']['twitter']['urlTo'] = $this->urlBuilder->getUrl(
+                'lightcheckout/social/login',
+                ['type' => 'twitter']
+            );
+        } else {
+            unset($jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
+                ['children']['twitter']);
         }
 
         return $jsLayout;
