@@ -6,8 +6,8 @@ use Magento\Framework\Data\OptionSourceInterface;
 
 class VerificationSystem implements OptionSourceInterface
 {
-    CONST VIES = 0;
-    CONST ISVAT = 1;
+    const VIES = 0;
+    const ISVAT = 1;
 
     /**
      * @inheritdoc

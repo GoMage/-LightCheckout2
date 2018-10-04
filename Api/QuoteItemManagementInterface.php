@@ -17,7 +17,7 @@ interface QuoteItemManagementInterface
     /**
      * @param int $cartId
      * @param int $itemId
-     * 
+     *
      * @return \GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface
      */
     public function removeItemById($cartId, $itemId);

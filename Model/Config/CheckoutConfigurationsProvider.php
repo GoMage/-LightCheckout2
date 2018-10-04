@@ -6,6 +6,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class CheckoutConfigurationsProvider
 {
+    // @codingStandardsIgnoreStart
     /**#@+
      * Light Checkout configuration General Tab settings.
      */
@@ -143,6 +144,7 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_SECRET = 'light_checkout_configuration/social_login_twitter/app_secret';
     const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_REDIRECT_URL = 'light_checkout_configuration/social_login_twitter/redirect_url';
     /**#@-*/
+    // @codingStandardsIgnoreEnd
 
     /**
      * @var ScopeConfigInterface

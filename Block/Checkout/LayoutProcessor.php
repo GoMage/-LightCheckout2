@@ -26,12 +26,12 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     /**
      * @var AttributeMapper
      */
-    protected $attributeMapper;
+    private $attributeMapper;
 
     /**
      * @var AttributeMerger
      */
-    protected $merger;
+    private $merger;
 
     /**
      * @var Options
@@ -182,9 +182,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $elements = $this->convertElementsToSelect($elements, $attributesToConvert);
 
         if (isset($jsLayout['components']['checkout']['children']['configuration']['children']
-            ['shipping-rates-validation']['children']
-        )) {
-
+            ['shipping-rates-validation']['children'])) {
             $jsLayout['components']['checkout']['children']['configuration']['children']
             ['shipping-rates-validation']['children'] =
                 $this->processShippingRates(
@@ -194,8 +192,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         }
 
         if (isset($jsLayout['components']['checkout']['children']['shippingAddress']['children']
-            ['shipping-address-fieldset']['children']
-        )) {
+            ['shipping-address-fieldset']['children'])) {
             $fields = $jsLayout['components']['checkout']['children']['shippingAddress']['children']
             ['shipping-address-fieldset']['children'];
             $jsLayout['components']['checkout']['children']['shippingAddress']['children']
@@ -208,8 +205,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         }
 
         if (isset($jsLayout['components']['checkout']['children']['billingAddress']['children']
-            ['billing-address-fieldset']['children']
-        )) {
+            ['billing-address-fieldset']['children'])) {
             $fields = $jsLayout['components']['checkout']['children']['billingAddress']['children']
             ['billing-address-fieldset']['children'];
             $jsLayout['components']['checkout']['children']['billingAddress']['children']
@@ -223,32 +219,33 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
             = $this->mergePaymentMethodsRenders(
-            $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
-        );
+                $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
+            );
 
         $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
             = $this->mergePaymentAfterMethods(
-            $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
-        );
+                $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
+            );
 
         $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']['children']
             = $this->mergeBeforePlaceOrder(
-            $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']['children']['before-place-order']
-        );
+                $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']
+                ['children']['before-place-order']
+            );
 
-        $jsLayout['components']['checkout']['children']['payment']['children']['additional-payment-validators']['children']
-            = $this->mergeAdditionalValidators(
+        $jsLayout['components']['checkout']['children']['payment']['children']['additional-payment-validators']
+        ['children'] = $this->mergeAdditionalValidators(
             $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
         );
 
-        $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']['totals']['children']
-            = $this->mergeSummaryTotals(
-            $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']['totals']['children']
+        $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']['totals']
+        ['children'] = $this->mergeSummaryTotals(
+            $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']
+                ['totals']['children']
         );
 
         if (isset($jsLayout['components']['checkout']['children']['deliveryDate']['children']
-            ['selectTime']
-        )) {
+            ['selectTime'])) {
             $jsLayout['components']['checkout']['children']['deliveryDate']['children']
             ['selectTime']['options'] = [];
         }
@@ -358,7 +355,8 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
             . '/item[@name="components"]/item[@name="checkout"]/item[@name="children"]'
             . '/item[@name="steps"]/item[@name="children"]/item[@name="billing-step"]'
             . '/item[@name="children"]/item[@name="payment"]/item[@name="children"]'
-            . '/item[@name="payments-list"]/item[@name="children"]/item[@name="before-place-order"]/item[@name="children"]';
+            . '/item[@name="payments-list"]/item[@name="children"]/item[@name="before-place-order"]'
+            . '/item[@name="children"]';
 
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 

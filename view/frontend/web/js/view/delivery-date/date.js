@@ -64,7 +64,7 @@ define([
                 disabledDays = window.checkoutConfig.deliveryDate.disabledDays,
                 day = moment(date).day();
 
-            if (Object.values(disabledDays).indexOf(day) !== -1){
+            if (Object.values(disabledDays).indexOf(day) !== -1) {
                 isAvailableDay = false;
             }
 

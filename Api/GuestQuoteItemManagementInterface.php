@@ -24,7 +24,7 @@ interface GuestQuoteItemManagementInterface
 
     /**
      * @param string $cartId
-     * 
+     *
      * @return \GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface
      */
     public function updateSections($cartId);

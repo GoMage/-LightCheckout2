@@ -90,4 +90,5 @@ define(
                 return result;
             }
         })
-    });
+    }
+);

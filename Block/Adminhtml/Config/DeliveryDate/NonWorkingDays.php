@@ -56,11 +56,12 @@ class NonWorkingDays extends AbstractFieldArray
         $numberDayOptionsRenderer = $this->getNumberDayOptionsRenderer();
         $monthOptionsRenderer = $this->getMonthOptionsRenderer();
 
+        $selectedStr = 'selected="selected"';
         $row->setData(
             'option_extra_attrs',
             [
-                'option_' . $numberDayOptionsRenderer->calcOptionHash($row->getDayNonworking()) => 'selected="selected"',
-                'option_' . $monthOptionsRenderer->calcOptionHash($row->getMonthNonworking()) => 'selected="selected"',
+                'option_' . $numberDayOptionsRenderer->calcOptionHash($row->getDayNonworking()) => $selectedStr,
+                'option_' . $monthOptionsRenderer->calcOptionHash($row->getMonthNonworking()) => $selectedStr,
             ]
         );
 

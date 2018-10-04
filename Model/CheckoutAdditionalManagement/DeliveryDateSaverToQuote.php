@@ -8,7 +8,7 @@ use Magento\Quote\Api\CartRepositoryInterface;
 use GoMage\LightCheckout\Model\Config\Source\Time;
 
 /**
- * Save Delivery Date and Delivery time to quote before submit order.
+ * Save Delivery Date and Delivery Time to quote before submit order.
  */
 class DeliveryDateSaverToQuote
 {
@@ -69,7 +69,6 @@ class DeliveryDateSaverToQuote
             unset($additionInformation['deliveryDate']);
 
             if (isset($additionInformation['deliveryDateTime'])) {
-
                 $timeArray = explode(':', strval($additionInformation['deliveryDateTime']));
 
                 $time = ($timeArray[0] * 60 * 60) + ($timeArray[1] * 60);

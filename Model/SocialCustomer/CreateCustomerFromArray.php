@@ -67,7 +67,6 @@ class CreateCustomerFromArray
         $this->accountManagement = $accountManagement;
     }
 
-
     public function execute($userDataArray)
     {
         $store = $this->storeManager->getStore();

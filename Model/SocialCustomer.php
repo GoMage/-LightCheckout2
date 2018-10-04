@@ -22,12 +22,12 @@ class SocialCustomer extends AbstractModel
      */
     public function getSocialCustomerByIdentifierAndType($identify, $type)
     {
-        $socialCustomer = $this->getCollection()
+        $collection = $this->getCollection()
             ->addFieldToFilter('social_id', $identify)
-            ->addFieldToFilter('type', $type)
-            ->getFirstItem();
+            ->addFieldToFilter('type', $type);
+        $collection->getSelect()->limit(1);
 
-        return $socialCustomer;
+        return $collection->getFirstItem();
     }
 
     /**

@@ -4,7 +4,7 @@ define(
     ],
     function (Component) {
         return Component.extend({
-            isFullMode: function() {
+            isFullMode: function () {
                 return true;
             }
         });

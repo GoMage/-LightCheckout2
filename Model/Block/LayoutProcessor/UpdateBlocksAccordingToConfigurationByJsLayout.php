@@ -78,7 +78,8 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
      */
     private function disableDeletingItemOnCheckoutAccordingToTheConfiguration($jsLayout)
     {
-        $isEnabledRemoveItemFromCheckout = $this->checkoutConfigurationsProvider->getIsAllowedToRemoveItemFromCheckout();
+        $isEnabledRemoveItemFromCheckout = $this->checkoutConfigurationsProvider
+            ->getIsAllowedToRemoveItemFromCheckout();
 
         if (!$isEnabledRemoveItemFromCheckout) {
             unset($jsLayout['components']['checkout']['children']['sidebar']['children']['summary']
@@ -166,12 +167,14 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
     {
         if ($this->checkoutConfigurationsProvider->getIsEnabledAutoFillByZipCode()) {
             $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
-            ['children']['postcode']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/element-with-blur-template';
+            ['children']['postcode']['config']['elementTmpl']
+                = 'GoMage_LightCheckout/element/element-with-blur-template';
             $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
             ['children']['postcode']['component'] = 'GoMage_LightCheckout/js/view/post-code';
 
             $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
-            ['children']['postcode']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/element-with-blur-template';
+            ['children']['postcode']['config']['elementTmpl']
+                = 'GoMage_LightCheckout/element/element-with-blur-template';
             $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
             ['children']['postcode']['component'] = 'GoMage_LightCheckout/js/view/post-code';
         }
@@ -207,19 +210,19 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
                     );
                 } else {
                     switch ($helpMessage['field']) {
-                        case CheckoutFields::SHIPPING_METHODS :
+                        case CheckoutFields::SHIPPING_METHODS:
                             $jsLayout['components']['checkout']['children']['shippingAddress']
                             ['tooltip']['description'] = $helpMessage['help_message'];
                             break;
-                        case CheckoutFields::DELIVERY_DATE :
+                        case CheckoutFields::DELIVERY_DATE:
                             $jsLayout['components']['checkout']['children']['deliveryDate']
                             ['tooltip']['description'] = $helpMessage['help_message'];
                             break;
-                        case CheckoutFields::PAYMENT_METHOD :
+                        case CheckoutFields::PAYMENT_METHOD:
                             $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']
                             ['tooltip']['description'] = $helpMessage['help_message'];
                             break;
-                        case CheckoutFields::ORDER_SUMMARY :
+                        case CheckoutFields::ORDER_SUMMARY:
                             $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']
                             ['tooltip']['description'] = $helpMessage['help_message'];
                             break;
@@ -295,7 +298,6 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
     private function addSocialNetworksAccordingToTheConfiguration($jsLayout)
     {
         if ($this->checkoutConfigurationsProvider->getIsSocialLoginGoogleEnabled()) {
-
             $jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
             ['children']['google']['urlTo'] = $this->urlBuilder->getUrl(
                 'lightcheckout/social/login',

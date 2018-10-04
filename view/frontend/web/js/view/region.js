@@ -24,7 +24,8 @@ define([
     return Component.extend({
         initInput: function () {
 
-            layout([utils.template(_.extend(inputNode,
+            layout([utils.template(_.extend(
+                inputNode,
                 {
                     additionalClasses: this.additionalClasses,
                     tooltip: this.tooltip
@@ -35,4 +36,3 @@ define([
         }
     });
 });
-

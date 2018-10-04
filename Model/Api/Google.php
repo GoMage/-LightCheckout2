@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
 class Google extends Base
 {
     /**
-     * URL to get address info
+     * URL to get address info.
      *
      * @const string
      */
@@ -43,7 +43,8 @@ class Google extends Base
         \Magento\Directory\Model\ResourceModel\Region\Collection $regionCollection,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider
     ) {
-        parent::__construct($logger,
+        parent::__construct(
+            $logger,
             $jsonHelper,
             $dataObjectFactory,
             $httpClientFactory,
@@ -53,7 +54,6 @@ class Google extends Base
         );
 
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
-
     }
 
     /**
@@ -64,18 +64,7 @@ class Google extends Base
      */
     public function getAddress($postCode)
     {
-        $result = [
-            'city' => '',
-            'country' => '',
-            'country_id' => '',
-            'region_id' => '',
-            'region' => '',
-            'completed' => false
-        ];
-
         $postCode = urlencode(trim($postCode));
-        $city = $country = $region = '';
-        $allowedCountry = $this->allowedCountries->getAllowedCountries();
 
         $parameters = [
             'sensor' => true,
@@ -106,27 +95,9 @@ class Google extends Base
         }
 
         if ($responseBody['status'] == "OK") {
-            if (count($responseBody['results'][0]['address_components']) > 0) {
-                foreach ($responseBody['results'][0]['address_components'] as $address_component) {
-                    foreach ($address_component['types'] as $type) {
-                        if ($type == "locality") {
-                            $city = $address_component['long_name'];
-                        } elseif ($type == "administrative_area_level_1") {
-                            $region = $address_component['short_name'];
-                        } elseif ($type == "country") {
-                            $country = $address_component['short_name'];
-                        }
-                    }
-                }
-            }
-
-            if (in_array($country, $allowedCountry)) {
-                $result['completed'] = true;
-                $result['city'] = $city;
-                $result['country_id'] = $result['country'] = $this->getCountryCode($country);
-                $result['region_id'] = $result['region'] = $this->getRegionId($result['country'], $region);
-            }
+            $result = $this->getResultByResponseBody($responseBody);
         } else {
+            $result = $this->getEmptyResult();
             $this->logger->critical('Google Maps response error: ' . $responseBodyText);
         }
 
@@ -134,5 +105,55 @@ class Google extends Base
         $dataObject->addData($result);
 
         return $dataObject;
+    }
+
+    /**
+     * @param $responseBody
+     *
+     * @return array
+     */
+    private function getResultByResponseBody($responseBody)
+    {
+        $result = $this->getEmptyResult();
+        $city = $country = $region = '';
+        $allowedCountry = $this->allowedCountries->getAllowedCountries();
+
+        if (!empty($responseBody['results'][0]['address_components'])) {
+            foreach ($responseBody['results'][0]['address_components'] as $address_component) {
+                foreach ($address_component['types'] as $type) {
+                    if ($type == "locality") {
+                        $city = $address_component['long_name'];
+                    } elseif ($type == "administrative_area_level_1") {
+                        $region = $address_component['short_name'];
+                    } elseif ($type == "country") {
+                        $country = $address_component['short_name'];
+                    }
+                }
+            }
+        }
+
+        if (in_array($country, $allowedCountry)) {
+            $result['completed'] = true;
+            $result['city'] = $city;
+            $result['country_id'] = $result['country'] = $this->getCountryCode($country);
+            $result['region_id'] = $result['region'] = $this->getRegionId($result['country'], $region);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    private function getEmptyResult()
+    {
+        return $result = [
+            'city' => '',
+            'country' => '',
+            'country_id' => '',
+            'region_id' => '',
+            'region' => '',
+            'completed' => false
+        ];
     }
 }

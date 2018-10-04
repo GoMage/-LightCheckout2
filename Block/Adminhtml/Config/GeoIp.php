@@ -35,15 +35,19 @@ class GeoIp extends Field
      */
     protected function _getElementHtml(AbstractElement $element)
     {
-        $filePath = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath() . '/geoip/GeoLiteCity.dat';
+        $filePath = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath()
+            . '/geoip/GeoLiteCity.dat';
+
         if (!file_exists($filePath)) {
             $element->setDisabled(true);
             if ($element->getId() == 'light_checkout_configuration_geoip_enable_for_country') {
                 $element->setComment(
                     sprintf(
-                        __('To use GeoIP you need to upload GeoliteCity.dat file to folder pub/media/geoip. Read more in the <a target="_blank" href="%s">Installation Guide</a>'),
+                        __('To use GeoIP you need to upload GeoliteCity.dat file to folder pub/media/geoip.'
+                            .' Read more in the <a target="_blank" href="%s">Installation Guide</a>'),
                         'https://wiki.gomage.com/hc/en-us/articles/115002196431-GeoIP-Settings'
-                    ));
+                    )
+                );
             }
         }
 

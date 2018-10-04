@@ -39,6 +39,8 @@ class SaveShippingAddressBeforeEstimate
      * @param \Magento\Quote\Api\Data\EstimateAddressInterface $address The estimate address
      *
      * @return \Magento\Quote\Api\Data\ShippingMethodInterface[] An array of shipping methods.
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function aroundEstimateByAddress(
         ShippingMethodManagement $subject,
@@ -58,6 +60,8 @@ class SaveShippingAddressBeforeEstimate
      * @param AddressInterface $address
      *
      * @return \Magento\Quote\Api\Data\ShippingMethodInterface[] An array of shipping methods
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function aroundEstimateByExtendedAddress(
         ShippingMethodManagement $subject,
@@ -77,6 +81,8 @@ class SaveShippingAddressBeforeEstimate
      * @param int $addressId The estimate address id
      *
      * @return \Magento\Quote\Api\Data\ShippingMethodInterface[]
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function aroundEstimateByAddressId(
         ShippingMethodManagement $subject,

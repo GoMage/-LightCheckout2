@@ -42,7 +42,9 @@ class EnableVatFieldOnFrontend implements ObserverInterface
     }
 
     /**
-     * @param Observer $observer
+     * @inheritdoc
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function execute(Observer $observer)
     {

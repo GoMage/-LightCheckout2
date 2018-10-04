@@ -99,7 +99,8 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'customer_id',
                     $setup->getTable('customer_entity'),
                     'entity_id',
-                    Table::ACTION_CASCADE)
+                    Table::ACTION_CASCADE
+                )
                 ->setComment('Social Customer Table')
         );
     }

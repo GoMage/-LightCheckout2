@@ -44,7 +44,7 @@ class DeliveryDateConfigProvider
             'nonWorkingDays' => array_merge($this->getNonWorkingDays(), $this->getDaysOffWithIntervalForDelivery()),
             'deliveryDaysWithTime' => $this->getDeliveryDaysWithTime(),
             'deliveryHoursHelper' => $this->hour->toOptionArray(),
-            'shippingMethods' => explode(',' ,$this->checkoutConfigurationsProvider->getUseDeliveryDateFor()),
+            'shippingMethods' => explode(',', $this->checkoutConfigurationsProvider->getUseDeliveryDateFor()),
         ];
     }
 
@@ -53,7 +53,7 @@ class DeliveryDateConfigProvider
      */
     private function getDisabledDays()
     {
-        return $disabledDates = array_diff(array(0, 1, 2, 3, 4, 5, 6), array_keys($this->getDeliveryDaysWithTime()));
+        return $disabledDates = array_diff([0, 1, 2, 3, 4, 5, 6], array_keys($this->getDeliveryDaysWithTime()));
     }
 
     /**
@@ -66,7 +66,7 @@ class DeliveryDateConfigProvider
 
         if ($availableDays) {
             $availableDays = json_decode($availableDays, true);
-            if (is_array($availableDays) && count($availableDays)) {
+            if (is_array($availableDays) && !empty($availableDays)) {
                 foreach ($availableDays as $value) {
                     if ($value['delivery_available']) {
                         $timeRange = $this->getTimeRange($value['delivery_time_from'], $value['delivery_time_to']);
@@ -104,7 +104,7 @@ class DeliveryDateConfigProvider
             $to = 24;
         }
 
-        $hours = array();
+        $hours = [];
         if ($from > $to) {
             for ($i = $from; $i != $to; $i++) {
                 if ($i == 24) {
@@ -131,7 +131,7 @@ class DeliveryDateConfigProvider
      */
     private function getDateFormat()
     {
-        if (intval($this->checkoutConfigurationsProvider->getDateFormat()) === DateFormats::EUROPEAN) {
+        if ((int)$this->checkoutConfigurationsProvider->getDateFormat() === DateFormats::EUROPEAN) {
             $format = 'dd.MM.y';
         } else {
             $format = 'MM.dd.y';
@@ -174,8 +174,8 @@ class DeliveryDateConfigProvider
             $date = time() + $i * 60 * 60 * 24;
             $nonWorkingDays[] =
                 [
-                    'day' => intval(date('d', $date)),
-                    'month' => intval(date('m', $date)) - 1,
+                    'day' => (int)date('d', $date),
+                    'month' => (int)date('m', $date) - 1,
                 ];
         }
 

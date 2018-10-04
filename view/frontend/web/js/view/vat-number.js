@@ -93,7 +93,6 @@ define(
                             }
                             updateSectionAction();
                         });
-
                     } else if (vatNumber && !country) {
                         this.setNotVerified();
                     } else if (!vatNumber) {
@@ -154,4 +153,5 @@ define(
                 return result;
             }
         })
-    });
+    }
+);

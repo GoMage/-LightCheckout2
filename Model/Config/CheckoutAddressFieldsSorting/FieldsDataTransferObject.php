@@ -2,7 +2,6 @@
 
 namespace GoMage\LightCheckout\Model\Config\CheckoutAddressFieldsSorting;
 
-
 class FieldsDataTransferObject
 {
     /**
@@ -46,5 +45,4 @@ class FieldsDataTransferObject
     {
         $this->notVisibleFields = $notVisibleFields;
     }
-
 }

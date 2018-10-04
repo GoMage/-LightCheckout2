@@ -2,9 +2,7 @@
 
 namespace GoMage\LightCheckout\Model\Layout;
 
-use Magento\Framework\Config\Converter\Dom\Flat as FlatConverter;
-use Magento\Framework\Config\Dom\ArrayNodeConfig;
-use Magento\Framework\Config\Dom\NodePathMatcher;
+use Magento\Framework\Config\Converter\Dom\Flat;
 use Magento\Framework\Data\Argument\InterpreterInterface;
 use Magento\Framework\View\LayoutFactory;
 use Psr\Log\LoggerInterface;
@@ -12,7 +10,7 @@ use Psr\Log\LoggerInterface;
 class FetchArgs
 {
     /**
-     * @var FlatConverter
+     * @var Flat
      */
     private $flatConverter;
 
@@ -35,28 +33,18 @@ class FetchArgs
      * @param LayoutFactory $layoutFactory
      * @param InterpreterInterface $argumentInterpreter
      * @param LoggerInterface $logger
+     * @param Flat $checkoutConverterDomFlat
      */
     public function __construct(
         LayoutFactory $layoutFactory,
         InterpreterInterface $argumentInterpreter,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        Flat $checkoutConverterDomFlat
     ) {
         $this->layoutFactory = $layoutFactory;
         $this->argumentInterpreter = $argumentInterpreter;
-        $this->flatConverter = $this->createFlatConverter();
+        $this->flatConverter = $checkoutConverterDomFlat;
         $this->logger = $logger;
-    }
-
-    /**
-     * Create flat converter.
-     *
-     * @return FlatConverter
-     */
-    private function createFlatConverter()
-    {
-        return new FlatConverter(
-            new ArrayNodeConfig(new NodePathMatcher(), ['(/item)+' => 'name'])
-        );
     }
 
     /**

@@ -21,4 +21,22 @@
     <type name="Magento\Tax\Model\ResourceModel\Calculation">
         <plugin name="gomage_light_checkout_tax_exclude_tax_rule" type="GoMage\LightCheckout\Plugin\Tax\ExcludeTaxRule"/>
     </type>
+
+    <virtualType name="LightCheckoutArrayNodeConfig" type="Magento\Framework\Config\Dom\ArrayNodeConfig">
+        <arguments>
+            <argument name="assocArrayAttributes" xsi:type="array">
+                <item name="(/item)+" xsi:type="string">name</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="LightCheckoutConverterDomFlat" type="Magento\Framework\Config\Converter\Dom\Flat">
+        <arguments>
+            <argument name="arrayNodeConfig" xsi:type="object">LightCheckoutArrayNodeConfig</argument>
+        </arguments>
+    </virtualType>
+    <type name="GoMage\LightCheckout\Model\Layout\FetchArgs">
+        <arguments>
+            <argument name="checkoutConverterDomFlat" xsi:type="object">LightCheckoutConverterDomFlat</argument>
+        </arguments>
+    </type>
 </config>

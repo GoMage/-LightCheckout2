@@ -52,7 +52,7 @@ class Callback extends Action
      *
      * @return bool|mixed
      */
-    public function checkRequest($key, $value = null)
+    private function checkRequest($key, $value = null)
     {
         $param = $this->getRequest()->getParam($key, false);
 

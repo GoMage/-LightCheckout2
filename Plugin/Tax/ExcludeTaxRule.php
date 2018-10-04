@@ -24,6 +24,7 @@ class ExcludeTaxRule
      * @param array $result
      *
      * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterGetCalculationProcess($subject, $result)
     {

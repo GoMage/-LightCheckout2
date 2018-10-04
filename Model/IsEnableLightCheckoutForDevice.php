@@ -4,6 +4,7 @@ namespace GoMage\LightCheckout\Model;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\Config\Source\OperationSystemsForDevices;
+use Mobile_Detect;
 
 class IsEnableLightCheckoutForDevice
 {
@@ -13,11 +14,19 @@ class IsEnableLightCheckoutForDevice
     private $checkoutConfigurationsProvider;
 
     /**
+     * @var Mobile_Detect
+     */
+    private $mobileDetect;
+
+    /**
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     * @param Mobile_Detect $mobileDetect
      */
     public function __construct(
-        CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+        CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
+        Mobile_Detect $mobileDetect
     ) {
+        $this->mobileDetect = $mobileDetect;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
     }
 
@@ -26,29 +35,27 @@ class IsEnableLightCheckoutForDevice
      */
     public function execute()
     {
-        if (!class_exists(\Mobile_Detect::class)) {
+        if (!class_exists(Mobile_Detect::class)) {
             return true;
         }
 
-        $detect = new \Mobile_Detect();
-
-        if (!$detect->isMobile()) {
+        if (!$this->mobileDetect->isMobile()) {
             return (bool)$this->checkoutConfigurationsProvider->isShowOnDesktopAndLaptop();
         }
 
-        if ($detect->isTablet()) {
+        if ($this->mobileDetect->isTablet()) {
             $devices = explode(',', $this->checkoutConfigurationsProvider->getShowOnTabletOperationSystems());
         } else {
             $devices = explode(',', $this->checkoutConfigurationsProvider->getShowOnSmartphoneOperationSystems());
         }
 
-        if ($detect->isAndroidOS()) {
+        if ($this->mobileDetect->isAndroidOS()) {
             return in_array(OperationSystemsForDevices::ANDROID, $devices);
         }
-        if ($detect->isBlackBerryOS()) {
+        if ($this->mobileDetect->isBlackBerryOS()) {
             return in_array(OperationSystemsForDevices::BLACKBERRY, $devices);
         }
-        if ($detect->isiOS()) {
+        if ($this->mobileDetect->isiOS()) {
             return in_array(OperationSystemsForDevices::IOS, $devices);
         }
 

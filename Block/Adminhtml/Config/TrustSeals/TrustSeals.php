@@ -59,10 +59,11 @@ class TrustSeals extends AbstractFieldArray
     {
         $whereToShowOptionsRenderer = $this->getWhereToShowOptionsBlockRenderer();
 
+        $selectedStr = 'selected="selected"';
         $row->setData(
             'option_extra_attrs',
             [
-                'option_' . $whereToShowOptionsRenderer->calcOptionHash($row->getWhereToShow()) => 'selected="selected"',
+                'option_' . $whereToShowOptionsRenderer->calcOptionHash($row->getWhereToShow()) => $selectedStr,
             ]
         );
 

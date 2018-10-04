@@ -24,6 +24,8 @@ class ClearPostcodeCacheButton extends Field
 
     /**
      * @inheritdoc
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function _getElementHtml(AbstractElement $element)
     {
@@ -56,6 +58,4 @@ class ClearPostcodeCacheButton extends Field
 
         return $button->toHtml();
     }
-
 }
-

@@ -5,7 +5,7 @@ define(
     function (Component) {
         "use strict";
         return Component.extend({
-            isDisplayed: function() {
+            isDisplayed: function () {
                 return true;
             }
         });

@@ -66,6 +66,8 @@ class CheckoutAddressFieldsSorting extends Field
 
     /**
      * @inheritdoc
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function _getElementHtml(AbstractElement $element)
     {
@@ -88,4 +90,3 @@ class CheckoutAddressFieldsSorting extends Field
         return $this->fieldsDataTransferObject->getNotVisibleFields();
     }
 }
-
