@@ -2,7 +2,9 @@
 
 namespace GoMage\LightCheckout\Controller\Index;
 
+use GoMage\Core\Helper\Data;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
+use GoMage\LightCheckout\Setup\InstallData;
 use Magento\Checkout\Model\Session;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
@@ -21,6 +23,11 @@ class Index extends \Magento\Checkout\Controller\Onepage
     private $checkoutConfigurationsProvider;
 
     /**
+     * @var Data
+     */
+    private $helper;
+
+    /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Customer\Model\Session $customerSession
      * @param CustomerRepositoryInterface $customerRepository
@@ -37,6 +44,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param Session $session
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     * @param Data $helper
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -54,7 +62,8 @@ class Index extends \Magento\Checkout\Controller\Onepage
         \Magento\Framework\Controller\Result\RawFactory $resultRawFactory,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         Session $session,
-        CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+        CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
+        Data $helper
     ) {
         parent::__construct(
             $context,
@@ -75,6 +84,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
 
         $this->session = $session;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
+        $this->helper = $helper;
     }
 
     /**
@@ -82,18 +92,22 @@ class Index extends \Magento\Checkout\Controller\Onepage
      */
     public function execute()
     {
-        $quote = $this->getOnepage()->getQuote();
-        if (!$quote->hasItems() || $quote->getHasError() || !$quote->validateMinimumAmount()) {
-            //redirect not to cart, because if cart is off in configuration it will come to endless redirect.
-            return $this->resultRedirectFactory->create()->setPath('home');
+        if ($this->helper->isA(InstallData::MODULE_NAME)) {
+            $quote = $this->getOnepage()->getQuote();
+            if (!$quote->hasItems() || $quote->getHasError() || !$quote->validateMinimumAmount()) {
+                //redirect not to cart, because if cart is off in configuration it will come to endless redirect.
+                return $this->resultRedirectFactory->create()->setPath('home');
+            }
+
+            $this->_customerSession->regenerateId();
+            $this->session->setCartWasUpdated(false);
+            $this->getOnepage()->initCheckout();
+
+            $resultPage = $this->resultPageFactory->create();
+            $resultPage->getConfig()->getTitle()->set(__($this->checkoutConfigurationsProvider->getPageTitle()));
+        } else {
+            $resultPage = null;
         }
-
-        $this->_customerSession->regenerateId();
-        $this->session->setCartWasUpdated(false);
-        $this->getOnepage()->initCheckout();
-
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->set(__($this->checkoutConfigurationsProvider->getPageTitle()));
 
         return $resultPage;
     }

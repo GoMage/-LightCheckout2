@@ -45,7 +45,7 @@ class ApiDataProviderByType
      */
     private function getIsEnabledByType($type)
     {
-        return $this->scopeConfig->getValue('light_checkout_configuration/social_login_' . $type . '/enable');
+        return $this->scopeConfig->getValue('gomage_light_checkout_configuration/social_login_' . $type . '/enable');
     }
 
     /**
@@ -55,7 +55,7 @@ class ApiDataProviderByType
      */
     private function getAppIdByType($type)
     {
-        return $this->scopeConfig->getValue('light_checkout_configuration/social_login_' . $type . '/app_id');
+        return $this->scopeConfig->getValue('gomage_light_checkout_configuration/social_login_' . $type . '/app_id');
     }
 
     /**
@@ -65,7 +65,7 @@ class ApiDataProviderByType
      */
     private function getAppSecretByType($type)
     {
-        return $this->scopeConfig->getValue('light_checkout_configuration/social_login_' . $type . '/app_secret');
+        return $this->scopeConfig->getValue('gomage_light_checkout_configuration/social_login_' . $type . '/app_secret');
     }
 
     /**

@@ -13,6 +13,8 @@ use Magento\Sales\Setup\SalesSetupFactory;
 
 class InstallData implements InstallDataInterface
 {
+    const MODULE_NAME = 'GoMage_LightCheckout';
+
     /**
      * @var QuoteSetupFactory
      */

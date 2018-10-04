@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="light_checkout" translate="label" sortOrder="250">
-            <label>GoMage Light Checkout</label>
-        </tab>
-        <section id="light_checkout_configuration" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Configuration</label>
-            <tab>light_checkout</tab>
+        <section id="gomage_light_checkout_configuration" translate="label" type="text" sortOrder="200"
+                 showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Light Checkout</label>
+            <tab>gomage</tab>
             <resource>GoMage_LightCheckout::light_checkout</resource>
             <group id="general" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
                    showInStore="1">

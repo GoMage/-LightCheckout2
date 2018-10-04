@@ -46,7 +46,7 @@ class FieldsProvider
         $visibleFields = [];
         $notVisibleFields = $this->addressFieldsProvider->get();
 
-        $fieldsConfig = json_decode($this->checkoutConfigurationsProvider->getAddressFieldsForm(), true);
+        $fieldsConfig = json_decode($this->checkoutConfigurationsProvider->getAddressFieldsForm(), true) ?:[];
         $sortOrder = 1;
         $isNewRow = true;
         $lastWasWide = true;
