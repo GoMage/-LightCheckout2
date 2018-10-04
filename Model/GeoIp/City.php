@@ -37,40 +37,6 @@
 
 namespace GoMage\LightCheckout\Model\GeoIp;
 
-class Record
-{
-    var $country_code;
-    var $country_code3;
-    var $country_name;
-    var $region;
-    var $city;
-    var $postal_code;
-    var $latitude;
-    var $longitude;
-    var $area_code;
-    var $dma_code;   # metro and dma code are the same. use metro_code
-    var $metro_code;
-    var $continent_code;
-}
-
-class Dnsrecord
-{
-    var $country_code;
-    var $country_code3;
-    var $country_name;
-    var $region;
-    var $regionname;
-    var $city;
-    var $postal_code;
-    var $latitude;
-    var $longitude;
-    var $areacode;
-    var $dmacode;
-    var $isp;
-    var $org;
-    var $metrocode;
-}
-
 class City
 {
     const FULL_RECORD_LENGTH = 50;
@@ -116,13 +82,7 @@ class City
           $number = Core::$GEOIP_COUNTRY_CODE_TO_NUMBER[$record->country_code];
           $record->country_code3 = Core::$GEOIP_COUNTRY_CODES3[$number];
           $record->country_name = Core::$GEOIP_COUNTRY_NAMES[$number];
-        if ($record->region != "") {
-            if (($record->country_code == "US") || ($record->country_code == "CA")) {
-                $record->regionname = $GLOBALS['ISO'][$record->country_code][$record->region];
-            } else {
-                $record->regionname = $GLOBALS['FIPS'][$record->country_code][$record->region];
-            }
-        }
+
           return $record;
     }
 

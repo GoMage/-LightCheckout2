@@ -242,11 +242,9 @@ class Core
     
     public function geoip_load_shared_mem($file)
     {
-
         $fp = fopen($file, "rb");
         if (!$fp) {
-            print "error opening $file: $php_errormsg\n";
-            exit;
+            return;
         }
         $s_array = fstat($fp);
         $size = $s_array['size'];
@@ -356,7 +354,10 @@ class Core
             if ($gi->flags & self::GEOIP_SHARED_MEMORY) {
                 $gi->shmid = @shmop_open(self::GEOIP_SHM_KEY, "a", 0, 0);
             } else {
-                $gi->filehandle = fopen($filename, "rb") or die("Can not open $filename\n");
+                $gi->filehandle = fopen($filename, "rb");
+                if (!$gi->filehandle) {
+                    return;
+                }
                 if ($gi->flags & self::GEOIP_MEMORY_CACHE) {
                     $s_array = fstat($gi->filehandle);
                     $gi->memory_buffer = fread($gi->filehandle, $s_array['size']);
@@ -471,8 +472,9 @@ class Core
                     2 * $gi->record_length
                 );
             } else {
-                fseek($gi->filehandle, 2 * $gi->record_length * $offset, SEEK_SET) == 0
-                or die("fseek failed");
+                if (!fseek($gi->filehandle, 2 * $gi->record_length * $offset, SEEK_SET) == 0) {
+                    return;
+                }
                 $buf = fread($gi->filehandle, 2 * $gi->record_length);
             }
             $x = [0,0];
