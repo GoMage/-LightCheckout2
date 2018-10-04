@@ -56,6 +56,7 @@ class CheckoutConfigurationsProvider
     /**#@+
      * Light Checkout configuration GeoIP.
      */
+    const XML_PATH_LIGHT_CHECKOUT_GEOIP_ENABLE = 'light_checkout_configuration/geoip/enable';
     const XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_COUNTRY = 'light_checkout_configuration/geoip/enable_for_country';
     const XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_STATE = 'light_checkout_configuration/geoip/enable_for_state';
     const XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_ZIP = 'light_checkout_configuration/geoip/enable_for_zip';
@@ -287,6 +288,11 @@ class CheckoutConfigurationsProvider
     public function getDeliveryDateText()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_TEXT);
+    }
+
+    public function getIsEnabledGeoIp()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_ENABLE);
     }
 
     public function getIsEnabledGeoIpForCountry()

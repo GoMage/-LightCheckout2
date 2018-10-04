@@ -167,29 +167,47 @@
             <group id="geoip" translate="label" type="text" sortOrder="250" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>GeoIP Settings</label>
+                <field id="enable" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable GeoIP</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
+                </field>
                 <field id="enable_for_country" translate="label" type="select" sortOrder="20"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable GeoIP for Country</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="enable_for_state" translate="label" type="select" sortOrder="30"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable GeoIP for State/Province</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="enable_for_zip" translate="label" type="select" sortOrder="40"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable GeoIP for Zip/Postcode</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="enable_for_city" translate="label" type="select" sortOrder="50"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable GeoIP for City</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\GeoIp</frontend_model>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
             </group>
             <group id="autofill_by_zipcode" translate="label" type="text" sortOrder="280" showInDefault="1"
