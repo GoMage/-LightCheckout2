@@ -1,9 +1,9 @@
-.section-config #light_checkout_configuration_delivery_date td.value {
+.section-config #gomage_light_checkout_configuration_delivery_date td.value {
     min-width: 700px;
     width: 100%;
 }
 
-.section-config #light_checkout_configuration_delivery_date td.value .time-select {
+.section-config #gomage_light_checkout_configuration_delivery_date td.value .time-select {
     min-width: 100px;
 }
 
@@ -87,33 +87,42 @@
 }
 ul.sortable-list{list-style: none !important;}
 
-#row_light_checkout_configuration_checkout_address_fields_sorting_fields_form td.label,
-#row_light_checkout_configuration_help_messages_message td.label {
+#row_gomage_light_checkout_configuration_checkout_address_fields_sorting_fields_form td.label,
+#row_gomage_light_checkout_configuration_help_messages_message td.label {
     width: 0;
     height: 0;
     padding: 0 0 0 0;
     float: left;
 }
 
-#row_light_checkout_configuration_checkout_address_fields_sorting_fields_form td.value,
-#row_light_checkout_configuration_help_messages_message td.value {
+#row_gomage_light_checkout_configuration_checkout_address_fields_sorting_fields_form td.value,
+#row_gomage_light_checkout_configuration_help_messages_message td.value {
     float: left;
     padding: 0 0 0 0;
     width: 220%;
 }
 
-#light_checkout_configuration_trust_seals td.value {
+#gomage_light_checkout_configuration_trust_seals td.value {
     width: 220%;
 }
 
-#light_checkout_configuration_trust_seals table td.value tbody td:nth-child(2) {
+#gomage_light_checkout_configuration_trust_seals table td.value tbody td:nth-child(2) {
     width: 35%;
 }
 
-#light_checkout_configuration_trust_seals table td.value tbody td:nth-child(3) {
+#gomage_light_checkout_configuration_trust_seals table td.value tbody td:nth-child(3) {
     width: 5%;
 }
 
-.accordion .config#light_checkout_configuration_trust_seals .label {
+.accordion .config#gomage_light_checkout_configuration_trust_seals .label {
     width: 15%;
 }
+
+#row_gomage_light_checkout_configuration_checkout_address_fields_sorting_fields_form .ui-icon {
+    background-image: url("images/ui-icons_222222_256x240.png")
+}
+
+.ui-icon-gripsmall-diagonal-se {
+    background-position: -64px -224px;
+}
+
