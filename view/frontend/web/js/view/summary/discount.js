@@ -1,6 +1,6 @@
 define(
     [
-        'Magento_Tax/js/view/checkout/summary/tax'
+        'Magento_SalesRule/js/view/summary/discount'
     ],
     function (Component) {
         return Component.extend({
