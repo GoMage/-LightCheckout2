@@ -36,7 +36,7 @@ class ShippingMethods implements OptionSourceInterface
     /**
      * @inheritdoc
      */
-    public function toOptionArray()
+    public function toOptionArray($isMultiselect = false)
     {
         $shippingMethodsOptionArray = [];
         $carrierMethodsList = $this->shippingConfig->getActiveCarriers();
@@ -48,6 +48,18 @@ class ShippingMethods implements OptionSourceInterface
                     'value' => $carrierMethodCode . '_' . $shippingMethodCode,
                 ];
             }
+        }
+
+        if (!$isMultiselect) {
+            $shippingMethodsOptionArray = array_merge(
+                [
+                    [
+                        'label' => __('-- Please select --'),
+                        'value' => '',
+                    ],
+                ],
+                $shippingMethodsOptionArray
+            );
         }
 
         return $shippingMethodsOptionArray;
