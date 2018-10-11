@@ -179,6 +179,9 @@
                                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/billing-address/create-account</item>
                                                         <item name="displayArea" xsi:type="string">create-account</item>
                                                         <item name="sortOrder" xsi:type="string">999</item>
+                                                        <item name="config" xsi:type="array">
+                                                            <item name="additionalClasses" xsi:type="string">full left</item>
+                                                        </item>
                                                     </item>
                                                 </item>
                                             </item>
