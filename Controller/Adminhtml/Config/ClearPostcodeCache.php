@@ -66,4 +66,16 @@ class ClearPostcodeCache extends Action
 
         return $result->setData(['success' => $success, 'message' => $message]);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function _isAllowed()
+    {
+        if (!$this->helper->isA(InstallData::MODULE_NAME)) {
+            return false;
+        }
+
+        return parent::_isAllowed();
+    }
 }
