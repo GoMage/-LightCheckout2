@@ -17,12 +17,12 @@
                 <field id="default_shipping_method" translate="label" type="select" sortOrder="30"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Default Shipping Method</label>
-                    <source_model>GoMage\LightCheckout\Model\Config\Source\ShippingMethodsWithEmptyValue</source_model>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\ShippingMethods</source_model>
                 </field>
                 <field id="default_payment_method" translate="label" type="select" sortOrder="40"
                        showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Default Payment Method</label>
-                    <source_model>GoMage\LightCheckout\Model\Config\Source\PaymentMethodsWithEmptyValue</source_model>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\PaymentMethods</source_model>
                 </field>
                 <field id="page_title" translate="label" type="text" sortOrder="50"
                        showInDefault="1" showInWebsite="0" showInStore="0">

@@ -9,7 +9,7 @@ use Magento\Payment\Model\Method\Factory as PaymentMethodFactory;
 /**
  * Return Options array of payment methods.
  */
-class PaymentMethodsWithEmptyValue implements OptionSourceInterface
+class PaymentMethods implements OptionSourceInterface
 {
     /**
      * @var ScopeConfigInterface
@@ -36,9 +36,9 @@ class PaymentMethodsWithEmptyValue implements OptionSourceInterface
     /**
      * @inheritdoc
      */
-    public function toOptionArray()
+    public function toOptionArray($isMultiselect = false)
     {
-        $options = [['label' => __('-- Please select --'), 'value' => '']];
+        $options = [];
         $paymentMethodsConfig = $this->scopeConfig->getValue('payment');
 
         foreach ($paymentMethodsConfig as $code => $methodConfig) {
@@ -49,6 +49,18 @@ class PaymentMethodsWithEmptyValue implements OptionSourceInterface
                     'value' => $code
                 ];
             }
+        }
+
+        if (!$isMultiselect) {
+            $options = array_merge(
+                [
+                    [
+                        'label' => __('-- Please select --'),
+                        'value' => '',
+                    ],
+                ],
+                $options
+            );
         }
 
         return $options;
