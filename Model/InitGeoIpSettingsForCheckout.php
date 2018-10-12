@@ -66,10 +66,11 @@ class InitGeoIpSettingsForCheckout
      */
     public function execute($jsLayout)
     {
+        $isGeoIpEnabled = $this->checkoutConfigurationsProvider->getIsEnabledGeoIp();
         $filePath = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath()
             . '/geoip/GeoLiteCity.dat';
 
-        if (file_exists($filePath)) {
+        if ($isGeoIpEnabled && file_exists($filePath)) {
             $ip = $this->remoteAddress->getRemoteAddress();
 
             $record = Core::getInstance($filePath, Core::GEOIP_STANDARD)->geoip_record_by_addr($ip);

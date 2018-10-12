@@ -2,11 +2,16 @@
 
 namespace GoMage\LightCheckout\Block\Checkout;
 
-use GoMage\LightCheckout\Model\Block\DisableBlockByJsLayout;
+use GoMage\LightCheckout\Model\Block\LayoutProcessor\UpdateBlocksAccordingToConfigurationByJsLayout;
+use GoMage\LightCheckout\Model\Block\LayoutProcessor\PrepareAddressFieldsPositions;
 use GoMage\LightCheckout\Model\InitGeoIpSettingsForCheckout;
 use GoMage\LightCheckout\Model\Layout\FetchArgs;
 use Magento\Checkout\Block\Checkout\AttributeMerger;
+use Magento\Customer\Model\AttributeMetadataDataProvider;
+use Magento\Customer\Model\Options;
+use Magento\Shipping\Model\Config;
 use Magento\Store\Api\StoreResolverInterface;
+use Magento\Ui\Component\Form\AttributeMapper;
 
 /**
  * Class LayoutProcessor
@@ -14,22 +19,22 @@ use Magento\Store\Api\StoreResolverInterface;
 class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcessorInterface
 {
     /**
-     * @var \Magento\Customer\Model\AttributeMetadataDataProvider
+     * @var AttributeMetadataDataProvider
      */
     private $attributeMetadataDataProvider;
 
     /**
-     * @var \Magento\Ui\Component\Form\AttributeMapper
+     * @var AttributeMapper
      */
-    protected $attributeMapper;
+    private $attributeMapper;
 
     /**
      * @var AttributeMerger
      */
-    protected $merger;
+    private $merger;
 
     /**
-     * @var \Magento\Customer\Model\Options
+     * @var Options
      */
     private $options;
 
@@ -39,7 +44,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private $storeResolver;
 
     /**
-     * @var \Magento\Shipping\Model\Config
+     * @var Config
      */
     private $shippingConfig;
 
@@ -49,9 +54,9 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private $fetchArgs;
 
     /**
-     * @var DisableBlockByJsLayout
+     * @var UpdateBlocksAccordingToConfigurationByJsLayout
      */
-    private $disableBlockByJsLayout;
+    private $updateBlocksAccordingToConfigurationByJsLayout;
 
     /**
      * @var InitGeoIpSettingsForCheckout
@@ -59,26 +64,33 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private $initGeoIpSettingsForCheckout;
 
     /**
-     * @param \Magento\Customer\Model\AttributeMetadataDataProvider $attributeMetadataDataProvider
-     * @param \Magento\Ui\Component\Form\AttributeMapper $attributeMapper
+     * @var PrepareAddressFieldsPositions
+     */
+    private $prepareAddressFieldsPositions;
+
+    /**
+     * @param AttributeMetadataDataProvider $attributeMetadataDataProvider
+     * @param AttributeMapper $attributeMapper
      * @param AttributeMerger $merger
      * @param FetchArgs $fetchArgs
-     * @param \Magento\Shipping\Model\Config $shippingConfig
+     * @param Config $shippingConfig
      * @param StoreResolverInterface $storeResolver
-     * @param \Magento\Customer\Model\Options $options
-     * @param DisableBlockByJsLayout $disableBlockByJsLayout
+     * @param Options $options
+     * @param UpdateBlocksAccordingToConfigurationByJsLayout $updateBlocksAccordingToConfigurationByJsLayout
      * @param InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout
+     * @param PrepareAddressFieldsPositions $prepareAddressFieldsPositions
      */
     public function __construct(
-        \Magento\Customer\Model\AttributeMetadataDataProvider $attributeMetadataDataProvider,
-        \Magento\Ui\Component\Form\AttributeMapper $attributeMapper,
+        AttributeMetadataDataProvider $attributeMetadataDataProvider,
+        AttributeMapper $attributeMapper,
         AttributeMerger $merger,
         FetchArgs $fetchArgs,
-        \Magento\Shipping\Model\Config $shippingConfig,
+        Config $shippingConfig,
         StoreResolverInterface $storeResolver,
-        \Magento\Customer\Model\Options $options,
-        DisableBlockByJsLayout $disableBlockByJsLayout,
-        InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout
+        Options $options,
+        UpdateBlocksAccordingToConfigurationByJsLayout $updateBlocksAccordingToConfigurationByJsLayout,
+        InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout,
+        PrepareAddressFieldsPositions $prepareAddressFieldsPositions
     ) {
         $this->attributeMetadataDataProvider = $attributeMetadataDataProvider;
         $this->attributeMapper = $attributeMapper;
@@ -87,8 +99,9 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $this->shippingConfig = $shippingConfig;
         $this->storeResolver = $storeResolver;
         $this->options = $options;
-        $this->disableBlockByJsLayout = $disableBlockByJsLayout;
+        $this->updateBlocksAccordingToConfigurationByJsLayout = $updateBlocksAccordingToConfigurationByJsLayout;
         $this->initGeoIpSettingsForCheckout = $initGeoIpSettingsForCheckout;
+        $this->prepareAddressFieldsPositions = $prepareAddressFieldsPositions;
     }
 
     /**
@@ -169,9 +182,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $elements = $this->convertElementsToSelect($elements, $attributesToConvert);
 
         if (isset($jsLayout['components']['checkout']['children']['configuration']['children']
-            ['shipping-rates-validation']['children']
-        )) {
-
+            ['shipping-rates-validation']['children'])) {
             $jsLayout['components']['checkout']['children']['configuration']['children']
             ['shipping-rates-validation']['children'] =
                 $this->processShippingRates(
@@ -181,8 +192,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         }
 
         if (isset($jsLayout['components']['checkout']['children']['shippingAddress']['children']
-            ['shipping-address-fieldset']['children']
-        )) {
+            ['shipping-address-fieldset']['children'])) {
             $fields = $jsLayout['components']['checkout']['children']['shippingAddress']['children']
             ['shipping-address-fieldset']['children'];
             $jsLayout['components']['checkout']['children']['shippingAddress']['children']
@@ -195,8 +205,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         }
 
         if (isset($jsLayout['components']['checkout']['children']['billingAddress']['children']
-            ['billing-address-fieldset']['children']
-        )) {
+            ['billing-address-fieldset']['children'])) {
             $fields = $jsLayout['components']['checkout']['children']['billingAddress']['children']
             ['billing-address-fieldset']['children'];
             $jsLayout['components']['checkout']['children']['billingAddress']['children']
@@ -210,24 +219,42 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
             = $this->mergePaymentMethodsRenders(
-            $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
-        );
+                $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
+            );
 
         $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
             = $this->mergePaymentAfterMethods(
+                $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
+            );
+
+        $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']['children']
+            = $this->mergeBeforePlaceOrder(
+                $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']
+                ['children']['before-place-order']
+            );
+
+        $jsLayout['components']['checkout']['children']['payment']['children']['additional-payment-validators']
+        ['children'] = $this->mergeAdditionalValidators(
             $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
         );
 
+        $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']['totals']
+        ['children'] = $this->mergeSummaryTotals(
+            $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']
+                ['totals']['children']
+        );
+
         if (isset($jsLayout['components']['checkout']['children']['deliveryDate']['children']
-            ['selectTime']
-        )) {
+            ['selectTime'])) {
             $jsLayout['components']['checkout']['children']['deliveryDate']['children']
             ['selectTime']['options'] = [];
         }
 
-
-        $jsLayout = $this->disableBlockByJsLayout->execute($jsLayout);
+        $jsLayout = $this->updateTemplateForVatIdField($jsLayout);
+        $jsLayout = $this->updateBlocksAccordingToConfigurationByJsLayout->execute($jsLayout);
         $jsLayout = $this->initGeoIpSettingsForCheckout->execute($jsLayout);
+
+        $jsLayout = $this->prepareAddressFieldsPositions->execute($jsLayout);
 
         return $jsLayout;
     }
@@ -249,7 +276,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
-        return array_merge($renders, $args);
+        return array_merge($args, $renders);
     }
 
     /**
@@ -294,7 +321,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
-        return array_merge($shippingRatesLayout, $args);
+        return array_merge($args, $shippingRatesLayout);
     }
 
     /**
@@ -314,6 +341,80 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $args = $this->fetchArgs->execute('checkout_index_index', $path);
 
-        return array_merge($afterMethodsLayout, $args);
+        return array_merge($args, $afterMethodsLayout);
+    }
+
+    /**
+     * @param $layout
+     *
+     * @return array
+     */
+    private function mergeBeforePlaceOrder($layout)
+    {
+        $path = '//referenceBlock[@name="checkout.root"]/arguments/argument[@name="jsLayout"]'
+            . '/item[@name="components"]/item[@name="checkout"]/item[@name="children"]'
+            . '/item[@name="steps"]/item[@name="children"]/item[@name="billing-step"]'
+            . '/item[@name="children"]/item[@name="payment"]/item[@name="children"]'
+            . '/item[@name="payments-list"]/item[@name="children"]/item[@name="before-place-order"]'
+            . '/item[@name="children"]';
+
+        $args = $this->fetchArgs->execute('checkout_index_index', $path);
+
+        return array_merge($args, $layout);
+    }
+
+    /**
+     * @param $layout
+     *
+     * @return array
+     */
+    private function mergeAdditionalValidators($layout)
+    {
+        $path = '//referenceBlock[@name="checkout.root"]/arguments/argument[@name="jsLayout"]'
+            . '/item[@name="components"]/item[@name="checkout"]/item[@name="children"]'
+            . '/item[@name="steps"]/item[@name="children"]/item[@name="billing-step"]'
+            . '/item[@name="children"]/item[@name="payment"]/item[@name="children"]'
+            . '/item[@name="additional-payment-validators"]/item[@name="children"]';
+
+        $args = $this->fetchArgs->execute('checkout_index_index', $path);
+
+        return array_merge($args, $layout);
+    }
+
+    /**
+     * @param $layout
+     *
+     * @return array
+     */
+    private function mergeSummaryTotals($layout)
+    {
+        $path = '//referenceBlock[@name="checkout.root"]/arguments/argument[@name="jsLayout"]'
+            . '/item[@name="components"]/item[@name="checkout"]/item[@name="children"]'
+            . '/item[@name="sidebar"]/item[@name="children"]/item[@name="summary"]'
+            . '/item[@name="children"]/item[@name="totals"]/item[@name="children"]';
+
+        $args = $this->fetchArgs->execute('checkout_index_index', $path);
+
+        return array_merge($args, $layout);
+    }
+
+    /**
+     * @param $jsLayout
+     *
+     * @return array
+     */
+    private function updateTemplateForVatIdField($jsLayout)
+    {
+        $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
+        ['children']['vat_id']['config']['template'] = 'GoMage_LightCheckout/element/vat-number-with-checkbox';
+        $jsLayout['components']['checkout']['children']['billingAddress']['children']['billing-address-fieldset']
+        ['children']['vat_id']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/element-with-blur-template';
+
+        $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
+        ['children']['vat_id']['config']['template'] = 'GoMage_LightCheckout/element/vat-number';
+        $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
+        ['children']['vat_id']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/element-with-blur-template';
+
+        return $jsLayout;
     }
 }

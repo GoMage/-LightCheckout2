@@ -38,7 +38,6 @@ class DeliveryDate extends Template
         return $this->coreRegistry->registry('current_order');
     }
 
-
     /**
      * @inheritdoc
      */

@@ -40,6 +40,7 @@ class Onepage extends Template
         array $data = []
     ) {
         parent::__construct($context, $data);
+
         $this->formKey = $formKey;
         $this->_isScopePrivate = true;
         $this->jsLayout = isset($data['jsLayout']) && is_array($data['jsLayout'])

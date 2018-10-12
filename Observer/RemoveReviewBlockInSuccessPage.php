@@ -36,7 +36,7 @@ class RemoveReviewBlockInSuccessPage implements ObserverInterface
         $titleBlock = $layout->getBlock('order_review_title');
 
         $isShowBlock = $this->scopeConfig->getValue(
-            'light_checkout_configuration/general/show_order_summary_on_success_page',
+            'gomage_light_checkout_configuration/general/show_order_summary_on_success_page',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
 

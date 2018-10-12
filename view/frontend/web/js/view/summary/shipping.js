@@ -1,12 +1,11 @@
 define(
     [
-        'Magento_Checkout/js/view/summary/shipping',
-        'Magento_Checkout/js/model/quote'
+        'Magento_Tax/js/view/checkout/summary/shipping',
     ],
-    function (Component, quote) {
+    function (Component) {
         return Component.extend({
-            isCalculated: function() {
-                return this.totals() && null != quote.shippingMethod();
+            isFullMode: function () {
+                return true;
             }
         });
     }

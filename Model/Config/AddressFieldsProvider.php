@@ -1,8 +1,8 @@
 <?php
 
-namespace GoMage\LightCheckout\Model\ConfigProvider;
+namespace GoMage\LightCheckout\Model\Config;
 
-use Magento\Customer\Helper\Address as AddressHelper;
+use Magento\Customer\Helper\Address;
 use Magento\Customer\Model\AttributeMetadataDataProvider;
 use Magento\Eav\Api\Data\AttributeInterface;
 
@@ -14,20 +14,20 @@ class AddressFieldsProvider
     private $attributeMetadataDataProvider;
 
     /**
-     * @var AddressHelper
-     * */
-    private $addressHelper;
+     * @var Address
+     */
+    private $address;
 
     /**
      * @param AttributeMetadataDataProvider $attributeMetadataDataProvider
-     * @param AddressHelper $addressHelper
+     * @param Address $address
      */
     public function __construct(
         AttributeMetadataDataProvider $attributeMetadataDataProvider,
-        AddressHelper $addressHelper
+        Address $address
     ) {
         $this->attributeMetadataDataProvider = $attributeMetadataDataProvider;
-        $this->addressHelper = $addressHelper;
+        $this->address = $address;
     }
 
     /**
@@ -35,7 +35,7 @@ class AddressFieldsProvider
      */
     public function get()
     {
-        $availableFields = [];
+        $addressFields = [];
 
         /** @var AttributeInterface[] $collection */
         $collection = $this->attributeMetadataDataProvider->loadAttributesCollection(
@@ -46,7 +46,7 @@ class AddressFieldsProvider
             if (!$this->isAddressAttributeVisible($field)) {
                 continue;
             }
-            $availableFields[] = $field;
+            $addressFields[] = $field;
         }
 
         /** @var AttributeInterface[] $collection */
@@ -58,31 +58,26 @@ class AddressFieldsProvider
             if (!$this->isCustomerAttributeVisible($field)) {
                 continue;
             }
-            $availableFields[] = $field;
+            $addressFields[] = $field;
         }
 
-        $fieldsNames = [];
-        foreach ($availableFields as $availableField) {
-            $fieldsNames[] = $availableField->getAttributeCode();
-        }
-
-        return $fieldsNames;
+        return $addressFields;
     }
 
     /**
-     * Check if address attribute should be visible on frontend.
+     * Check if address attribute can be visible on frontend.
      *
      * @param $attribute
      *
-     * @return bool
+     * @return bool|null|string
      */
-    public function isAddressAttributeVisible($attribute)
+    private function isAddressAttributeVisible($attribute)
     {
         $code = $attribute->getAttributeCode();
         $result = $attribute->getIsVisible();
         switch ($code) {
             case 'vat_id':
-                $result = $this->addressHelper->isVatAttributeVisible();
+                $result = $this->address->isVatAttributeVisible();
                 break;
             case 'region':
                 $result = false;
@@ -93,13 +88,11 @@ class AddressFieldsProvider
     }
 
     /**
-     * Check if customer attribute should be visible on frontend.
-     *
      * @param AttributeInterface $attribute
      *
      * @return bool
      */
-    public function isCustomerAttributeVisible($attribute)
+    private function isCustomerAttributeVisible(AttributeInterface $attribute)
     {
         $code = $attribute->getAttributeCode();
         if (in_array($code, ['gender', 'taxvat', 'dob'])) {

@@ -1,10 +1,10 @@
 <?php
 
-namespace GoMage\LightCheckout\Model\Config\Backend\DeliveryDate;
+namespace GoMage\LightCheckout\Model\Config\Backend;
 
 use Magento\Framework\App\Config\Value;
 
-class Days extends Value
+class SelectFieldConverter extends Value
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class Days extends Value
                 $result[] = $data;
             }
         }
-        $this->setValue(serialize($result));
+        $this->setValue(json_encode($result));
 
         return $this;
     }
@@ -28,7 +28,7 @@ class Days extends Value
      */
     public function afterLoad()
     {
-        $value = @unserialize($this->getValue());
+        $value = json_decode($this->getValue(), true);
         if (is_array($value)) {
             $this->setValue($value);
         }

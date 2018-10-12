@@ -83,13 +83,14 @@ class DeliveryDays extends AbstractFieldArray
         $dayOptionsRenderer = $this->getWeekDayOptionsRenderer();
         $availableOptionsRenderer = $this->getAvailableOptionsRenderer();
 
+        $selectedStr = 'selected="selected"';
         $row->setData(
             'option_extra_attrs',
             [
-                'option_' . $timeFromOptionsRenderer->calcOptionHash($row->getDeliveryTimeFrom()) => 'selected="selected"',
-                'option_' . $timeToOptionsRenderer->calcOptionHash($row->getDeliveryTimeTo()) => 'selected="selected"',
-                'option_' . $dayOptionsRenderer->calcOptionHash($row->getDeliveryDay()) => 'selected="selected"',
-                'option_' . $availableOptionsRenderer->calcOptionHash($row->getDeliveryAvailable()) => 'selected="selected"',
+                'option_' . $timeFromOptionsRenderer->calcOptionHash($row->getDeliveryTimeFrom()) => $selectedStr,
+                'option_' . $timeToOptionsRenderer->calcOptionHash($row->getDeliveryTimeTo()) => $selectedStr,
+                'option_' . $dayOptionsRenderer->calcOptionHash($row->getDeliveryDay()) => $selectedStr,
+                'option_' . $availableOptionsRenderer->calcOptionHash($row->getDeliveryAvailable()) => $selectedStr,
             ]
         );
 

@@ -3,7 +3,6 @@
 namespace GoMage\LightCheckout\Model;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
-use GoMage\LightCheckout\Model\ConfigProvider\AddressFieldsProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\DeliveryDateConfigProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\PasswordSettingProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\PaymentMethodsListProvider;
@@ -26,11 +25,6 @@ class ConfigProvider implements ConfigProviderInterface
      * @var PaymentMethodsListProvider
      */
     private $paymentMethodsListProvider;
-
-    /**
-     * @var AddressFieldsProvider
-     */
-    private $addressFieldsProvider;
 
     /**
      * @var CheckoutConfigurationsProvider
@@ -70,7 +64,6 @@ class ConfigProvider implements ConfigProviderInterface
     /**
      * @param PaymentMethodsListProvider $paymentMethodsListProvider
      * @param CheckoutSession $session
-     * @param AddressFieldsProvider $addressFieldsProvider
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param PaymentMethodManagementInterface $paymentMethodManagement
      * @param ShippingMethodConverter $shippingMethodConverter
@@ -82,7 +75,6 @@ class ConfigProvider implements ConfigProviderInterface
     public function __construct(
         PaymentMethodsListProvider $paymentMethodsListProvider,
         CheckoutSession $session,
-        AddressFieldsProvider $addressFieldsProvider,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
         PaymentMethodManagementInterface $paymentMethodManagement,
         ShippingMethodConverter $shippingMethodConverter,
@@ -93,7 +85,6 @@ class ConfigProvider implements ConfigProviderInterface
     ) {
         $this->paymentMethodsListProvider = $paymentMethodsListProvider;
         $this->checkoutSession = $session;
-        $this->addressFieldsProvider = $addressFieldsProvider;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
         $this->paymentMethodManagement = $paymentMethodManagement;
         $this->shippingMethodConverter = $shippingMethodConverter;
@@ -111,11 +102,12 @@ class ConfigProvider implements ConfigProviderInterface
         $quoteId = $this->checkoutSession->getQuoteId();
         $config = [
             'paymentMethods' => $this->paymentMethodsListProvider->get($quoteId),
-            'addressFields' => $this->addressFieldsProvider->get(),
             'general' => $this->getGeneralConfig(),
             'passwordSettings' => $this->passwordSettingProvider->get(),
             'registration' => $this->getRegistrationConfig(),
             'deliveryDate' => $this->deliveryDateConfigProvider->get(),
+            'vatTax' => $this->getVatTaxConfig(),
+            'autoCompleteStreet' => $this->getAutoCompleteStreetConfig(),
         ];
 
         return $config;
@@ -227,6 +219,28 @@ class ConfigProvider implements ConfigProviderInterface
             'checkoutMode' => $this->checkoutConfigurationsProvider->getCheckoutMode(),
             'isCreateAnAccountCheckboxChecked' => $this->checkoutConfigurationsProvider->getCreateAnAccountCheckbox(),
             'autoRegistration' => $this->checkoutConfigurationsProvider->getIsAutoRegistration(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getVatTaxConfig()
+    {
+        return [
+            'enabled' => $this->checkoutConfigurationsProvider->getIsEnabledVatTax(),
+            'checkboxSettings' => $this->checkoutConfigurationsProvider->getVatTaxShowCheckbox(),
+            'checkboxText' => $this->checkoutConfigurationsProvider->getVatTaxTextUnderTaxVatField(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getAutoCompleteStreetConfig()
+    {
+        return [
+            'enabled' => $this->checkoutConfigurationsProvider->getIsEnabledAutoCompleteByStreet(),
         ];
     }
 }

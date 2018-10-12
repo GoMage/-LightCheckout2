@@ -153,4 +153,15 @@ class QuoteItemManagement implements QuoteItemManagementInterface
 
         return $responseData;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function updateSections($cartId)
+    {
+        /** @var \Magento\Quote\Model\Quote $quote */
+        $quote = $this->quoteRepository->getActive($cartId);
+
+        return $this->getResponseData($quote);
+    }
 }

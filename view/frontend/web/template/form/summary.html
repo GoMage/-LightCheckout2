@@ -1,0 +1,21 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="opc-block-summary" data-bind="blockLoader: isLoading">
+    <span data-bind="i18n: 'Order Summary'" class="title"></span>
+    <!-- ko if: ($data.tooltip && tooltip.description) -->
+    <div class="field-tooltip toggle">
+        <span class="field-tooltip-action action-help" tabindex="0" data-toggle="dropdown" data-bind="mageInit: {'dropdown':{'activeClass': '_active'}}" aria-haspopup="true" aria-expanded="false"></span>
+        <div class="field-tooltip-content" data-target="dropdown" aria-hidden="true">
+            <!-- ko text: tooltip.description--><!-- /ko -->
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko foreach: elems() -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</div>

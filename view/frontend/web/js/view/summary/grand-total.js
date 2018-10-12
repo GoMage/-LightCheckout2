@@ -1,14 +1,11 @@
 define(
     [
-        'Magento_Checkout/js/view/summary/grand-total'
+        'Magento_Tax/js/view/checkout/summary/grand-total'
     ],
     function (Component) {
         "use strict";
         return Component.extend({
-            defaults: {
-                template: 'Magento_Checkout/summary/grand-total'
-            },
-            isDisplayed: function() {
+            isDisplayed: function () {
                 return true;
             }
         });

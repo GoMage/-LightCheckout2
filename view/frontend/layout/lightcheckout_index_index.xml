@@ -26,7 +26,6 @@
                                                     <!-- Shipping rates validation components -->
                                                 </item>
                                             </item>
-
                                         </item>
                                     </item>
                                     <item name="errors" xsi:type="array">
@@ -36,9 +35,15 @@
                                     </item>
                                     <item name="page_content" xsi:type="array">
                                         <item name="sortOrder" xsi:type="string">5</item>
-                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/element/page_content</item>
-                                        <item name="template" xsi:type="string">GoMage_LightCheckout/element/page_content</item>
+                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/page-content</item>
+                                        <item name="template" xsi:type="string">GoMage_LightCheckout/element/page-content</item>
                                         <item name="displayArea" xsi:type="string">page_content</item>
+                                    </item>
+                                    <item name="trust_seals_top" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">8</item>
+                                        <item name="component" xsi:type="string">uiComponent</item>
+                                        <item name="template" xsi:type="string">GoMage_LightCheckout/element/trust-seals</item>
+                                        <item name="displayArea" xsi:type="string">trust_seals_top</item>
                                     </item>
                                     <item name="authentication" xsi:type="array">
                                         <item name="sortOrder" xsi:type="string">10</item>
@@ -55,6 +60,7 @@
                                     </item>
                                     <item name="customer-email" xsi:type="array">
                                         <item name="component" xsi:type="string">Magento_Checkout/js/view/form/element/email</item>
+                                        <item name="template" xsi:type="string">GoMage_LightCheckout/element/email</item>
                                         <item name="displayArea" xsi:type="string">customer-email</item>
                                         <item name="sortOrder" xsi:type="string">20</item>
                                         <item name="tooltip" xsi:type="array">
@@ -73,6 +79,34 @@
                                                 <item name="displayArea" xsi:type="string">additional-login-form-fields</item>
                                                 <item name="children" xsi:type="array">
                                                     <!-- additional login form fields -->
+                                                </item>
+                                            </item>
+                                            <item name="social-networks" xsi:type="array">
+                                                <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/social-networks</item>
+                                                <item name="template" xsi:type="string">GoMage_LightCheckout/form/social-networks</item>
+                                                <item name="displayArea" xsi:type="string">social-networks</item>
+                                                <item name="children" xsi:type="array">
+                                                    <item name="facebook" xsi:type="array">
+                                                        <item name="component" xsi:type="string">uiComponent</item>
+                                                        <item name="template" xsi:type="string">GoMage_LightCheckout/form/social-networks/social-network</item>
+                                                        <item name="config" xsi:type="array">
+                                                            <item name="additionalClasses" xsi:type="string">facebook-logo</item>
+                                                        </item>
+                                                    </item>
+                                                    <item name="google" xsi:type="array">
+                                                        <item name="component" xsi:type="string">uiComponent</item>
+                                                        <item name="template" xsi:type="string">GoMage_LightCheckout/form/social-networks/social-network</item>
+                                                        <item name="config" xsi:type="array">
+                                                            <item name="additionalClasses" xsi:type="string">google-logo</item>
+                                                        </item>
+                                                    </item>
+                                                    <item name="twitter" xsi:type="array">
+                                                        <item name="component" xsi:type="string">uiComponent</item>
+                                                        <item name="template" xsi:type="string">GoMage_LightCheckout/form/social-networks/social-network</item>
+                                                        <item name="config" xsi:type="array">
+                                                            <item name="additionalClasses" xsi:type="string">twitter-logo</item>
+                                                        </item>
+                                                    </item>
                                                 </item>
                                             </item>
                                         </item>
@@ -103,11 +137,11 @@
                                                         <item name="visible" xsi:type="boolean">false</item>
                                                     </item>
                                                     <item name="region_id" xsi:type="array">
-                                                        <item name="component" xsi:type="string">Magento_Ui/js/form/element/region</item>
+                                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/region</item>
                                                         <item name="config" xsi:type="array">
                                                             <item name="template" xsi:type="string">ui/form/field</item>
                                                             <item name="elementTmpl" xsi:type="string">ui/form/element/select</item>
-                                                            <item name="customEntry" xsi:type="string">shippingAddress.region</item>
+                                                            <item name="customEntry" xsi:type="string">billingAddress.region</item>
                                                         </item>
                                                         <item name="validation" xsi:type="array">
                                                             <item name="required-entry" xsi:type="boolean">true</item>
@@ -138,16 +172,16 @@
                                                     <item name="country_id" xsi:type="array">
                                                         <item name="sortOrder" xsi:type="string">115</item>
                                                     </item>
-                                                    <item name="telephone" xsi:type="array">
-                                                        <item name="config" xsi:type="array">
-                                                            <item name="tooltip" xsi:type="array">
-                                                                <item name="description" xsi:type="string" translate="true">For delivery questions.</item>
-                                                            </item>
-                                                        </item>
+                                                    <item name="vat_id" xsi:type="array">
+                                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/vat-number</item>
                                                     </item>
                                                     <item name="createAccount" xsi:type="array">
                                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/billing-address/create-account</item>
                                                         <item name="displayArea" xsi:type="string">create-account</item>
+                                                        <item name="sortOrder" xsi:type="string">999</item>
+                                                        <item name="config" xsi:type="array">
+                                                            <item name="additionalClasses" xsi:type="string">full left</item>
+                                                        </item>
                                                     </item>
                                                 </item>
                                             </item>
@@ -209,7 +243,7 @@
                                                         <item name="visible" xsi:type="boolean">false</item>
                                                     </item>
                                                     <item name="region_id" xsi:type="array">
-                                                        <item name="component" xsi:type="string">Magento_Ui/js/form/element/region</item>
+                                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/region</item>
                                                         <item name="config" xsi:type="array">
                                                             <item name="template" xsi:type="string">ui/form/field</item>
                                                             <item name="elementTmpl" xsi:type="string">ui/form/element/select</item>
@@ -244,30 +278,36 @@
                                                     <item name="country_id" xsi:type="array">
                                                         <item name="sortOrder" xsi:type="string">115</item>
                                                     </item>
-                                                    <item name="telephone" xsi:type="array">
-                                                        <item name="config" xsi:type="array">
-                                                            <item name="tooltip" xsi:type="array">
-                                                                <item name="description" xsi:type="string" translate="true">For delivery questions.</item>
-                                                            </item>
-                                                        </item>
+                                                    <item name="vat_id" xsi:type="array">
+                                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/vat-number</item>
                                                     </item>
                                                 </item>
                                             </item>
                                         </item>
                                     </item>
                                     <item name="deliveryDate" xsi:type="array">
+                                        <item name="config" xsi:type="array">
+                                            <item name="deps" xsi:type="array">
+                                                <item name="0" xsi:type="string">checkoutProvider</item>
+                                            </item>
+                                        </item>
                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/delivery-date</item>
                                         <item name="displayArea" xsi:type="string">deliveryDate</item>
+                                        <item name="provider" xsi:type="string">checkoutProvider</item>
                                         <item name="children" xsi:type="array">
                                             <item name="selectDate" xsi:type="array">
                                                 <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/delivery-date/date</item>
                                                 <item name="template" xsi:type="string">GoMage_LightCheckout/form/delivery-date/date</item>
                                                 <item name="displayArea" xsi:type="string">selectDate</item>
+                                                <item name="dataScope" xsi:type="string">deliveryDate.selectDate</item>
+                                                <item name="provider" xsi:type="string">checkoutProvider</item>
                                             </item>
                                             <item name="selectTime" xsi:type="array">
                                                 <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/delivery-date/time</item>
                                                 <item name="displayArea" xsi:type="string">selectTime</item>
                                                 <item name="template" xsi:type="string">ui/form/element/select</item>
+                                                <item name="dataScope" xsi:type="string">deliveryDate.selectTime</item>
+                                                <item name="provider" xsi:type="string">checkoutProvider</item>
                                             </item>
                                         </item>
                                     </item>
@@ -305,6 +345,7 @@
                                             </item>
                                             <item name="payments-list" xsi:type="array">
                                                 <item name="component" xsi:type="string">Magento_Checkout/js/view/payment/list</item>
+                                                <item name="template" xsi:type="string">GoMage_LightCheckout/form/payment-methods/list</item>
                                                 <item name="displayArea" xsi:type="string">payment-methods-list</item>
                                                 <item name="config" xsi:type="array">
                                                     <item name="deps" xsi:type="array">
@@ -349,7 +390,7 @@
                                                 <item name="component" xsi:type="string">Magento_Checkout/js/view/summary</item>
                                                 <item name="displayArea" xsi:type="string">summary</item>
                                                 <item name="config" xsi:type="array">
-                                                    <item name="template" xsi:type="string">Magento_Checkout/summary</item>
+                                                    <item name="template" xsi:type="string">GoMage_LightCheckout/form/summary</item>
                                                 </item>
                                                 <item name="children" xsi:type="array">
                                                     <item name="totals" xsi:type="array">
@@ -362,9 +403,11 @@
                                                             <!-- sort order for this totals is configured on admin panel-->
                                                             <!-- Stores->Configuration->SALES->Sales->General->Checkout Totals Sort Order -->
                                                             <item name="subtotal" xsi:type="array">
-                                                                <item name="component"  xsi:type="string">Magento_Checkout/js/view/summary/subtotal</item>
+                                                                <item name="component"  xsi:type="string">Magento_Tax/js/view/checkout/summary/subtotal</item>
                                                                 <item name="config" xsi:type="array">
                                                                     <item name="title" xsi:type="string" translate="true">Cart Subtotal</item>
+                                                                    <item name="excludingTaxMessage" xsi:type="string" translate="true">Excl. Tax</item>
+                                                                    <item name="includingTaxMessage" xsi:type="string" translate="true">Incl. Tax</item>
                                                                 </item>
                                                             </item>
                                                             <item name="shipping" xsi:type="array">
@@ -372,11 +415,37 @@
                                                                 <item name="config" xsi:type="array">
                                                                     <item name="title" xsi:type="string" translate="true">Shipping</item>
                                                                     <item name="notCalculatedMessage" xsi:type="string" translate="true">Not yet calculated</item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="excludingTaxMessage" xsi:type="string" translate="true">Excl. Tax</item>
+                                                                        <item name="includingTaxMessage" xsi:type="string" translate="true">Incl. Tax</item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                            <item name="tax" xsi:type="array">
+                                                                <item name="component"  xsi:type="string">GoMage_LightCheckout/js/view/summary/tax</item>
+                                                                <item name="config" xsi:type="array">
+                                                                    <item name="title" xsi:type="string" translate="true">Tax</item>
+                                                                </item>
+                                                            </item>
+                                                            <item name="discount" xsi:type="array">
+                                                                <item name="component"  xsi:type="string">GoMage_LightCheckout/js/view/summary/discount</item>
+                                                                <item name="config" xsi:type="array">
+                                                                    <item name="title" xsi:type="string" translate="true">Discount</item>
+                                                                </item>
+                                                            </item>
+                                                            <item name="before_grandtotal" xsi:type="array">
+                                                                <item name="component"  xsi:type="string">uiComponent</item>
+                                                                <item name="sortOrder" xsi:type="string">30</item>
+                                                                <item name="children" xsi:type="array">
+                                                                    <!-- merge your components here -->
                                                                 </item>
                                                             </item>
                                                             <item name="grand-total" xsi:type="array">
                                                                 <item name="component"  xsi:type="string">GoMage_LightCheckout/js/view/summary/grand-total</item>
                                                                 <item name="config" xsi:type="array">
+                                                                    <item name="exclTaxLabel" xsi:type="string" translate="true">Order Total Excl. Tax</item>
+                                                                    <item name="inclTaxLabel" xsi:type="string" translate="true">Order Total Incl. Tax</item>
+                                                                    <item name="basicCurrencyMessage" xsi:type="string" translate="true">Your credit card will be charged for</item>
                                                                     <item name="title" xsi:type="string" translate="true">Order Total</item>
                                                                 </item>
                                                             </item>
@@ -416,7 +485,6 @@
                                                                     </item>
                                                                 </item>
                                                             </item>
-
                                                         </item>
                                                     </item>
                                                     <item name="itemsAfter" xsi:type="array">
@@ -427,9 +495,19 @@
                                                     </item>
                                                 </item>
                                             </item>
+                                            <item name="trust_seals_before_place_order_button" xsi:type="array">
+                                                <item name="component" xsi:type="string">uiComponent</item>
+                                                <item name="template" xsi:type="string">GoMage_LightCheckout/element/trust-seals</item>
+                                                <item name="displayArea" xsi:type="string">trust_seals_before_place_order_button</item>
+                                            </item>
                                             <item name="placeOrderButton" xsi:type="array">
                                                 <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/place-order</item>
                                                 <item name="displayArea" xsi:type="string">placeOrderButton</item>
+                                            </item>
+                                            <item name="trust_seals_after_place_order_button" xsi:type="array">
+                                                <item name="component" xsi:type="string">uiComponent</item>
+                                                <item name="template" xsi:type="string">GoMage_LightCheckout/element/trust-seals</item>
+                                                <item name="displayArea" xsi:type="string">trust_seals_after_place_order_button</item>
                                             </item>
                                         </item>
                                     </item>
@@ -445,5 +523,11 @@
         </referenceContainer>
         <move element="logo" destination="checkout.header.wrapper"/>
         <referenceBlock name="page.main.title" remove="true"/>
+        <referenceBlock name="head.additional">
+            <block class="GoMage\LightCheckout\Block\Checkout\AddJsForGoogleAutoCompleteStreet"
+                   name="google-auto-complete-street"
+                   as="google-auto-complete-street"
+                   template="google_auto_complete_street.phtml"/>
+        </referenceBlock>
     </body>
 </page>

@@ -40,7 +40,34 @@ define(
                 };
 
                 return this.getUrl(urls, {});
+            },
+
+            getUrlForCheckVatNumber: function () {
+                var urls = {
+                    'default': '/light_checkout/check-vat-number'
+                };
+
+                return this.getUrl(urls, {});
+            },
+            
+            getUrlForUpdateSections: function (quoteId) {
+                var params = (this.getCheckoutMethod() == 'guest') ? {cartId: quoteId} : {};
+                var urls = {
+                    'guest': '/light_checkout/guest-carts/:cartId/update-sections',
+                    'customer': '/light_checkout/carts/mine/update-sections'
+                };
+
+                return this.getUrl(urls, params);
+            },
+
+            getUrlForGetAddressByPostCode: function () {
+                var urls = {
+                    'default': '/light_checkout/get-address-by-zip-code'
+                };
+
+                return this.getUrl(urls, {});
             }
+
         }, resourceUrlManager);
     }
 );

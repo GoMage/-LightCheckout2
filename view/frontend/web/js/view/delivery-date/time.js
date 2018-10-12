@@ -31,7 +31,6 @@ define([
                     _.each(deliveryDaysWithTime[day], function (hour, key) {
                         options[key] = deliveryHoursHelper[hour];
                     });
-
                 }
             }
 
