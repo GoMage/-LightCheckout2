@@ -317,7 +317,7 @@
                 </field>
                 <field id="text_under_vat_tax_field" translate="label" type="text" sortOrder="90"
                        showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Text under VAT/Tax field</label>
+                    <label>Text for "Buy without VAT" checkbox</label>
                 </field>
             </group>
             <group id="help_messages" translate="label" type="text" sortOrder="500" showInDefault="1"
