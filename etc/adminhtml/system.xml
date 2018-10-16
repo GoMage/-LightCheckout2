@@ -227,7 +227,7 @@
                 </field>
                 <field id="enabled_zip_caching" translate="label" type="select" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Enabled Zip Caching</label>
+                    <label>Enable Zip Caching</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="download_library" translate="label comment" type="button" sortOrder="35" showInDefault="1"
