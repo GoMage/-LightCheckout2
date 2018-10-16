@@ -312,7 +312,7 @@
                 </field>
                 <field id="show_buy_without_vat_checkbox" translate="label" type="select" sortOrder="80"
                        showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Show Buy without VAT checkbox</label>
+                    <label>Show "Buy without VAT" checkbox</label>
                     <source_model>GoMage\LightCheckout\Model\Config\Source\EnableCheckboxOptions</source_model>
                 </field>
                 <field id="text_under_vat_tax_field" translate="label" type="text" sortOrder="90"
