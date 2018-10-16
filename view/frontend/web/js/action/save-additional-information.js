@@ -30,14 +30,13 @@ define(
                 },
                 passwordVal = $(selectors.password).val(),
                 isCheckboxChecked = $(selectors.accountCheckbox).is(":checked"),
-                isPasswordForLoginVisible = $(selectors.passwordForLoginForm).is(":visible"),
                 deliveryDateVal = $(selectors.deliveryDate).val(),
                 deliveryTimeVal = $(selectors.deliveryTime).text(),
                 payload = {
                     additionInformation: {}
                 };
 
-            if (isCheckboxChecked && !isPasswordForLoginVisible) {
+            if (isCheckboxChecked) {
                 payload.additionInformation.password = passwordVal;
             }
 
