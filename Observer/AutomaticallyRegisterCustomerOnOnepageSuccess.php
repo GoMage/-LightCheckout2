@@ -7,6 +7,7 @@ use Magento\Checkout\Model\Session;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Sales\Api\OrderCustomerManagementInterface;
 
 class AutomaticallyRegisterCustomerOnOnepageSuccess implements ObserverInterface
@@ -63,8 +64,10 @@ class AutomaticallyRegisterCustomerOnOnepageSuccess implements ObserverInterface
             && $order->getId() == $orderId
             && !$order->getCustomerId()
         ) {
-            $customer = $this->customerRepository->get($order->getCustomerEmail());
-            if (!$customer->getId()) {
+            try {
+                $this->customerRepository->get($order->getCustomerEmail());
+            } catch (NoSuchEntityException $e) {
+                //need to do only if customer does not exists.
                 $this->orderCustomerService->create($orderId);
             }
         }
