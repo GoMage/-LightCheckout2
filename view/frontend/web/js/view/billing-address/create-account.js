@@ -33,7 +33,7 @@ define(
                     shouldCheckboxBeVisible = false,
                     shouldIsCreateAnAccountCheckboxChecked = parseInt(window.checkoutConfig.registration.isCreateAnAccountCheckboxChecked),
                     autoRegistration = parseInt(window.checkoutConfig.registration.autoRegistration),
-                    checkoutMode = parseInt(window.checkoutConfig.registration.checkoutMod);
+                    checkoutMode = parseInt(window.checkoutConfig.registration.checkoutMode);
 
                 if (autoRegistration === 0) {
                     if (checkoutMode === 0 && !customer.isLoggedIn()) {
