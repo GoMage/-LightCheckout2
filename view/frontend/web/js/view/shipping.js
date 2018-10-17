@@ -236,7 +236,7 @@ define(
                     shippingMethodValidationResult = false;
                 }
 
-                if (!customer.isLoggedIn()) {
+                if (!customer.isLoggedIn() && !$('#customer-email-error').is(':visible')) {
                     $(loginFormSelector).validation();
                     emailValidationResult = Boolean($(loginFormSelector + ' input[name=username]').valid());
                 }

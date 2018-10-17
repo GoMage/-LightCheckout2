@@ -15,6 +15,7 @@ define([
         customerNoteSelector: '#note-customer-email',
         onlyRegistered: ko.observable(false),
         checkoutMode: parseInt(window.checkoutConfig.registration.checkoutMode),
+        autoRegistration: parseInt(window.checkoutConfig.registration.autoRegistration),
         error: 'Customer with this email does not exist. Please register before placing order.',
         errorText: ko.observable('Customer with this email does not exist. Please register before placing order.'),
 
@@ -25,7 +26,7 @@ define([
         initialize: function () {
             this._super();
 
-            if (!customer.isLoggedIn() && this.checkoutMode === 1) {
+            if (!customer.isLoggedIn() && this.checkoutMode === 1 && !this.autoRegistration) {
                 this.onlyRegistered(true);
                 additionalValidators.registerValidator(this);
             }
@@ -62,14 +63,14 @@ define([
             $.when(this.isEmailCheckComplete).done(function () {
                 this.isPasswordVisible(false);
 
-                if (!customer.isLoggedIn() && this.checkoutMode === 1) {
+                if (!customer.isLoggedIn() && this.checkoutMode === 1 && !this.autoRegistration) {
                     self.showErrorText();
                 }
             }.bind(this)).fail(function () {
                 this.isPasswordVisible(true);
                 checkoutData.setCheckedEmailValue(this.email());
 
-                if (!customer.isLoggedIn() && this.checkoutMode === 1) {
+                if (!customer.isLoggedIn() && this.checkoutMode === 1 && !this.autoRegistration) {
                     self.hideErrorText();
                 }
             }.bind(this)).always(function () {
@@ -103,7 +104,7 @@ define([
         validateEmail: function (focused) {
             var result = this._super(focused);
 
-            if (this.checkoutMode === 1) {
+            if (this.checkoutMode === 1 && !this.autoRegistration) {
                 if (this.email() !== '' && this.errorText() === '') {
                     this.errorText(this.error);
                 }
