@@ -26,6 +26,7 @@ class ApiDataProviderByType
      */
     public function get($type)
     {
+        $type = strtolower($type);
         $data = [
             "enabled" => $this->getIsEnabledByType($type),
             "keys" => [

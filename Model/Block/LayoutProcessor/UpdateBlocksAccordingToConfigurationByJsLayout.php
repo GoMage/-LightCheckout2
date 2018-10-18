@@ -301,33 +301,33 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
             $jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
             ['children']['google']['urlTo'] = $this->urlBuilder->getUrl(
                 'lightcheckout/social/login',
-                ['type' => 'google']
+                ['type' => 'Google']
             );
         } else {
             unset($jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
-                ['children']['google']);
+                ['children']['Google']);
         }
 
         if ($this->checkoutConfigurationsProvider->getIsSocialLoginFacebookEnabled()) {
             $jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
             ['children']['facebook']['urlTo'] = $this->urlBuilder->getUrl(
                 'lightcheckout/social/login',
-                ['type' => 'facebook']
+                ['type' => 'Facebook']
             );
         } else {
             unset($jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
-                ['children']['facebook']);
+                ['children']['Facebook']);
         }
 
         if ($this->checkoutConfigurationsProvider->getIsSocialLoginTwitterEnabled()) {
             $jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
             ['children']['twitter']['urlTo'] = $this->urlBuilder->getUrl(
                 'lightcheckout/social/login',
-                ['type' => 'twitter']
+                ['type' => 'Twitter']
             );
         } else {
             unset($jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
-                ['children']['twitter']);
+                ['children']['Twitter']);
         }
 
         return $jsLayout;
