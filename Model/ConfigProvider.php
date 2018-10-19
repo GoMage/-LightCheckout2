@@ -8,6 +8,7 @@ use GoMage\LightCheckout\Model\ConfigProvider\PasswordSettingProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\PaymentMethodsListProvider;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
+use Magento\Customer\Model\Url;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Cart\ShippingMethodConverter;
@@ -62,6 +63,11 @@ class ConfigProvider implements ConfigProviderInterface
     private $deliveryDateConfigProvider;
 
     /**
+     * @var Url
+     */
+    private $url;
+
+    /**
      * @param PaymentMethodsListProvider $paymentMethodsListProvider
      * @param CheckoutSession $session
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
@@ -71,6 +77,7 @@ class ConfigProvider implements ConfigProviderInterface
      * @param TotalsCollector $totalsCollector
      * @param PasswordSettingProvider $passwordSettingProvider
      * @param DeliveryDateConfigProvider $deliveryDateConfigProvider
+     * @param Url $url
      */
     public function __construct(
         PaymentMethodsListProvider $paymentMethodsListProvider,
@@ -81,7 +88,8 @@ class ConfigProvider implements ConfigProviderInterface
         DirectoryHelper $directoryHelper,
         TotalsCollector $totalsCollector,
         PasswordSettingProvider $passwordSettingProvider,
-        DeliveryDateConfigProvider $deliveryDateConfigProvider
+        DeliveryDateConfigProvider $deliveryDateConfigProvider,
+        Url $url
     ) {
         $this->paymentMethodsListProvider = $paymentMethodsListProvider;
         $this->checkoutSession = $session;
@@ -92,6 +100,7 @@ class ConfigProvider implements ConfigProviderInterface
         $this->totalsCollector = $totalsCollector;
         $this->passwordSettingProvider = $passwordSettingProvider;
         $this->deliveryDateConfigProvider = $deliveryDateConfigProvider;
+        $this->url = $url;
     }
 
     /**
@@ -219,6 +228,7 @@ class ConfigProvider implements ConfigProviderInterface
             'checkoutMode' => $this->checkoutConfigurationsProvider->getCheckoutMode(),
             'isCreateAnAccountCheckboxChecked' => $this->checkoutConfigurationsProvider->getCreateAnAccountCheckbox(),
             'autoRegistration' => $this->checkoutConfigurationsProvider->getIsAutoRegistration(),
+            'registrationUrl' => $this->url->getRegisterUrl(),
         ];
     }
 
