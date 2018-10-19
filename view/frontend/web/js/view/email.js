@@ -16,14 +16,17 @@ define([
         onlyRegistered: ko.observable(false),
         checkoutMode: parseInt(window.checkoutConfig.registration.checkoutMode),
         autoRegistration: parseInt(window.checkoutConfig.registration.autoRegistration),
-        error: 'Customer with this email does not exist. Please register before placing order.',
-        errorText: ko.observable('Customer with this email does not exist. Please register before placing order.'),
+        error: 'Customer with this email does not exist. Please '
+        + '<a href="' + window.checkoutConfig.registration.registrationUrl + '" target="__blank">register</a>'
+        + ' before placing order.',
+        errorText: ko.observable(''),
 
         /**
          *
          * @inheritDoc
          */
         initialize: function () {
+            this.errorText(this.error);
             this._super();
 
             if (!customer.isLoggedIn() && this.checkoutMode === 1 && !this.autoRegistration) {
@@ -83,7 +86,7 @@ define([
         },
 
         showErrorText: function () {
-            $(this.customerEmailErrorSelector).text(this.errorText());
+            $(this.customerEmailErrorSelector).html(this.errorText());
             $(this.customerEmailErrorSelector).show();
         },
 
