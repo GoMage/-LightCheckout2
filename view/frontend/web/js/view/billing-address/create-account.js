@@ -31,9 +31,11 @@ define(
             initObservable: function () {
                 var shouldCreateAccountBeVisible = false,
                     shouldCheckboxBeVisible = false,
-                    shouldIsCreateAnAccountCheckboxChecked = parseInt(window.checkoutConfig.registration.isCreateAnAccountCheckboxChecked),
-                    autoRegistration = parseInt(window.checkoutConfig.registration.autoRegistration),
-                    checkoutMode = parseInt(window.checkoutConfig.registration.checkoutMode);
+                    shouldIsCreateAnAccountCheckboxChecked = parseInt(
+                        window.checkoutConfig.registration.isCreateAnAccountCheckboxChecked || 0
+                    ),
+                    autoRegistration = parseInt(window.checkoutConfig.registration.autoRegistration || 0),
+                    checkoutMode = parseInt(window.checkoutConfig.registration.checkoutMode || 0);
 
                 if (autoRegistration === 0) {
                     if (checkoutMode === 0 && !customer.isLoggedIn()) {
@@ -45,10 +47,6 @@ define(
                         shouldCreateAccountBeVisible = true;
                         shouldCheckboxBeVisible = false;
                         shouldIsCreateAnAccountCheckboxChecked = true;
-                    }
-
-                    if (checkoutMode === 2 && !customer.isLoggedIn()) {
-                        shouldCreateAccountBeVisible = false;
                     }
                 }
 
