@@ -99,7 +99,7 @@ ul.sortable-list{list-style: none !important;}
 #row_gomage_light_checkout_configuration_help_messages_message td.value {
     float: left;
     padding: 0 0 0 0;
-    width: 220%;
+    width: 300%;
 }
 
 #gomage_light_checkout_configuration_trust_seals td.value {

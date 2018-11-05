@@ -118,3 +118,10 @@
 #checkout #social-networks {
     padding-top: 10px;
 }
+
+.field.inside._required:after {
+    content:"*";
+    position:absolute;
+    color: #e02b27;
+    font-size: 1.2rem;
+}

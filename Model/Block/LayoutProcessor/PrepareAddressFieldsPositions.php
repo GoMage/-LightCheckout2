@@ -3,6 +3,7 @@
 namespace GoMage\LightCheckout\Model\Block\LayoutProcessor;
 
 use GoMage\LightCheckout\Model\Config\CheckoutAddressFieldsSorting\FieldsProvider;
+use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 
 class PrepareAddressFieldsPositions
 {
@@ -12,11 +13,20 @@ class PrepareAddressFieldsPositions
     private $fieldsProvider;
 
     /**
-     * @param FieldsProvider $fieldsProvider
+     * @var CheckoutConfigurationsProvider
      */
-    public function __construct(FieldsProvider $fieldsProvider)
-    {
+    private $checkoutConfigurationsProvider;
+
+    /**
+     * @param FieldsProvider $fieldsProvider
+     * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     */
+    public function __construct(
+        FieldsProvider $fieldsProvider,
+        CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+    ) {
         $this->fieldsProvider = $fieldsProvider;
+        $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
     }
 
     /**
@@ -89,6 +99,33 @@ class PrepareAddressFieldsPositions
                 }
 
                 $preparedFields[$attributeCode]['sortOrder'] = $visibleField->getSortOrder();
+
+                if ($this->checkoutConfigurationsProvider->getAddressFieldsKeepInside()) {
+                    $presentedAddClasses = isset($preparedFields[$attributeCode]['config']['additionalClasses'])
+                        ? $preparedFields[$attributeCode]['config']['additionalClasses']
+                        : '';
+                    if (isset($preparedFields[$attributeCode]['config']['template'])
+                        && $preparedFields[$attributeCode]['config']['template'] === 'ui/form/field'
+                    ) {
+                        $preparedFields[$attributeCode]['config']['template'] = 'GoMage_LightCheckout/element/field-inside';
+                        $preparedFields[$attributeCode]['config']['placeholder'] = $preparedFields[$attributeCode]['label'];
+                        $preparedFields[$attributeCode]['config']['additionalClasses'] = $presentedAddClasses . ' inside';
+                    }
+
+                    if (isset($preparedFields[$attributeCode]['config']['template'])
+                        && $preparedFields[$attributeCode]['config']['template'] === 'ui/group/group'
+                    ) {
+                        $preparedFields[$attributeCode]['config']['template'] =
+                         'GoMage_LightCheckout/element/group-inside';
+                        if (isset($preparedFields[$attributeCode]['children'])) {
+                            foreach ($preparedFields[$attributeCode]['children'] as $key => $street) {
+                                $preparedFields[$attributeCode]['children'][$key]['config']['placeholder'] =
+                                    $preparedFields[$attributeCode]['label'];
+                                $preparedFields[$attributeCode]['children'][$key]['config']['additionalClasses'] = $presentedAddClasses . ' inside';
+                            }
+                        }
+                    }
+                }
             }
         }
 

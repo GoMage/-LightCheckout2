@@ -87,6 +87,7 @@ class CheckoutConfigurationsProvider
      * Light Checkout configuration Address Fields Form.
      */
     const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM = 'gomage_light_checkout_configuration/checkout_address_fields_sorting/fields_form';
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_KEEP_FIELDS_INSIDE = 'gomage_light_checkout_configuration/checkout_address_fields_sorting/keep_field_names_inside';
     /**#@-*/
 
     /**#@+
@@ -363,6 +364,11 @@ class CheckoutConfigurationsProvider
     public function getAddressFieldsForm()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM);
+    }
+
+    public function getAddressFieldsKeepInside()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_KEEP_FIELDS_INSIDE);
     }
 
     public function getIsEnabledAutoFillByZipCode()

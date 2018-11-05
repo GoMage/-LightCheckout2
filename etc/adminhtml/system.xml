@@ -108,59 +108,15 @@
                     <source_model>GoMage\LightCheckout\Model\Config\Source\OperationSystemsForDevices</source_model>
                 </field>
             </group>
-            <group id="checkout_address_fields_required" translate="label" type="text" sortOrder="170" showInDefault="1"
-                   showInWebsite="1" showInStore="1">
-                <label>Mandatory fields setting</label>
-                <field id="first_name" translate="label" type="select" sortOrder="20"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>First Name</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="last_name" translate="label" type="select" sortOrder="30"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Last Name</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="company" translate="label" type="select" sortOrder="40"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Company</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="country" translate="label" type="select" sortOrder="50"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Country</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="city" translate="label" type="select" sortOrder="60"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>City</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="street_address" translate="label" type="select" sortOrder="70"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Street Address</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="zipcode" translate="label" type="select" sortOrder="80"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Zip/Postal Code</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="state" translate="label" type="select" sortOrder="90"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>State/Province</label>
-                    <source_model>GoMage\LightCheckout\Model\Config\Source\AddressFieldStateOptions</source_model>
-                </field>
-                <field id="phone" translate="label" type="select" sortOrder="100"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Phone Number</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-            </group>
             <group id="checkout_address_fields_sorting" translate="label" type="text" sortOrder="175" showInDefault="1"
                    showInWebsite="1" showInStore="1">
                 <label>Address fields sorting on checkout</label>
-                <field id="fields_form" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="keep_field_names_inside" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
+                    <label>Keep field names inside</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="fields_form" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\CheckoutAddressFieldsSorting</frontend_model>
                 </field>
             </group>

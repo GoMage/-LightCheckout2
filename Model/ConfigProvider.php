@@ -117,6 +117,7 @@ class ConfigProvider implements ConfigProviderInterface
             'deliveryDate' => $this->deliveryDateConfigProvider->get(),
             'vatTax' => $this->getVatTaxConfig(),
             'autoCompleteStreet' => $this->getAutoCompleteStreetConfig(),
+            'addressFields' => $this->getAddressFieldsConfig(),
         ];
 
         return $config;
@@ -251,6 +252,16 @@ class ConfigProvider implements ConfigProviderInterface
     {
         return [
             'enabled' => $this->checkoutConfigurationsProvider->getIsEnabledAutoCompleteByStreet(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getAddressFieldsConfig()
+    {
+        return [
+            'keepInside' => $this->checkoutConfigurationsProvider->getAddressFieldsKeepInside(),
         ];
     }
 }
