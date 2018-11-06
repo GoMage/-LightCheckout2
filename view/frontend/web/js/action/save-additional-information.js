@@ -22,22 +22,31 @@ define(
         return function () {
             var serviceUrl = resourceUrlManager.getUrlForSaveAdditionalInformation(),
                 selectors = {
-                    password : '#account-password',
+                    password: '#account-password',
                     accountCheckbox: 'input[name=create-account-checkbox]',
-                    passwordForLoginForm : '.form-login #customer-email-fieldset #customer-password',
-                    deliveryDate : '#delivery-date input',
-                    deliveryTime: '#delivery-date select option:selected'
+                    passwordForLoginForm: '.form-login #customer-email-fieldset #customer-password',
+                    customerEmail: '.form-login #customer-email-fieldset #customer-email',
+                    deliveryDate: '#delivery-date input',
+                    deliveryTime: '#delivery-date select option:selected',
+                    subscribeToNewsletter: '#opc-sidebar #subscribe-newsletter input[type=checkbox]'
                 },
                 passwordVal = $(selectors.password).val(),
-                isCheckboxChecked = $(selectors.accountCheckbox).is(":checked"),
+                isAccountCheckboxChecked = $(selectors.accountCheckbox).is(":checked"),
                 deliveryDateVal = $(selectors.deliveryDate).val(),
                 deliveryTimeVal = $(selectors.deliveryTime).text(),
+                isSubscribeToNewsletterCheckboxVisible = $(selectors.subscribeToNewsletter).is(":visible"),
+                isSubscribeToNewsletterCheckboxChecked = $(selectors.subscribeToNewsletter).is(":checked"),
                 payload = {
                     additionInformation: {}
                 };
 
-            if (isCheckboxChecked) {
+            if (isAccountCheckboxChecked) {
                 payload.additionInformation.password = passwordVal;
+            }
+
+            if (isSubscribeToNewsletterCheckboxVisible && isSubscribeToNewsletterCheckboxChecked) {
+                payload.additionInformation.subscribe = isSubscribeToNewsletterCheckboxChecked;
+                payload.additionInformation.customerEmail = $(selectors.customerEmail).val();
             }
 
             if (deliveryDateVal) {

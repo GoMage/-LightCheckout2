@@ -446,6 +446,23 @@
                     </depends>
                 </field>
             </group>
+            <group id="newsletter_checkbox" translate="label" type="text" sortOrder="700" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Newsletter checkbox</label>
+                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable/Disable in checkout and success page</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\NewsletterCheckbox</source_model>
+                </field>
+                <field id="checkbox_is_checked" translate="label" type="select" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Checkbox is checked/unchecked</label>
+                    <source_model>GoMage\LightCheckout\Model\Config\Source\CheckboxOptions</source_model>
+                    <depends>
+                        <field id="enable" separator=",">1,3</field>
+                    </depends>
+                </field>
+            </group>
         </section>
     </system>
 </config>

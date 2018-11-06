@@ -8,6 +8,9 @@
     </head>
     <body>
         <referenceContainer name="content">
+            <block class="GoMage\LightCheckout\Block\Checkout\SubscribeToNewsletter"
+                   name="success_page.subscribe_to_newsletter" template="subscribe_to_newsletter.phtml"
+                   cacheable="false" before="order_review_title"/>
             <block class="\Magento\Framework\View\Element\Template" name="order_review_title"
                    template="GoMage_LightCheckout::order_review_title.phtml" before="order_items_success_page"/>
             <block class="GoMage\LightCheckout\Block\Checkout\Summary" name="order_items_success_page"

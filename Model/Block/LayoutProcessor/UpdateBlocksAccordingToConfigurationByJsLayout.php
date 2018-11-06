@@ -4,8 +4,12 @@ namespace GoMage\LightCheckout\Model\Block\LayoutProcessor;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\Config\Source\CheckoutFields;
+use GoMage\LightCheckout\Model\Config\Source\NewsletterCheckbox;
 use GoMage\LightCheckout\Model\Config\Source\TrustSealsWhereToShow;
+use Magento\Customer\Model\Session;
 use Magento\Framework\UrlInterface;
+use Magento\Newsletter\Model\Subscriber;
+use Magento\Newsletter\Model\SubscriberFactory;
 
 /**
  * Unset blocks according to configuration.
@@ -23,15 +27,31 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
     private $urlBuilder;
 
     /**
+     * @var Session
+     */
+    private $customerSession;
+
+    /**
+     * @var SubscriberFactory
+     */
+    private $subscriberFactory;
+
+    /**
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param UrlInterface $urlBuilder
+     * @param Session $customerSession
+     * @param SubscriberFactory $subscriberFactory
      */
     public function __construct(
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
-        UrlInterface $urlBuilder
+        UrlInterface $urlBuilder,
+        Session $customerSession,
+        SubscriberFactory $subscriberFactory
     ) {
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
         $this->urlBuilder = $urlBuilder;
+        $this->customerSession = $customerSession;
+        $this->subscriberFactory = $subscriberFactory;
     }
 
     /**
@@ -50,6 +70,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $jsLayout = $this->addHelpMessagesAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->addTrustSealsAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->addSocialNetworksAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->updateSubscribeToNewsletterAccordingToTheConfiguration($jsLayout);
 
         return $jsLayout;
     }
@@ -328,6 +349,35 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         } else {
             unset($jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
                 ['children']['Twitter']);
+        }
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function updateSubscribeToNewsletterAccordingToTheConfiguration($jsLayout)
+    {
+        $isEnabled = (int)$this->checkoutConfigurationsProvider->getIsEnabledSubscribeToNewsletter();
+        $isCustomerLogin = $this->customerSession->isLoggedIn();
+        $customerId = $this->customerSession->getCustomerId();
+        $isSubscribed = $this->subscriberFactory->create()->loadByCustomerId($customerId);
+
+        if ($isEnabled === NewsletterCheckbox::NEWSLETTER_CHECKBOX_DISABLE
+            || $isEnabled === NewsletterCheckbox::NEWSLETTER_CHECKBOX_ENABLE_ON_SUCCESS_PAGE
+            || ($isCustomerLogin && $isSubscribed->getStatus() == Subscriber::STATUS_SUBSCRIBED)
+        ) {
+            unset($jsLayout['components']['checkout']['children']['sidebar']['children']['subscribeNewsletter']);
+        } elseif (
+            $isEnabled === NewsletterCheckbox::NEWSLETTER_CHECKBOX_ENABLE_IN_CHECKOUT
+            || $isEnabled === NewsletterCheckbox::NEWSLETTER_CHECKBOX_ENABLE_BOTH
+        ) {
+            $isChecked = (bool)$this->checkoutConfigurationsProvider->getSubscribeToNewsletterIsCheckboxChecked();
+            $jsLayout['components']['checkout']['children']['sidebar']['children']
+            ['subscribeNewsletter']['config']['checked'] = $isChecked;
         }
 
         return $jsLayout;
