@@ -4,7 +4,7 @@ $notVisible = $block->geNotVisibleFields();
 ?>
 <textarea id="gomage_light_checkout_configuration_checkout_address_fields_sorting_text"
           name="groups[checkout_address_fields_sorting][fields][fields_form][value]"
-          class="textarea admin__control-textarea"
+          class="check-mandatory-settings textarea admin__control-textarea"
           data-ui-id="textarea-groups-checkout_address_fields_sorting-fields-fields_form-value" style="display: none"></textarea>
 <div id="checkout-address-fields">
     <div id="sort-content">
@@ -50,7 +50,7 @@ $notVisible = $block->geNotVisibleFields();
     </div>
 </div>
 <script>
-    require(['jquery', 'jquery/ui'], function ($) {
+    require(['jquery', 'jquery/ui', 'jquery/validate'], function ($) {
         $(function () {
             //sort fields
             $("#checkout-address-fields .sortable-list").sortable({
@@ -83,6 +83,28 @@ $notVisible = $block->geNotVisibleFields();
             });
         });
 
+        $.validator.addMethod(
+            "check-mandatory-settings",
+            function () {
+                var result = true;
+                $('#checkout-address-fields .field-not-visible ul li').each(
+                    function (index, element) {
+                        var code = element.getAttribute('code'),
+                            mandatory = $('tbody td select[name="groups[checkout_address_fields_required][fields][' +
+                                code + '][value]"]');
+                        if (parseInt(mandatory.val()) === 1) {
+                            result = false;
+                        }
+                    }
+                );
+
+                return result;
+            },
+            $.mage.__(
+                '1 or more mandatory fields are disabled. Please change mandatory settings or enable mandatory field'
+            )
+        );
+
         $('#config-edit-form').submit(function() {
             var fields = [];
 
@@ -94,6 +116,7 @@ $notVisible = $block->geNotVisibleFields();
             });
 
             $('#gomage_light_checkout_configuration_checkout_address_fields_sorting_text').val(JSON.stringify(fields));
+
             return true;
         });
     });

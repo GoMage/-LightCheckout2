@@ -8,7 +8,7 @@
         </resources>
     </route>
     <route url="/V1/light_checkout/carts/mine/quote-items/:itemId" method="DELETE">
-        <service class="GoMage\LightCheckout\Api\GuestQuoteItemManagementInterface" method="removeItemById"/>
+        <service class="GoMage\LightCheckout\Api\QuoteItemManagementInterface" method="removeItemById"/>
         <resources>
             <resource ref="self" />
         </resources>
@@ -23,7 +23,7 @@
         </resources>
     </route>
     <route url="/V1/light_checkout/carts/mine/quote-items" method="POST">
-        <service class="GoMage\LightCheckout\Api\GuestQuoteItemManagementInterface" method="updateItemQty"/>
+        <service class="GoMage\LightCheckout\Api\QuoteItemManagementInterface" method="updateItemQty"/>
         <resources>
             <resource ref="self" />
         </resources>
@@ -57,6 +57,12 @@
         <data>
             <parameter name="cartId" force="true">%cart_id%</parameter>
         </data>
+    </route>
+    <route url="/V1/light_checkout/get-address-by-zip-code" method="POST">
+        <service class="GoMage\LightCheckout\Api\GetAddressByPostCodeInterface" method="execute"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
     </route>
     <route url="/V1/light_checkout/get-address-by-zip-code" method="POST">
         <service class="GoMage\LightCheckout\Api\GetAddressByPostCodeInterface" method="execute"/>

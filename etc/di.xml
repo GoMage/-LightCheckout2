@@ -39,4 +39,8 @@
             <argument name="checkoutConverterDomFlat" xsi:type="object">LightCheckoutConverterDomFlat</argument>
         </arguments>
     </type>
+    <type name="Magento\Quote\Model\Quote\Address">
+        <plugin name="gomage_light_checkout_change_quote_address_validator"
+                type="GoMage\LightCheckout\Plugin\Quote\ChangeAddressValidatorAccordingToConfiguration"/>
+    </type>
 </config>

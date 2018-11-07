@@ -71,6 +71,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $jsLayout = $this->addTrustSealsAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->addSocialNetworksAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->updateSubscribeToNewsletterAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->updateRequiredFields($jsLayout);
 
         return $jsLayout;
     }
@@ -326,7 +327,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
             );
         } else {
             unset($jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
-                ['children']['Google']);
+                ['children']['google']);
         }
 
         if ($this->checkoutConfigurationsProvider->getIsSocialLoginFacebookEnabled()) {
@@ -337,7 +338,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
             );
         } else {
             unset($jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
-                ['children']['Facebook']);
+                ['children']['facebook']);
         }
 
         if ($this->checkoutConfigurationsProvider->getIsSocialLoginTwitterEnabled()) {
@@ -348,7 +349,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
             );
         } else {
             unset($jsLayout['components']['checkout']['children']['customer-email']['children']['social-networks']
-                ['children']['Twitter']);
+                ['children']['twitter']);
         }
 
         return $jsLayout;
@@ -379,6 +380,58 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
             $jsLayout['components']['checkout']['children']['sidebar']['children']
             ['subscribeNewsletter']['config']['checked'] = $isChecked;
         }
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param array $jsLayout
+     *
+     * @return array
+     */
+    private function updateRequiredFields($jsLayout)
+    {
+        $isFirstNameRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldFirstName();
+        $isLastNameRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldLastName();
+        $isStreetRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldStreetAddress();
+        $isCityRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldCity();
+        $isPhoneRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldPhoneNumber();
+        $isZipRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldZipPostalCode();
+        $isCountryRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldCountry();
+        $isStateRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldStateProvince();
+        $isCompanyRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldCompany();
+
+        $shippingAddressFieldset = $jsLayout['components']['checkout']['children']['shippingAddress']['children']
+        ['shipping-address-fieldset']['children'];
+
+        $billingAddressFieldset = $jsLayout['components']['checkout']['children']['billingAddress']['children']
+        ['billing-address-fieldset']['children'];
+
+        $shippingAddressFieldset['firstname']['validation']['required-entry'] = $isFirstNameRequired;
+        $shippingAddressFieldset['lastname']['validation']['required-entry'] = $isLastNameRequired;
+        $shippingAddressFieldset['street']['validation']['required-entry'] = $isStreetRequired;
+        $shippingAddressFieldset['city']['validation']['required-entry'] = $isCityRequired;
+        $shippingAddressFieldset['telephone']['validation']['required-entry'] = $isPhoneRequired;
+        $shippingAddressFieldset['postcode']['validation']['required-entry'] = $isZipRequired;
+        $shippingAddressFieldset['country_id']['validation']['required-entry'] = $isCountryRequired;
+        $shippingAddressFieldset['region_id']['validation']['required-entry'] = $isStateRequired;
+        $shippingAddressFieldset['company']['validation']['required-entry'] = $isCompanyRequired;
+
+        $billingAddressFieldset['firstname']['validation']['required-entry'] = $isFirstNameRequired;
+        $billingAddressFieldset['lastname']['validation']['required-entry'] = $isLastNameRequired;
+        $billingAddressFieldset['street']['validation']['required-entry'] = $isStreetRequired;
+        $billingAddressFieldset['city']['validation']['required-entry'] = $isCityRequired;
+        $billingAddressFieldset['telephone']['validation']['required-entry'] = $isPhoneRequired;
+        $billingAddressFieldset['postcode']['validation']['required-entry'] = $isZipRequired;
+        $billingAddressFieldset['country_id']['validation']['required-entry'] = $isCountryRequired;
+        $billingAddressFieldset['region_id']['validation']['required-entry'] = $isStateRequired;
+        $billingAddressFieldset['company']['validation']['required-entry'] = $isCompanyRequired;
+
+        $jsLayout['components']['checkout']['children']['shippingAddress']['children']
+        ['shipping-address-fieldset']['children'] = $shippingAddressFieldset;
+
+        $jsLayout['components']['checkout']['children']['billingAddress']['children']
+        ['billing-address-fieldset']['children'] = $billingAddressFieldset;
 
         return $jsLayout;
     }

@@ -7,6 +7,16 @@
                 <page_title>GoMage LightCheckout</page_title>
                 <enable_discount_codes>1</enable_discount_codes>
             </general>
+            <checkout_address_fields_required>
+                <firstname>1</firstname>
+                <lastname>1</lastname>
+                <country_id>1</country_id>
+                <city>1</city>
+                <street>1</street>
+                <postcode>1</postcode>
+                <telephone>1</telephone>
+                <region_id>2</region_id>
+            </checkout_address_fields_required>
             <devices>
                 <desktop>1</desktop>
             </devices>

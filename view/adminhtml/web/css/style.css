@@ -122,7 +122,6 @@ ul.sortable-list{list-style: none !important;}
     background-image: url("images/ui-icons_222222_256x240.png")
 }
 
-.ui-icon-gripsmall-diagonal-se {
+#checkout-address-fields .ui-icon-gripsmall-diagonal-se {
     background-position: -64px -224px;
 }
-

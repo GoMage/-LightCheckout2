@@ -2,8 +2,9 @@ define([
     'underscore',
     'Magento_Ui/js/form/element/region',
     'mageUtils',
-    'uiLayout'
-], function (_, Component, utils, layout) {
+    'uiLayout',
+    'uiRegistry'
+], function (_, Component, utils, layout, registry) {
     'use strict';
 
     var inputNode = {
@@ -24,7 +25,6 @@ define([
 
     return Component.extend({
         initInput: function () {
-
             layout([utils.template(_.extend(
                 inputNode,
                 {
@@ -34,6 +34,8 @@ define([
             ), this)]);
 
             return this;
-        }
+        },
+
+
     });
 });

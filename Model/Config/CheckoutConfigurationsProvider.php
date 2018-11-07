@@ -84,6 +84,20 @@ class CheckoutConfigurationsProvider
     /**#@-*/
 
     /**#@+
+     * Light Checkout configuration Address Fields Required.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_FIRST_NAME = 'gomage_light_checkout_configuration/checkout_address_fields_required/firstname';
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_LAST_NAME = 'gomage_light_checkout_configuration/checkout_address_fields_required/lastname';
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COMPANY = 'gomage_light_checkout_configuration/checkout_address_fields_required/company';
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COUNTRY = 'gomage_light_checkout_configuration/checkout_address_fields_required/country_id';
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_CITY = 'gomage_light_checkout_configuration/checkout_address_fields_required/city';
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STREET_ADDRESS = 'gomage_light_checkout_configuration/checkout_address_fields_required/street';
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_ZIPCODE = 'gomage_light_checkout_configuration/checkout_address_fields_required/postcode';
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STATE = 'gomage_light_checkout_configuration/checkout_address_fields_required/region_id';
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_PHONE = 'gomage_light_checkout_configuration/checkout_address_fields_required/telephone';
+    /**#@-*/
+
+    /**#@+
      * Light Checkout configuration Address Fields Form.
      */
     const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM = 'gomage_light_checkout_configuration/checkout_address_fields_sorting/fields_form';
@@ -367,6 +381,51 @@ class CheckoutConfigurationsProvider
     public function getVatTaxTextUnderTaxVatField()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_TEXT_UNDER_VAT_TAX_FIELD);
+    }
+
+    public function getIsRequiredAddressFieldFirstName()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_FIRST_NAME);
+    }
+
+    public function getIsRequiredAddressFieldLastName()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_LAST_NAME);
+    }
+
+    public function getIsRequiredAddressFieldCompany()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COMPANY);
+    }
+
+    public function getIsRequiredAddressFieldCountry()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COUNTRY);
+    }
+
+    public function getIsRequiredAddressFieldCity()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_CITY);
+    }
+
+    public function getIsRequiredAddressFieldStreetAddress()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STREET_ADDRESS);
+    }
+
+    public function getIsRequiredAddressFieldZipPostalCode()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_ZIPCODE);
+    }
+
+    public function getIsRequiredAddressFieldStateProvince()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STATE);
+    }
+
+    public function getIsRequiredAddressFieldPhoneNumber()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_PHONE);
     }
 
     public function getAddressFieldsForm()
