@@ -17,7 +17,7 @@ define([
         checkoutMode: parseInt(window.checkoutConfig.registration.checkoutMode),
         autoRegistration: parseInt(window.checkoutConfig.registration.autoRegistration),
         error: 'Customer with this email does not exist. Please '
-        + '<a href="' + window.checkoutConfig.registration.registrationUrl + '" target="__blank">register</a>'
+        + '<a class="registration-popup-link">register</a>'
         + ' before placing order.',
         errorText: ko.observable(''),
 

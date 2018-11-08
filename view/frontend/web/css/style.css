@@ -77,7 +77,7 @@
     padding-right: 3%;
 }
 
-#checkout #social-networks span.google-logo {
+#social-networks span.google-logo {
     background: url("images/google-logo.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -85,7 +85,7 @@
     -khtml-background-size: 100% 100%; /*  Konqueror  */
     -moz-background-size: 100% 100%;
 }
-#checkout #social-networks span.facebook-logo {
+#social-networks span.facebook-logo {
     background: url("images/facebook-logo.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -93,7 +93,7 @@
     -khtml-background-size: 100% 100%; /*  Konqueror  */
     -moz-background-size: 100% 100%;
 }
-#checkout #social-networks span.twitter-logo {
+#social-networks span.twitter-logo {
     background: url("images/twitter-logo.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -102,20 +102,20 @@
     -moz-background-size: 100% 100%;
 }
 
-#checkout #social-networks span{
+#social-networks span{
     display: block;
     width: 40px;
     height: 40px;
 }
 
-#checkout #social-networks span.text {
+#social-networks span.text {
     margin-top: 15px;
     display: block;
     width: 20%;
     height: 40px;
 }
 
-#checkout #social-networks {
+#social-networks {
     padding-top: 10px;
 }
 

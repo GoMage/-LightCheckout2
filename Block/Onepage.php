@@ -2,9 +2,12 @@
 
 namespace GoMage\LightCheckout\Block;
 
+use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use Magento\Checkout\Block\Checkout\LayoutProcessorInterface;
 use Magento\Checkout\Model\CompositeConfigProvider;
+use Magento\Customer\Model\Session;
 use Magento\Framework\Data\Form\FormKey;
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 
@@ -26,9 +29,27 @@ class Onepage extends Template
     private $layoutProcessors;
 
     /**
+     * @var Session
+     */
+    private $customerSession;
+
+    /**
+     * @var UrlInterface
+     */
+    private $url;
+
+    /**
+     * @var CheckoutConfigurationsProvider
+     */
+    private $checkoutConfigurationsProvider;
+
+    /**
      * @param Context $context
      * @param FormKey $formKey
      * @param CompositeConfigProvider $configProvider
+     * @param Session $customerSession
+     * @param UrlInterface $url
+     * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param array $layoutProcessors
      * @param array $data
      */
@@ -36,6 +57,9 @@ class Onepage extends Template
         Context $context,
         FormKey $formKey,
         CompositeConfigProvider $configProvider,
+        Session $customerSession,
+        UrlInterface $url,
+        CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
         array $layoutProcessors = [],
         array $data = []
     ) {
@@ -48,6 +72,9 @@ class Onepage extends Template
             : [];
         $this->configProvider = $configProvider;
         $this->layoutProcessors = $layoutProcessors;
+        $this->customerSession = $customerSession;
+        $this->url = $url;
+        $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
     }
 
     /**
@@ -87,5 +114,29 @@ class Onepage extends Template
     public function getSerializedCheckoutConfig()
     {
         return json_encode($this->getCheckoutConfig(), JSON_HEX_TAG);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRegistrationPopupAvailable()
+    {
+        $isRegistrationPopupAvailable = !$this->customerSession->isLoggedIn() &&
+            $this->checkoutConfigurationsProvider->getCheckoutMode() == 1;
+
+        if ($isRegistrationPopupAvailable) {
+            $this->setRedirectUrlCheckoutAfterRegistration();
+        }
+
+        return $isRegistrationPopupAvailable;
+    }
+
+    /**
+     * Set redirect to checkout after registration on checkout.
+     */
+    private function setRedirectUrlCheckoutAfterRegistration()
+    {
+        $url = $this->url->getUrl('checkout');
+        $this->customerSession->setBeforeAuthUrl($url);
     }
 }

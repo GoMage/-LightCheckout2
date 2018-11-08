@@ -7,7 +7,7 @@
     <body>
         <referenceContainer name="content">
             <block class="GoMage\LightCheckout\Block\Onepage" name="checkout.root"
-                   template="Magento_Checkout::onepage.phtml"
+                   template="GoMage_LightCheckout::onepage.phtml"
                    cacheable="false">
                 <arguments>
                     <argument name="jsLayout" xsi:type="array">
@@ -526,6 +526,13 @@
                         </item>
                     </argument>
                 </arguments>
+                <block class="Magento\Customer\Block\Form\Register" name="customer_form_register_on_checkout" template="form/register.phtml">
+                    <container name="form.additional.info" as="form_additional_info"/>
+                    <container name="customer.form.register.fields.before" as="form_fields_before" label="Form Fields Before" htmlTag="div" htmlClass="customer-form-before"/>
+                </block>
+                <block class="GoMage\LightCheckout\Block\Checkout\SocialNetworksOnRegistrationPopup"
+                       name="social_network_on_checkout_registration_popup"
+                       template="social_networks_on_registration_popup.phtml"/>
             </block>
         </referenceContainer>
         <move element="logo" destination="checkout.header.wrapper"/>
