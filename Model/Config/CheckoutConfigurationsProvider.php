@@ -160,13 +160,19 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_SECRET = 'gomage_light_checkout_configuration/social_login_twitter/app_secret';
     const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_REDIRECT_URL = 'gomage_light_checkout_configuration/social_login_twitter/redirect_url';
     /**#@-*/
-    // @codingStandardsIgnoreEnd
 
     /**#@+
      * Light Checkout configuration Subscribe To Newsletter.
      */
     const XML_PATH_LIGHT_CHECKOUT_NEWSLETTER_CHECKBOX_ENABLE = 'gomage_light_checkout_configuration/newsletter_checkbox/enable';
     const XML_PATH_LIGHT_CHECKOUT_NEWSLETTER_CHECKBOX_CHECKBOX_IS_CHECKED = 'gomage_light_checkout_configuration/newsletter_checkbox/checkbox_is_checked';
+    /**#@-*/
+
+    /**#@+
+     * Light Checkout configuration Color Settings.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON = 'gomage_light_checkout_configuration/color_settings/place_order_button';
+    const XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_CHECKOUT_COLOR = 'gomage_light_checkout_configuration/color_settings/checkout_color';
     /**#@-*/
     // @codingStandardsIgnoreEnd
 
@@ -552,8 +558,19 @@ class CheckoutConfigurationsProvider
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NEWSLETTER_CHECKBOX_ENABLE);
     }
+
     public function getSubscribeToNewsletterIsCheckboxChecked()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NEWSLETTER_CHECKBOX_CHECKBOX_IS_CHECKED);
+    }
+
+    public function getCheckoutColorSettingsPlaceOrderButton()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON);
+    }
+
+    public function getCheckoutColorSettingsCheckoutColor()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_CHECKOUT_COLOR);
     }
 }

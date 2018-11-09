@@ -512,6 +512,20 @@
                     </depends>
                 </field>
             </group>
+            <group id="color_settings" translate="label" type="text" sortOrder="800" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Color settings</label>
+                <field id="place_order_button" translate="label comment" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Place order button</label>
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\Color</frontend_model>
+                </field>
+                <field id="checkout_color" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Checkout Color</label>
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\Color</frontend_model>
+                </field>
+            </group>
         </section>
     </system>
 </config>
