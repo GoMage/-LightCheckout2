@@ -174,6 +174,13 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON = 'gomage_light_checkout_configuration/color_settings/place_order_button';
     const XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_CHECKOUT_COLOR = 'gomage_light_checkout_configuration/color_settings/checkout_color';
     /**#@-*/
+
+    /**#@+
+     * Light Checkout configuration Number of products visible in checkout.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_HIDE = 'gomage_light_checkout_configuration/number_product_in_checkout/hide_products_in_total_order_block';
+    const XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_VISIBLE_IN_CHECKOUT = 'gomage_light_checkout_configuration/number_product_in_checkout/number_visible_in_checkout';
+    /**#@-*/
     // @codingStandardsIgnoreEnd
 
     /**
@@ -572,5 +579,15 @@ class CheckoutConfigurationsProvider
     public function getCheckoutColorSettingsCheckoutColor()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_CHECKOUT_COLOR);
+    }
+
+    public function getIsHidedNumberOfProducts()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_HIDE);
+    }
+
+    public function getNumberOfProductsVisibleInCheckout()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_VISIBLE_IN_CHECKOUT);
     }
 }

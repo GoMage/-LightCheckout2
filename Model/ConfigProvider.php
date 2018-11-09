@@ -119,6 +119,7 @@ class ConfigProvider implements ConfigProviderInterface
             'autoCompleteStreet' => $this->getAutoCompleteStreetConfig(),
             'addressFields' => $this->getAddressFieldsConfig(),
             'mandatorySettings' => $this->getMandatorySettings(),
+            'numberProductInCheckout' => $this->getProductNumberInCheckoutSettings(),
         ];
 
         return $config;
@@ -266,10 +267,24 @@ class ConfigProvider implements ConfigProviderInterface
         ];
     }
 
+    /**
+     * @return array
+     */
     private function getMandatorySettings()
     {
         return [
           'isMandatory' => $this->checkoutConfigurationsProvider->getIsRequiredAddressFieldStateProvince()
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getProductNumberInCheckoutSettings()
+    {
+        return [
+            'hideProducts' => (bool)$this->checkoutConfigurationsProvider->getIsHidedNumberOfProducts(),
+            'numberOfProducts' => $this->checkoutConfigurationsProvider->getNumberOfProductsVisibleInCheckout(),
         ];
     }
 }

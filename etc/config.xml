@@ -23,6 +23,9 @@
             <vat>
                 <text_under_vat_tax_field>Buy without VAT (for EU only)</text_under_vat_tax_field>
             </vat>
+            <number_product_in_checkout>
+                <number_visible_in_checkout>10</number_visible_in_checkout>
+            </number_product_in_checkout>
         </gomage_light_checkout_configuration>
     </default>
 </config>
