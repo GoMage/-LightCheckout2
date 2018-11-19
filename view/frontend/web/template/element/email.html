@@ -7,6 +7,9 @@
 <form class="form form-login" data-role="email-with-possible-login"
       data-bind="submit:login"
       method="post">
+    <div class="step-title" data-role="title">
+        <span data-bind="i18n: 'Account Information'"></span>
+    </div>
     <fieldset id="customer-email-fieldset" class="fieldset" data-bind="blockLoader: isLoading">
         <div class="field required">
             <label class="label" for="customer-email">

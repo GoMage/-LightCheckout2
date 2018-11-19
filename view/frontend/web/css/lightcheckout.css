@@ -1,0 +1,827 @@
+/* GoMage LightCheckout
+-------------------------------------------------- */
+
+/* Layout
+-------------------------------------------------- */
+
+.glc{
+    margin: 0;
+}
+
+.glc .opc-wrapper{
+    float: none;
+    width: auto;
+    padding: 0;
+}
+
+.glc-cols:after{
+    content: '';
+    clear: both;
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 0;
+}
+
+.glc-left-col{
+    float: left;
+    width: calc(50% - 20px);
+}
+
+.glc-right-col{
+    float: right;
+    width: calc(50% - 20px);
+}
+
+@media all and (max-width: 1024px){
+
+    .glc-left-col,
+    .glc-right-col{
+        width: calc(50% - 12px);
+    }
+
+}
+
+@media all and (max-width: 980px){
+
+    .glc-left-col,
+    .glc-right-col{
+        float: none;
+        width: auto;
+    }
+
+}
+
+/* Text
+-------------------------------------------------- */
+
+.glc-content{
+    margin: 0 0 20px;
+}
+
+/* Icons
+-------------------------------------------------- */
+
+.glc-checkbox label:before,
+.admin__field-option input.admin__control-checkbox + label:before,
+.glc-radio label:before,
+.delivery-date-left ._has-datepicker ~ .ui-datepicker-trigger:before,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-prev:before,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-next:before{
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -moz-font-feature-settings: 'liga';
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Inputs
+-------------------------------------------------- */
+
+/* Text */
+
+.glc input.input-text{
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    background: #fff;
+    height: 36px;
+    padding: 0 8px;
+    display: block;
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.glc input.input-text:hover{
+    border-color: #333;
+}
+
+.glc input.input-text:focus{
+    border-color: #0081ed;
+    border-width: 2px;
+    padding: 0 7px;
+    box-shadow: none;
+}
+
+.glc input.input-text:active{
+    border-color: #333;
+}
+
+.glc input.input-text::-webkit-input-placeholder{
+    color: rgba(51, 51, 51, 0.56);
+    opacity: 1;
+}
+
+.glc input.input-text:-moz-placeholder{
+    color: rgba(51, 51, 51, 0.56);
+    opacity: 1;
+}
+
+.glc input.input-text::-moz-placeholder{
+    color: rgba(51, 51, 51, 0.56);
+    opacity: 1;
+}
+
+.glc input.input-text:-ms-input-placeholder{
+    color: rgba(51, 51, 51, 0.56);
+    opacity: 1;
+}
+
+.glc .field._error .control input{
+    border-color: #f4531c;
+    border-width: 2px;
+    padding: 0 7px;
+}
+
+/* Textarea */
+
+.glc textarea{
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    background: #fff;
+    padding: 8px;
+    display: block;
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.glc textarea:hover{
+    border-color: #333;
+}
+
+.glc textarea:focus{
+    border-color: #0081ed;
+    border-width: 2px;
+    padding: 7px;
+    box-shadow: none;
+}
+
+.glc textarea:active{
+    border-color: #333;
+}
+
+.glc .field._error .control textarea{
+    border-color: #f4531c;
+    border-width: 2px;
+    padding: 7px;
+}
+
+/* Select */
+
+.glc select{
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    background: #fff url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNyAxMGw1IDUgNS01eiIvPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48L3N2Zz4=) no-repeat calc(100% - 6px) 50%;
+    padding: 0 36px 0 8px;
+    display: block;
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+    height: 36px;
+    -webkit-appearance: none;
+    -moz-appearance   : none;
+    appearance        : none;
+}
+
+.glc select:hover{
+    border-color: #333;
+}
+
+.glc select:focus{
+    border-color: #0081ed;
+    border-width: 2px;
+    padding-left: 7px;
+    padding-right: 35px;
+    box-shadow: none;
+    background-position: calc(100% - 5px) 50%;
+}
+
+.glc select:active{
+    border-color: #333;
+}
+
+.glc .field._error .control select{
+    border-color: #f4531c;
+    border-width: 2px;
+    padding-left: 7px;
+    padding-right: 35px;
+}
+
+/* Switcher */
+
+.glc-switcher input{
+    display: none;
+}
+
+.glc-switcher label{
+    display: block;
+    position: relative;
+    font-size: 16px;
+    line-height: 2;
+    color: #333;
+    font-weight: 400;
+    padding: 0 0 0 56px;
+}
+
+.glc-switcher label:before{
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 9px;
+    width: 34px;
+    height: 14px;
+    background-color: #333;
+    opacity: .4;
+    transition: all .2s;
+    border-radius: 6px;
+}
+
+.glc-switcher label:after{
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.24), 0 0 1px 0 rgba(0, 0, 0, 0.12);
+    background-color: #f1f1f1;
+    transition: all .2s;
+}
+
+.glc-switcher input:checked + label:before{
+    background-color: #0081ed;
+}
+
+.glc-switcher input:checked + label:after{
+    background-color: #0081ed;
+    left: 20px;
+}
+
+/* Checkbox */
+
+.glc-checkbox input,
+.admin__field-option input.admin__control-checkbox{
+    display: none;
+}
+
+.glc-checkbox label,
+.admin__field-option input.admin__control-checkbox + label{
+    display: block;
+    position: relative;
+    font-size: 16px;
+    line-height: 2;
+    color: #333;
+    font-weight: 400;
+    padding: 0 0 0 40px;
+}
+
+.glc-checkbox label:before,
+.admin__field-option input.admin__control-checkbox + label:before{
+    content: "check_box_outline_blank";
+    position: absolute;
+    left: 0;
+    top: 3px;
+    color: #0081ed;
+}
+
+.glc-checkbox input:checked + label:before,
+.admin__field-option input.admin__control-checkbox:checked + label:before{
+    content: "check_box";
+}
+
+/* Radio */
+
+.glc-radio input{
+    display: none;
+}
+
+.glc-radio label{
+    display: block;
+    position: relative;
+    font-size: 16px;
+    line-height: 2;
+    color: #333;
+    font-weight: 400;
+    padding: 0 0 0 40px;
+}
+
+.glc-radio.single label{
+    padding: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.glc-radio label:before{
+    content: "radio_button_unchecked";
+    position: absolute;
+    left: 0;
+    top: 3px;
+    color: #0081ed;
+}
+
+.glc-radio input:checked + label:before{
+    content: "radio_button_checked";
+}
+
+/* Buttons */
+
+.glc .action.primary{
+    height: auto;
+    background: #0acb7a;
+    border-radius: 2px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.4px;
+    font-size: 14px;
+    color: #fff;
+    padding: 8px 16px;
+    border: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.glc .action.primary:hover{
+    background: #5ad493;
+}
+
+.glc .action.primary:active{
+    background: #35a160;
+}
+
+.glc .action.primary.disabled,
+.glc .action.primary[disabled]{
+    background: #d1d1d1;
+}
+
+.glc .action.checkout{
+    font-size: 16px;
+    line-height: 24px;
+    padding: 20px;
+}
+
+/* Label */
+
+.glc .label,
+.glc .fieldset > .field > .label{
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+    font-weight: 400;
+    margin: 0 0 4px;
+}
+
+.glc .fieldset > .field > .label{
+    display: block;
+}
+
+.glc .fieldset > .field.required > .label:after,
+.glc .fieldset > .fields > .field.required > .label:after,
+.glc .fieldset > .field._required > .label:after,
+.glc .fieldset > .fields > .field._required > .label:after{
+    display: none;
+}
+
+/* Fields */
+
+.glc .fieldset{
+    margin: 0;
+}
+
+.glc .fieldset:after{
+    content: '';
+    clear: both;
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 0;
+}
+
+.glc .fieldset > .field{
+    margin: 0 0 24px;
+}
+
+.glc .fieldset > .field:last-child{
+    margin-bottom: 0;
+}
+
+.glc .address-half,
+.glc .half{
+    width: calc(50% - 8px);
+}
+
+.glc .left{
+    float: left;
+    clear: both;
+}
+
+.glc .right{
+    float: right;
+}
+
+.glc .full{
+    clear: both;
+    width: 100%;
+}
+
+.glc div.mage-error[generated],
+.glc .field-error{
+    font-size: 12px;
+    line-height: 1.67;
+    color: #f4531c;
+    margin-top: 4px;
+}
+
+/* Steps
+-------------------------------------------------- */
+
+.glc-step{
+    margin: 0 0 16px;
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    padding: 0 16px 16px;
+}
+
+.glc-step:after{
+    content: '';
+    clear: both;
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 0;
+}
+
+.glc-step .step-title{
+    border: 0;
+    margin: -1px -17px 16px;
+    padding: 0 17px;
+    background: #0081ed;
+    border-radius: 2px 2px 0 0;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 2.8;
+    color: #fff;
+}
+
+.glc .opc-wrapper .step-content{
+    margin: 0;
+}
+
+/* Login
+-------------------------------------------------- */
+
+.glc .opc-wrapper .form-login{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    max-width: none;
+}
+
+/* Billing Address
+-------------------------------------------------- */
+
+.create-account-checkbox + .fieldset{
+    margin-top: 16px;
+}
+
+.billing-address-same-as-shipping-block{
+    margin-top: 24px;
+}
+
+/* Shipping Address
+-------------------------------------------------- */
+
+.glc .opc-wrapper .form-shipping-address{
+    margin: 0;
+    max-width: none;
+}
+
+/* Shipping Methods
+-------------------------------------------------- */
+
+.glc-delivery{
+    padding-bottom: 0;
+}
+
+.glc-delivery .step-title{
+    margin-bottom: 0;
+}
+
+.glc .table-checkout-shipping-method{
+    max-width: none;
+    min-width: 0;
+    width: 100%;
+}
+
+.glc .table-checkout-shipping-method tbody td{
+    border-color: #d1d1d1;
+    font-size: 16px;
+    line-height: 2;
+    color: #333;
+    padding: 16px 0 12px;
+    vertical-align: top;
+}
+
+.glc .table-checkout-shipping-method tbody td:first-child{
+    padding-right: 16px;
+}
+
+.glc .table-checkout-shipping-method tbody .col-price{
+    text-align: right;
+    padding-left: 16px;
+}
+
+.glc .table-checkout-shipping-method .carrier-title{
+    display: block;
+    margin: 0 0 4px;
+}
+
+.glc .table-checkout-shipping-method .glc-radio{
+    margin-top: 1px;
+}
+
+/* Review
+-------------------------------------------------- */
+
+.glc-sidebar .actions-toolbar div.primary{
+    float: none;
+    display: block;
+}
+
+.glc-sidebar .actions-toolbar div.primary .action.checkout{
+    float: none;
+    margin: 0;
+    width: 100%;
+}
+
+.glc-sidebar #subscribe-newsletter{
+    margin-top: 8px;
+}
+
+/* Delivery Date
+-------------------------------------------------- */
+
+.glc-delivery-date{
+    margin: 0 -16px;
+    padding: 15px 16px 16px;
+    border-top: 1px solid #d1d1d1;
+}
+
+.delivery-date-text{
+    margin: 8px 0 0;
+}
+
+.delivery-date:after{
+    content: '';
+    clear: both;
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 0;
+}
+
+.delivery-date-left .control{
+    position: relative;
+}
+
+.delivery-date-left ._has-datepicker ~ .ui-datepicker-trigger{
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    margin: 0;
+}
+
+.delivery-date-left ._has-datepicker ~ .ui-datepicker-trigger:before{
+    content: "event";
+    display: block;
+    color: #333;
+}
+
+.delivery-date-left .label{
+    display: block;
+}
+
+.delivery-date-right:before{
+    content: "Time";
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+    font-weight: 400;
+    margin: 0 0 4px;
+    display: block;
+}
+
+/* Calendar */
+
+.lightcheckout-index-index .ui-datepicker{
+    box-shadow: none;
+    width: 340px;
+    border: 1px solid #d1d1d1;
+    background: #fff;
+    border-radius: 2px;
+    padding: 16px;
+    margin-top: 7px;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-calendar{
+    border: 0;
+    color: #333;
+    font-size: 18px;
+    table-layout: fixed;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-calendar th,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-calendar .ui-state-disabled,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-calendar td{
+    background: none;
+    border: 0;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-calendar th{
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    padding: 8px 4px;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-calendar td{
+    text-align: center;
+    vertical-align: middle;
+    padding: 2px;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-calendar .ui-state-hover,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-calendar .ui-state-active{
+    background: #0081ed;
+    border-radius: 50%;
+    color: #fff;
+}
+
+.lightcheckout-index-index .ui-datepicker td span,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-calendar td a{
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    margin: auto;
+    line-height: 40px;
+    padding: 0;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-calendar .ui-state-disabled span{
+    color: #d1d1d1;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-title{
+    font-size: 18px;
+    color: #333;
+    line-height: 24px;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-title .ui-datepicker-month,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-title .ui-datepicker-year{
+    width: auto;
+    margin: 0;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-header{
+    padding: 0 0 8px;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-prev,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-next{
+    color: #333;
+    top: 0;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-prev:hover,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-next:hover{
+    color: #0081ed;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-prev span,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-next span{
+    display: none;
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-prev:before,
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-next:before{
+    content: "chevron_left";
+}
+
+.lightcheckout-index-index .ui-datepicker .ui-datepicker-next:before{
+    content: "chevron_right";
+}
+
+
+
+
+
+
+
+
+/* TEMP = DELETE
+-------------------------------------------------- */
+
+.payment-method-content .actions-toolbar {
+    display: none
+}
+
+.table-checkout-shipping-method {
+    min-width: 10px;
+}
+
+.remove-item {
+    margin-left: 20%;
+}
+
+.green-text {
+    color:green;
+}
+
+.red-text {
+    color:red;
+}
+
+
+#checkout #delivery-date,
+#checkout #checkout-step-payment #co-payment-form #checkout-payment-method-load,
+#checkout #opc-sidebar .opc-block-summary {
+    position: relative;
+}
+
+#trust-seals p:not(:last-child) {
+    float:left;
+    padding-right: 3%;
+}
+
+#social-networks span.google-logo {
+    background: url("images/google-logo.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-background-size: 100% 100%; /*  Safari  */
+    -khtml-background-size: 100% 100%; /*  Konqueror  */
+    -moz-background-size: 100% 100%;
+}
+#social-networks span.facebook-logo {
+    background: url("images/facebook-logo.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-background-size: 100% 100%; /*  Safari  */
+    -khtml-background-size: 100% 100%; /*  Konqueror  */
+    -moz-background-size: 100% 100%;
+}
+#social-networks span.twitter-logo {
+    background: url("images/twitter-logo.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-background-size: 100% 100%; /*  Safari  */
+    -khtml-background-size: 100% 100%; /*  Konqueror  */
+    -moz-background-size: 100% 100%;
+}
+
+#social-networks span{
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+#social-networks span.text {
+    margin-top: 15px;
+    display: block;
+    width: 20%;
+    height: 40px;
+}
+
+#social-networks {
+    padding-top: 10px;
+}
+
+.field.inside._required:after {
+    content:"*";
+    position:absolute;
+    color: #e02b27;
+    font-size: 1.2rem;
+}

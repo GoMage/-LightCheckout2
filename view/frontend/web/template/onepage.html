@@ -10,38 +10,41 @@
     <!-- ko template: getTemplate() --><!-- /ko -->
     <!--/ko-->
     </div>
-    <!-- ko foreach: getRegion('authentication') -->
-        <!-- ko template: getTemplate() --><!-- /ko -->
-    <!--/ko-->
-    <div class="one-third">
-    <!-- ko foreach: getRegion('customer-email') -->
-        <!-- ko template: getTemplate() --><!-- /ko -->
-    <!--/ko-->
-    </div>
 
     <div class="opc-wrapper">
-        <div class="opc" id="checkoutSteps">
-            <div class="one-third left">
-                <div data-bind="scope: 'checkout.billingAddress'">
+        <div class="opc glc-cols" id="checkoutSteps">
+            <div class="glc-left-col">
+                <div class="glc-step glc-login">
+                    <!-- ko foreach: getRegion('authentication') -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!--/ko-->
+                    <!-- ko foreach: getRegion('customer-email') -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!--/ko-->
+                </div>
+                <div class="glc-step glc-billing-address" data-bind="scope: 'checkout.billingAddress'">
                     <!-- ko template: getTemplate() --><!-- /ko -->
                 </div>
-                <div data-bind="scope: 'checkout.shippingAddress'">
+                <div class="glc-step glc-shipping-address" data-bind="scope: 'checkout.shippingAddress'">
                     <!-- ko template: getTemplate() --><!-- /ko -->
                 </div>
-            </div>
-            <div class="two-thirds right">
-                <div class="half left">
-                    <div data-bind="scope: 'checkout.shippingAddress'">
+                <div class="glc-step glc-delivery">                
+                    <div class="step-title" data-role="title">
+                        <span data-bind="i18n: 'Shipping Method'"></span>
+                    </div>
+                    <div class="glc-shipping-methods" data-bind="scope: 'checkout.shippingAddress'">
                         <!-- ko template: getShippingMethodsTemplate() --><!-- /ko -->
                     </div>
-                    <div id="delivery-date" data-bind="scope: 'checkout.deliveryDate'">
+                    <div class="glc-delivery-date" id="delivery-date" data-bind="scope: 'checkout.deliveryDate'">
                         <!-- ko template: getTemplate() --><!-- /ko -->
                     </div>
                 </div>
-                <div class="half right" data-bind="scope: 'checkout.payment'">
+                <div class="glc-step glc-payment-methods" data-bind="scope: 'checkout.payment'">
                     <!-- ko template: getTemplate() --><!-- /ko -->
-                </div>
-                <div class="full right" data-bind="scope: 'checkout.sidebar'">
+                </div>                
+            </div>
+            <div class="glc-right-col">
+                <div class="glc-step glc-sidebar" data-bind="scope: 'checkout.sidebar'">
                     <!-- ko template: getTemplate() --><!-- /ko -->
                 </div>
             </div>

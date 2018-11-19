@@ -1,6 +1,5 @@
 <div data-bind="visible: useForShippingMethod()">
-    <div>
-        <div class="step-title" data-bind="i18n: 'Delivery Date'" data-role="title"></div>
+    <div class="delivery-date">
         <!-- ko if: ($data.tooltip && tooltip.description) -->
         <div class="field-tooltip toggle">
             <span class="field-tooltip-action action-help" tabindex="0" data-toggle="dropdown" data-bind="mageInit: {'dropdown':{'activeClass': '_active'}}" aria-haspopup="true" aria-expanded="false"></span>
@@ -10,18 +9,18 @@
         </div>
         <!--/ko-->
 
-        <div class="left">
+        <div class="delivery-date-left half left">
             <!-- ko foreach: getRegion('selectDate') -->
                 <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
-        <div class="right">
+        <div class="delivery-date-right half right">
             <!-- ko foreach: getRegion('selectTime') -->
                 <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
     </div>
-    <div class="left">
+    <div class="delivery-date-text">
         <!-- ko if: (displayDeliveryDateText == 1) -->
          <div data-bind="text: deliveryDateText"></div>
         <!-- /ko -->
