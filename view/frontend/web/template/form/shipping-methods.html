@@ -3,15 +3,21 @@
     data-bind="fadeVisible: visible(), blockLoader: isLoading"
     role="presentation">
     <div class="checkout-shipping-method">
-        <!-- ko if: ($data.tooltip && tooltip.description) -->
-        <div class="field-tooltip toggle">
-            <span class="field-tooltip-action action-help" tabindex="0" data-toggle="dropdown" data-bind="mageInit: {'dropdown':{'activeClass': '_active'}}" aria-haspopup="true" aria-expanded="false"></span>
-            <div class="field-tooltip-content" data-target="dropdown" aria-hidden="true">
-                    <!-- ko text: tooltip.description --><!-- /ko -->
+    
+        <div class="step-title" data-role="title">
+            <span data-bind="i18n: 'Shipping Method'"></span>
+            
+            <!-- ko if: ($data.tooltip && tooltip.description) -->
+            <div class="field-tooltip toggle">
+                <span class="field-tooltip-action action-help" tabindex="0" data-toggle="dropdown" data-bind="mageInit: {'dropdown':{'activeClass': '_active'}}" aria-haspopup="true" aria-expanded="false"></span>
+                <div class="field-tooltip-content" data-target="dropdown" aria-hidden="true">
+                        <!-- ko text: tooltip.description --><!-- /ko -->
+                </div>
             </div>
+            <!-- /ko -->
+            
         </div>
-        <!-- /ko -->
-
+    
         <!-- ko foreach: getRegion('before-shipping-method-form') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!-- /ko -->

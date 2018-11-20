@@ -13,7 +13,7 @@
     <fieldset id="customer-email-fieldset" class="fieldset" data-bind="blockLoader: isLoading">
         <div class="field required">
             <label class="label" for="customer-email">
-                <span data-bind="i18n: 'Email Address'"></span>
+                <span data-bind="i18n: 'Email'"></span>
             </label>
             <div class="control _with-tooltip">
                 <input class="input-text"
@@ -33,20 +33,23 @@
         </div>
 
         <!--Hidden fields -->
-        <fieldset class="fieldset hidden-fields" data-bind="fadeVisible: isPasswordVisible">
-            <div class="field">
+        <fieldset class="fieldset fieldset-password hidden-fields" data-bind="fadeVisible: isPasswordVisible">
+            <div class="field field-with-remind">
                 <label class="label" for="customer-password">
                     <span data-bind="i18n: 'Password'"></span>
                 </label>
                 <div class="control">
                     <input class="input-text"
-                           placeholder="optional"
                            type="password"
                            name="password"
                            id="customer-password"
                            data-validate="{required:true}" autocomplete="off"/>
-                    <span class="note" data-bind="i18n: 'You already have an account with us. Sign in or continue as guest.'"></span>
+                    <span class="note" data-bind="i18n: 'You already have an account with us. Log in or continue as guest.'"></span>
                 </div>
+                
+                <a class="action remind" data-bind="attr: { href: forgotPasswordUrl }">
+                    <span data-bind="i18n: 'Forgot Your Password?'"></span>
+                </a>
 
             </div>
             <!-- ko foreach: getRegion('additional-login-form-fields') -->
@@ -56,11 +59,6 @@
                 <input name="context" type="hidden" value="checkout" />
                 <div class="primary">
                     <button type="submit" class="action login primary" data-action="checkout-method-login"><span data-bind="i18n: 'Login'"></span></button>
-                </div>
-                <div class="secondary">
-                    <a class="action remind" data-bind="attr: { href: forgotPasswordUrl }">
-                        <span data-bind="i18n: 'Forgot Your Password?'"></span>
-                    </a>
                 </div>
             </div>
         </fieldset>

@@ -1,9 +1,10 @@
-<div id="social-networks">
-    <!-- ko if: (elems().length > 0) -->
-        <span class="left text" data-bind="i18n: 'Login with'"></span>
-    <!-- /ko -->
-
+<!-- ko if: (elems().length > 0) -->
+<div id="social-networks" class="social-networks">
+    
+    <span class="social-networks-text" data-bind="i18n: 'Login with'"></span>    
+    
     <!-- ko foreach: elems() -->
         <!-- ko template: getTemplate() --><!-- /ko -->
     <!-- /ko -->
 </div>
+<!-- /ko -->

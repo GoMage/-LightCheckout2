@@ -1,13 +1,8 @@
 <div class="block items-in-cart" data-bind="mageInit: {'collapsible':{'openedState': 'active', 'active': isItemsBlockExpanded()}}">
     <div class="title" data-role="title">
         <strong role="heading">
-            <span data-bind="text: getItemsQty()"></span>
-            <!-- ko if: getCartLineItemsCount() == 1 -->
-                <!-- ko i18n: 'Item in Cart' --><!-- /ko -->
-            <!-- /ko -->
-            <!-- ko if: getCartLineItemsCount() > 1 -->
-                <!-- ko i18n: 'Items in Cart' --><!-- /ko -->
-            <!-- /ko -->
+            <span class="heading-text" data-bind="i18n: 'Cart'"></span>
+            <span class="heading-qty" data-bind="text: getItemsQty()"></span>
         </strong>
     </div>
     <div class="content minicart-items" data-role="content">
