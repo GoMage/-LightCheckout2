@@ -356,7 +356,7 @@
     padding: 0 0 0 40px;
 }
 
-.checkout-agreement label .action{
+.checkout-agreement .action{
     font-size: 16px;
     line-height: 2;
     color: #333;
@@ -1375,6 +1375,10 @@
 
 .glc .opc-block-summary .table-totals .grand strong{
     padding: 0;
+}
+
+.glc .checkout-agreement + .checkout-agreement{
+    margin-top: 8px;
 }
 
 /* Discount
