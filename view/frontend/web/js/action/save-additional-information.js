@@ -28,13 +28,12 @@ define(
                     customerEmail: '.form-login #customer-email-fieldset #customer-email',
                     deliveryDate: '#delivery-date input',
                     deliveryTime: '#delivery-date select option:selected',
-                    subscribeToNewsletter: '#opc-sidebar #subscribe-newsletter input[type=checkbox]'
+                    subscribeToNewsletter: '#subscribe-newsletter input[type=checkbox]'
                 },
                 passwordVal = $(selectors.password).val(),
                 isAccountCheckboxChecked = $(selectors.accountCheckbox).is(":checked"),
                 deliveryDateVal = $(selectors.deliveryDate).val(),
                 deliveryTimeVal = $(selectors.deliveryTime).text(),
-                isSubscribeToNewsletterCheckboxVisible = $(selectors.subscribeToNewsletter).is(":visible"),
                 isSubscribeToNewsletterCheckboxChecked = $(selectors.subscribeToNewsletter).is(":checked"),
                 payload = {
                     additionInformation: {}
@@ -44,7 +43,7 @@ define(
                 payload.additionInformation.password = passwordVal;
             }
 
-            if (isSubscribeToNewsletterCheckboxVisible && isSubscribeToNewsletterCheckboxChecked) {
+            if (isSubscribeToNewsletterCheckboxChecked) {
                 payload.additionInformation.subscribe = isSubscribeToNewsletterCheckboxChecked;
                 payload.additionInformation.customerEmail = $(selectors.customerEmail).val();
             }

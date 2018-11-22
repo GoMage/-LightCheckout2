@@ -17,6 +17,10 @@ class ChangeAddressValidatorAccordingToConfiguration
      */
     private $directoryData;
 
+    /**
+     * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     * @param Data $directoryData
+     */
     public function __construct(
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
         Data $directoryData
@@ -71,11 +75,11 @@ class ChangeAddressValidatorAccordingToConfiguration
 
         $isStateRequired = (int)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldStateProvince();
         if ($isStateRequired === 2) {
-            if ($this->getCountryModel()->getRegionCollection()->getSize() && !\Zend_Validate::is(
-                    $this->getRegionId(),
+            if ($subject->getCountryModel()->getRegionCollection()->getSize() && !\Zend_Validate::is(
+                    $subject->getRegionId(),
                     'NotEmpty'
-                ) && $this->_directoryData->isRegionRequired(
-                    $this->getCountryId()
+                ) && $this->directoryData->isRegionRequired(
+                    $subject->getCountryId()
                 )
             ) {
                 $errors[] = __('Please enter the state/province.');
