@@ -256,6 +256,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
         $jsLayout = $this->prepareAddressFieldsPositions->execute($jsLayout);
         $jsLayout = $this->removeTermsAndConditionsFromPaymentMethods($jsLayout);
+        $jsLayout = $this->removeDiscountCodeFromPaymentMethods($jsLayout);
 
         return $jsLayout;
     }
@@ -436,6 +437,23 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
             $agreements['displayArea'] = 'checkoutAgreements';
             $jsLayout['components']['checkout']['children']['sidebar']['children']['agreements'] = $agreements;
+        }
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param $jsLayout
+     *
+     * @return array
+     */
+    private function removeDiscountCodeFromPaymentMethods($jsLayout)
+    {
+        if (isset($jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']
+            ['children']['discount'])
+        ) {
+            unset($jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']
+                ['children']['discount']);
         }
 
         return $jsLayout;
