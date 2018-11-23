@@ -1,5 +1,6 @@
 define(
     [
+        'ko',
         'jquery',
         'Magento_Checkout/js/view/billing-address',
         'uiRegistry',
@@ -14,9 +15,15 @@ define(
         'underscore',
         'Magento_Customer/js/model/customer',
         'GoMage_LightCheckout/js/model/address/auto-complete-register',
-        'rjsResolver'
+        'rjsResolver',
+        'Magento_Checkout/js/action/select-shipping-address',
+        'GoMage_LightCheckout/js/light-checkout-data',
+        'Magento_Ui/js/model/messageList',
+        'Magento_Checkout/js/action/set-billing-address',
+        'Magento_Checkout/js/action/create-shipping-address'
     ],
     function (
+        ko,
         $,
         Component,
         uiRegistry,
@@ -31,7 +38,12 @@ define(
         _,
         customer,
         autoCompleteRegister,
-        rjsResolver
+        rjsResolver,
+        selectShippingAddress,
+        lightCheckoutData,
+        globalMessageList,
+        setBillingAddressAction,
+        createShippingAddress
     ) {
         'use strict';
 
@@ -41,6 +53,7 @@ define(
 
         return Component.extend({
             initialize: function () {
+                var self = this;
                 this._super();
 
                 uiRegistry.async('checkoutProvider')(function (checkoutProvider) {
@@ -59,6 +72,13 @@ define(
 
                 this.initFields();
 
+
+                quote.billingAddress.subscribe(function (newAddress) {
+                    if (self.isAddressSameAsShipping()) {
+                        selectShippingAddress(newAddress);
+                    }
+                });
+
                 additionalValidators.registerValidator(this);
 
                 rjsResolver(this.registerAutoComplete.bind(this));
@@ -74,7 +94,8 @@ define(
                 this._super()
                     .observe({
                         isAddressFormVisible: true,
-                        isAddressNew: false
+                        isAddressNew: false,
+                        isAddressSameAsShipping: false
                     });
 
                 // check if not only new address present
@@ -86,6 +107,25 @@ define(
                         }
                     }
                 }
+
+                var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
+
+                if (enableDifferentShippingAddress === 0 || enableDifferentShippingAddress === 1) {
+                    this.isAddressSameAsShipping(true);
+                } else if (enableDifferentShippingAddress === 2) {
+                    this.isAddressSameAsShipping(false);
+                }
+
+                //get if saved after page refreshed.
+                var isAddressSameAsShipping = lightCheckoutData.getIsAddressSameAsShipping();
+
+                if (isAddressSameAsShipping !== null) {
+                    this.isAddressSameAsShipping(isAddressSameAsShipping)
+                }
+
+                this.isAddressSameAsShipping.subscribe(function (newValue) {
+                    lightCheckoutData.setIsAddressSameAsShipping(newValue);
+                });
 
                 return this;
             },
@@ -260,6 +300,38 @@ define(
                 }
 
                 this.source.set('billingAddress', address);
+            },
+
+            /**
+             * @inheritDoc
+             */
+            canUseShippingAddress: ko.computed(function () {
+                var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
+
+                return !quote.isVirtual() && quote.shippingAddress() && quote.shippingAddress().canUseForBilling()
+                    && enableDifferentShippingAddress;
+            }),
+
+            useShippingAddress: function () {
+                if (this.isAddressSameAsShipping()) {
+                    $('#shipping').hide();
+                    selectShippingAddress(quote.billingAddress());
+
+                    if (window.checkoutConfig.reloadOnBillingAddress ||
+                        !window.checkoutConfig.displayBillingOnPaymentMethod
+                    ) {
+                        setBillingAddressAction(globalMessageList);
+                    }
+                } else {
+                    $('#shipping').show();
+                    var addressData = this.source.get('shippingAddress');
+
+                    this.isAddressSameAsShipping(false);
+
+                    selectShippingAddress(createShippingAddress(addressData));
+                }
+
+                return true;
             }
         });
     }

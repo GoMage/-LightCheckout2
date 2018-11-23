@@ -6,16 +6,12 @@ define(
         'Magento_Checkout/js/model/quote',
         'uiRegistry',
         'Magento_Checkout/js/checkout-data',
-        'GoMage_LightCheckout/js/light-checkout-data',
         'Magento_Checkout/js/model/shipping-rates-validator',
         'Magento_Checkout/js/action/set-shipping-information',
         'Magento_Checkout/js/action/select-shipping-address',
-        'Magento_Checkout/js/action/set-billing-address',
-        'Magento_Ui/js/model/messageList',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Customer/js/model/customer',
         'Magento_Checkout/js/model/address-converter',
-        'Magento_Checkout/js/action/create-shipping-address',
         'Magento_Customer/js/model/address-list',
         'mage/translate',
         'underscore',
@@ -30,16 +26,12 @@ define(
         quote,
         registry,
         checkoutData,
-        lightCheckoutData,
         shippingRatesValidator,
         setShippingInformationAction,
         selectShippingAddress,
-        setBillingAddressAction,
-        globalMessageList,
         additionalValidators,
         customer,
         addressConverter,
-        createShippingAddress,
         addressList,
         $t,
         _,
@@ -72,7 +64,6 @@ define(
              * @inheritDoc
              */
             initialize: function () {
-                var self = this;
                 var fieldsetName = 'checkout.shippingAddress.shipping-address-fieldset';
 
                 if (!checkoutData.getSelectedShippingRate() && window.checkoutConfig.general.defaultShippingMethod) {
@@ -96,12 +87,6 @@ define(
                     shippingRatesValidator.initFields(fieldsetName);
                 });
 
-                quote.billingAddress.subscribe(function (newAddress) {
-                    if (self.isAddressSameAsShipping()) {
-                        selectShippingAddress(newAddress);
-                    }
-                });
-
                 additionalValidators.registerValidator(this);
 
                 rjsResolver(this.registerAutoComplete.bind(this));
@@ -119,7 +104,6 @@ define(
             initObservable: function () {
                 this._super()
                     .observe({
-                        isAddressSameAsShipping: false,
                         selectedAddress: null,
                         isAddressNew: false
                     });
@@ -134,14 +118,6 @@ define(
                     }
                 }
 
-                var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
-
-                if (enableDifferentShippingAddress === 0 || enableDifferentShippingAddress === 1) {
-                    this.isAddressSameAsShipping(true);
-                } else if (enableDifferentShippingAddress === 2) {
-                    this.isAddressSameAsShipping(false);
-                }
-
                 quote.shippingMethod.subscribe(function (oldValue) {
                     this.currentMethod = oldValue;
                 }, this, 'beforeChange');
@@ -154,17 +130,6 @@ define(
                         updateSectionAction();
                     }
                 }, this);
-
-                //get if saved after page refreshed.
-                var isAddressSameAsShipping = lightCheckoutData.getIsAddressSameAsShipping();
-
-                if (isAddressSameAsShipping !== null) {
-                    this.isAddressSameAsShipping(isAddressSameAsShipping)
-                }
-
-                this.isAddressSameAsShipping.subscribe(function (newValue) {
-                    lightCheckoutData.setIsAddressSameAsShipping(newValue);
-                });
 
                 return this;
             },
@@ -185,29 +150,6 @@ define(
                 return !quote.isVirtual() && quote.shippingAddress() && quote.shippingAddress().canUseForBilling()
                     && enableDifferentShippingAddress;
             }),
-
-            /**
-             * @inheritDoc
-             */
-            useShippingAddress: function () {
-                if (this.isAddressSameAsShipping()) {
-                    selectShippingAddress(quote.billingAddress());
-
-                    if (window.checkoutConfig.reloadOnBillingAddress ||
-                        !window.checkoutConfig.displayBillingOnPaymentMethod
-                    ) {
-                        setBillingAddressAction(globalMessageList);
-                    }
-                } else {
-                    var addressData = this.source.get('shippingAddress');
-
-                    this.isAddressSameAsShipping(false);
-
-                    selectShippingAddress(createShippingAddress(addressData));
-                }
-
-                return true;
-            },
 
             /**
              * @param {Object} address
@@ -240,8 +182,8 @@ define(
                     $(loginFormSelector).validation();
                     emailValidationResult = Boolean($(loginFormSelector + ' input[name=username]').valid());
                 }
-
-                if (!this.isAddressSameAsShipping()) {
+debugger;
+                if (!$('.glc-switcher.billing-address-same-as-shipping-block input[type=checkbox]').is(':checked')) {
                     this.source.set('params.invalid', false);
                     this.source.trigger('shippingAddress.data.validate');
 
@@ -297,6 +239,16 @@ define(
                 }
 
                 this.source.set('shippingAddress', address);
+            },
+
+            afterRenderShipping: function () {
+                var isAddressSameAsShipping =  $('.glc-switcher.billing-address-same-as-shipping-block' +
+                    ' input[type=checkbox]').is(':checked');
+                if (isAddressSameAsShipping) {
+                    $('#shipping').hide();
+                } else {
+                    $('#shipping').show();
+                }
             }
         });
     }
