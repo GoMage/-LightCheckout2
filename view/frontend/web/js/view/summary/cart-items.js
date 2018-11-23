@@ -4,8 +4,10 @@
  */
 
 define([
-    'Magento_Checkout/js/view/summary/cart-items'
-], function (Component) {
+    'ko',
+    'Magento_Checkout/js/view/summary/cart-items',
+    'Magento_Checkout/js/view/summary/grand-total'
+], function (ko, Component, grandTotal) {
     'use strict';
 
     return Component.extend({
@@ -28,6 +30,10 @@ define([
          */
         setItems: function (items) {
             this.items(items);
-        }
+        },
+
+        getOrderTotal: ko.computed(function() {
+            return grandTotal().getValue();
+        }, this)
     });
 });

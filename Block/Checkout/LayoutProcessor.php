@@ -255,6 +255,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $jsLayout = $this->initGeoIpSettingsForCheckout->execute($jsLayout);
 
         $jsLayout = $this->prepareAddressFieldsPositions->execute($jsLayout);
+        $jsLayout = $this->removeTermsAndConditionsFromPaymentMethods($jsLayout);
 
         return $jsLayout;
     }
@@ -414,6 +415,28 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         ['children']['vat_id']['config']['template'] = 'GoMage_LightCheckout/element/vat-number';
         $jsLayout['components']['checkout']['children']['shippingAddress']['children']['shipping-address-fieldset']
         ['children']['vat_id']['config']['elementTmpl'] = 'GoMage_LightCheckout/element/element-with-blur-template';
+
+        return $jsLayout;
+    }
+
+    /**
+     * @param $jsLayout
+     *
+     * @return array
+     */
+    private function removeTermsAndConditionsFromPaymentMethods($jsLayout)
+    {
+        if (isset($jsLayout['components']['checkout']['children']['payment']['children']['payments-list']
+            ['children']['agreements'])
+        ) {
+            $agreements = $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']
+            ['children']['agreements'];
+            unset($jsLayout['components']['checkout']['children']['payment']['children']['payments-list']
+                ['children']['agreements']);
+
+            $agreements['displayArea'] = 'checkoutAgreements';
+            $jsLayout['components']['checkout']['children']['sidebar']['children']['agreements'] = $agreements;
+        }
 
         return $jsLayout;
     }

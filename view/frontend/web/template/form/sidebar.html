@@ -10,7 +10,11 @@
                 <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
-    
+
+        <!-- ko foreach: getRegion('checkoutAgreements') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+
         <div class="trust-seals-before-button">
             <!-- ko foreach: getRegion('trust_seals_before_place_order_button') -->
              <!-- ko template: getTemplate() --><!-- /ko -->

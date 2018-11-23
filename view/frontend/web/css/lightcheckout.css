@@ -1442,6 +1442,10 @@
     display: none;
 }
 
+.items-in-cart .title .heading-total{
+    display: none;
+}
+
 /* VAT
 -------------------------------------------------- */
 
@@ -1466,7 +1470,9 @@
 }
 
 @media all and (max-width: 1023px){
-
+    .items-in-cart .title .heading-total{
+        display: block;
+    }
     .glc{
         max-width: 560px;
         margin: auto;
