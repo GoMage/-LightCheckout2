@@ -14,7 +14,7 @@
                     <argument name="jsLayout" xsi:type="array">
                         <item name="components" xsi:type="array">
                             <item name="checkout" xsi:type="array">
-                                <item name="component" xsi:type="string">uiComponent</item>
+                                <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/onepage</item>
                                 <item name="config" xsi:type="array">
                                     <item name="template" xsi:type="string">GoMage_LightCheckout/onepage</item>
                                 </item>
@@ -87,18 +87,18 @@
                                                 <item name="template" xsi:type="string">GoMage_LightCheckout/form/social-networks</item>
                                                 <item name="displayArea" xsi:type="string">social-networks</item>
                                                 <item name="children" xsi:type="array">
-                                                    <item name="facebook" xsi:type="array">
-                                                        <item name="component" xsi:type="string">uiComponent</item>
-                                                        <item name="template" xsi:type="string">GoMage_LightCheckout/form/social-networks/social-network</item>
-                                                        <item name="config" xsi:type="array">
-                                                            <item name="additionalClasses" xsi:type="string">facebook-logo</item>
-                                                        </item>
-                                                    </item>
                                                     <item name="google" xsi:type="array">
                                                         <item name="component" xsi:type="string">uiComponent</item>
                                                         <item name="template" xsi:type="string">GoMage_LightCheckout/form/social-networks/social-network</item>
                                                         <item name="config" xsi:type="array">
                                                             <item name="additionalClasses" xsi:type="string">google-logo</item>
+                                                        </item>
+                                                    </item>
+                                                    <item name="facebook" xsi:type="array">
+                                                        <item name="component" xsi:type="string">uiComponent</item>
+                                                        <item name="template" xsi:type="string">GoMage_LightCheckout/form/social-networks/social-network</item>
+                                                        <item name="config" xsi:type="array">
+                                                            <item name="additionalClasses" xsi:type="string">facebook-logo</item>
                                                         </item>
                                                     </item>
                                                     <item name="twitter" xsi:type="array">
@@ -352,7 +352,7 @@
                                                 </item>
                                             </item>
                                             <item name="payments-list" xsi:type="array">
-                                                <item name="component" xsi:type="string">Magento_Checkout/js/view/payment/list</item>
+                                                <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/payment/list</item>
                                                 <item name="template" xsi:type="string">GoMage_LightCheckout/form/payment-methods/list</item>
                                                 <item name="displayArea" xsi:type="string">payment-methods-list</item>
                                                 <item name="config" xsi:type="array">
@@ -413,6 +413,7 @@
                                                         <item name="children" xsi:type="array">
                                                             <item name="details" xsi:type="array">
                                                                 <item name="component" xsi:type="string">Magento_Checkout/js/view/summary/item/details</item>
+                                                                <item name="template" xsi:type="string">GoMage_LightCheckout/form/summary/item/details</item>
                                                                 <item name="children" xsi:type="array">
                                                                     <item name="thumbnail" xsi:type="array">
                                                                         <item name="component" xsi:type="string">Magento_Checkout/js/view/summary/item/details/thumbnail</item>
@@ -420,11 +421,11 @@
                                                                     </item>
                                                                     <item name="decrease_item_qty" xsi:type="array">
                                                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/summary/item/details/decrease-item-qty</item>
-                                                                        <item name="displayArea" xsi:type="string">after_details</item>
+                                                                        <item name="displayArea" xsi:type="string">item_qty</item>
                                                                     </item>
                                                                     <item name="increase_item_qty" xsi:type="array">
                                                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/summary/item/details/increase-item-qty</item>
-                                                                        <item name="displayArea" xsi:type="string">after_details</item>
+                                                                        <item name="displayArea" xsi:type="string">item_qty</item>
                                                                     </item>
                                                                     <item name="subtotal" xsi:type="array">
                                                                         <item name="component" xsi:type="string">Magento_Checkout/js/view/summary/item/details/subtotal</item>

@@ -14,6 +14,7 @@
     <div class="opc-wrapper">
         <div class="opc glc-cols" id="checkoutSteps">
             <div class="glc-left-col">
+                <!-- ko ifnot: isCustomerLoggedIn() -->
                 <div class="glc-step glc-login">
                     <!-- ko foreach: getRegion('authentication') -->
                         <!-- ko template: getTemplate() --><!-- /ko -->
@@ -27,12 +28,14 @@
                         <!--/ko-->
                     </div>
                 </div>
+                <!--/ko-->
                 <div class="glc-step glc-billing-address" data-bind="scope: 'checkout.billingAddress'">
                     <!-- ko template: getTemplate() --><!-- /ko -->
                 </div>
                 <div data-bind="scope: 'checkout.shippingAddress'">
                     <!-- ko template: getTemplate() --><!-- /ko -->
                 </div>
+                <!-- ko ifnot: isQuoteVirtual -->
                 <div class="glc-step glc-delivery">                
                     <div class="glc-shipping-methods" data-bind="scope: 'checkout.shippingAddress'">
                         <!-- ko template: getShippingMethodsTemplate() --><!-- /ko -->
@@ -41,6 +44,7 @@
                         <!-- ko template: getTemplate() --><!-- /ko -->
                     </div>
                 </div>
+                <!--/ko-->
                 <div class="glc-step glc-payment-methods" data-bind="scope: 'checkout.payment'">
                     <!-- ko template: getTemplate() --><!-- /ko -->
                 </div>                

@@ -11,6 +11,7 @@ define([
     return Component.extend({
         hideProducts: window.checkoutConfig.numberProductInCheckout.hideProducts,
         numberOfProducts: window.checkoutConfig.numberProductInCheckout.numberOfProducts,
+        productClasses: 'product-item',
 
         /**
          *

@@ -125,6 +125,9 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
                 ['children']['cart_items']['children']['details']['children']['increase_item_qty']);
             unset($jsLayout['components']['checkout']['children']['sidebar']['children']['summary']
                 ['children']['cart_items']['children']['details']['children']['decrease_item_qty']);
+        } else {
+            $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']
+            ['cart_items']['config']['productClasses'] = 'product-item allow-to-change-qty';
         }
 
         return $jsLayout;

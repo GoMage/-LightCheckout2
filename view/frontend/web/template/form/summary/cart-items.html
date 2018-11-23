@@ -3,13 +3,14 @@
         <strong role="heading">
             <span class="heading-text" data-bind="i18n: 'Cart'"></span>
             <span class="heading-qty" data-bind="text: getItemsQty()"></span>
+            <span class="heading-total" data-bind="text: getItemsQty()"></span>
         </strong>
     </div>
     <div class="content minicart-items" data-role="content">
         <div class="minicart-items-wrapper overflowed">
             <ol class="minicart-items">
                 <!-- ko foreach: items() -->
-                <li class="product-item">
+                <li data-bind="css: $parent.productClasses">
                     <div class="product">
                         <!-- ko foreach: $parent.elems() -->
                         <!-- ko template: getTemplate() --><!-- /ko -->
