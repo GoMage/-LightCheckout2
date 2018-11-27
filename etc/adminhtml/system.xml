@@ -159,7 +159,7 @@
             </group>
             <group id="checkout_address_fields_sorting" translate="label" type="text" sortOrder="175" showInDefault="1"
                    showInWebsite="1" showInStore="1">
-                <label>Address fields sorting on checkout</label>
+                <label>Address fields sorting</label>
                 <field id="keep_field_names_inside" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
                        showInStore="0">
                     <label>Keep field names inside</label>
@@ -404,94 +404,94 @@
                     </depends>
                 </field>
             </group>
-            <group id="social_login_facebook" translate="label" type="text" sortOrder="550" showInDefault="1"
+            <group id="social_media_login" translate="label" type="text" sortOrder="650" showInDefault="1"
                    showInWebsite="1" showInStore="1">
-                <label>Facebook</label>
-                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable</label>
+                <label>Social Media Login</label>
+                <field id="enable_facebook" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Facebook</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Create app <a href="https://developers.facebook.com/apps" target="_bank">here</a>]]></comment>
                 </field>
-                <field id="app_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="app_id_facebook" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Facebook App Id</label>
                     <validate>required-entry</validate>
                     <depends>
-                        <field id="enable">1</field>
+                        <field id="enable_facebook">1</field>
                     </depends>
                 </field>
-                <field id="app_secret" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="app_secret_facebook" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Facebook App Secret</label>
                     <validate>required-entry</validate>
                     <depends>
-                        <field id="enable">1</field>
+                        <field id="enable_facebook">1</field>
                     </depends>
                 </field>
-                <field id="redirect_url" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="redirect_url_facebook" translate="label" type="text" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\RedirectUrl</frontend_model>
-                    <label>Valid OAuth redirect URIs</label>
+                    <label>Facebook Valid OAuth redirect URIs</label>
                     <depends>
-                        <field id="enable">1</field>
+                        <field id="enable_facebook">1</field>
                     </depends>
                 </field>
-            </group>
-            <group id="social_login_google" translate="label" type="text" sortOrder="600" showInDefault="1"
-                   showInWebsite="1" showInStore="1">
-                <label>Google</label>
-                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable</label>
+                <field id="enable_google" translate="label comment" type="select" sortOrder="50" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Google</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Create app <a href="https://code.google.com/apis/console/" target="_bank">here</a>]]></comment>
                 </field>
-                <field id="app_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Client ID</label>
-                    <validate>required-entry</validate>
-                    <depends>
-                        <field id="enable">1</field>
-                    </depends>
-                </field>
-                <field id="app_secret" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Client Secret</label>
-                    <validate>required-entry</validate>
-                    <depends>
-                        <field id="enable">1</field>
-                    </depends>
-                </field>
-                <field id="redirect_url" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\RedirectUrl</frontend_model>
-                    <label>REDIRECT URIS</label>
-                    <depends>
-                        <field id="enable">1</field>
-                    </depends>
-                </field>
-            </group>
-            <group id="social_login_twitter" translate="label" type="text" sortOrder="650" showInDefault="1"
-                   showInWebsite="1" showInStore="1">
-                <label>Twitter</label>
-                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                <field id="app_id_google" translate="label" type="text" sortOrder="60" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Enable</label>
+                    <label>Google Client ID</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enable_google">1</field>
+                    </depends>
+                </field>
+                <field id="app_secret_google" translate="label" type="text" sortOrder="70" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Google Client Secret</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enable_google">1</field>
+                    </depends>
+                </field>
+                <field id="redirect_url_google" translate="label" type="text" sortOrder="80" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\RedirectUrl</frontend_model>
+                    <label>Google REDIRECT URIS</label>
+                    <depends>
+                        <field id="enable_google">1</field>
+                    </depends>
+                </field>
+                <field id="enable_twitter" translate="label comment" type="select" sortOrder="90" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Twitter</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Create app <a href="https://dev.twitter.com/apps" target="_bank">here</a>]]></comment>
                 </field>
-                <field id="app_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Consumer Key</label>
+                <field id="app_id_twitter" translate="label" type="text" sortOrder="95" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Twitter Consumer Key</label>
                     <validate>required-entry</validate>
                     <depends>
-                        <field id="enable">1</field>
+                        <field id="enable_twitter">1</field>
                     </depends>
                 </field>
-                <field id="app_secret" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Consumer Secret</label>
+                <field id="app_secret_twitter" translate="label" type="text" sortOrder="100" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Twitter Consumer Secret</label>
                     <validate>required-entry</validate>
                     <depends>
-                        <field id="enable">1</field>
+                        <field id="enable_twitter">1</field>
                     </depends>
                 </field>
-                <field id="redirect_url" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="redirect_url" type="text" sortOrder="110" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\RedirectUrl</frontend_model>
-                    <label>Callback URL</label>
+                    <label>Twitter Callback URL</label>
                     <depends>
-                        <field id="enable">1</field>
+                        <field id="enable_twitter">1</field>
                     </depends>
                 </field>
             </group>
