@@ -17,17 +17,15 @@ class GeoIp extends Field
 
     /**
      * @param Context $context
-     * @param Filesystem $filesystem
      * @param array $data
      */
     public function __construct(
         Context $context,
-        Filesystem $filesystem,
         array $data = []
     ) {
         parent::__construct($context, $data);
 
-        $this->filesystem = $filesystem;
+        $this->filesystem = $context->getFilesystem();
     }
 
     /**

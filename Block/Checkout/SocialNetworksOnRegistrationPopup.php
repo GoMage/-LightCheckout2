@@ -3,11 +3,8 @@
 namespace GoMage\LightCheckout\Block\Checkout;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
-use GoMage\LightCheckout\Model\Config\Source\NewsletterCheckbox;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Template\Context;
-use Magento\Newsletter\Model\Subscriber;
-use Magento\Newsletter\Model\SubscriberFactory;
 
 class SocialNetworksOnRegistrationPopup extends \Magento\Framework\View\Element\Template
 {
@@ -24,19 +21,18 @@ class SocialNetworksOnRegistrationPopup extends \Magento\Framework\View\Element\
     /**
      * @param Context $context
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
-     * @param UrlInterface $urlBuilder
      * @param array $data
      */
     public function __construct(
         Context $context,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
-        UrlInterface $urlBuilder,
         array $data = []
     ) {
+        
         parent::__construct($context, $data);
 
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
-        $this->urlBuilder = $urlBuilder;
+        $this->urlBuilder = $context->getUrlBuilder();;
     }
 
     /**
