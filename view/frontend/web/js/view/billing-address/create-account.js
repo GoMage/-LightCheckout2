@@ -1,7 +1,7 @@
 define(
     [
         'jquery',
-        'Magento_Checkout/js/view/billing-address',
+        'GoMage_LightCheckout/js/view/billing-address',
         'Magento_Checkout/js/model/quote',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Customer/js/model/customer'

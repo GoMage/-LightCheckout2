@@ -1,26 +1,29 @@
-<!--
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
-<div class="billing-address-form" data-bind="fadeVisible: isAddressFormVisible">
+<!-- ko if: (isCustomerLoggedIn) -->
+<div class="new-address"
+     data-bind="visible: isNewAddressLinkVisible">
+                <span class="action action-toggle" id="add-new-address" data-bind="click: addNewAddressClick">
+                    <!-- ko i18n: 'Add New Address'--><!-- /ko -->
+                </span>
+</div>
+<!-- /ko -->
+<div class="billing-address-form">
     <!-- ko foreach: getRegion('before-fields') -->
-    <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
     <!--/ko-->
     <form data-hasrequired="* Required Fields">
-        <fieldset id="billing-new-address-form" class="fieldset address">
+        <!-- ko if: (isCustomerLoggedIn) -->
+        <div class="choice field full left" data-bind="visible: !isNewAddressLinkVisible()">
+            <input type="checkbox" class="checkbox" id="billing-save-in-address-book" data-bind="checked: saveInAddressBook" />
+            <label class="label" for="billing-save-in-address-book">
+                <span data-bind="i18n: 'Save New Address to Address Book'"></span>
+            </label>
+        </div>
+        <!-- /ko -->
+        <fieldset id="billing-new-address-form" class="fieldset address"
+                  data-bind="visible: !isCustomerLoggedIn || !isNewAddressLinkVisible()">
             <!-- ko foreach: getRegion('additional-fieldsets') -->
-            <!-- ko template: getTemplate() --><!-- /ko -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
-            <!-- ko if: (isCustomerLoggedIn) -->
-            <div class="choice field full left" data-bind="visible: isAddressNew">
-                <input type="checkbox" class="checkbox" id="billing-save-in-address-book" data-bind="checked: saveInAddressBook" />
-                <label class="label" for="billing-save-in-address-book">
-                    <span data-bind="i18n: 'Save in address book'"></span>
-                </label>
-            </div>
-            <!-- /ko -->
         </fieldset>
     </form>
 </div>

@@ -2,7 +2,7 @@ define(
     [
         'ko',
         'jquery',
-        'Magento_Checkout/js/view/billing-address',
+        'Magento_Ui/js/form/form',
         'uiRegistry',
         'Magento_Checkout/js/checkout-data',
         'Magento_Checkout/js/model/quote',
@@ -20,7 +20,8 @@ define(
         'GoMage_LightCheckout/js/light-checkout-data',
         'Magento_Ui/js/model/messageList',
         'Magento_Checkout/js/action/set-billing-address',
-        'Magento_Checkout/js/action/create-shipping-address'
+        'Magento_Checkout/js/action/create-shipping-address',
+        'Magento_Customer/js/model/address-list'
     ],
     function (
         ko,
@@ -43,15 +44,21 @@ define(
         lightCheckoutData,
         globalMessageList,
         setBillingAddressAction,
-        createShippingAddress
+        createShippingAddress,
+        addressList
     ) {
         'use strict';
 
         var observedElements = [],
             postcodeElement = null,
-            postcodeElementName = 'postcode';
+            postcodeElementName = 'postcode',
+            addressOptions = addressList().filter(function (address) {
+                return address.getType() == 'customer-address';
+            });
 
         return Component.extend({
+            addressOptions: addressOptions,
+
             initialize: function () {
                 var self = this;
                 this._super();
@@ -93,16 +100,15 @@ define(
             initObservable: function () {
                 this._super()
                     .observe({
-                        isAddressFormVisible: true,
-                        isAddressNew: false,
-                        isAddressSameAsShipping: false
+                        isAddressSameAsShipping: false,
+                        isNewAddressLinkVisible: customer.isLoggedIn(),
+                        saveInAddressBook: 1
                     });
 
-                // check if not only new address present
-                if (this.addressOptions.length > 1) {
+                if (this.addressOptions.length > 0) {
                     for (var i = 0; i < this.addressOptions.length; i++) {
                         if (this.addressOptions[i].isDefaultBilling()) {
-                            this.selectedAddress(this.addressOptions[i]);
+                            this.onAddressChange(this.addressOptions[i]);
                             break;
                         }
                     }
@@ -131,27 +137,32 @@ define(
             },
 
             validate: function () {
-                this.source.set('params.invalid', false);
-                this.source.trigger('billingAddress.data.validate');
+                var result = true;
 
-                if (this.source.get('billingAddress.custom_attributes')) {
-                    this.source.trigger('billingAddress.custom_attributes.data.validate');
+                if (!this.isNewAddressLinkVisible()) {
+                    this.source.set('params.invalid', false);
+                    this.source.trigger('billingAddress.data.validate');
+
+                    if (this.source.get('billingAddress.custom_attributes')) {
+                        this.source.trigger('billingAddress.custom_attributes.data.validate');
+                    }
+
+                    var addressData = addressConverter.formAddressDataToQuoteAddress(
+                        this.source.get('billingAddress')
+                    );
+
+                    if (customer.isLoggedIn() && !this.customerHasAddresses) {
+                        this.saveInAddressBook(1);
+                    }
+
+                    addressData['save_in_address_book'] = this.saveInAddressBook() ? 1 : 0;
+                    addressData.saveInAddressBook = this.saveInAddressBook() ? 1 : 0;
+
+                    selectBillingAddress(addressData);
+                    result = !this.source.get('params.invalid');
                 }
 
-                var addressData = addressConverter.formAddressDataToQuoteAddress(
-                    this.source.get('billingAddress')
-                );
-
-                if (customer.isLoggedIn() && !this.customerHasAddresses) {
-                    this.saveInAddressBook(1);
-                }
-
-                addressData['save_in_address_book'] = this.saveInAddressBook() ? 1 : 0;
-                addressData.saveInAddressBook = this.saveInAddressBook() ? 1 : 0;
-
-                selectBillingAddress(addressData);
-
-                return !this.source.get('params.invalid');
+                return result;
             },
 
             /**
@@ -280,27 +291,20 @@ define(
              * @inheritDoc
              */
             onAddressChange: function (address) {
-                var streetObj = {};
-
                 if (address.customerAddressId !== null) {
-                    this.isAddressNew(false);
-                    address.country_id = address.countryId;
-                    address.region_id = address.regionId;
 
-                    if (_.isArray(address.street)) {
-                        //convert array to object to display street values on frontend.
-                        for (var i = 0; i < address.street.length; i++) {
-                            streetObj[i] = address.street[i];
-                        }
-
-                        address.street = streetObj;
-                    }
+                    selectBillingAddress(address);
                 } else {
-                    this.isAddressNew(true);
+                    this.source.set('billingAddress', address);
                 }
-
-                this.source.set('billingAddress', address);
             },
+
+            isBillingSelected: ko.computed(function () {
+                    return quote.billingAddress() ?
+                        quote.billingAddress().customerAddressId
+                        : null;
+                }
+            ),
 
             /**
              * @inheritDoc
@@ -326,12 +330,14 @@ define(
                     $('#shipping').show();
                     var addressData = this.source.get('shippingAddress');
 
-                    this.isAddressSameAsShipping(false);
-
                     selectShippingAddress(createShippingAddress(addressData));
                 }
 
                 return true;
+            },
+
+            addNewAddressClick: function () {
+                this.isNewAddressLinkVisible(false);
             }
         });
     }

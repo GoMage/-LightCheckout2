@@ -41,21 +41,9 @@ define(
     ) {
         'use strict';
 
-        var newAddressOption = {
-            /**
-             * Get new address label
-             * @returns {String}
-             */
-            getAddressInline: function () {
-                return $t('New Address');
-            },
-            customerAddressId: null
-        },
-            addressOptions = addressList().filter(function (address) {
+        var addressOptions = addressList().filter(function (address) {
             return address.getType() == 'customer-address';
         });
-
-        addressOptions.push(newAddressOption);
 
         return Component.extend({
             addressOptions: addressOptions,
@@ -104,15 +92,14 @@ define(
             initObservable: function () {
                 this._super()
                     .observe({
-                        selectedAddress: null,
-                        isAddressNew: false
+                        isNewAddressLinkVisible: customer.isLoggedIn()
                     });
 
                 // check if not only new address present
-                if (this.addressOptions.length > 1) {
+                if (this.addressOptions.length > 0) {
                     for (var i = 0; i < this.addressOptions.length; i++) {
                         if (this.addressOptions[i].isDefaultShipping()) {
-                            this.selectedAddress(this.addressOptions[i]);
+                            this.onAddressChange(this.addressOptions[i]);
                             break;
                         }
                     }
@@ -133,6 +120,13 @@ define(
 
                 return this;
             },
+
+            isShippingSelected: ko.computed(function () {
+                    return quote.shippingAddress() ?
+                        quote.shippingAddress().customerAddressId
+                        : null;
+                }
+            ),
 
             /**
              * @returns {string}
@@ -182,8 +176,10 @@ define(
                     $(loginFormSelector).validation();
                     emailValidationResult = Boolean($(loginFormSelector + ' input[name=username]').valid());
                 }
-debugger;
-                if (!$('.glc-switcher.billing-address-same-as-shipping-block input[type=checkbox]').is(':checked')) {
+
+                if (!$('.glc-switcher.billing-address-same-as-shipping-block input[type=checkbox]').is(':checked')
+                    && !this.isNewAddressLinkVisible()
+                ) {
                     this.source.set('params.invalid', false);
                     this.source.trigger('shippingAddress.data.validate');
 
@@ -199,7 +195,7 @@ debugger;
                         this.source.get('shippingAddress')
                     );
 
-                    if (customer.isLoggedIn() && this.addressOptions.length === 1) {
+                    if (customer.isLoggedIn() && this.addressOptions.length === 0) {
                         this.saveInAddressBook = 1;
                     }
 
@@ -219,26 +215,15 @@ debugger;
              * @param {Object} address
              */
             onAddressChange: function (address) {
-                var streetObj = {};
 
-                if (address.customerAddressId !== null) {
-                    this.isAddressNew(false);
-                    address.country_id = address.countryId;
-                    address.region_id = address.regionId;
+                if (address) {
+                    if (address.customerAddressId !== null) {
 
-                    if (_.isArray(address.street)) {
-                        //convert array to object to display street values on frontend.
-                        for (var i = 0; i < address.street.length; i++) {
-                            streetObj[i] = address.street[i];
-                        }
-
-                        address.street = streetObj;
+                        selectShippingAddress(address);
+                    } else {
+                        this.source.set('shippingAddress', address);
                     }
-                } else {
-                    this.isAddressNew(true);
                 }
-
-                this.source.set('shippingAddress', address);
             },
 
             afterRenderShipping: function () {
@@ -249,6 +234,10 @@ debugger;
                 } else {
                     $('#shipping').show();
                 }
+            },
+
+            addNewAddressClick: function () {
+                this.isNewAddressLinkVisible(false);
             }
         });
     }

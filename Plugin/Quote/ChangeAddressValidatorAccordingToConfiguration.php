@@ -84,7 +84,10 @@ class ChangeAddressValidatorAccordingToConfiguration
             ) {
                 $errors[] = __('Please enter the state/province.');
             }
-        } elseif ($isStateRequired === 1 && !\Zend_Validate::is($subject->getRegionId(), 'NotEmpty')) {
+        } elseif ($isStateRequired === 1 &&
+            !(\Zend_Validate::is($subject->getRegionId(), 'NotEmpty')
+            || \Zend_Validate::is($subject->getRegion(), 'NotEmpty'))
+        ) {
             $errors[] = __('Please enter the state/province.');
         }
 
