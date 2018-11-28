@@ -97,6 +97,8 @@ class CreateCustomerBeforeSubmitCheckout implements ObserverInterface
 
                 $customer = $quote->getCustomer();
                 $dataArray = $quote->getBillingAddress()->getData();
+                //this is needed for M2.6.
+                unset($dataArray['id']);
 
                 $this->dataObjectHelper->populateWithArray(
                     $customer,
