@@ -57,7 +57,9 @@
 .glc .opc-block-summary .items-in-cart > .title:after,
 .glc .minicart-items .action.delete:after,
 .glc .opc-block-summary .minicart-items .product .toggle:after,
-.glc .discount-code.payment-option  .payment-option-title .action-toggle:after{
+.glc .discount-code.payment-option  .payment-option-title .action-toggle:after,
+.glc .message.warning > :first-child:before,
+.glc .message.notice > :first-child::before{
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
@@ -174,8 +176,8 @@
     color: #fff;
     font-size: 12px;
     line-height: 1.67;
-    padding: 4px 8px;
-    width: 137px;
+    padding: 8px;
+    width: 192px;
     top: auto;
     left: 50%;
     -webkit-transform: translateX(-50%);
@@ -185,6 +187,7 @@
     text-align: center;
     margin: 0 0 3px;
     border-radius: 3px;
+    box-sizing: border-box;
 }
 
 .glc .field-tooltip .field-tooltip-content:before{
@@ -204,6 +207,10 @@
 
 .glc .field-tooltip .field-tooltip-content:after{
     display: none;
+}
+
+.glc .field-tooltip:hover .field-tooltip-content{
+    display: block;
 }
 
 /* Textarea */
@@ -301,6 +308,7 @@
     color: #333;
     font-weight: 400;
     padding: 0 0 0 56px;
+    cursor: pointer;
 }
 
 .glc-switcher label:before{
@@ -356,6 +364,7 @@
     color: #333;
     font-weight: 400;
     padding: 0 0 0 40px;
+    cursor: pointer;
 }
 
 .glc-checkbox label:before,
@@ -390,6 +399,11 @@
     color: #333;
     font-weight: 400;
     padding: 0 0 0 40px;
+    cursor: pointer;
+}
+
+.glc .payment-method-title .label{
+    cursor: pointer;
 }
 
 .glc-radio.single label{
@@ -532,9 +546,34 @@
     margin-top: 4px;
 }
 
-.street.address-half.left.inside{
+.glc .street.address-half.left.inside{
     float: none;
     width: 100%;
+}
+
+.glc .message.warning,
+.glc .message.notice{
+    background: #ffebb3;
+    border-radius: 2px;
+    padding: 8px 8px 8px 40px;
+    font-size: 12px;
+    line-height: 1.67;
+    color: #333;
+}
+
+.glc .message.warning > :first-child:before,
+.glc .message.notice > :first-child:before{
+    content: "warning";
+    color: #fe9e04;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    margin: 0;
+    width: auto;
+}
+
+.glc .field .message.warning{
+    margin: 4px 0 0;
 }
 
 /* Steps
@@ -584,7 +623,7 @@
 }
 
 .glc-step .step-title .field-tooltip .field-tooltip-action:before{
-    color: #fff;
+    color: #fff !important;
 }
 
 .glc .opc-wrapper .step-content{
@@ -722,10 +761,6 @@
 
 .create-account-checkbox + .fieldset{
     margin-top: 16px;
-}
-
-.billing-address-same-as-shipping-block{
-    /* margin-top: 24px; */
 }
 
 .buy-without-vat-checkbox{
@@ -875,6 +910,10 @@
 
 .delivery-date .label{
     display: block;
+}
+
+.glc-delivery-date .delivery-date-left:last-child{
+    width: 100%;
 }
 
 /* Calendar */
@@ -1548,6 +1587,91 @@
     color:red;
 }
 
+/* Address for registered customer
+-------------------------------------------------- */
+
+/* Address List */
+
+.table-checkout-address-list tr td{
+    border-top: 1px solid #d1d1d1;
+    padding: 16px 0;
+}
+
+.table-checkout-address-list tr:first-child td{
+    border-top: 0;
+    padding-top: 0;
+}
+
+.table-checkout-address-list .col-billing-address,
+.table-checkout-address-list .col-shipping-address{
+    width: 20px;
+    padding-right: 16px;
+}
+
+.table-checkout-address-list .col-billing-address .glc-radio{
+    margin-top: 1px;
+}
+
+.table-checkout-address-list .col-option{
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.table-checkout-address-list .col-option span:first-child{
+    line-height: 2;
+}
+
+.table-checkout-address-list .col-option span{
+    display: block;
+}
+
+.table-checkout-address-list .col-option span + span{
+    margin-top: 8px;
+}
+
+/* Address Add */
+
+.glc .new-address{
+    border-top: 1px solid #d1d1d1;
+    margin: 0 -16px;
+    padding: 15px 16px 0;
+}
+
+.glc .new-address:first-child,
+.glc .table-checkout-address-list:empty .new-address{
+    border-top: 0;
+    padding-top: 0;
+}
+
+.glc .new-address .action{
+    font-size: 16px;
+    line-height: 1.5;
+    color: #0081ed;
+    cursor: pointer;
+}
+
+.glc .new-address .action .material-icons{
+    vertical-align: middle;
+    margin-right: 12px;
+    position: relative;
+    top: -1px;
+}
+
+.glc .checkout-billing-address-has-switcher .new-address{
+    margin-bottom: 16px;
+}
+
+/* Form */
+
+.table-checkout-address-list ~ .form-add-address .glc-checkbox-save-address{
+    border-top: 1px solid #d1d1d1;
+    padding: 16px 0 0;    
+}
+
+.glc-checkbox-save-address{
+    margin: 0 0 16px;
+}
+
 /* Responsive
 -------------------------------------------------- */
 
@@ -1624,8 +1748,8 @@
         width: 100%;
     }
 
-    .delivery-date-left{
-        margin-bottom: 24px;
+    .delivery-date-left:not(:last-child){
+        margin-bottom: 16px;
     }
 
     .glc-step .step-title{
@@ -1702,6 +1826,10 @@
         font-size: 18px;
         line-height: 1.33;
         margin: 0;
+    }
+
+    .glc .form-create-account .field + .field{
+        margin-top: 24px;
     }
 
 }

@@ -2,19 +2,20 @@
 <div class="new-address"
      data-bind="visible: isNewAddressLinkVisible">
                 <span class="action action-toggle" id="add-new-address" data-bind="click: addNewAddressClick">
-                    <!-- ko i18n: 'Add New Address'--><!-- /ko -->
+                    <i class="material-icons">add</i>
+                    <span><!-- ko i18n: 'Add New Address'--><!-- /ko --></span>
                 </span>
 </div>
 <!-- /ko -->
-<div class="billing-address-form">
+<div class="form-add-address billing-address-form">
     <!-- ko foreach: getRegion('before-fields') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
     <!--/ko-->
     <form data-hasrequired="* Required Fields">
         <!-- ko if: (isCustomerLoggedIn) -->
-        <div class="choice field full left" data-bind="visible: !isNewAddressLinkVisible()">
+        <div class="choice field glc-checkbox glc-checkbox-save-address" data-bind="visible: !isNewAddressLinkVisible()">
             <input type="checkbox" class="checkbox" id="billing-save-in-address-book" data-bind="checked: saveInAddressBook" />
-            <label class="label" for="billing-save-in-address-book">
+            <label for="billing-save-in-address-book">
                 <span data-bind="i18n: 'Save New Address to Address Book'"></span>
             </label>
         </div>

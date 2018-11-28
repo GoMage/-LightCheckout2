@@ -20,7 +20,7 @@
         background: <?php echo $this->getCheckoutColor();?>
     }
     .glc-checkbox label:before,
-    .checkout-agreement label:before,
+    .checkout-agreement input + label:before,
     .admin__field-option input.admin__control-checkbox + label:before,
     .glc-radio label:before,
     .glc .payment-method-title .label:before,
@@ -31,7 +31,11 @@
     .glc .minicart-items .action.delete:hover,
     .glc .minicart-items .product-item-details .change-qty a,
     .glc .discount-code.payment-option .payment-option-title .action-toggle,
-    .glc .discount-code.payment-option .payment-option-title .action-toggle:after {
+    .glc .discount-code.payment-option .payment-option-title .action-toggle:after,
+    .glc .discount-applied .discount-applied-value,
+    .glc .field-tooltip .field-tooltip-action:hover:before,
+    .glc .discount-applied .action-cancel:hover,
+    .glc .new-address .action {
         color: <?php echo $this->getCheckoutColor();?>
     }
 
@@ -41,6 +45,11 @@
     .glc .minicart-items .product-item-details .change-qty.increase a:hover,
     .glc .discount-code.payment-option .actions-toolbar .primary .action {
         background-color: <?php echo $this->getCheckoutColor();?>
+    }
+    
+    .glc .minicart-items .product-item-details .change-qty.decrease a:hover,
+    .glc .minicart-items .product-item-details .change-qty.increase a:hover{
+        border-color: <?php echo $this->getCheckoutColor();?>
     }
 
     .glc input.input-text:focus,
