@@ -6,6 +6,9 @@
     <div class="product-item-inner">
         <div class="product-item-name-block">
             <strong class="product-item-name" data-bind="text: $parent.name"></strong>
+            <!-- ko foreach: getRegion('after_name') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!-- /ko -->
             <div class="summary-item-qty">
                 <div class="details-qty">
                     <span class="label"><!-- ko i18n: 'Qty' --><!-- /ko --></span>
