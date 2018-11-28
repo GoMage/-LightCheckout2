@@ -172,6 +172,7 @@ class CheckoutConfigurationsProvider
      * Light Checkout configuration Color Settings.
      */
     const XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON = 'gomage_light_checkout_configuration/color_settings/place_order_button';
+    const XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON_HOVER = 'gomage_light_checkout_configuration/color_settings/place_order_button_hover';
     const XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_CHECKOUT_COLOR = 'gomage_light_checkout_configuration/color_settings/checkout_color';
     /**#@-*/
 
@@ -574,6 +575,11 @@ class CheckoutConfigurationsProvider
     public function getCheckoutColorSettingsPlaceOrderButton()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON);
+    }
+
+    public function getCheckoutColorSettingsPlaceOrderButtonHover()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON_HOVER);
     }
 
     public function getCheckoutColorSettingsCheckoutColor()

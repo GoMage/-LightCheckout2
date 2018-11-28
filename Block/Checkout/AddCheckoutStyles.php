@@ -5,7 +5,7 @@ namespace GoMage\LightCheckout\Block\Checkout;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use Magento\Framework\View\Element\Template;
 
-class AddJsForGoogleAutoCompleteStreet extends \Magento\Framework\View\Element\Template
+class AddCheckoutStyles extends \Magento\Framework\View\Element\Template
 {
     /**
      * @var CheckoutConfigurationsProvider
@@ -30,17 +30,32 @@ class AddJsForGoogleAutoCompleteStreet extends \Magento\Framework\View\Element\T
     /**
      * @return bool
      */
-    public function isEnableStreetAutoComplete()
+    public function getIsEnabledLightCheckout()
     {
-        return $this->checkoutConfigurationsProvider->isLightCheckoutEnabled()
-            && $this->checkoutConfigurationsProvider->getIsEnabledAutoCompleteByStreet();
+        return $this->checkoutConfigurationsProvider->isLightCheckoutEnabled();
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getGoogleApiKey()
+    public function getPlaceOrderButtonColor()
     {
-        return $this->checkoutConfigurationsProvider->getAutoCompleteByStreetGoogleApiKey();
+        return $this->checkoutConfigurationsProvider->getCheckoutColorSettingsPlaceOrderButton();
+    }
+
+    /**
+     * @return bool
+     */
+    public function getPlaceOrderButtonHoverColor()
+    {
+        return $this->checkoutConfigurationsProvider->getCheckoutColorSettingsPlaceOrderButtonHover();
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCheckoutColor()
+    {
+        return $this->checkoutConfigurationsProvider->getCheckoutColorSettingsCheckoutColor();
     }
 }
