@@ -7,6 +7,7 @@ use GoMage\LightCheckout\Model\CustomerLoginByEmailAndPassword;
 use Magento\Checkout\Model\Session;
 use Magento\Checkout\Model\Type\Onepage;
 use Magento\Customer\Api\AccountManagementInterface;
+use Magento\Customer\Model\ResourceModel\CustomerRepository;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
@@ -51,6 +52,7 @@ class CreateCustomerBeforeSubmitCheckout implements ObserverInterface
      * @param DataObjectHelper $dataObjectHelper
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param CustomerLoginByEmailAndPassword $customerLoginByEmailAndPassword
+     * @param CustomerRepository $customerRepository
      */
     public function __construct(
         Session $checkoutSession,
@@ -58,7 +60,8 @@ class CreateCustomerBeforeSubmitCheckout implements ObserverInterface
         CustomerManagement $customerManagement,
         DataObjectHelper $dataObjectHelper,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
-        CustomerLoginByEmailAndPassword $customerLoginByEmailAndPassword
+        CustomerLoginByEmailAndPassword $customerLoginByEmailAndPassword,
+        CustomerRepository $customerRepository
     ) {
         $this->checkoutSession = $checkoutSession;
         $this->accountManagement = $accountManagement;
@@ -97,6 +100,8 @@ class CreateCustomerBeforeSubmitCheckout implements ObserverInterface
 
                 $customer = $quote->getCustomer();
                 $dataArray = $quote->getBillingAddress()->getData();
+                //this is needed for M2.6.
+                unset($dataArray['id']);
 
                 $this->dataObjectHelper->populateWithArray(
                     $customer,

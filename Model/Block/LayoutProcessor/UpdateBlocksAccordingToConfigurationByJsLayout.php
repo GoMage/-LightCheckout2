@@ -86,7 +86,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $isEnabledDiscountCodes = $this->checkoutConfigurationsProvider->getIsEnabledDiscountCodes();
 
         if (!$isEnabledDiscountCodes) {
-            unset($jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']
+            unset($jsLayout['components']['checkout']['children']['sidebar']['children']['summary']
                 ['children']['discount']);
         }
 

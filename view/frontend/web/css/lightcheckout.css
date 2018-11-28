@@ -443,6 +443,10 @@
     background: #d1d1d1;
 }
 
+.glc .action.primary.login {
+    background: #0081ed;
+}
+
 .glc .action.checkout{
     font-size: 16px;
     line-height: 24px;

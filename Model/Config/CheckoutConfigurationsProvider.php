@@ -137,28 +137,28 @@ class CheckoutConfigurationsProvider
     /**#@+
      * Light Checkout configuration Social Login Facebook.
      */
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_ENABLE = 'gomage_light_checkout_configuration/social_login_facebook/enable';
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_ID = 'gomage_light_checkout_configuration/social_login_facebook/app_id';
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_SECRET = 'gomage_light_checkout_configuration/social_login_facebook/app_secret';
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_REDIRECT_URL = 'gomage_light_checkout_configuration/social_login_facebook/redirect_url';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_ENABLE = 'gomage_light_checkout_configuration/social_media_login/enable_facebook';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_ID = 'gomage_light_checkout_configuration/social_media_login/app_id_facebook';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_SECRET = 'gomage_light_checkout_configuration/social_media_login/app_secret_facebook';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_REDIRECT_URL = 'gomage_light_checkout_configuration/social_media_login/redirect_url_facebook';
     /**#@-*/
 
     /**#@+
      * Light Checkout configuration Social Login Google.
      */
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_ENABLE = 'gomage_light_checkout_configuration/social_login_google/enable';
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_ID = 'gomage_light_checkout_configuration/social_login_google/app_id';
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_SECRET = 'gomage_light_checkout_configuration/social_login_google/app_secret';
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_REDIRECT_URL = 'gomage_light_checkout_configuration/social_login_google/redirect_url';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_ENABLE = 'gomage_light_checkout_configuration/social_media_login/enable_google';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_ID = 'gomage_light_checkout_configuration/social_media_login/app_id_google';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_SECRET = 'gomage_light_checkout_configuration/social_media_login/app_secret_google';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_REDIRECT_URL = 'gomage_light_checkout_configuration/social_media_login/redirect_url_google';
     /**#@-*/
 
     /**#@+
      * Light Checkout configuration Social Login Twitter.
      */
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_ENABLE = 'gomage_light_checkout_configuration/social_login_twitter/enable';
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_ID = 'gomage_light_checkout_configuration/social_login_twitter/app_id';
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_SECRET = 'gomage_light_checkout_configuration/social_login_twitter/app_secret';
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_REDIRECT_URL = 'gomage_light_checkout_configuration/social_login_twitter/redirect_url';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_ENABLE = 'gomage_light_checkout_configuration/social_media_login/enable_twitter';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_ID = 'gomage_light_checkout_configuration/social_media_login/app_id_twitter';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_SECRET = 'gomage_light_checkout_configuration/social_media_login/app_secret_twitter';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_REDIRECT_URL = 'gomage_light_checkout_configuration/social_media_login/redirect_url';
     /**#@-*/
 
     /**#@+
@@ -172,6 +172,7 @@ class CheckoutConfigurationsProvider
      * Light Checkout configuration Color Settings.
      */
     const XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON = 'gomage_light_checkout_configuration/color_settings/place_order_button';
+    const XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON_HOVER = 'gomage_light_checkout_configuration/color_settings/place_order_button_hover';
     const XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_CHECKOUT_COLOR = 'gomage_light_checkout_configuration/color_settings/checkout_color';
     /**#@-*/
 
@@ -574,6 +575,11 @@ class CheckoutConfigurationsProvider
     public function getCheckoutColorSettingsPlaceOrderButton()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON);
+    }
+
+    public function getCheckoutColorSettingsPlaceOrderButtonHover()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON_HOVER);
     }
 
     public function getCheckoutColorSettingsCheckoutColor()

@@ -43,4 +43,8 @@
         <plugin name="gomage_light_checkout_change_quote_address_validator"
                 type="GoMage\LightCheckout\Plugin\Quote\ChangeAddressValidatorAccordingToConfiguration"/>
     </type>
+    <type name="Magento\Quote\Api\ChangeQuoteControlInterface">
+        <plugin name="gomage_light_checkout_simulate_is_allowed_when_creating_customer"
+                type="GoMage\LightCheckout\Plugin\Quote\SimulateIsAllowedWhenCreatingCustomer"/>
+    </type>
 </config>

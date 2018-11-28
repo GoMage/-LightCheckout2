@@ -559,5 +559,11 @@
                    as="google-auto-complete-street"
                    template="google_auto_complete_street.phtml"/>
         </referenceBlock>
+        <referenceContainer name="page.bottom.container">
+            <block class="GoMage\LightCheckout\Block\Checkout\AddCheckoutStyles"
+                   name="light-checkout-add-styles"
+                   as="light-checkout-add-styles"
+                   template="add_checkout_styles.phtml"/>
+        </referenceContainer>
     </body>
 </page>
