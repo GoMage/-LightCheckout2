@@ -48,7 +48,6 @@ class Onepage extends Template
      * @param FormKey $formKey
      * @param CompositeConfigProvider $configProvider
      * @param Session $customerSession
-     * @param UrlInterface $url
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param array $layoutProcessors
      * @param array $data
@@ -58,7 +57,6 @@ class Onepage extends Template
         FormKey $formKey,
         CompositeConfigProvider $configProvider,
         Session $customerSession,
-        UrlInterface $url,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
         array $layoutProcessors = [],
         array $data = []
@@ -73,7 +71,7 @@ class Onepage extends Template
         $this->configProvider = $configProvider;
         $this->layoutProcessors = $layoutProcessors;
         $this->customerSession = $customerSession;
-        $this->url = $url;
+        $this->url = $context->getUrlBuilder();
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
     }
 
