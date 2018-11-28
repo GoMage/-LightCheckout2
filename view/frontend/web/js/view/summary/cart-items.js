@@ -6,8 +6,9 @@
 define([
     'ko',
     'Magento_Checkout/js/view/summary/cart-items',
-    'Magento_Checkout/js/view/summary/grand-total'
-], function (ko, Component, grandTotal) {
+    'Magento_Checkout/js/view/summary/grand-total',
+    'Magento_Checkout/js/model/totals'
+], function (ko, Component, grandTotal, totals) {
     'use strict';
 
     return Component.extend({
@@ -23,6 +24,10 @@ define([
             return this.hideProducts === false
                 || (this.hideProducts === true && this.getCartLineItemsCount() > this.numberOfProducts);
         },
+
+        getTotals: ko.computed(function() {
+           return parseFloat(totals.totals()['items_qty']);
+        }, this),
 
         /**
          *
