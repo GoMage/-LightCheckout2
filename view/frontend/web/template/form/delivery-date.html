@@ -1,4 +1,4 @@
-<div data-bind="visible: useForShippingMethod()">
+<div class="glc-delivery-date" data-bind="visible: useForShippingMethod()">
     <div class="delivery-date">
         <!-- ko if: ($data.tooltip && tooltip.description) -->
         <div class="field-tooltip toggle">
@@ -14,12 +14,14 @@
                 <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
-        <div class="delivery-date-right half right">
-            <!-- ko foreach: getRegion('selectTime') -->
+        
+        <!-- ko foreach: getRegion('selectTime') -->
+            <div class="delivery-date-right half right">
                 <label class="label"><span data-bind="i18n: 'Time'"></span></label>
-                <!-- ko template: getTemplate() --><!-- /ko -->
-            <!--/ko-->
-        </div>
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            </div>
+        <!--/ko-->
+        
     </div>
     <div class="delivery-date-text">
         <!-- ko if: (displayDeliveryDateText == 1) -->

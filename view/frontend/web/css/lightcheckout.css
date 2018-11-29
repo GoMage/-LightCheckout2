@@ -58,7 +58,9 @@
 .glc .opc-block-summary .items-in-cart > .title:after,
 .glc .minicart-items .action.delete:after,
 .glc .opc-block-summary .minicart-items .product .toggle:after,
-.glc .discount-code.payment-option  .payment-option-title .action-toggle:after{
+.glc .discount-code.payment-option  .payment-option-title .action-toggle:after,
+.glc .message.warning > :first-child:before,
+.glc .message.notice > :first-child::before{
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
@@ -144,12 +146,14 @@
     padding-right: 36px;
 }
 
-.glc .field .control._with-tooltip select{
+.glc .field .control._with-tooltip select,
+.glc .checkout-payment-method .ccard .fields .control._with-tooltip .select{
     padding-right: 60px;
     background-position: calc(100% - 30px) 50%;
 }
 
-.glc .field .control._with-tooltip select:focus{
+.glc .field .control._with-tooltip select:focus,
+.glc .checkout-payment-method .ccard .fields .control._with-tooltip .select:focus{
     background-position: calc(100% - 29px) 50%;
 }
 
@@ -175,8 +179,8 @@
     color: #fff;
     font-size: 12px;
     line-height: 1.67;
-    padding: 4px 8px;
-    width: 137px;
+    padding: 8px;
+    width: 192px;
     top: auto;
     left: 50%;
     -webkit-transform: translateX(-50%);
@@ -186,6 +190,7 @@
     text-align: center;
     margin: 0 0 3px;
     border-radius: 3px;
+    box-sizing: border-box;
 }
 
 .glc .field-tooltip .field-tooltip-content:before{
@@ -205,6 +210,15 @@
 
 .glc .field-tooltip .field-tooltip-content:after{
     display: none;
+}
+
+.glc .field-tooltip:hover .field-tooltip-content{
+    display: block;
+}
+
+.glc .cvv .field-tooltip .field-tooltip-content{
+    width: 469px;
+    max-width: calc(100vw - 64px);
 }
 
 /* Textarea */
@@ -247,7 +261,8 @@
 
 /* Select */
 
-.glc select{
+.glc select,
+.glc .checkout-payment-method .ccard .fields .select{
     border: 1px solid #d1d1d1;
     border-radius: 2px;
     background: #fff url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNyAxMGw1IDUgNS01eiIvPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48L3N2Zz4=) no-repeat calc(100% - 6px) 50%;
@@ -264,11 +279,13 @@
     appearance        : none;
 }
 
-.glc select:hover{
+.glc select:hover,
+.glc .checkout-payment-method .ccard .fields .select:hover{
     border-color: #333;
 }
 
-.glc select:focus{
+.glc select:focus,
+.glc .checkout-payment-method .ccard .fields .select:focus{
     border-color: #0081ed;
     border-width: 2px;
     padding-left: 7px;
@@ -277,11 +294,13 @@
     background-position: calc(100% - 5px) 50%;
 }
 
-.glc select:active{
+.glc select:active,
+.glc .checkout-payment-method .ccard .fields .select:active{
     border-color: #333;
 }
 
-.glc .field._error .control select{
+.glc .field._error .control select,
+.glc .checkout-payment-method .ccard .fields .select.mage-error{
     border-color: #f4531c;
     border-width: 2px;
     padding-left: 7px;
@@ -302,6 +321,7 @@
     color: #333;
     font-weight: 400;
     padding: 0 0 0 56px;
+    cursor: pointer;
 }
 
 .glc-switcher label:before{
@@ -357,6 +377,7 @@
     color: #333;
     font-weight: 400;
     padding: 0 0 0 40px;
+    cursor: pointer;
 }
 
 .glc-checkbox label:before,
@@ -391,6 +412,11 @@
     color: #333;
     font-weight: 400;
     padding: 0 0 0 40px;
+    cursor: pointer;
+}
+
+.glc .payment-method-title .label{
+    cursor: pointer;
 }
 
 .glc-radio.single label{
@@ -533,9 +559,34 @@
     margin-top: 4px;
 }
 
-.street.address-half.left.inside{
+.glc .street.address-half.inside{
     float: none;
     width: 100%;
+}
+
+.glc .message.warning,
+.glc .message.notice{
+    background: #ffebb3;
+    border-radius: 2px;
+    padding: 8px 8px 8px 40px;
+    font-size: 12px;
+    line-height: 1.67;
+    color: #333;
+}
+
+.glc .message.warning > :first-child:before,
+.glc .message.notice > :first-child:before{
+    content: "warning";
+    color: #fe9e04;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    margin: 0;
+    width: auto;
+}
+
+.glc .field .message.warning{
+    margin: 4px 0 0;
 }
 
 /* Steps
@@ -585,7 +636,7 @@
 }
 
 .glc-step .step-title .field-tooltip .field-tooltip-action:before{
-    color: #fff;
+    color: #fff !important;
 }
 
 .glc .opc-wrapper .step-content{
@@ -723,10 +774,6 @@
 
 .create-account-checkbox + .fieldset{
     margin-top: 16px;
-}
-
-.billing-address-same-as-shipping-block{
-    /* margin-top: 24px; */
 }
 
 .buy-without-vat-checkbox{
@@ -876,6 +923,10 @@
 
 .delivery-date .label{
     display: block;
+}
+
+.glc-delivery-date .delivery-date-left:last-child{
+    width: 100%;
 }
 
 /* Calendar */
@@ -1383,6 +1434,16 @@
     font-size: 18px;
     line-height: 1.78;
     padding-top: 15px;
+    padding-bottom: 3px !important;
+}
+
+.glc .opc-block-summary .table-totals .grand:last-child .mark,
+.glc .opc-block-summary .table-totals .grand:last-child .amount{
+    padding-bottom: 16px !important;
+}
+
+.glc .opc-block-summary .table-totals .totals.charge .mark,
+.glc .opc-block-summary .table-totals .totals.charge .amount{
     padding-bottom: 16px;
 }
 
@@ -1486,11 +1547,13 @@
     box-shadow: none;
 }
 
-.glc .discount-code.payment-option .actions-toolbar .primary .action:hover{
+.glc .discount-code.payment-option .actions-toolbar .primary .action:hover,
+.glc .action.primary.login:hover{
     background-image: linear-gradient(to bottom, rgba(255,255,255,.2), rgba(255,255,255,.2));
 }
 
-.glc .discount-code.payment-option .actions-toolbar .primary .action:active{
+.glc .discount-code.payment-option .actions-toolbar .primary .action:active,
+.glc .action.primary.login:active{
     background-image: linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.2));
     box-shadow: none;
 }
@@ -1547,6 +1610,117 @@
 
 .red-text{
     color:red;
+}
+
+/* Address for registered customer
+-------------------------------------------------- */
+
+/* Address List */
+
+.table-checkout-address-list tr td{
+    border-top: 1px solid #d1d1d1;
+    padding: 16px 0;
+}
+
+.table-checkout-address-list tr:first-child td{
+    border-top: 0;
+    padding-top: 0;
+}
+
+.table-checkout-address-list .col-billing-address,
+.table-checkout-address-list .col-shipping-address{
+    width: 20px;
+    padding-right: 16px;
+}
+
+.table-checkout-address-list .col-billing-address .glc-radio{
+    margin-top: 1px;
+}
+
+.table-checkout-address-list .col-option{
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.table-checkout-address-list .col-option span:first-child{
+    line-height: 2;
+}
+
+.table-checkout-address-list .col-option span{
+    display: block;
+}
+
+.table-checkout-address-list .col-option span + span{
+    margin-top: 8px;
+}
+
+/* Address Add */
+
+.glc .new-address{
+    border-top: 1px solid #d1d1d1;
+    margin: 0 -16px;
+    padding: 15px 16px 0;
+}
+
+.glc .new-address:first-child,
+.glc .table-checkout-address-list:empty .new-address{
+    border-top: 0;
+    padding-top: 0;
+}
+
+.glc .new-address .action{
+    font-size: 16px;
+    line-height: 1.5;
+    color: #0081ed;
+    cursor: pointer;
+}
+
+.glc .new-address .action .material-icons{
+    vertical-align: middle;
+    margin-right: 12px;
+    position: relative;
+    top: -1px;
+}
+
+.glc .checkout-billing-address-has-switcher .new-address{
+    margin-bottom: 16px;
+}
+
+/* Form */
+
+.table-checkout-address-list ~ .form-add-address .glc-checkbox-save-address{
+    border-top: 1px solid #d1d1d1;
+    padding: 16px 0 0;
+}
+
+.glc-checkbox-save-address{
+    margin: 0 0 16px;
+}
+
+/* Credit Card
+-------------------------------------------------- */
+
+.glc .payment-method-content .fieldset{
+    margin-bottom: 24px;
+}
+
+.glc .checkout-payment-method .ccard .number .input-text,
+.glc .checkout-payment-method .ccard.fieldset > .field .fields.group.group-2 .field .select{
+    width: 100%;
+}
+
+.glc .checkout-payment-method .ccard.fieldset > .field .fields.group.group-2 .field{
+    width: calc(50% - 8px) !important;
+}
+
+.glc .checkout-payment-method .ccard.fieldset > .field .fields.group.group-2 .field + .field{
+    margin-left: 16px;
+    padding: 0;
+}
+
+.glc .checkout-payment-method .ccard > .field.cvv > .control{
+    display: block;
+    padding-right: 0;
 }
 
 /* Responsive
@@ -1615,6 +1789,10 @@
     .glc .items-in-cart:not(.active) .title .heading-total{
         display: block;
     }
+    
+    .glc-right-col._sticky{
+        top: auto !important;
+    }
 
 }
 
@@ -1624,8 +1802,16 @@
     .glc .half{
         width: 100%;
     }
+    
+    .glc .checkout-payment-method .ccard.fieldset > .field .fields.group.group-2 .field{
+        width: 100% !important;
+    }
+    
+    .glc .checkout-payment-method .ccard.fieldset > .field .fields.group.group-2 .field + .field{
+        margin: 16px 0 0;
+    }
 
-    .delivery-date-left{
+    .delivery-date-left:not(:last-child){
         margin-bottom: 24px;
     }
 
@@ -1634,7 +1820,9 @@
         line-height: 3;
     }
 
-    .glc .opc-block-summary .items-in-cart > .title strong .heading-text{
+    .glc .opc-block-summary .items-in-cart > .title strong .heading-text,
+    .glc .opc-block-summary .table-totals .grand .mark,
+    .glc .opc-block-summary .table-totals .grand .amount{
         font-size: 16px;
         line-height: 1.5;
     }
@@ -1655,7 +1843,9 @@
     .glc .minicart-items .product-item-name,
     .glc .opc-block-summary .product-item .subtotal,
     .glc .minicart-items .product-item-details .details-qty .label,
-    .glc .minicart-items .product-item-details .details-qty .value{
+    .glc .minicart-items .product-item-details .details-qty .value,
+    .glc .opc-block-summary .table-totals,
+    .glc .opc-block-summary .table-totals .label{
         font-size: 14px;
         line-height: 1.43;
     }
@@ -1675,7 +1865,8 @@
 
     .glc .opc-block-summary .minicart-items .product .toggle,
     .glc .opc-block-summary .minicart-items .item-options,
-    .glc .opc-block-summary .minicart-items .item-options dt{
+    .glc .opc-block-summary .minicart-items .item-options dt,
+    .glc .discount-code.payment-option .payment-option-title{
         font-size: 14px;
         line-height: 1.71;
     }
@@ -1694,15 +1885,14 @@
         right: 32px;
     }
 
-    .glc .discount-code.payment-option .payment-option-title{
-        font-size: 14px;
-        line-height: 1.71;
-    }
-
     .glc .discount-code.payment-option .payment-option-title .action-toggle:after{
         font-size: 18px;
         line-height: 1.33;
         margin: 0;
+    }
+
+    .glc .form-create-account .field + .field{
+        margin-top: 24px;
     }
 
 }
