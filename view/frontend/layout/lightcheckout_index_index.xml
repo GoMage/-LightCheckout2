@@ -429,7 +429,7 @@
                                                                     </item>
                                                                     <item name="subtotal" xsi:type="array">
                                                                         <item name="component" xsi:type="string">Magento_Checkout/js/view/summary/item/details/subtotal</item>
-                                                                        <item name="displayArea" xsi:type="string">after_details</item>
+                                                                        <item name="displayArea" xsi:type="string">after_name</item>
                                                                     </item>
                                                                     <item name="delete_item" xsi:type="array">
                                                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/summary/item/details/delete-item</item>
