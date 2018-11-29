@@ -146,12 +146,14 @@
     padding-right: 36px;
 }
 
-.glc .field .control._with-tooltip select{
+.glc .field .control._with-tooltip select,
+.glc .checkout-payment-method .ccard .fields .control._with-tooltip .select{
     padding-right: 60px;
     background-position: calc(100% - 30px) 50%;
 }
 
-.glc .field .control._with-tooltip select:focus{
+.glc .field .control._with-tooltip select:focus,
+.glc .checkout-payment-method .ccard .fields .control._with-tooltip .select:focus{
     background-position: calc(100% - 29px) 50%;
 }
 
@@ -214,6 +216,11 @@
     display: block;
 }
 
+.glc .cvv .field-tooltip .field-tooltip-content{
+    width: 469px;
+    max-width: calc(100vw - 64px);
+}
+
 /* Textarea */
 
 .glc textarea{
@@ -254,7 +261,8 @@
 
 /* Select */
 
-.glc select{
+.glc select,
+.glc .checkout-payment-method .ccard .fields .select{
     border: 1px solid #d1d1d1;
     border-radius: 2px;
     background: #fff url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNyAxMGw1IDUgNS01eiIvPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48L3N2Zz4=) no-repeat calc(100% - 6px) 50%;
@@ -271,11 +279,13 @@
     appearance        : none;
 }
 
-.glc select:hover{
+.glc select:hover,
+.glc .checkout-payment-method .ccard .fields .select:hover{
     border-color: #333;
 }
 
-.glc select:focus{
+.glc select:focus,
+.glc .checkout-payment-method .ccard .fields .select:focus{
     border-color: #0081ed;
     border-width: 2px;
     padding-left: 7px;
@@ -284,11 +294,13 @@
     background-position: calc(100% - 5px) 50%;
 }
 
-.glc select:active{
+.glc select:active,
+.glc .checkout-payment-method .ccard .fields .select:active{
     border-color: #333;
 }
 
-.glc .field._error .control select{
+.glc .field._error .control select,
+.glc .checkout-payment-method .ccard .fields .select.mage-error{
     border-color: #f4531c;
     border-width: 2px;
     padding-left: 7px;
