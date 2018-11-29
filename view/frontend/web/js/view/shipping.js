@@ -215,7 +215,6 @@ define(
              * @param {Object} address
              */
             onAddressChange: function (address) {
-
                 if (address) {
                     if (address.customerAddressId !== null) {
 
