@@ -33,6 +33,7 @@
 .glc-right-col{
     float: right;
     width: calc(50% - 20px);
+    position: relative;
 }
 
 /* Text

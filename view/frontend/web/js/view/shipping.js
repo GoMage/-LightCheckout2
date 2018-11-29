@@ -17,7 +17,8 @@ define(
         'underscore',
         'GoMage_LightCheckout/js/action/update-sections',
         'GoMage_LightCheckout/js/model/address/auto-complete-register',
-        'rjsResolver'
+        'rjsResolver',
+        'Magento_Checkout/js/action/create-shipping-address'
     ],
     function (
         ko,
@@ -37,7 +38,8 @@ define(
         _,
         updateSectionAction,
         autoCompleteRegister,
-        rjsResolver
+        rjsResolver,
+        createShippingAddress
     ) {
         'use strict';
 
@@ -215,13 +217,10 @@ define(
              * @param {Object} address
              */
             onAddressChange: function (address) {
-
                 if (address) {
                     if (address.customerAddressId !== null) {
-
                         selectShippingAddress(address);
-                    } else {
-                        this.source.set('shippingAddress', address);
+                        this.isNewAddressLinkVisible(true);
                     }
                 }
             },
@@ -237,7 +236,10 @@ define(
             },
 
             addNewAddressClick: function () {
+                var addressData = this.source.get('shippingAddress');
+
                 this.isNewAddressLinkVisible(false);
+                selectShippingAddress(createShippingAddress(addressData));
             }
         });
     }

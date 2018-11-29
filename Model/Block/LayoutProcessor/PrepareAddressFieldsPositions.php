@@ -105,18 +105,16 @@ class PrepareAddressFieldsPositions
                         ? $preparedFields[$attributeCode]['config']['additionalClasses']
                         : '';
                     if (isset($preparedFields[$attributeCode]['config']['template'])
-                        && $preparedFields[$attributeCode]['config']['template'] === 'ui/form/field'
+                        && $preparedFields[$attributeCode]['config']['template'] !== 'ui/group/group'
                     ) {
-                        $preparedFields[$attributeCode]['config']['template'] = 'GoMage_LightCheckout/element/field-inside';
                         $preparedFields[$attributeCode]['config']['placeholder'] = $preparedFields[$attributeCode]['label'];
+                        $preparedFields[$attributeCode]['label'] ='';
                         $preparedFields[$attributeCode]['config']['additionalClasses'] = $presentedAddClasses . ' inside';
                     }
 
                     if (isset($preparedFields[$attributeCode]['config']['template'])
                         && $preparedFields[$attributeCode]['config']['template'] === 'ui/group/group'
                     ) {
-                        $preparedFields[$attributeCode]['config']['template'] =
-                         'GoMage_LightCheckout/element/group-inside';
                         if (isset($preparedFields[$attributeCode]['children'])) {
                             foreach ($preparedFields[$attributeCode]['children'] as $key => $street) {
                                 $preparedFields[$attributeCode]['children'][$key]['config']['placeholder'] =
@@ -124,6 +122,7 @@ class PrepareAddressFieldsPositions
                                 $preparedFields[$attributeCode]['children'][$key]['config']['additionalClasses'] = $presentedAddClasses . ' inside';
                             }
                         }
+                        $preparedFields[$attributeCode]['label'] = '';
                     }
                 }
             }

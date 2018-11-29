@@ -21,7 +21,8 @@ define(
         'Magento_Ui/js/model/messageList',
         'Magento_Checkout/js/action/set-billing-address',
         'Magento_Checkout/js/action/create-shipping-address',
-        'Magento_Customer/js/model/address-list'
+        'Magento_Customer/js/model/address-list',
+        'Magento_Checkout/js/action/create-billing-address'
     ],
     function (
         ko,
@@ -45,7 +46,8 @@ define(
         globalMessageList,
         setBillingAddressAction,
         createShippingAddress,
-        addressList
+        addressList,
+        createBillingAddress
     ) {
         'use strict';
 
@@ -292,10 +294,8 @@ define(
              */
             onAddressChange: function (address) {
                 if (address.customerAddressId !== null) {
-
                     selectBillingAddress(address);
-                } else {
-                    this.source.set('billingAddress', address);
+                    this.isNewAddressLinkVisible(true);
                 }
             },
 
@@ -337,7 +337,10 @@ define(
             },
 
             addNewAddressClick: function () {
+                var addressData = this.source.get('billingAddress');
+
                 this.isNewAddressLinkVisible(false);
+                selectBillingAddress(createBillingAddress(addressData));
             }
         });
     }
