@@ -1421,6 +1421,16 @@
     font-size: 18px;
     line-height: 1.78;
     padding-top: 15px;
+    padding-bottom: 3px !important;
+}
+
+.glc .opc-block-summary .table-totals .grand:last-child .mark,
+.glc .opc-block-summary .table-totals .grand:last-child .amount{
+    padding-bottom: 16px !important;
+}
+
+.glc .opc-block-summary .table-totals .totals.charge .mark,
+.glc .opc-block-summary .table-totals .totals.charge .amount{
     padding-bottom: 16px;
 }
 
@@ -1524,11 +1534,13 @@
     box-shadow: none;
 }
 
-.glc .discount-code.payment-option .actions-toolbar .primary .action:hover{
+.glc .discount-code.payment-option .actions-toolbar .primary .action:hover,
+.glc .action.primary.login:hover{
     background-image: linear-gradient(to bottom, rgba(255,255,255,.2), rgba(255,255,255,.2));
 }
 
-.glc .discount-code.payment-option .actions-toolbar .primary .action:active{
+.glc .discount-code.payment-option .actions-toolbar .primary .action:active,
+.glc .action.primary.login:active{
     background-image: linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.2));
     box-shadow: none;
 }
@@ -1665,11 +1677,37 @@
 
 .table-checkout-address-list ~ .form-add-address .glc-checkbox-save-address{
     border-top: 1px solid #d1d1d1;
-    padding: 16px 0 0;    
+    padding: 16px 0 0;
 }
 
 .glc-checkbox-save-address{
     margin: 0 0 16px;
+}
+
+/* Credit Card
+-------------------------------------------------- */
+
+.glc .payment-method-content .fieldset{
+    margin-bottom: 24px;
+}
+
+.glc .checkout-payment-method .ccard .number .input-text,
+.glc .checkout-payment-method .ccard.fieldset > .field .fields.group.group-2 .field .select{
+    width: 100%;
+}
+
+.glc .checkout-payment-method .ccard.fieldset > .field .fields.group.group-2 .field{
+    width: calc(50% - 8px) !important;
+}
+
+.glc .checkout-payment-method .ccard.fieldset > .field .fields.group.group-2 .field + .field{
+    margin-left: 16px;
+    padding: 0;
+}
+
+.glc .checkout-payment-method .ccard > .field.cvv > .control{
+    display: block;
+    padding-right: 0;
 }
 
 /* Responsive
@@ -1747,9 +1785,17 @@
     .glc .half{
         width: 100%;
     }
+    
+    .glc .checkout-payment-method .ccard.fieldset > .field .fields.group.group-2 .field{
+        width: 100% !important;
+    }
+    
+    .glc .checkout-payment-method .ccard.fieldset > .field .fields.group.group-2 .field + .field{
+        margin: 16px 0 0;
+    }
 
     .delivery-date-left:not(:last-child){
-        margin-bottom: 16px;
+        margin-bottom: 24px;
     }
 
     .glc-step .step-title{
@@ -1757,7 +1803,9 @@
         line-height: 3;
     }
 
-    .glc .opc-block-summary .items-in-cart > .title strong .heading-text{
+    .glc .opc-block-summary .items-in-cart > .title strong .heading-text,
+    .glc .opc-block-summary .table-totals .grand .mark,
+    .glc .opc-block-summary .table-totals .grand .amount{
         font-size: 16px;
         line-height: 1.5;
     }
@@ -1778,7 +1826,9 @@
     .glc .minicart-items .product-item-name,
     .glc .opc-block-summary .product-item .subtotal,
     .glc .minicart-items .product-item-details .details-qty .label,
-    .glc .minicart-items .product-item-details .details-qty .value{
+    .glc .minicart-items .product-item-details .details-qty .value,
+    .glc .opc-block-summary .table-totals,
+    .glc .opc-block-summary .table-totals .label{
         font-size: 14px;
         line-height: 1.43;
     }
@@ -1798,7 +1848,8 @@
 
     .glc .opc-block-summary .minicart-items .product .toggle,
     .glc .opc-block-summary .minicart-items .item-options,
-    .glc .opc-block-summary .minicart-items .item-options dt{
+    .glc .opc-block-summary .minicart-items .item-options dt,
+    .glc .discount-code.payment-option .payment-option-title{
         font-size: 14px;
         line-height: 1.71;
     }
@@ -1815,11 +1866,6 @@
         font-size: 16px;
         line-height: 1.5;
         right: 32px;
-    }
-
-    .glc .discount-code.payment-option .payment-option-title{
-        font-size: 14px;
-        line-height: 1.71;
     }
 
     .glc .discount-code.payment-option .payment-option-title .action-toggle:after{
