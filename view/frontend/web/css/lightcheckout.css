@@ -1789,6 +1789,10 @@
     .glc .items-in-cart:not(.active) .title .heading-total{
         display: block;
     }
+    
+    .glc-right-col._sticky{
+        top: auto !important;
+    }
 
 }
 
