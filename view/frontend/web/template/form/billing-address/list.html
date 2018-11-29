@@ -1,7 +1,7 @@
 <table class="table-checkout-billing-address" data-bind="if: (addressOptions.length > 0)">
     <tbody>
     <!--ko foreach: { data: addressOptions, as: 'option'}-->
-    <tr class="row" data-bind="click: $parent.onAddressChange, style: {cursor: 'pointer'}">
+    <tr class="row" data-bind="click: $parent.onAddressChange.bind($parent), style: {cursor: 'pointer'}">
         <td class="col col-billing-address">
             <div class="glc-radio single">
                 <input class="radio" type="radio"
