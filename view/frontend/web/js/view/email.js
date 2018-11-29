@@ -121,6 +121,22 @@ define([
             }
 
             return result;
+        },
+
+        getLabel: function (label) {
+            if (parseInt(window.checkoutConfig.addressFields.keepInside) === 1) {
+                label = '';
+            }
+
+            return label;
+        },
+
+        getPlaceholder: function (placeholder) {
+            if (parseInt(window.checkoutConfig.addressFields.keepInside) !== 1) {
+                placeholder = '';
+            }
+
+            return placeholder;
         }
     });
 });

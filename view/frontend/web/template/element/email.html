@@ -13,14 +13,17 @@
     <fieldset id="customer-email-fieldset" class="fieldset" data-bind="blockLoader: isLoading">
         <div class="field required">
             <label class="label" for="customer-email">
-                <span data-bind="i18n: 'Email'"></span>
+                <span data-bind="text: getLabel('Email')"></span>
             </label>
             <div class="control _with-tooltip">
                 <input class="input-text"
                        type="email"
                        data-bind="
                             textInput: email,
-                            hasFocus: emailFocused"
+                            hasFocus: emailFocused,
+                            attr: {
+                                    'placeholder': getPlaceholder('Email')
+                                    }"
                        name="username"
                        data-validate="{required:true, 'validate-email':true}"
                        id="customer-email" />
