@@ -4,7 +4,9 @@
          class="step-content"
          data-role="content">
 
-        <!-- ko template: 'GoMage_LightCheckout/form/shipping-address/list' --><!-- /ko -->
+        <!-- ko if: (addressOptions.length > 0) -->
+            <!-- ko template: 'GoMage_LightCheckout/form/shipping-address/list' --><!-- /ko -->
+        <!-- /ko -->
 
         <!-- ko template: 'GoMage_LightCheckout/form/shipping-address/form' --><!-- /ko -->
 
