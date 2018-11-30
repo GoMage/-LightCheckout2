@@ -7,7 +7,8 @@ define(
         'Magento_Checkout/js/model/payment/method-converter',
         'Magento_Checkout/js/model/payment-service',
         'GoMage_LightCheckout/js/model/resource-url-manager',
-        'Magento_Checkout/js/model/shipping-service'
+        'Magento_Checkout/js/model/shipping-service',
+        'Magento_Customer/js/customer-data'
     ],
     function (
         quote,
@@ -17,7 +18,8 @@ define(
         methodConverter,
         paymentService,
         resourceUrlManager,
-        shippingService
+        shippingService,
+        customerData
     ) {
         'use strict';
 
@@ -35,6 +37,7 @@ define(
             ).done(
                 function (response) {
                     if (response.redirect_url) {
+                        customerData.invalidate(['cart']);
                         window.location.href = response.redirect_url;
                         return;
                     }

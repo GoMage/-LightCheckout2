@@ -8,7 +8,8 @@ define(
         'Magento_Checkout/js/model/error-processor',
         'Magento_Checkout/js/model/payment/method-converter',
         'Magento_Checkout/js/model/payment-service',
-        'Magento_Checkout/js/model/full-screen-loader'
+        'Magento_Checkout/js/model/full-screen-loader',
+        'Magento_Customer/js/customer-data'
     ],
     function (
         $,
@@ -18,7 +19,8 @@ define(
         errorProcessor,
         methodConverter,
         paymentService,
-        fullScreenLoader
+        fullScreenLoader,
+        customerData
     ) {
         'use strict';
 
@@ -30,6 +32,7 @@ define(
             ).done(
                 function (response) {
                     if (response.redirect_url) {
+                        customerData.invalidate(['cart']);
                         window.location.href = response.redirect_url;
                         return;
                     }

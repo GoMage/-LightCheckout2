@@ -7,7 +7,8 @@ define(
         'mage/storage',
         'Magento_Checkout/js/model/error-processor',
         'Magento_Checkout/js/model/full-screen-loader',
-        'uiRegistry'
+        'uiRegistry',
+        'Magento_Customer/js/customer-data'
     ],
     function (
         $,
@@ -16,7 +17,8 @@ define(
         storage,
         errorProcessor,
         fullScreenLoader,
-        uiRegistry
+        uiRegistry,
+        customerData
     ) {
         'use strict';
 
@@ -33,6 +35,7 @@ define(
             ).done(
                 function (response) {
                     if (response.redirect_url) {
+                        customerData.invalidate(['cart']);
                         window.location.href = response.redirect_url;
                         return;
                     }
