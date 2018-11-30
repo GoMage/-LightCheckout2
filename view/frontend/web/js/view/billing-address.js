@@ -326,6 +326,11 @@ define(
                     ) {
                         setBillingAddressAction(globalMessageList);
                     }
+
+                    // again sticky as we have left block smaller
+                    $('.glc-right-col').mage('sticky', {
+                        container: '#maincontent'
+                    });
                 } else {
                     $('#shipping').show();
                     var addressData = this.source.get('shippingAddress');
