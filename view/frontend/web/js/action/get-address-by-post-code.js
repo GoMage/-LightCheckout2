@@ -34,6 +34,8 @@ define(
                 JSON.stringify(payload)
             ).done(
                 function (response) {
+                    var city, countryId, regionId;
+
                     if (response.redirect_url) {
                         customerData.invalidate(['cart']);
                         window.location.href = response.redirect_url;
@@ -41,13 +43,23 @@ define(
                     }
 
                     if (response.city) {
-                        uiRegistry.get(parentScope + '.city').value(response.city);
+                        city = uiRegistry.get(parentScope + '.city');
+                        if (city) {
+                            city.value(response.city);
+                        }
                     }
+
                     if (response.country_id) {
-                        uiRegistry.get(parentScope + '.country_id').value(response.country_id);
+                        countryId = uiRegistry.get(parentScope + '.country_id');
+                        if (countryId) {
+                            countryId.value(response.country_id);
+                        }
                     }
                     if (response.region_id) {
-                        uiRegistry.get(parentScope + '.region_id').value(response.region_id);
+                        regionId = uiRegistry.get(parentScope + '.region_id');
+                        if (regionId) {
+                            regionId.value(response.region_id);
+                        }
                     }
 
                     if (response.enable_fields === true || response.enable_fields === false) {
