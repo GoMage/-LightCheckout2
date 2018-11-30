@@ -5,7 +5,7 @@
             <span data-bind="i18n: 'Billing Address'"></span>
         </div>
         <div id="checkout-step-billing" class="step-content" data-role="content">
-            <!-- ko if: (addressOptions.length > 1) -->
+            <!-- ko if: (addressOptions.length > 0) -->
                 <!-- ko template: 'GoMage_LightCheckout/form/billing-address/list' --><!-- /ko -->
             <!-- /ko -->
 
