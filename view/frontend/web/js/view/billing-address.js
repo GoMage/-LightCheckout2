@@ -331,6 +331,11 @@ define(
                     var addressData = this.source.get('shippingAddress');
 
                     selectShippingAddress(createShippingAddress(addressData));
+
+                    // again sticky as we have left block larger
+                    $('.glc-right-col').mage('sticky', {
+                        container: '#maincontent'
+                    });
                 }
 
                 return true;
@@ -341,6 +346,11 @@ define(
 
                 this.isNewAddressLinkVisible(false);
                 selectBillingAddress(createBillingAddress(addressData));
+
+                // again sticky as we have left block larger
+                $('.glc-right-col').mage('sticky', {
+                    container: '#maincontent'
+                });
             }
         });
     }

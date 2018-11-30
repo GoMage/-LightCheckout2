@@ -7,13 +7,21 @@ define(
         'mage/mage',
         'domReady!'
     ],
-    function($, Component) {
+    function ($, Component) {
         'use strict';
         return Component.extend({
             afterRenderSummary: function () {
-                $('.glc-right-col').mage('sticky', {
-                    container: '#maincontent'
-                });
+                var loaderElement = '#checkout-loader .loader',
+                    summaryElement = '.glc-right-col';
+
+                var checkExist = setInterval(function() {
+                    if (!$(loaderElement).is(':visible')) {
+                        $(summaryElement).mage('sticky', {
+                            container: '#maincontent'
+                        });
+                        clearInterval(checkExist);
+                    }
+                }, 500);
             }
         });
     }

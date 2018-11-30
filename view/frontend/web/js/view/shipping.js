@@ -240,6 +240,11 @@ define(
 
                 this.isNewAddressLinkVisible(false);
                 selectShippingAddress(createShippingAddress(addressData));
+
+                // again sticky as we have left block larger
+                $('.glc-right-col').mage('sticky', {
+                    container: '#maincontent'
+                });
             }
         });
     }
