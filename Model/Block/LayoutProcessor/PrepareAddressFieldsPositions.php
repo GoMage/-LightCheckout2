@@ -44,13 +44,6 @@ class PrepareAddressFieldsPositions
         $preparedBillingFields = $this->prepareByAddressChildren($billingFields);
         $preparedShippingFields = $this->prepareByAddressChildren($shippingFields);
 
-        if (isset($billingFields['createAccount'])) {
-            $preparedBillingFields = array_merge(
-                $preparedBillingFields,
-                ['createAccount' => $billingFields['createAccount']]
-            );
-        }
-
         $jsLayout["components"]["checkout"]["children"]["billingAddress"]["children"]["billing-address-fieldset"]
         ["children"] = $preparedBillingFields;
         $jsLayout["components"]["checkout"]["children"]["shippingAddress"]["children"]["shipping-address-fieldset"]
