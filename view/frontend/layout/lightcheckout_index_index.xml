@@ -110,13 +110,13 @@
                                                     </item>
                                                 </item>
                                             </item>
-                                        </item>
-                                    </item>
-                                    <item name="subscribeNewsletter" xsi:type="array">
-                                        <item name="component" xsi:type="string">Magento_Ui/js/form/element/single-checkbox</item>
-                                        <item name="displayArea" xsi:type="string">subscribeNewsletter</item>
-                                        <item name="config" xsi:type="array">
-                                            <item name="description" xsi:type="string" translate="true">Register for newsletter</item>
+                                            <item name="subscribeNewsletter" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/single-checkbox</item>
+                                                <item name="displayArea" xsi:type="string">subscribeNewsletter</item>
+                                                <item name="config" xsi:type="array">
+                                                    <item name="description" xsi:type="string" translate="true">Register for newsletter</item>
+                                                </item>
+                                            </item>
                                         </item>
                                     </item>
                                     <item name="billingAddress" xsi:type="array">

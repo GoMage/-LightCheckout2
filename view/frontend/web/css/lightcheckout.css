@@ -609,7 +609,7 @@
     font-size: 0;
 }
 
-.glc-step.glc-sidebar{
+.glc-sidebar.glc-step{
     margin-bottom: 0;
 }
 
@@ -874,10 +874,10 @@
 -------------------------------------------------- */
 
 .glc-delivery-date{
-    margin: 0 -16px;
-    padding: 15px 16px 16px;
-    border-top: 1px solid #d1d1d1;
     position: relative;
+    padding-top: 17px;
+    margin-top: -18px;
+    background: #fff;
 }
 
 .glc-delivery-date .field-tooltip{
@@ -1764,7 +1764,7 @@
         transform        : rotate(-45deg);
     }
 
-    .glc-step.glc-sidebar{
+    .glc-sidebar.glc-step{
         padding: 0;
         border: 0;
     }
