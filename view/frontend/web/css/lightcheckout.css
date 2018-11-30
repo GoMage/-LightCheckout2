@@ -843,6 +843,12 @@
     padding-left: 16px;
 }
 
+.glc .table-checkout-shipping-method tbody .col-title,
+.glc .table-checkout-shipping-method tbody .col-method,
+.glc .table-checkout-shipping-method tbody .col-price{
+    width: 33%;
+}
+
 .glc .table-checkout-shipping-method .glc-radio{
     margin-top: 1px;
 }
