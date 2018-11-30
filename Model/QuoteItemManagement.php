@@ -142,7 +142,7 @@ class QuoteItemManagement implements QuoteItemManagementInterface
         $responseData = $this->responseDataFactory->create();
 
         if (!$quote->hasItems() || $quote->getHasError() || !$quote->validateMinimumAmount()) {
-            $responseData->setRedirectUrl($this->url->getUrl('home'));
+            $responseData->setRedirectUrl($this->url->getUrl());
         } else {
             if ($quote->getShippingAddress()->getCountryId()) {
                 $responseData->setShippingMethods($this->shippingMethodsProvider->get($quote));

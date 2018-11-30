@@ -96,7 +96,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
             $quote = $this->getOnepage()->getQuote();
             if (!$quote->hasItems() || $quote->getHasError() || !$quote->validateMinimumAmount()) {
                 //redirect not to cart, because if cart is off in configuration it will come to endless redirect.
-                return $this->resultRedirectFactory->create()->setPath('home');
+                return $this->resultRedirectFactory->create()->setPath('');
             }
 
             $this->_customerSession->regenerateId();
