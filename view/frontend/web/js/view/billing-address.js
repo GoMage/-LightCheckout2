@@ -327,20 +327,24 @@ define(
                         setBillingAddressAction(globalMessageList);
                     }
 
-                    // again sticky as we have left block smaller
-                    $('.glc-right-col').mage('sticky', {
-                        container: '#maincontent'
-                    });
+                    setTimeout(function () {
+                        // again sticky as we have left block smaller
+                        $('.glc-right-col').mage('sticky', {
+                            container: '#maincontent'
+                        });
+                    }, 1000);
                 } else {
                     $('#shipping').show();
                     var addressData = this.source.get('shippingAddress');
 
                     selectShippingAddress(createShippingAddress(addressData));
 
-                    // again sticky as we have left block larger
-                    $('.glc-right-col').mage('sticky', {
-                        container: '#maincontent'
-                    });
+                    setTimeout(function () {
+                        // again sticky as we have left block larger
+                        $('.glc-right-col').mage('sticky', {
+                            container: '#maincontent'
+                        });
+                    }, 1000);
                 }
 
                 return true;
