@@ -221,6 +221,10 @@
     max-width: calc(100vw - 64px);
 }
 
+.glc .field-tooltip:hover{
+    z-index: 100;
+}
+
 /* Textarea */
 
 .glc textarea{
@@ -1726,6 +1730,26 @@
 /* Responsive
 -------------------------------------------------- */
 
+@media all and (max-width: 1380px){
+
+    .glc .field-tooltip .field-tooltip-content{
+        left: auto;
+        right: -6px;
+        -webkit-transform: none;
+        -ms-transform    : none;
+        transform        : none;
+    }
+
+    .glc .field-tooltip .field-tooltip-content:before{
+        left: auto;
+        right: 14px;
+        -webkit-transform: rotate(-45deg);
+        -ms-transform    : rotate(-45deg);
+        transform        : rotate(-45deg);
+    }    
+
+}
+
 @media all and (max-width: 1024px){
 
     .glc-left-col,
@@ -1746,22 +1770,6 @@
     .glc-right-col{
         float: none;
         width: auto;
-    }
-
-    .glc .field-tooltip .field-tooltip-content{
-        left: auto;
-        right: -6px;
-        -webkit-transform: none;
-        -ms-transform    : none;
-        transform        : none;
-    }
-
-    .glc .field-tooltip .field-tooltip-content:before{
-        left: auto;
-        right: 14px;
-        -webkit-transform: rotate(-45deg);
-        -ms-transform    : rotate(-45deg);
-        transform        : rotate(-45deg);
     }
 
     .glc-sidebar.glc-step{
