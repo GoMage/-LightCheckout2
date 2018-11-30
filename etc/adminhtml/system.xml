@@ -413,7 +413,7 @@
                     <comment><![CDATA[Create app <a href="https://developers.facebook.com/apps" target="_bank">here</a>]]></comment>
                 </field>
                 <field id="app_id_facebook" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Facebook App Id</label>
+                    <label>Facebook App ID</label>
                     <validate>required-entry</validate>
                     <depends>
                         <field id="enable_facebook">1</field>
@@ -429,7 +429,7 @@
                 <field id="redirect_url_facebook" translate="label" type="text" sortOrder="40" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\RedirectUrl</frontend_model>
-                    <label>Facebook Valid OAuth redirect URIs</label>
+                    <label>Facebook Valid OAuth Redirect URLs</label>
                     <depends>
                         <field id="enable_facebook">1</field>
                     </depends>
@@ -459,7 +459,7 @@
                 <field id="redirect_url_google" translate="label" type="text" sortOrder="80" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\RedirectUrl</frontend_model>
-                    <label>Google REDIRECT URIS</label>
+                    <label>Google Redirect URLs</label>
                     <depends>
                         <field id="enable_google">1</field>
                     </depends>
@@ -536,12 +536,12 @@
                 <label>Number of products visible in checkout</label>
                 <field id="hide_products_in_total_order_block" translate="label comment" type="select" sortOrder="10"
                        showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Hide products in Total order block</label>
+                    <label>Hide products in Order Summary block</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="number_visible_in_checkout" translate="label comment" type="text" sortOrder="20"
                        showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Number of products visible in the checkout</label>
+                    <label>Number of products visible in Order Summary block</label>
                     <validate>validate-digits</validate>
                     <depends>
                         <field id="hide_products_in_total_order_block">1</field>
