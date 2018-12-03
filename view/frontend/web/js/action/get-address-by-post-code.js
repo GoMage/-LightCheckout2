@@ -63,9 +63,15 @@ define(
                     }
 
                     if (response.enable_fields === true || response.enable_fields === false) {
-                        uiRegistry.get(parentScope + '.city').disabled(!response.enable_fields);
-                        uiRegistry.get(parentScope + '.country_id').disabled(!response.enable_fields);
-                        uiRegistry.get(parentScope + '.region_id').disabled(!response.enable_fields);
+                        if (city) {
+                            city.disabled(!response.enable_fields);
+                        }
+                        if (countryId) {
+                            countryId.disabled(!response.enable_fields);
+                        }
+                        if (regionId) {
+                            regionId.disabled(!response.enable_fields);
+                        }
                     }
                 }
             ).fail(
