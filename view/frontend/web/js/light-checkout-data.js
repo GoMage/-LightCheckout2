@@ -50,6 +50,18 @@ define([
 
         getDeliveryDate: function () {
             return getData().deliveryDate;
+        },
+
+        getSubscribedEmailValue: function () {
+            var obj = getData();
+
+            return obj.subscribedEmailValue ? obj.subscribedEmailValue : '';
+        },
+        setSubscribedEmailValue: function (email) {
+            var obj = getData();
+
+            obj.subscribedEmailValue = email;
+            saveData(obj);
         }
     }
 });

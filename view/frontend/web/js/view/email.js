@@ -7,8 +7,21 @@ define([
     'Magento_Checkout/js/checkout-data',
     'Magento_Checkout/js/model/payment/additional-validators',
     'Magento_Customer/js/model/customer',
-    'uiRegistry'
-], function ($, ko, Component, checkEmailAvailability, checkoutData, additionalValidators, customer, uiRegistry) {
+    'uiRegistry',
+    'GoMage_LightCheckout/js/action/check-is-subscribed',
+    'GoMage_LightCheckout/js/light-checkout-data'
+], function (
+    $,
+    ko,
+    Component,
+    checkEmailAvailability,
+    checkoutData,
+    additionalValidators,
+    customer,
+    uiRegistry,
+    checkIsSubscribed,
+    lightCheckoutData
+) {
     'use strict';
 
     return Component.extend({
@@ -21,6 +34,7 @@ define([
         + ' before placing order.',
         errorText: ko.observable(''),
         customerExist: false,
+        isSubscribeVisible: ko.observable(true),
 
         /**
          *
@@ -39,6 +53,7 @@ define([
         },
 
         initConfig: function () {
+            var shouldSubscribeNotBeVisible;
             this._super();
 
             if (!customer.isLoggedIn() && this.checkoutMode === 1) {
@@ -53,6 +68,11 @@ define([
                     }
                 }
                 this.isPasswordVisible = false;
+            }
+
+            shouldSubscribeNotBeVisible = this.resolveInitialSubscribeNotVisibility();
+            if (shouldSubscribeNotBeVisible) {
+                this.isSubscribeVisible(false);
             }
         },
 
@@ -105,6 +125,24 @@ define([
                     this.isPasswordVisible(false);
                 }
                 this.customerExist = true;
+            }.bind(this)).always(function () {
+                this.isLoading(false);
+                this.checkIsSubscribed();
+            }.bind(this));
+        },
+
+        checkIsSubscribed: function () {
+            var isSubscribedCheckComplete = $.Deferred(),
+                self = this;
+
+            this.isLoading(true);
+            checkIsSubscribed(isSubscribedCheckComplete, this.email());
+
+            $.when(isSubscribedCheckComplete).done(function () {
+                self.isSubscribeVisible(false);
+                lightCheckoutData.setSubscribedEmailValue(this.email());
+            }.bind(this)).fail(function () {
+                self.isSubscribeVisible(true);
             }.bind(this)).always(function () {
                 this.isLoading(false);
             }.bind(this));
@@ -172,6 +210,14 @@ define([
             }
 
             return placeholder;
+        },
+
+        resolveInitialSubscribeNotVisibility: function () {
+            if (lightCheckoutData.getSubscribedEmailValue() !== '') {
+                return checkoutData.getInputFieldEmailValue() === lightCheckoutData.getSubscribedEmailValue();
+            }
+
+            return false;
         }
     });
 });

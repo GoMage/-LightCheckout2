@@ -8,6 +8,7 @@
     <preference for="GoMage\LightCheckout\Api\CheckVatNumberInterface" type="GoMage\LightCheckout\Model\CheckVatNumber" />
     <preference for="GoMage\LightCheckout\Api\GetAddressByPostCodeInterface" type="GoMage\LightCheckout\Model\GetAddressByPostCode" />
     <preference for="GoMage\LightCheckout\Model\GetAddressByPostCode\ResponseDataInterface" type="GoMage\LightCheckout\Model\GetAddressByPostCode\ResponseData" />
+    <preference for="GoMage\LightCheckout\Api\IsCustomerSubscribedForNewsletterInterface" type="GoMage\LightCheckout\Model\IsCustomerSubscribedForNewsletter" />
 
     <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid">
         <arguments>
