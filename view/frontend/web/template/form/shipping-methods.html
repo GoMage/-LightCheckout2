@@ -32,8 +32,9 @@
                     <table class="table-checkout-shipping-method">
                         <thead>
                         <tr class="row">
+                            <th class="col col-radio"></th>
                             <th class="col col-method" data-bind="i18n: 'Select Method'"></th>
-                            <th class="col col-method" data-bind="i18n: 'Method Title'"></th>
+                            <th class="col col-title" data-bind="i18n: 'Method Title'"></th>
                             <th class="col col-price" data-bind="i18n: 'Price'"></th>
                         </tr>
                         </thead>
@@ -41,7 +42,7 @@
 
                         <!--ko foreach: { data: rates(), as: 'method'}-->
                         <tr class="row" data-bind="click: $parent.selectShippingMethod, style: {cursor: 'pointer'}">
-                            <td class="col col-method">
+                            <td class="col col-radio">
                                 <!-- ko ifnot: method.error_message -->
                                 <!-- ko if: $parent.rates().length == 1 -->
                                 <div class="glc-radio single">
@@ -75,7 +76,10 @@
                             </td>                            
 
                             <td class="col col-method">                                
-                                <span class="carrier-title" data-bind="text: method.carrier_title, attr: {'id': 'label_carrier_' + method.method_code + '_' + method.carrier_code}"></span>
+                                <span class="carrier-title" data-bind="text: method.carrier_title, attr: {'id': 'label_carrier_' + method.method_code + '_' + method.carrier_code}"></span>                                
+                            </td>
+                            
+                            <td class="col col-title">
                                 <span class="method-title" data-bind="text: method.method_title, attr: {'id': 'label_method_' + method.method_code + '_' + method.carrier_code}"></span>
                             </td>
                                 

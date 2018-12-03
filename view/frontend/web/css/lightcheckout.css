@@ -525,11 +525,15 @@
 .glc .fieldset > .field,
 .glc .field-select-billing,
 .glc .field-select-shipping{
-    margin: 0 0 24px;
+    margin: 0 0 8px;
+}
+
+.glc .fieldset > .field.inside{
+    margin-bottom: 16px;
 }
 
 .glc .field.street .field.inside + .field.inside{
-    margin-top: 10px;
+    margin-top: 16px;
 }
 
 .glc .fieldset > .field:last-child{
@@ -679,11 +683,7 @@
 }
 
 .glc .fieldset-password{
-    margin-top: 24px;
-}
-
-.glc .fieldset-password .actions-toolbar{
-    margin-top: -16px;
+    margin-top: 16px;
 }
 
 .glc .fieldset-password .actions-toolbar div.primary{
@@ -789,7 +789,7 @@
 }
 
 .create-account-block{
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 /* Shipping Address
@@ -805,7 +805,7 @@
 /* Shipping Methods
 -------------------------------------------------- */
 
-.glc-delivery{
+.checkout-shipping-method.glc-step{
     padding-bottom: 0;
 }
 
@@ -824,7 +824,7 @@
     font-size: 16px;
     line-height: 2;
     color: #333;
-    padding: 16px 0 12px;
+    padding: 16px 0;
     vertical-align: top;
 }
 
@@ -835,11 +835,18 @@
 .glc .table-checkout-shipping-method tbody .col-price{
     text-align: right;
     padding-left: 16px;
+    white-space: nowrap;
+    width: 1%;
 }
 
-.glc .table-checkout-shipping-method .carrier-title{
-    display: block;
-    margin: 0 0 4px;
+.glc .table-checkout-shipping-method tbody .col-title{
+    padding-left: 16px;
+}
+
+.glc .table-checkout-shipping-method tbody .col-title,
+.glc .table-checkout-shipping-method tbody .col-method,
+.glc .table-checkout-shipping-method tbody .col-price{
+    width: 33%;
 }
 
 .glc .table-checkout-shipping-method .glc-radio{
@@ -1824,7 +1831,7 @@
     }
 
     .delivery-date-left:not(:last-child){
-        margin-bottom: 24px;
+        margin-bottom: 8px;
     }
 
     .glc-step .step-title{
