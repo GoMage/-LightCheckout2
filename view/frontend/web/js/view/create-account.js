@@ -1,7 +1,8 @@
 define(
     [
         'jquery',
-        'GoMage_LightCheckout/js/view/billing-address',
+        'uiComponent',
+        'uiRegistry',
         'Magento_Checkout/js/model/quote',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Customer/js/model/customer'
@@ -9,6 +10,7 @@ define(
     function (
         $,
         Component,
+        uiRegistry,
         quote,
         additionalValidators,
         customer
@@ -17,7 +19,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'GoMage_LightCheckout/form/billing-address/create-account'
+                template: 'GoMage_LightCheckout/form/create-account'
             },
             passwordMinLength: window.checkoutConfig.passwordSettings.minimumPasswordLength,
             passwordMinCharacterSets: window.checkoutConfig.passwordSettings.requiredCharacterClassesNumber,
@@ -37,20 +39,18 @@ define(
                     autoRegistration = parseInt(window.checkoutConfig.registration.autoRegistration || 0),
                     checkoutMode = parseInt(window.checkoutConfig.registration.checkoutMode || 0);
 
-                if (autoRegistration === 0) {
-                    if (checkoutMode === 0 && !customer.isLoggedIn()) {
-                        shouldCreateAccountBeVisible = true;
-                        shouldCheckboxBeVisible = true;
-                    }
-
-                    if (checkoutMode === 1 && !customer.isLoggedIn()) {
-                        shouldCreateAccountBeVisible = true;
-                        shouldCheckboxBeVisible = false;
-                        shouldIsCreateAnAccountCheckboxChecked = true;
-                    }
+                if (autoRegistration === 0 && !customer.isLoggedIn() && checkoutMode === 0) {
+                    shouldCreateAccountBeVisible = true;
+                    shouldCheckboxBeVisible = true;
                 }
 
-                if (customer.isLoggedIn() || autoRegistration === 1) {
+                if (checkoutMode === 1 && !customer.isLoggedIn()) {
+                    shouldCreateAccountBeVisible = true;
+                    shouldCheckboxBeVisible = false;
+                    shouldIsCreateAnAccountCheckboxChecked = true;
+                }
+
+                if (customer.isLoggedIn() || (autoRegistration === 1 && checkoutMode !== 1)) {
                     shouldCreateAccountBeVisible = false;
                     shouldCheckboxBeVisible = false;
                     shouldIsCreateAnAccountCheckboxChecked = false;
@@ -71,14 +71,14 @@ define(
             },
 
             validate: function () {
-                var result = null;
+                var result, passwordSelector, confirm, password;
 
-                if (this.isCreateAnAccountCheckboxChecked()) {
-                    var passwordSelector = $('#account-password');
+                if (this.isCreateAccountVisible() && this.isCreateAnAccountCheckboxChecked()) {
+                    passwordSelector = $('#account-password');
                     passwordSelector.parents('form').validation();
 
-                    var password = !!passwordSelector.valid();
-                    var confirm = !!$('#account-password-confirmation').valid();
+                    password = !!passwordSelector.valid();
+                    confirm = !!$('#account-password-confirmation').valid();
 
                     result = password && confirm;
                 } else {
@@ -102,6 +102,14 @@ define(
                 }
 
                 return placeholder;
+            },
+
+            afterRenderCreateAnAccount: function () {
+                if (uiRegistry.get('checkout.customer-email').isPasswordVisible()
+                    && parseInt(window.checkoutConfig.registration.checkoutMode || 0) !== 1
+                ) {
+                    this.isCreateAccountVisible(false);
+                }
             }
         })
     }
