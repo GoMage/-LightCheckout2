@@ -420,6 +420,20 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $shippingAddressFieldset['region_id']['validation']['required-entry'] = $isStateRequired;
         $shippingAddressFieldset['company']['validation']['required-entry'] = $isCompanyRequired;
 
+        $shippingAddressFieldset['firstname'] = $this->changeLabelIfRequired($shippingAddressFieldset['firstname']);
+        $shippingAddressFieldset['lastname'] = $this->changeLabelIfRequired($shippingAddressFieldset['lastname']);
+        $shippingAddressFieldset['street'] = $this->changeLabelIfRequired($shippingAddressFieldset['street']);
+        $shippingAddressFieldset['city'] = $this->changeLabelIfRequired($shippingAddressFieldset['city']);
+        $shippingAddressFieldset['telephone'] = $this->changeLabelIfRequired($shippingAddressFieldset['telephone']);
+        $shippingAddressFieldset['postcode'] = $this->changeLabelIfRequired($shippingAddressFieldset['postcode']);
+        $shippingAddressFieldset['country_id'] = $this->changeLabelIfRequired($shippingAddressFieldset['country_id']);
+        $shippingAddressFieldset['region_id'] = $this->changeLabelIfRequired($shippingAddressFieldset['region_id']);
+        $shippingAddressFieldset['company'] = $this->changeLabelIfRequired($shippingAddressFieldset['company']);
+
+        if (isset($shippingAddressFieldset['vat_id'])) {
+            $shippingAddressFieldset['vat_id']['label'] .= ' (' . __('Optional') . ')';
+        }
+
         $billingAddressFieldset['firstname']['validation']['required-entry'] = $isFirstNameRequired;
         $billingAddressFieldset['lastname']['validation']['required-entry'] = $isLastNameRequired;
         $billingAddressFieldset['street']['validation']['required-entry'] = $isStreetRequired;
@@ -430,6 +444,20 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $billingAddressFieldset['region_id']['validation']['required-entry'] = $isStateRequired;
         $billingAddressFieldset['company']['validation']['required-entry'] = $isCompanyRequired;
 
+        $billingAddressFieldset['firstname'] = $this->changeLabelIfRequired($billingAddressFieldset['firstname']);
+        $billingAddressFieldset['lastname'] = $this->changeLabelIfRequired($billingAddressFieldset['lastname']);
+        $billingAddressFieldset['street'] = $this->changeLabelIfRequired($billingAddressFieldset['street']);
+        $billingAddressFieldset['city'] = $this->changeLabelIfRequired($billingAddressFieldset['city']);
+        $billingAddressFieldset['telephone'] = $this->changeLabelIfRequired($billingAddressFieldset['telephone']);
+        $billingAddressFieldset['postcode'] = $this->changeLabelIfRequired($billingAddressFieldset['postcode']);
+        $billingAddressFieldset['country_id'] = $this->changeLabelIfRequired($billingAddressFieldset['country_id']);
+        $billingAddressFieldset['region_id'] = $this->changeLabelIfRequired($billingAddressFieldset['region_id']);
+        $billingAddressFieldset['company'] = $this->changeLabelIfRequired($billingAddressFieldset['company']);
+
+        if (isset($billingAddressFieldset['vat_id'])) {
+            $billingAddressFieldset['vat_id']['label'] .= ' (' . __('Optional') . ')';
+        }
+
         $jsLayout['components']['checkout']['children']['shippingAddress']['children']
         ['shipping-address-fieldset']['children'] = $shippingAddressFieldset;
 
@@ -437,5 +465,20 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         ['billing-address-fieldset']['children'] = $billingAddressFieldset;
 
         return $jsLayout;
+    }
+
+    /**
+     * @param $field
+     *
+     * @return array
+     */
+    private function changeLabelIfRequired($field)
+    {
+        $isRequired = $field['validation']['required-entry'];
+        if (!$isRequired) {
+            $field['label'] .= ' (' . __('Optional') . ')';
+        }
+
+        return $field;
     }
 }
