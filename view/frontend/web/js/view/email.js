@@ -45,6 +45,12 @@ define([
                 if (this.isPasswordVisible) {
                     this.customerExist = true;
                     this.errorText('');
+                } else {
+                    var createAnAccount = uiRegistry.get('checkout.customer-email.createAccount');
+
+                    if (createAnAccount) {
+                        createAnAccount.isCreateAccountVisible(false);
+                    }
                 }
                 this.isPasswordVisible = false;
             }
@@ -65,8 +71,12 @@ define([
                 var createAnAccount = uiRegistry.get('checkout.customer-email.createAccount');
                 this.isPasswordVisible(false);
 
-                if (createAnAccount && this.checkoutMode !== 1) {
-                    createAnAccount.isCreateAccountVisible(true);
+                if (createAnAccount) {
+                    if (this.checkoutMode !== 1) {
+                        createAnAccount.isCreateAccountVisible(true);
+                    } else {
+                        createAnAccount.isCreateAccountVisible(false);
+                    }
                 }
 
                 if (!customer.isLoggedIn() && this.checkoutMode === 1) {
@@ -80,8 +90,12 @@ define([
                     this.isPasswordVisible(true);
                 }
 
-                if (createAnAccount && this.checkoutMode !== 1) {
-                    createAnAccount.isCreateAccountVisible(false);
+                if (createAnAccount) {
+                    if (this.checkoutMode !== 1) {
+                        createAnAccount.isCreateAccountVisible(false);
+                    } else {
+                        createAnAccount.isCreateAccountVisible(true);
+                    }
                 }
 
                 checkoutData.setCheckedEmailValue(this.email());

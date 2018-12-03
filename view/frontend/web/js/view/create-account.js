@@ -39,20 +39,18 @@ define(
                     autoRegistration = parseInt(window.checkoutConfig.registration.autoRegistration || 0),
                     checkoutMode = parseInt(window.checkoutConfig.registration.checkoutMode || 0);
 
-                if (autoRegistration === 0 && !customer.isLoggedIn()) {
-                    if (checkoutMode === 0) {
-                        shouldCreateAccountBeVisible = true;
-                        shouldCheckboxBeVisible = true;
-                    }
-
-                    if (checkoutMode === 1) {
-                        shouldCreateAccountBeVisible = true;
-                        shouldCheckboxBeVisible = false;
-                        shouldIsCreateAnAccountCheckboxChecked = true;
-                    }
+                if (autoRegistration === 0 && !customer.isLoggedIn() && checkoutMode === 0) {
+                    shouldCreateAccountBeVisible = true;
+                    shouldCheckboxBeVisible = true;
                 }
 
-                if (customer.isLoggedIn() || autoRegistration === 1) {
+                if (checkoutMode === 1 && !customer.isLoggedIn()) {
+                    shouldCreateAccountBeVisible = true;
+                    shouldCheckboxBeVisible = false;
+                    shouldIsCreateAnAccountCheckboxChecked = true;
+                }
+
+                if (customer.isLoggedIn() || (autoRegistration === 1 && checkoutMode !== 1)) {
                     shouldCreateAccountBeVisible = false;
                     shouldCheckboxBeVisible = false;
                     shouldIsCreateAnAccountCheckboxChecked = false;
