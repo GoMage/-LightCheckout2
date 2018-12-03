@@ -37,7 +37,7 @@ class RedirectUrl extends FormField
     protected function _getElementHtml(AbstractElement $element)
     {
         $elementId = explode('_', $element->getHtmlId());
-        $redirectUrl = $this->getAuthUrl(ucfirst($elementId[6]));
+        $redirectUrl = $this->getAuthUrl(ucfirst($elementId[9]));
         $html = '<input style="opacity:1;" readonly id="' . $element->getHtmlId()
             . '" class="input-text admin__control-text" value="' . $redirectUrl
             . '" onclick="this.select()" type="text">';

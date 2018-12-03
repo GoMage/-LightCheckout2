@@ -158,7 +158,7 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_ENABLE = 'gomage_light_checkout_configuration/social_media_login/enable_twitter';
     const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_ID = 'gomage_light_checkout_configuration/social_media_login/app_id_twitter';
     const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_SECRET = 'gomage_light_checkout_configuration/social_media_login/app_secret_twitter';
-    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_REDIRECT_URL = 'gomage_light_checkout_configuration/social_media_login/redirect_url';
+    const XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_REDIRECT_URL = 'gomage_light_checkout_configuration/social_media_login/redirect_url_twitter';
     /**#@-*/
 
     /**#@+

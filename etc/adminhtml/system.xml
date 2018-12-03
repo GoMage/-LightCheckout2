@@ -486,7 +486,7 @@
                         <field id="enable_twitter">1</field>
                     </depends>
                 </field>
-                <field id="redirect_url" type="text" sortOrder="110" showInDefault="1" showInWebsite="0"
+                <field id="redirect_url_twitter" type="text" sortOrder="110" showInDefault="1" showInWebsite="0"
                        showInStore="0">
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\RedirectUrl</frontend_model>
                     <label>Twitter Callback URL</label>
