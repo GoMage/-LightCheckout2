@@ -79,10 +79,10 @@ define(
             },
 
             checkVat: function (vatNumber, country) {
-                var result;
+                var result,
+                    self = this;
 
                 if (parseInt(this.isEnabledVatCheck)) {
-                    self = this;
                     if (vatNumber && country) {
                         result = vatNumberCheckAction(vatNumber, country, this.isCheckboxChecked());
                         result.success(function (result) {
