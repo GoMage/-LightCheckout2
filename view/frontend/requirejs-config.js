@@ -1,9 +1,9 @@
-/**
-* Copyright 2016 aheadWorks. All rights reserved.
-* See LICENSE.txt for license details.
-*/
-
 var config = {
+    map: {
+        '*': {
+            'Magento_CheckoutAgreements/js/model/agreements-assigner': 'GoMage_LightCheckout/js/model/agreements-assigner'
+        }
+    },
     config: {
         mixins: {
             'Magento_Checkout/js/view/payment/default': {

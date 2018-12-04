@@ -436,6 +436,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
                 ['children']['agreements']);
 
             $agreements['displayArea'] = 'checkoutAgreements';
+            $agreements['component'] = 'GoMage_LightCheckout/js/view/summary/checkout-agreements';
             $jsLayout['components']['checkout']['children']['sidebar']['children']['agreements'] = $agreements;
         }
 

@@ -430,7 +430,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $shippingAddressFieldset['region_id'] = $this->changeLabelIfRequired($shippingAddressFieldset['region_id']);
         $shippingAddressFieldset['company'] = $this->changeLabelIfRequired($shippingAddressFieldset['company']);
 
-        if (isset($shippingAddressFieldset['vat_id'])) {
+        if (isset($shippingAddressFieldset['vat_id']) && isset($shippingAddressFieldset['vat_id']['label'])) {
             $shippingAddressFieldset['vat_id']['label'] .= ' (' . __('Optional') . ')';
         }
 
@@ -454,7 +454,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $billingAddressFieldset['region_id'] = $this->changeLabelIfRequired($billingAddressFieldset['region_id']);
         $billingAddressFieldset['company'] = $this->changeLabelIfRequired($billingAddressFieldset['company']);
 
-        if (isset($billingAddressFieldset['vat_id'])) {
+        if (isset($billingAddressFieldset['vat_id']) && isset($billingAddressFieldset['vat_id']['label'])) {
             $billingAddressFieldset['vat_id']['label'] .= ' (' . __('Optional') . ')';
         }
 

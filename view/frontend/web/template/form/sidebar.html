@@ -11,9 +11,11 @@
             <!--/ko-->
         </div>
 
-        <!-- ko foreach: getRegion('checkoutAgreements') -->
-            <!-- ko template: getTemplate() --><!-- /ko -->
-        <!--/ko-->
+        <form id="co-place-order-agreement" class="form" novalidate="novalidate">
+            <!-- ko foreach: getRegion('checkoutAgreements') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </form>
 
         <div class="trust-seals-before-button">
             <!-- ko foreach: getRegion('trust_seals_before_place_order_button') -->
