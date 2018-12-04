@@ -1485,6 +1485,16 @@
     color: #333;
     font-weight: 400;
     text-align: left;
+    text-decoration: underline;
+}
+
+.glc .checkout-agreement .action:hover{
+    text-decoration: none;
+    color: #0081ed;
+}
+
+.glc .checkout-agreement > .action:first-child{
+    margin-left: 40px;
 }
 
 .glc .items-in-cart .title .heading-total{
