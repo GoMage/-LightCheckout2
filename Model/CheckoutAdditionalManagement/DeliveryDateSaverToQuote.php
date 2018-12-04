@@ -70,14 +70,14 @@ class DeliveryDateSaverToQuote
 
             if (isset($additionInformation['deliveryDateTime'])) {
                 $timeArray = explode(':', strval($additionInformation['deliveryDateTime']));
+                if ($timeArray && count($timeArray) == 2) {
+                    $time = ($timeArray[0] * 60 * 60) + ($timeArray[1] * 60);
+                    $dateTime = new \DateTime($formattedDate, new \DateTimeZone($timezone));
+                    $dateTime->add(new \DateInterval('PT' . $time . 'S'));
+                    $time = $this->timezone->convertConfigTimeToUtc($dateTime);
 
-                $time = ($timeArray[0] * 60 * 60) + ($timeArray[1] * 60);
-                $dateTime = new \DateTime($formattedDate, new \DateTimeZone($timezone));
-                $dateTime->add(new \DateInterval('PT' . $time . 'S'));
-                $time = $this->timezone->convertConfigTimeToUtc($dateTime);
-
-                $quote->setLcDeliveryDateTime($time);
-
+                    $quote->setLcDeliveryDateTime($time);
+                }
                 unset($additionInformation['deliveryDateTime']);
             }
 

@@ -36,8 +36,13 @@ define(
                         window.location.href = response.redirect_url;
                         return;
                     }
-                    quote.setTotals(response.totals);
-                    paymentService.setPaymentMethods(methodConverter(response.payment_methods));
+                    if (response.totals) {
+                        quote.setTotals(response.totals);
+                    }
+
+                    if (response.payment_methods) {
+                        paymentService.setPaymentMethods(methodConverter(response.payment_methods));
+                    }
                 }
             ).fail(
                 function (response) {
