@@ -1485,12 +1485,11 @@
     line-height: 2;
     color: #333;
     font-weight: 400;
-    text-align: left;
-    text-decoration: underline;
+    text-align: left;    
 }
 
 .glc .checkout-agreement .action:hover{
-    text-decoration: none;
+    text-decoration: underline;
     color: #0081ed;
 }
 
