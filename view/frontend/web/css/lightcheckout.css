@@ -728,7 +728,7 @@
     -ms-flex-align     : center;
     -webkit-align-items: center;
     align-items        : center;
-    margin: 16px 0 0;
+    margin: 11px 0 0;
 }
 
 .social-networks-text{
@@ -781,7 +781,8 @@
 -------------------------------------------------- */
 
 .create-account-checkbox + .fieldset{
-    margin-top: 16px;
+    margin-top: 3px;
+    padding-bottom: 1px;
 }
 
 .buy-without-vat-checkbox{
@@ -789,7 +790,7 @@
 }
 
 .create-account-block{
-    margin-bottom: 16px;
+    margin: 9px 0 2px;
 }
 
 /* Shipping Address
