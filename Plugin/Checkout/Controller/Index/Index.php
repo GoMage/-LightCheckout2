@@ -71,7 +71,7 @@ class Index
                 ->setController('index')
                 ->forward('index');
         } else {
-            $result = $proceed($subject);
+            $result = $proceed();
         }
 
         return $result;
