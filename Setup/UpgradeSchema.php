@@ -17,18 +17,14 @@ class UpgradeSchema implements UpgradeSchemaInterface
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->startSetup();
-        if (version_compare($context->getVersion(), '1.1.2', '<')) {
-            $this->updateTo112($setup);
-        }
-
-        if (version_compare($context->getVersion(), '1.1.3', '<')) {
-            $this->updateTo113($setup);
+        if (version_compare($context->getVersion(), '1.0.0', '<')) {
+            $this->updateTo100($setup);
         }
 
         $setup->endSetup();
     }
 
-    private function updateTo112(SchemaSetupInterface $setup)
+    private function updateTo100(SchemaSetupInterface $setup)
     {
         $setup->getConnection()->createTable(
             $setup->getConnection()->newTable(
@@ -63,10 +59,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
             )
         );
-    }
 
-    private function updateTo113(SchemaSetupInterface $setup)
-    {
         $setup->getConnection()->createTable(
             $setup->getConnection()
                 ->newTable($setup->getTable(\GoMage\LightCheckout\Model\ResourceModel\SocialCustomer::TABLE_NAME))

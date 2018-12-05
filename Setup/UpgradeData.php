@@ -30,7 +30,7 @@ class UpgradeData implements UpgradeDataInterface
     {
         $setup->startSetup();
 
-        if (version_compare($context->getVersion(), '1.1.4', '<')) {
+        if (version_compare($context->getVersion(), '1.0.0', '<')) {
             $addressFields = [
                 [
                     'code' => 'firstname',
