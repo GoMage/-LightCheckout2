@@ -1,10 +1,17 @@
 .section-config #gomage_light_checkout_configuration_delivery_date td.value {
-    min-width: 700px;
-    width: 100%;
+    width: 77%;
 }
 
 .section-config #gomage_light_checkout_configuration_delivery_date td.value .time-select {
-    min-width: 100px;
+    min-width: 90px;
+}
+
+.section-config #gomage_light_checkout_configuration_delivery_date td.value input[id*="delivery_sort"]{
+    min-width: 35px;
+}
+
+.section-config #gomage_light_checkout_configuration_delivery_date .admin__control-table tbody td:not(:last-child){
+    padding-right: 1.25rem;
 }
 
 .field-wrapper .field ul .potential-position{
