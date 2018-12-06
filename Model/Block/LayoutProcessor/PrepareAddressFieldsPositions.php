@@ -100,8 +100,15 @@ class PrepareAddressFieldsPositions
                     if (isset($preparedFields[$attributeCode]['config']['template'])
                         && $preparedFields[$attributeCode]['config']['template'] !== 'ui/group/group'
                     ) {
-                        $preparedFields[$attributeCode]['config']['placeholder'] = $preparedFields[$attributeCode]['label'];
-                        $preparedFields[$attributeCode]['label'] ='';
+                        if ($attributeCode === 'region_id') {
+                            $preparedFields[$attributeCode]['config']['inputPlaceholder'] =
+                                $preparedFields[$attributeCode]['label'];
+                        } else {
+                            $preparedFields[$attributeCode]['config']['placeholder'] =
+                                $preparedFields[$attributeCode]['label'];
+                        }
+
+                        $preparedFields[$attributeCode]['label'] = '';
                         $preparedFields[$attributeCode]['config']['additionalClasses'] = $presentedAddClasses . ' inside';
                     }
 
@@ -116,6 +123,10 @@ class PrepareAddressFieldsPositions
                             }
                         }
                         $preparedFields[$attributeCode]['label'] = '';
+                    }
+                } else {
+                    if ($attributeCode === 'region_id') {
+                        $preparedFields[$attributeCode]['config']['inputPlaceholder'] = '';
                     }
                 }
             }

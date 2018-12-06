@@ -10,7 +10,7 @@ define([
         parent: '${ $.$data.parentName }',
         component: 'Magento_Ui/js/form/element/abstract',
         template: '${ $.$data.template }',
-        placeholder: '${ $.$data.placeholder }',
+        placeholder: '${ $.$data.inputPlaceholder }',
         provider: '${ $.$data.provider }',
         name: '${ $.$data.index }_input',
         dataScope: '${ $.$data.customEntry }',
