@@ -7,6 +7,7 @@
                 <item name="addressFormAttributes" xsi:type="object">GoMage\LightCheckout\Block\Checkout\LayoutProcessor</item>
                 <item name="totalsSortOrder" xsi:type="object">Magento\Checkout\Block\Checkout\TotalsProcessor</item>
                 <item name="directoryData" xsi:type="object">Magento\Checkout\Block\Checkout\DirectoryDataProcessor</item>
+                <item name="configurationData" xsi:type="object">GoMage\LightCheckout\Block\Checkout\ConfigurationProcessor</item>
             </argument>
         </arguments>
     </type>
