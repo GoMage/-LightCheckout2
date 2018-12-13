@@ -207,6 +207,10 @@
     top: 6px;
 }
 
+.glc .field-tooltip .field-tooltip-action{
+    vertical-align: top;
+}
+
 .glc .field-tooltip .field-tooltip-action:before{
     content: "help";
     color: #333;
@@ -677,8 +681,8 @@
     padding: 0 16px 16px;
 }
 
-#payment.glc-step {
-    margin: 0 0 0;
+.glc #payment.glc-step{
+    margin: 0;
 }
 
 .glc-step:after{
@@ -1897,6 +1901,10 @@
     .glc-right-col{
         float: none;
         width: auto;
+    }
+    
+    .glc-left-col{
+        margin-bottom: 16px;
     }
 
     .glc-sidebar.glc-step{
