@@ -21,6 +21,9 @@
     <type name="Magento\Checkout\Controller\Index\Index">
         <plugin name="gomage_light_checkout_checkout_controller_index_index" type="GoMage\LightCheckout\Plugin\Checkout\Controller\Index\Index"/>
     </type>
+    <type name="Magento\Checkout\Model\DefaultConfigProvider">
+        <plugin name="gomage_light_checkout_default_provider" type="GoMage\LightCheckout\Plugin\DefaultProvider"/>
+    </type>
     <type name="Magento\Checkout\Controller\Cart\Index">
         <plugin name="gomage_light_checkout_checkout_controller_cart_index" type="GoMage\LightCheckout\Plugin\Checkout\Controller\Cart\Index"/>
     </type>

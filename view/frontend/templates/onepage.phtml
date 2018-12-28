@@ -1,5 +1,4 @@
 <?php
-
 // @codingStandardsIgnoreFile
 ?>
 <div id="checkout" data-bind="scope:'checkout'" class="checkout-container glc">
@@ -32,19 +31,6 @@
             blockLoader("<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>");
             return url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getBaseUrl();?>');
         })
-    </script>
-    <script>
-        require(["jquery"], function($){
-            
-            $(document).on('touchstart', function(e){
-                var container = $(".field-tooltip");
-
-                if (!container.is(e.target) && container.has(e.target).length === 0){
-                    container.removeClass("_active");
-                }
-            });
-
-        });
     </script>
 </div>
 
