@@ -40,6 +40,10 @@ define(
                         customerData.invalidate(['cart']);
                         window.location.href = response.redirect_url;
                         return;
+                    } else if (response.error) {
+                        // if requested quantity is not available
+                        item.qty--;
+                        return;
                     }
                     quote.setTotals(response.totals);
                     paymentService.setPaymentMethods(methodConverter(response.payment_methods));
