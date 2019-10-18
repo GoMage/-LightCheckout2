@@ -42,13 +42,9 @@ define(
         createShippingAddress
     ) {
         'use strict';
-        var quoteAddressInfo = window.checkoutConfig.quoteAddressInfo;
         var addressOptions = addressList().filter(function (address) {
-            return address.getType() == 'customer-address' && quoteAddressInfo[address['customerAddressId']] &&
-                quoteAddressInfo[address['customerAddressId']]['addressesType'] &&
-                quoteAddressInfo[address['customerAddressId']]['addressesType']['shipping']=='shipping';
+            return address.getType() == 'customer-address';
         });
-
         return Component.extend({
             addressOptions: addressOptions,
 
