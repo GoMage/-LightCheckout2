@@ -53,12 +53,9 @@ define(
 
         var observedElements = [],
             postcodeElement = null,
-            quoteAddressInfo = window.checkoutConfig.quoteAddressInfo,
             postcodeElementName = 'postcode',
             addressOptions = addressList().filter(function (address) {
-                return address.getType() == 'customer-address' && quoteAddressInfo[address['customerAddressId']] &&
-                    quoteAddressInfo[address['customerAddressId']]['addressesType'] &&
-                    quoteAddressInfo[address['customerAddressId']]['addressesType']['billing']=='billing';
+                return address.getType() == 'customer-address';
             });
 
         return Component.extend({
