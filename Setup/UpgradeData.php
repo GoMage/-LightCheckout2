@@ -4,9 +4,13 @@ namespace GoMage\LightCheckout\Setup;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use Magento\Config\Model\ResourceModel\Config;
+use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\Setup\UpgradeDataInterface;
+use Magento\Quote\Setup\QuoteSetupFactory;
+use Magento\Sales\Setup\SalesSetupFactory;
 
 class UpgradeData implements UpgradeDataInterface
 {
@@ -15,11 +19,30 @@ class UpgradeData implements UpgradeDataInterface
      */
     private $config;
 
+
     /**
-     * @param Config $config
+     * @var QuoteSetupFactory
      */
-    public function __construct(Config $config)
-    {
+    private $quoteSetupFactory;
+
+    /**
+     * @var SalesSetupFactory
+     */
+    private $salesSetupFactory;
+
+    /**
+     * UpgradeData constructor.
+     * @param Config $config
+     * @param QuoteSetupFactory $quoteSetupFactory
+     * @param SalesSetupFactory $salesSetupFactory
+     */
+    public function __construct(
+        Config $config,
+        QuoteSetupFactory $quoteSetupFactory,
+        SalesSetupFactory $salesSetupFactory
+    ) {
+        $this->quoteSetupFactory = $quoteSetupFactory;
+        $this->salesSetupFactory = $salesSetupFactory;
         $this->config = $config;
     }
 
@@ -73,6 +96,34 @@ class UpgradeData implements UpgradeDataInterface
             );
         }
 
+        if (version_compare($context->getVersion(), '1.0.1', '<')) {
+            $this->updateTo101($setup);
+        }
+
         $setup->endSetup();
+    }
+
+    /**
+     * @param SchemaSetupInterface $setup
+     */
+    private function updateTo101(ModuleDataSetupInterface $setup)
+    {
+        $setup->startSetup();
+
+        $quoteSetup = $this->quoteSetupFactory->create(['setup' => $setup]);
+        $quoteSetup
+            ->addAttribute(
+                'quote',
+                'comment_order',
+                ['type' => Table::TYPE_TEXT, 'required' => false]
+            );
+
+
+        $salesSetup = $this->salesSetupFactory->create(['setup' => $setup]);
+        $salesSetup->addAttribute(
+            'order',
+            'comment_order',
+            ['type' => Table::TYPE_TEXT, 'required' => false]
+        );
     }
 }

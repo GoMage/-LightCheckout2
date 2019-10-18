@@ -316,6 +316,25 @@
                                             </item>
                                         </item>
                                     </item>
+                                    <!-- add comment to checkout -->
+                                    <item name="commentOrder" xsi:type="array">
+                                        <item name="config" xsi:type="array">
+                                            <item name="deps" xsi:type="array">
+                                                <item name="0" xsi:type="string">checkoutProvider</item>
+                                            </item>
+                                        </item>
+                                        <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/comment-order</item>
+                                        <item name="displayArea" xsi:type="string">commentOrder</item>
+                                        <item name="provider" xsi:type="string">checkoutProvider</item>
+                                        <item name="children" xsi:type="array">
+                                            <item name="comment" xsi:type="array">
+                                                <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/comment-order/comment</item>
+                                                <item name="template" xsi:type="string">GoMage_LightCheckout/form/comment-order/comment</item>
+                                                <item name="displayArea" xsi:type="string">comment</item>
+                                                <item name="provider" xsi:type="string">checkoutProvider</item>
+                                            </item>
+                                        </item>
+                                    </item>
                                     <item name="payment" xsi:type="array">
                                         <item name="component" xsi:type="string">GoMage_LightCheckout/js/view/payment</item>
                                         <item name="config" xsi:type="array">

@@ -28,17 +28,18 @@ define(
                     customerEmail: '.form-login #customer-email-fieldset #customer-email',
                     deliveryDate: '#delivery-date input',
                     deliveryTime: '#delivery-date select option:selected',
+                    commentOrder: '#comment-order textarea',
                     subscribeToNewsletter: '#subscribe-newsletter input[type=checkbox]'
                 },
                 passwordVal = $(selectors.password).val(),
                 isAccountCheckboxChecked = $(selectors.accountCheckbox).is(":checked"),
                 deliveryDateVal = $(selectors.deliveryDate).val(),
                 deliveryTimeVal = $(selectors.deliveryTime).text(),
+                commentOrder = $(selectors.commentOrder).val(),
                 isSubscribeToNewsletterCheckboxChecked = $(selectors.subscribeToNewsletter).is(":checked"),
                 payload = {
                     additionInformation: {}
                 };
-
             if (isAccountCheckboxChecked) {
                 payload.additionInformation.password = passwordVal;
             }
@@ -51,6 +52,10 @@ define(
             if (deliveryDateVal) {
                 payload.additionInformation.deliveryDate = deliveryDateVal;
                 payload.additionInformation.deliveryDateTime = deliveryTimeVal;
+            }
+
+            if (commentOrder) {
+                payload.additionInformation.commentOrder = commentOrder;
             }
 
             if (_.isEmpty(payload.additionInformation)) {

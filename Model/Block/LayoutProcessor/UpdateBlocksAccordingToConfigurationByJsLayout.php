@@ -66,6 +66,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $jsLayout = $this->disableChangingQtyOnCheckoutAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->disableDeliveryDateOnCheckoutAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->disableAddressFieldsAccordingToTheConfiguration($jsLayout);
+        $jsLayout = $this->disableCommentOrderBlockOnCheckoutAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->updateTemplateForPostcodeFieldAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->addHelpMessagesAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->addTrustSealsAccordingToTheConfiguration($jsLayout);
@@ -464,6 +465,20 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $jsLayout['components']['checkout']['children']['billingAddress']['children']
         ['billing-address-fieldset']['children'] = $billingAddressFieldset;
 
+        return $jsLayout;
+    }
+
+    /**
+     * @param $jsLayout
+     * @return mixed
+     */
+    private function disableCommentOrderBlockOnCheckoutAccordingToTheConfiguration($jsLayout)
+    {
+        $isEnabledCommentOederBlock = $this->checkoutConfigurationsProvider->getIsShownOrderCommentBlock();
+
+        if (!$isEnabledCommentOederBlock) {
+            unset($jsLayout['components']['checkout']['children']['commentOrder']);
+        }
         return $jsLayout;
     }
 

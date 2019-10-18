@@ -4,6 +4,7 @@ namespace GoMage\LightCheckout\Model;
 
 use GoMage\LightCheckout\Api\CheckoutAdditionalManagementInterface;
 use GoMage\LightCheckout\Model\CheckoutAdditionalManagement\DeliveryDateSaverToQuote;
+use GoMage\LightCheckout\Model\CheckoutAdditionalManagement\CommentOrderSaveToQuote;
 use Magento\Checkout\Model\Session;
 
 class CheckoutAdditionalManagement implements CheckoutAdditionalManagementInterface
@@ -24,6 +25,11 @@ class CheckoutAdditionalManagement implements CheckoutAdditionalManagementInterf
     private $checkoutCustomerSubscriber;
 
     /**
+     * @var CommentOrderSaveToQuote
+     */
+    private $commentOrderSaveToQuote;
+
+    /**
      * @param Session $checkoutSession
      * @param DeliveryDateSaverToQuote $deliveryDateSaverToQuote
      * @param CheckoutCustomerSubscriber $checkoutCustomerSubscriber
@@ -31,11 +37,14 @@ class CheckoutAdditionalManagement implements CheckoutAdditionalManagementInterf
     public function __construct(
         Session $checkoutSession,
         DeliveryDateSaverToQuote $deliveryDateSaverToQuote,
-        CheckoutCustomerSubscriber $checkoutCustomerSubscriber
-    ) {
+        CheckoutCustomerSubscriber $checkoutCustomerSubscriber,
+        CommentOrderSaveToQuote $commentOrderSaveToQuote
+    )
+    {
         $this->checkoutSession = $checkoutSession;
         $this->deliveryDateSaverToQuote = $deliveryDateSaverToQuote;
         $this->checkoutCustomerSubscriber = $checkoutCustomerSubscriber;
+        $this->commentOrderSaveToQuote = $commentOrderSaveToQuote;
     }
 
     /**
@@ -55,7 +64,10 @@ class CheckoutAdditionalManagement implements CheckoutAdditionalManagementInterf
 
             $this->checkoutCustomerSubscriber->execute($email);
         }
-
+        /**add comment in quote*/
+        if (isset($additionInformation['commentOrder'])) {
+            $this->commentOrderSaveToQuote->execute($additionInformation['commentOrder']);
+        }
         return true;
     }
 }

@@ -2,12 +2,12 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="gomage_light_checkout_configuration" translate="label" type="text" sortOrder="200"
-                 showInDefault="1" showInWebsite="0" showInStore="0">
+                 showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Light Checkout</label>
             <tab>gomage</tab>
             <resource>GoMage_LightCheckout::light_checkout</resource>
-            <group id="general" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="0"
-                   showInStore="0">
+            <group id="general" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
                 <label>General</label>
                 <field id="is_enabled" translate="label" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="0" showInStore="0">
@@ -65,6 +65,11 @@
                 <field id="show_3_column_checkout" translate="label" type="select" sortOrder="130"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Show 3 Column Checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="show_order_comment_block" translate="label" type="select" sortOrder="140"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Order Comment Block</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
