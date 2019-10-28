@@ -202,62 +202,62 @@ class CheckoutConfigurationsProvider
 
     public function isLightCheckoutEnabled()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_IS_ENABLED);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_IS_ENABLED,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getDefaultShippingMethod()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_DEFAULT_SHIPPING_METHOD);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_DEFAULT_SHIPPING_METHOD,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getDefaultPaymentMethod()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_DEFAULT_PAYMENT_METHOD);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_DEFAULT_PAYMENT_METHOD,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getPageTitle()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_PAGE_TITLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_PAGE_TITLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getPageContent()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_PAGE_CONTENT);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_PAGE_CONTENT,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getEnableDifferentShippingAddress()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_ENABLE_DIFFERENT_SHIPPING_ADDRESS);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_ENABLE_DIFFERENT_SHIPPING_ADDRESS,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsAllowedToChangeQty()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_ALLOW_TO_CHANGE_QTY);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_ALLOW_TO_CHANGE_QTY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsAllowedToRemoveItemFromCheckout()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_ALLOW_TO_REMOVE_ITEM_FROM_CHECKOUT);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_ALLOW_TO_REMOVE_ITEM_FROM_CHECKOUT,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsDisabledCart()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_DISABLE_CART);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_DISABLE_CART,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledDiscountCodes()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_ENABLE_DISCOUNT_CODES);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_ENABLE_DISCOUNT_CODES,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsShownOrderSummaryOnSuccessPage()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_ORDER_SUMMARY_ON_SUCCESS_PAGE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_ORDER_SUMMARY_ON_SUCCESS_PAGE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsShown3ColumnCheckout()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_3_COLUMN_CHECKOUT);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_3_COLUMN_CHECKOUT,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsShownOrderCommentBlock()
@@ -267,346 +267,346 @@ class CheckoutConfigurationsProvider
 
     public function getCheckoutMode()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_REGISTRATION_CHECKOUT_MODE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_REGISTRATION_CHECKOUT_MODE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsAutoRegistration()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_REGISTRATION_AUTO_REGISTRATION);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_REGISTRATION_AUTO_REGISTRATION,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getCreateAnAccountCheckbox()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_REGISTRATION_CREATE_AN_ACCOUNT_CHECKBOX);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_REGISTRATION_CREATE_AN_ACCOUNT_CHECKBOX,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function isShowOnDesktopAndLaptop()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DEVICES_DESKTOP);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DEVICES_DESKTOP,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getShowOnTabletOperationSystems()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DEVICES_TABLET);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DEVICES_TABLET,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getShowOnSmartphoneOperationSystems()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DEVICES_TABLET);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DEVICES_TABLET,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledDeliveryDate()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_ENABLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_ENABLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsShowTime()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_SHOW_TIME);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_SHOW_TIME,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getDeliveryDays()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_DELIVERY_DAYS);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_DELIVERY_DAYS,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getNonWorkingDays()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_NON_WORKING_DAYS);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_NON_WORKING_DAYS,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIntervalForDelivery()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_INTERVAL);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_INTERVAL,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getDateFormat()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_FORMAT);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_FORMAT,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getUseDeliveryDateFor()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_USE_FOR);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_USE_FOR,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsDisplayDeliveryDateText()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_DISPLAY_TEXT);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_DISPLAY_TEXT,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getDeliveryDateText()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_TEXT);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_DELIVERY_DATE_TEXT,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledGeoIp()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_ENABLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_ENABLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledGeoIpForCountry()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_COUNTRY);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_COUNTRY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledGeoIpForState()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_STATE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_STATE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledGeoIpForZip()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_ZIP);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_ZIP,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledGeoIpForCity()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_CITY);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GEOIP_FOR_CITY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledTermsAndConditions()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TERMS_AND_CONDITIONS_ENABLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TERMS_AND_CONDITIONS_ENABLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledVatTax()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_ENABLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_ENABLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getVatTaxVerificationSystem()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_VERIFICATION_SYSTEM);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_VERIFICATION_SYSTEM,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getVatTaxBaseEuCountry()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_BASE_EU_COUNTRY);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_BASE_EU_COUNTRY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getVatTaxB2Cb2BBaseEu()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_B2C_B2B_BASE_EU);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_B2C_B2B_BASE_EU,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getVatTaxB2Cb2BNotBaseEu()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_B2C_B2B_NOT_BASE_EU);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_B2C_B2B_NOT_BASE_EU,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getVatTaxRule()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_RULE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_RULE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getVatTaxShowCheckbox()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_SHOW_BUY_WITHOUT_VAT_CHECKBOX);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_SHOW_BUY_WITHOUT_VAT_CHECKBOX,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getVatTaxTextUnderTaxVatField()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_TEXT_UNDER_VAT_TAX_FIELD);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_TEXT_UNDER_VAT_TAX_FIELD,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsRequiredAddressFieldFirstName()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_FIRST_NAME);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_FIRST_NAME,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsRequiredAddressFieldLastName()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_LAST_NAME);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_LAST_NAME,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsRequiredAddressFieldCompany()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COMPANY);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COMPANY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsRequiredAddressFieldCountry()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COUNTRY);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COUNTRY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsRequiredAddressFieldCity()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_CITY);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_CITY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsRequiredAddressFieldStreetAddress()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STREET_ADDRESS);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STREET_ADDRESS,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsRequiredAddressFieldZipPostalCode()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_ZIPCODE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_ZIPCODE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsRequiredAddressFieldStateProvince()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STATE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STATE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsRequiredAddressFieldPhoneNumber()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_PHONE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_PHONE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getAddressFieldsForm()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getAddressFieldsKeepInside()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_KEEP_FIELDS_INSIDE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_KEEP_FIELDS_INSIDE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledAutoFillByZipCode()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTOFILL_BY_ZIP_CODE_ENABLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTOFILL_BY_ZIP_CODE_ENABLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getAutoFillByZipCodeIsEnabledZipCaching()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTOFILL_BY_ZIP_CODE_ENABLE_ZIP_CACHING);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTOFILL_BY_ZIP_CODE_ENABLE_ZIP_CACHING,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getAutoFillByZipCodeGoogleApiKey()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTOFILL_BY_ZIP_CODE_GOOGLE_API_KEY);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTOFILL_BY_ZIP_CODE_GOOGLE_API_KEY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getAutoFillByZipCodeApiMode()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTOFILL_BY_ZIP_CODE_API_MODE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTOFILL_BY_ZIP_CODE_API_MODE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getAutoFillByZipCodeIsDisabledAddressFields()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTOFILL_BY_ZIP_CODE_DISABLE_ADDRESS_FIELDS);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTOFILL_BY_ZIP_CODE_DISABLE_ADDRESS_FIELDS,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getHelpMessages()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_HELP_MESSAGES);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_HELP_MESSAGES,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledAutoCompleteByStreet()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTO_COMPLETE_BY_STREET_ENABLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTO_COMPLETE_BY_STREET_ENABLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getAutoCompleteByStreetGoogleApiKey()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTO_COMPLETE_BY_STREET_GOOGLE_API_KEY);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_AUTO_COMPLETE_BY_STREET_GOOGLE_API_KEY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledTrustSeals()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TRUST_SEALS_ENABLED);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TRUST_SEALS_ENABLED,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getTrustSealsSeals()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TRUST_SEALS_SEALS);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_TRUST_SEALS_SEALS,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsSocialLoginFacebookEnabled()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_ENABLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_ENABLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getSocialLoginFacebookAppId()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_ID);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_ID,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getSocialLoginFacebookAppSecret()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_SECRET);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_APP_SECRET,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getSocialLoginFacebookAppRedirectUrl()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_REDIRECT_URL);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_FACEBOOK_REDIRECT_URL,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsSocialLoginGoogleEnabled()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_ENABLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_ENABLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getSocialLoginGoogleAppId()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_ID);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_ID,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getSocialLoginGoogleAppSecret()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_SECRET);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_APP_SECRET,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getSocialLoginGoogleAppRedirectUrl()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_REDIRECT_URL);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_GOOGLE_REDIRECT_URL,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsSocialLoginTwitterEnabled()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_ENABLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_ENABLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getSocialLoginTwitterAppId()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_ID);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_ID,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getSocialLoginTwitterAppSecret()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_SECRET);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_APP_SECRET,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getSocialLoginTwitterAppRedirectUrl()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_REDIRECT_URL);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_SOCIAL_TWITTER_REDIRECT_URL,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsEnabledSubscribeToNewsletter()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NEWSLETTER_CHECKBOX_ENABLE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NEWSLETTER_CHECKBOX_ENABLE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getSubscribeToNewsletterIsCheckboxChecked()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NEWSLETTER_CHECKBOX_CHECKBOX_IS_CHECKED);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NEWSLETTER_CHECKBOX_CHECKBOX_IS_CHECKED,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getCheckoutColorSettingsPlaceOrderButton()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getCheckoutColorSettingsPlaceOrderButtonHover()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON_HOVER);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_PLACE_ORDER_BUTTON_HOVER,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getCheckoutColorSettingsCheckoutColor()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_CHECKOUT_COLOR);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COLOR_SETTINGS_CHECKOUT_COLOR,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsHidedNumberOfProducts()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_HIDE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_HIDE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getNumberOfProductsVisibleInCheckout()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_VISIBLE_IN_CHECKOUT);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_VISIBLE_IN_CHECKOUT,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 }
