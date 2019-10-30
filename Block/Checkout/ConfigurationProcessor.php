@@ -12,7 +12,7 @@ class ConfigurationProcessor implements \Magento\Checkout\Block\Checkout\LayoutP
 {
 
     /**
-     * @var CheckoutConfigurationsProvider 
+     * @var CheckoutConfigurationsProvider
      */
     private $checkoutConfigurationsProvider;
 
@@ -36,6 +36,9 @@ class ConfigurationProcessor implements \Magento\Checkout\Block\Checkout\LayoutP
         if (!isset($jsLayout['components']['checkout']['configuration'])) {
             $jsLayout['components']['checkout']['configuration'] = [
                 'is3ColumnType' => (bool)$this->checkoutConfigurationsProvider->getIsShown3ColumnCheckout()
+            ];
+            $jsLayout['components']['checkout']['configuration'] = [
+                'comment_order' => $this->checkoutConfigurationsProvider->getCommentOrderConfig()
             ];
         }
         return $jsLayout;

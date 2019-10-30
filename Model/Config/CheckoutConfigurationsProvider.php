@@ -22,7 +22,6 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_GENERAL_ENABLE_DISCOUNT_CODES = 'gomage_light_checkout_configuration/general/enable_discount_codes';
     const XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_ORDER_SUMMARY_ON_SUCCESS_PAGE = 'gomage_light_checkout_configuration/general/show_order_summary_on_success_page';
     const XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_3_COLUMN_CHECKOUT = 'gomage_light_checkout_configuration/general/show_3_column_checkout';
-    const XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_ORDER_COMMENT_BLOCK = 'gomage_light_checkout_configuration/general/show_order_comment_block';
 
     /**#@-*/
 
@@ -185,6 +184,13 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_HIDE = 'gomage_light_checkout_configuration/number_product_in_checkout/hide_products_in_total_order_block';
     const XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_VISIBLE_IN_CHECKOUT = 'gomage_light_checkout_configuration/number_product_in_checkout/number_visible_in_checkout';
     /**#@-*/
+
+    /**#@+
+     * Light Checkout configuration Comment Order in checkout.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_COMMENT_ORDER_SHOW_ORDER_COMMENT_BLOCK = 'gomage_light_checkout_configuration/order_comment/show_order_comment_block';
+    const XML_PATH_LIGHT_CHECKOUT_COMMENT_ORDER = 'gomage_light_checkout_configuration/order_comment';
+    /**#@-*/
     // @codingStandardsIgnoreEnd
 
     /**
@@ -262,7 +268,7 @@ class CheckoutConfigurationsProvider
 
     public function getIsShownOrderCommentBlock()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_ORDER_COMMENT_BLOCK,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COMMENT_ORDER_SHOW_ORDER_COMMENT_BLOCK,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getCheckoutMode()
@@ -608,5 +614,10 @@ class CheckoutConfigurationsProvider
     public function getNumberOfProductsVisibleInCheckout()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_NUMBER_OF_PRODUCTS_VISIBLE_IN_CHECKOUT,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    public function getCommentOrderConfig()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_COMMENT_ORDER,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 }

@@ -67,11 +67,6 @@
                     <label>Show 3 Column Checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="show_order_comment_block" translate="label" type="select" sortOrder="140"
-                       showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Show Order Comment Block</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
             </group>
             <group id="registration" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1"
                    showInStore="1">
@@ -555,6 +550,37 @@
                     <validate>validate-digits</validate>
                     <depends>
                         <field id="hide_products_in_total_order_block">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="order_comment" translate="label" type="text" sortOrder="1000" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Comment in Checkout</label>
+
+                <field id="show_order_comment_block" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Order Comment Block</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <depends>
+                        <field id="show_order_comment_block">1</field>
+                    </depends>
+                </field>
+                <field id="subtitle" translate="label comment" type="text" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Subtitle</label>
+                    <depends>
+                        <field id="show_order_comment_block">1</field>
+                    </depends>
+                </field>
+                <field id="placeholder" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Placeholder</label>
+                    <depends>
+                        <field id="show_order_comment_block">1</field>
                     </depends>
                 </field>
             </group>
