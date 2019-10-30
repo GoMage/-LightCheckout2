@@ -681,10 +681,6 @@
     padding: 0 16px 16px;
 }
 
-.glc #payment.glc-step{
-    margin: 0;
-}
-
 .glc-step:after{
     content: '';
     clear: both;
