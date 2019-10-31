@@ -5,12 +5,12 @@
          data-role="content">
 
         <!-- ko if: (addressOptions.length > 0) -->
-            <!-- ko template: 'GoMage_LightCheckout/form/shipping-address/list' --><!-- /ko -->
+        <!-- ko template: 'GoMage_LightCheckout/form/shipping-address/list' --><!-- /ko -->
         <!-- /ko -->
 
         <!-- ko template: 'GoMage_LightCheckout/form/shipping-address/form' --><!-- /ko -->
 
         <div class="mp-clear"></div>
     </div>
-    <div data-bind="template: {afterRender: afterRenderShipping }"></div>
+    <div data-bind="afterRender: afterRenderShipping"></div>
 </div>
