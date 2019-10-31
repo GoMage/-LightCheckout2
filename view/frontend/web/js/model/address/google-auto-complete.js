@@ -31,6 +31,12 @@ define([
                 destination: 'city'
             }
         ],
+        postal_town: [
+            {
+                source: 'long_name',
+                destination: 'city'
+            }
+        ],
         administrative_area_level_1: [
             {
                 source: 'long_name',
