@@ -14,6 +14,7 @@ use Magento\Quote\Api\CartTotalRepositoryInterface;
 use Magento\Quote\Api\Data\TotalsItemInterface;
 use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Quote;
+use Magento\Framework\Message\ManagerInterface;
 
 class QuoteItemManagement implements QuoteItemManagementInterface
 {
@@ -48,12 +49,19 @@ class QuoteItemManagement implements QuoteItemManagementInterface
     private $shippingMethodsProvider;
 
     /**
+     * @var ManagerInterface
+     */
+    private $messageManager;
+
+    /**
+     * QuoteItemManagement constructor.
      * @param CartRepositoryInterface $quoteRepository
      * @param ResponseDataInterfaceFactory $responseDataFactory
      * @param PaymentMethodManagementInterface $paymentMethodManagement
      * @param CartTotalRepositoryInterface $cartTotalRepository
      * @param UrlInterface $url
      * @param ShippingMethodsProvider $shippingMethodsProvider
+     * @param ManagerInterface $messageManager
      */
     public function __construct(
         CartRepositoryInterface $quoteRepository,
@@ -61,7 +69,8 @@ class QuoteItemManagement implements QuoteItemManagementInterface
         PaymentMethodManagementInterface $paymentMethodManagement,
         CartTotalRepositoryInterface $cartTotalRepository,
         UrlInterface $url,
-        ShippingMethodsProvider $shippingMethodsProvider
+        ShippingMethodsProvider $shippingMethodsProvider,
+        ManagerInterface $messageManager
     ) {
         $this->quoteRepository = $quoteRepository;
         $this->responseDataFactory = $responseDataFactory;
@@ -69,6 +78,7 @@ class QuoteItemManagement implements QuoteItemManagementInterface
         $this->cartTotalsRepository = $cartTotalRepository;
         $this->url = $url;
         $this->shippingMethodsProvider = $shippingMethodsProvider;
+        $this->messageManager = $messageManager;
     }
 
     /**
@@ -97,13 +107,24 @@ class QuoteItemManagement implements QuoteItemManagementInterface
         }
 
         try {
-            $quoteItem->setQty($itemQty)->save();
-            $this->quoteRepository->save($quote);
+            $quoteItem->setQty($itemQty);
+
+            $errorFlag = false;
+            if ($errors = $quote->getErrors()) { // if requested quantity is not available
+                $errorString = '';
+                foreach ($errors as $error) {
+                    $errorString .= $error->getText() . ' ';
+                }
+                $errorFlag = true;
+                $this->messageManager->addErrorMessage($errorString);
+            } else {
+                $this->quoteRepository->save($quote);
+            }
         } catch (\Exception $e) {
             throw new CouldNotSaveException(__('Could not update item from quote'));
         }
 
-        return $this->getResponseData($quote);
+        return $this->getResponseData($quote, $errorFlag);
     }
 
     /**
@@ -136,13 +157,15 @@ class QuoteItemManagement implements QuoteItemManagementInterface
      *
      * @return ResponseDataInterface
      */
-    private function getResponseData(Quote $quote)
+    private function getResponseData(Quote $quote, $errorFlag = false)
     {
         /** @var ResponseDataInterface $responseData */
         $responseData = $this->responseDataFactory->create();
 
-        if (!$quote->hasItems() || $quote->getHasError() || !$quote->validateMinimumAmount()) {
+        if (!$quote->hasItems() || !$quote->validateMinimumAmount()) {
             $responseData->setRedirectUrl($this->url->getUrl());
+        } elseif ($errorFlag) {
+            $responseData->setError(true);
         } else {
             if ($quote->getShippingAddress()->getCountryId()) {
                 $responseData->setShippingMethods($this->shippingMethodsProvider->get($quote));

@@ -70,4 +70,22 @@ class ResponseData extends \Magento\Framework\DataObject implements ResponseData
     {
         return $this->setData(self::REDIRECT_URL, $url);
     }
+
+    /**
+     * @param $error
+     * @return ResponseData|mixed
+     */
+    public function setError($error)
+    {
+        $error = (true === $error) ? true : false;
+        return $this->setData(self::ERROR, $error);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getError()
+    {
+        return $this->getData(self::ERROR);
+    }
 }

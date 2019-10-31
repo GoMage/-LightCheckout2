@@ -8,6 +8,7 @@ interface ResponseDataInterface
     const PAYMENT_METHODS = 'payment_methods';
     const TOTALS = 'totals';
     const REDIRECT_URL = 'redirect_url';
+    const ERROR = 'error';
 
     /**
      * Get shipping methods.
@@ -72,4 +73,15 @@ interface ResponseDataInterface
      * @return $this
      */
     public function setRedirectUrl($url);
+
+    /**
+     * @param $error
+     * @return mixed
+     */
+    public function setError($error);
+
+    /**
+     * @return mixed
+     */
+    public function getError();
 }
