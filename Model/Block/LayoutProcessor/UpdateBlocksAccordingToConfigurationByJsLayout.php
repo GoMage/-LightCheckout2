@@ -374,16 +374,15 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
             || $isEnabled === NewsletterCheckbox::NEWSLETTER_CHECKBOX_ENABLE_ON_SUCCESS_PAGE
             || ($isCustomerLogin && $isSubscribed->getStatus() == Subscriber::STATUS_SUBSCRIBED)
         ) {
-            unset($jsLayout['components']['checkout']['children']['subscribeNewsletter']);
+            unset($jsLayout['components']['checkout']['children']['customer-email']['children']['subscribeNewsletter']);
         } elseif (
             $isEnabled === NewsletterCheckbox::NEWSLETTER_CHECKBOX_ENABLE_IN_CHECKOUT
             || $isEnabled === NewsletterCheckbox::NEWSLETTER_CHECKBOX_ENABLE_BOTH
         ) {
             $isChecked = (bool)$this->checkoutConfigurationsProvider->getSubscribeToNewsletterIsCheckboxChecked();
-            $jsLayout['components']['checkout']['children']
+            $jsLayout['components']['checkout']['children']['customer-email']['children']
             ['subscribeNewsletter']['config']['checked'] = $isChecked;
         }
-
         return $jsLayout;
     }
 
