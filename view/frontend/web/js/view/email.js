@@ -1,4 +1,3 @@
-
 define([
     'jquery',
     'ko',
@@ -30,8 +29,8 @@ define([
         onlyRegistered: ko.observable(false),
         checkoutMode: parseInt(window.checkoutConfig.registration.checkoutMode),
         error: 'Customer with this email does not exist. Please '
-        + '<a class="registration-popup-link">register</a>'
-        + ' before placing order.',
+            + '<a class="registration-popup-link">register</a>'
+            + ' before placing order.',
         errorText: ko.observable(''),
         customerExist: false,
         isSubscribeVisible: ko.observable(true),
@@ -53,7 +52,6 @@ define([
         },
 
         initConfig: function () {
-            var shouldSubscribeNotBeVisible;
             this._super();
 
             if (!customer.isLoggedIn() && this.checkoutMode === 1) {
@@ -69,9 +67,7 @@ define([
                 }
                 this.isPasswordVisible = false;
             }
-
-            shouldSubscribeNotBeVisible = this.resolveInitialSubscribeNotVisibility();
-            if (shouldSubscribeNotBeVisible) {
+            if(!this.isNewsletterEnable()){
                 this.isSubscribeVisible(false);
             }
         },
@@ -212,11 +208,14 @@ define([
             return placeholder;
         },
 
-        resolveInitialSubscribeNotVisibility: function () {
-            if (lightCheckoutData.getSubscribedEmailValue() !== '') {
-                return checkoutData.getInputFieldEmailValue() === lightCheckoutData.getSubscribedEmailValue();
-            }
+        getNewsletterData: function () {
+            return  uiRegistry.get('checkout.customer-email.subscribeNewsletter');
+        },
 
+        isNewsletterEnable: function () {
+            if (this.getNewsletterData()) {
+                return true;
+            }
             return false;
         }
     });
