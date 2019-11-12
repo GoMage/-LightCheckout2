@@ -10,7 +10,7 @@ use Magento\Customer\Model\Session;
 use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Magento\Framework\Stdlib\Cookie\PhpCookieManager;
 use Magento\Store\Model\StoreManagerInterface;
-
+use Hybridauth\Hybridauth;
 class SocialManagement
 {
     /**
@@ -99,17 +99,17 @@ class SocialManagement
     public function getUserProfileByType($type)
     {
         $config = [
-            "base_url" => $this->baseAuthUrlProvider->get(),
+            "callback" => $this->baseAuthUrlProvider->get($type),
             "providers" => [
                 $type => $this->apiDataProviderByType->get($type)
             ],
             "debug_mode" => false
         ];
 
-        $auth = new \Hybrid_Auth($config);
+        $auth = new Hybridauth($config);
         $adapter = $auth->authenticate($type);
         $userProfile = $adapter->getUserProfile();
-
+        $adapter->disconnect();
         return $userProfile;
     }
 

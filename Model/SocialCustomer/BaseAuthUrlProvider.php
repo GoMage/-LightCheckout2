@@ -7,10 +7,6 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class BaseAuthUrlProvider
 {
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
 
     /**
      * @var Url
@@ -18,32 +14,26 @@ class BaseAuthUrlProvider
     private $urlBuilder;
 
     /**
-     * @param StoreManagerInterface $storeManager
+     * BaseAuthUrlProvider constructor.
      * @param Url $urlBuilder
      */
-    public function __construct(StoreManagerInterface $storeManager, Url $urlBuilder)
+    public function __construct(Url $urlBuilder)
     {
-        $this->storeManager = $storeManager;
         $this->urlBuilder = $urlBuilder;
     }
 
     /**
-     * @return string
+     * @param $type
+     * @return mixed
      */
-    public function get()
+    public function get($type)
     {
-        /** @var \Magento\Store\Model\Store $store */
-        $store = $this->storeManager->getStore();
-
         $url = $this->urlBuilder->getUrl(
-            'lightcheckout/social/callback',
+            'lightcheckout/social/login',
             [
-                '_nosid' => true,
-                '_scope' => $store->getId(),
-                '_secure' => $store->isUrlSecure()
+                'type' => $type,
             ]
         );
-
         return $url;
     }
 }
