@@ -52,7 +52,7 @@ class RedirectUrl extends FormField
      */
     private function getAuthUrl($type)
     {
-        $authUrl = $this->baseAuthUrlProvider->get();
+        $authUrl = $this->baseAuthUrlProvider->get($type);
 
         if ($type == 'Facebook') {
             $param = 'hauth_done=' . $type;
