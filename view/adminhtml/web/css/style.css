@@ -140,3 +140,11 @@ ul.sortable-list{list-style: none !important;}
 #checkout-address-fields .ui-icon-gripsmall-diagonal-se {
     background-position: -64px -224px;
 }
+
+html[class*="ie"] .accordion .config[id*="gomage_light_checkout"] .label{
+    -ms-word-break: normal;
+}
+
+.accordion .config[id*="gomage_light_checkout"] .label{
+    -ms-hyphens: none;
+}
