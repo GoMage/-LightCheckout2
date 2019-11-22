@@ -29,7 +29,6 @@ define(
              * add custom thing to design
              */
             specialChangesFields: function () {
-                console.log(this.optional);
                 $('label.label:contains('+this.optional+')').html(
                     $('label.label:contains('+this.optional+')').html()
                         .replace(
