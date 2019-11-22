@@ -581,6 +581,11 @@
     display: none;
 }
 
+.glc .label .optional{
+    font-size: 14px;
+    color: rgba(51, 51, 51, 0.56);
+}
+
 /* Fields */
 
 .glc .fieldset{
