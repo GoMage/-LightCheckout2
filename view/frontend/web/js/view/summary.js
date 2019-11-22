@@ -29,13 +29,17 @@ define(
              * add custom thing to design
              */
             specialChangesFields: function () {
-                $('label.label:contains('+this.optional+')').html(
-                    $('label.label:contains('+this.optional+')').html()
-                        .replace(
-                            '(' + this.optional + ')',
-                            '<span class="optional">(' + this.optional + ')</span>'
-                        )
-                );
+                var self = this;
+                $.each($('label.label:contains('+this.optional+')'), function( index, element ) {
+                    element = $(element);
+                    element.html(
+                        element.html()
+                            .replace(
+                                '(' + self.optional + ')',
+                                '<span class="optional">(' + self.optional + ')</span>'
+                            )
+                    );
+                });
             }
         });
     }
