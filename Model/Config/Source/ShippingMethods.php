@@ -28,7 +28,8 @@ class ShippingMethods implements OptionSourceInterface
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         ShippingConfig $shippingConfig
-    ) {
+    )
+    {
         $this->scopeConfig = $scopeConfig;
         $this->shippingConfig = $shippingConfig;
     }
@@ -42,11 +43,13 @@ class ShippingMethods implements OptionSourceInterface
         $carrierMethodsList = $this->shippingConfig->getActiveCarriers();
 
         foreach ($carrierMethodsList as $carrierMethodCode => $carrierModel) {
-            foreach ($carrierModel->getAllowedMethods() as $shippingMethodCode => $shippingMethodTitle) {
-                $shippingMethodsOptionArray[] = [
-                    'label' => $this->getShippingMethodLabel($shippingMethodCode, $shippingMethodTitle),
-                    'value' => $carrierMethodCode . '_' . $shippingMethodCode,
-                ];
+            if ($allowedMethods = $carrierModel->getAllowedMethods()) {
+                foreach ($allowedMethods as $shippingMethodCode => $shippingMethodTitle) {
+                    $shippingMethodsOptionArray[] = [
+                        'label' => $this->getShippingMethodLabel($shippingMethodCode, $shippingMethodTitle),
+                        'value' => $carrierMethodCode . '_' . $shippingMethodCode,
+                    ];
+                }
             }
         }
 
