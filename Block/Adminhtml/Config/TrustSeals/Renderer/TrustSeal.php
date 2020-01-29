@@ -4,7 +4,7 @@ namespace GoMage\LightCheckout\Block\Adminhtml\Config\TrustSeals\Renderer;
 
 class TrustSeal extends \Magento\Backend\Block\Template
 {
-    protected $_template = 'config/text_area.phtml';
+    protected $_template = 'GoMage_LightCheckout:config/text_area.phtml';
 
     /**
      * Set name for input element.
