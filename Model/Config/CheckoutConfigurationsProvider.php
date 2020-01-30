@@ -193,6 +193,12 @@ class CheckoutConfigurationsProvider
     /**#@-*/
     // @codingStandardsIgnoreEnd
 
+
+    /**#@+
+     * Light Checkout configuration section.
+     */
+    const XML_PATH_LIGHT_CHECKOUT_CONFIG_SECTION = 'gomage_light_checkout_configuration';
+
     /**
      * @var ScopeConfigInterface
      */
