@@ -22,7 +22,7 @@ class CommentOrderFromQuoteToOrder implements ObserverInterface
         /** @var Quote $quote */
         $quote = $event->getQuote();
 
-        $order->setCommentOrder($quote->getCommentOrder())->save();
+        $order->setCommentOrder($quote->getCommentOrder());
         return $this;
     }
 }
