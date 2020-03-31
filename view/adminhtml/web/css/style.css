@@ -95,10 +95,8 @@
 ul.sortable-list{list-style: none !important;}
 
 #row_gomage_light_checkout_configuration_checkout_address_fields_sorting_fields_form td.label{
-    width: 0;
-    height: 0;
-    padding: 0 0 0 0;
     float: left;
+    width: 100%;
 }
 
 #row_gomage_light_checkout_configuration_checkout_address_fields_sorting_fields_form td.value{
