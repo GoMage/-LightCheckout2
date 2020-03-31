@@ -6,6 +6,7 @@
             <general>
                 <page_title>GoMage LightCheckout</page_title>
                 <enable_discount_codes>1</enable_discount_codes>
+                <show_3_column_checkout>1</show_3_column_checkout>
             </general>
             <checkout_address_fields_required>
                 <firstname>1</firstname>
