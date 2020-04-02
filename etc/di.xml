@@ -3,11 +3,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="GoMage\LightCheckout\Api\GuestQuoteItemManagementInterface" type="GoMage\LightCheckout\Model\GuestQuoteItemManagement" />
     <preference for="GoMage\LightCheckout\Api\QuoteItemManagementInterface" type="GoMage\LightCheckout\Model\QuoteItemManagement" />
-    <preference for="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface" type="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseData" />
+    <preference for="GoMage\LightCheckout\Api\Data\QuoteItemManagement\ResponseDataInterface" type="GoMage\LightCheckout\Model\QuoteItemManagement\ResponseData" />
     <preference for="GoMage\LightCheckout\Api\CheckoutAdditionalManagementInterface" type="GoMage\LightCheckout\Model\CheckoutAdditionalManagement" />
     <preference for="GoMage\LightCheckout\Api\CheckVatNumberInterface" type="GoMage\LightCheckout\Model\CheckVatNumber" />
     <preference for="GoMage\LightCheckout\Api\GetAddressByPostCodeInterface" type="GoMage\LightCheckout\Model\GetAddressByPostCode" />
-    <preference for="GoMage\LightCheckout\Model\GetAddressByPostCode\ResponseDataInterface" type="GoMage\LightCheckout\Model\GetAddressByPostCode\ResponseData" />
+    <preference for="GoMage\LightCheckout\Api\Data\GetAddressByPostCode\ResponseDataInterface" type="GoMage\LightCheckout\Model\GetAddressByPostCode\ResponseData" />
     <preference for="GoMage\LightCheckout\Api\IsCustomerSubscribedForNewsletterInterface" type="GoMage\LightCheckout\Model\IsCustomerSubscribedForNewsletter" />
 
     <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid">

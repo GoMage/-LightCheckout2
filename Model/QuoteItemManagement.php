@@ -3,8 +3,8 @@
 namespace GoMage\LightCheckout\Model;
 
 use GoMage\LightCheckout\Api\QuoteItemManagementInterface;
-use GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface;
-use GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterfaceFactory;
+use GoMage\LightCheckout\Api\Data\QuoteItemManagement\ResponseDataInterface;
+use GoMage\LightCheckout\Api\Data\QuoteItemManagement\ResponseDataInterfaceFactory;
 use GoMage\LightCheckout\Model\QuoteItemManagement\ShippingMethodsProvider;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;

@@ -10,7 +10,7 @@ interface QuoteItemManagementInterface
      * @param int $cartId
      * @param TotalsItemInterface $item
      *
-     * @return \GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface
+     * @return \GoMage\LightCheckout\Api\Data\QuoteItemManagement\ResponseDataInterface
      */
     public function updateItemQty($cartId, TotalsItemInterface $item);
 
@@ -18,14 +18,14 @@ interface QuoteItemManagementInterface
      * @param int $cartId
      * @param int $itemId
      *
-     * @return \GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface
+     * @return \GoMage\LightCheckout\Api\Data\QuoteItemManagement\ResponseDataInterface
      */
     public function removeItemById($cartId, $itemId);
 
     /**
      * @param int $cartId
      *
-     * @return \GoMage\LightCheckout\Model\QuoteItemManagement\ResponseDataInterface
+     * @return \GoMage\LightCheckout\Api\Data\QuoteItemManagement\ResponseDataInterface
      */
     public function updateSections($cartId);
 }

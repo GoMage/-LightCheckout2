@@ -1,6 +1,6 @@
 <?php
 
-namespace GoMage\LightCheckout\Model\GetAddressByPostCode;
+namespace GoMage\LightCheckout\Api\Data\GetAddressByPostCode;
 
 interface ResponseDataInterface
 {

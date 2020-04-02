@@ -2,6 +2,8 @@
 
 namespace GoMage\LightCheckout\Model\QuoteItemManagement;
 
+use GoMage\LightCheckout\Api\Data\QuoteItemManagement\ResponseDataInterface;
+
 /**
  * Response data for checkout after update the quote.
  */

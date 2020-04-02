@@ -7,7 +7,7 @@ interface GetAddressByPostCodeInterface
     /**
      * @param string $postcode
      *
-     * @return \GoMage\LightCheckout\Model\GetAddressByPostCode\ResponseDataInterface
+     * @return \GoMage\LightCheckout\Api\Data\GetAddressByPostCode\ResponseDataInterface
      */
     public function execute($postcode);
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace GoMage\LightCheckout\Model\QuoteItemManagement;
+namespace GoMage\LightCheckout\Api\Data\QuoteItemManagement;
 
 interface ResponseDataInterface
 {
