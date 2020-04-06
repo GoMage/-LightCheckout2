@@ -2,8 +2,9 @@ define([
     'underscore',
     'Magento_Ui/js/form/element/region',
     'mageUtils',
-    'uiLayout'
-], function (_, Component, utils, layout) {
+    'uiLayout',
+    'uiRegistry'
+], function (_, Component, utils, layout, registry) {
     'use strict';
 
     var inputNode = {
@@ -33,6 +34,27 @@ define([
             ), this)]);
 
             return this;
+        },
+
+        /**
+         * @param {String} value
+         */
+        update: function (value) {
+            if (this.mandatorySetting === 'required') {
+                this._super(value);
+                this.validation['required-entry'] = true;
+                registry.get(this.customName, function (input) {
+                    input.validation['required-entry'] = true;
+                    input.validation['validate-not-number-first'] = true;
+                    input.required(true);
+                });
+                this.required(true);
+            } else if (this.mandatorySetting === 'no_required') {
+                this.skipValidation = true;
+                return this._super(value);
+            } else if (this.mandatorySetting === 'use_magento_settings') {
+                return this._super(value);
+            }
         }
     });
 });
