@@ -11,6 +11,7 @@ define(
         'use strict';
         return Component.extend({
             optional: 'Optional',
+
             afterRenderSummary: function () {
                 var loaderElement = '#checkout-loader .loader',
                     summaryElement = '.glc-right-col';
@@ -25,20 +26,22 @@ define(
                     }
                 }, 500);
             },
+
             /**
              * add custom thing to design
              */
             specialChangesFields: function () {
                 var self = this;
-                $.each($('label.label:contains('+this.optional+')'), function( index, element ) {
-                    element = $(element);
-                    element.html(
-                        element.html()
-                            .replace(
-                                '(' + self.optional + ')',
-                                '<span class="optional">(' + self.optional + ')</span>'
-                            )
-                    );
+                $.each($('label.label:contains('+this.optional+'), legend.label:contains('+this.optional+')'),
+                    function( index, element ) {
+                        element = $(element);
+                        element.html(
+                            element.html()
+                                .replace(
+                                    '(' + self.optional + ')',
+                                    '<span class="optional">(' + self.optional + ')</span>'
+                                )
+                        );
                 });
             }
         });
