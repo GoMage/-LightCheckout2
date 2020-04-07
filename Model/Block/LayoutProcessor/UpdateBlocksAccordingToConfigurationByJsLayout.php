@@ -420,7 +420,9 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
 
         $shippingAddressFieldset['firstname']['validation']['required-entry'] = $isFirstNameRequired;
         $shippingAddressFieldset['lastname']['validation']['required-entry'] = $isLastNameRequired;
-        $shippingAddressFieldset['street']['validation']['required-entry'] = $isStreetRequired;
+        if (isset($shippingAddressFieldset['street']['children'][0])) {
+            $shippingAddressFieldset['street']['children'][0]['validation']['required-entry'] = $isStreetRequired;
+        }
         $shippingAddressFieldset['city']['validation']['required-entry'] = $isCityRequired;
         $shippingAddressFieldset['telephone']['validation']['required-entry'] = $isPhoneRequired;
         $shippingAddressFieldset['postcode']['validation']['required-entry'] = $isZipRequired;
@@ -430,7 +432,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
 
         $shippingAddressFieldset['firstname'] = $this->changeLabelIfRequired($shippingAddressFieldset['firstname']);
         $shippingAddressFieldset['lastname'] = $this->changeLabelIfRequired($shippingAddressFieldset['lastname']);
-        $shippingAddressFieldset['street'] = $this->changeLabelIfRequired($shippingAddressFieldset['street']);
+        $shippingAddressFieldset['street'] = $this->changeLabelIfStreetRequired($shippingAddressFieldset['street']);
         $shippingAddressFieldset['city'] = $this->changeLabelIfRequired($shippingAddressFieldset['city']);
         $shippingAddressFieldset['telephone'] = $this->changeLabelIfRequired($shippingAddressFieldset['telephone']);
         $shippingAddressFieldset['postcode'] = $this->changeLabelIfRequired($shippingAddressFieldset['postcode']);
@@ -444,7 +446,9 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
 
         $billingAddressFieldset['firstname']['validation']['required-entry'] = $isFirstNameRequired;
         $billingAddressFieldset['lastname']['validation']['required-entry'] = $isLastNameRequired;
-        $billingAddressFieldset['street']['validation']['required-entry'] = $isStreetRequired;
+        if (isset($billingAddressFieldset['street']['children'][0])) {
+            $billingAddressFieldset['street']['children'][0]['validation']['required-entry'] = $isStreetRequired;
+        }
         $billingAddressFieldset['city']['validation']['required-entry'] = $isCityRequired;
         $billingAddressFieldset['telephone']['validation']['required-entry'] = $isPhoneRequired;
         $billingAddressFieldset['postcode']['validation']['required-entry'] = $isZipRequired;
@@ -454,7 +458,7 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
 
         $billingAddressFieldset['firstname'] = $this->changeLabelIfRequired($billingAddressFieldset['firstname']);
         $billingAddressFieldset['lastname'] = $this->changeLabelIfRequired($billingAddressFieldset['lastname']);
-        $billingAddressFieldset['street'] = $this->changeLabelIfRequired($billingAddressFieldset['street']);
+        $billingAddressFieldset['street'] = $this->changeLabelIfStreetRequired($billingAddressFieldset['street']);
         $billingAddressFieldset['city'] = $this->changeLabelIfRequired($billingAddressFieldset['city']);
         $billingAddressFieldset['telephone'] = $this->changeLabelIfRequired($billingAddressFieldset['telephone']);
         $billingAddressFieldset['postcode'] = $this->changeLabelIfRequired($billingAddressFieldset['postcode']);
@@ -513,6 +517,23 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
     {
         if ($field['mandatorySetting'] == 'no_required') {
             $field['label'] .= ' (' . __('Optional') . ')';
+        }
+
+        return $field;
+    }
+
+    /**
+     * @param $field
+     *
+     * @return array
+     */
+    private function changeLabelIfStreetRequired($field)
+    {
+        if (isset($field['children'][0]['validation']['required-entry'])) {
+            $isRequired = $field['children'][0]['validation']['required-entry'];
+            if (!$isRequired) {
+                $field['label'] .= ' (' . __('Optional') . ')';
+            }
         }
 
         return $field;
