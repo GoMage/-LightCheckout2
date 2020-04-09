@@ -141,7 +141,7 @@ define(
             validate: function () {
                 var result = true;
 
-               // if (!this.isNewAddressLinkVisible()) {
+                if (!this.isNewAddressLinkVisible()) {
                     this.source.set('params.invalid', false);
                     this.source.trigger('billingAddress.data.validate');
 
@@ -162,7 +162,7 @@ define(
 
                     selectBillingAddress(addressData);
                     result = !this.source.get('params.invalid');
-               // }
+                }
 
                 return result;
             },

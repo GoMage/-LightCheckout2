@@ -177,7 +177,8 @@ define(
                     emailValidationResult = Boolean($(loginFormSelector + ' input[name=username]').valid());
                 }
 
-                if (!$('.glc-switcher.billing-address-same-as-shipping-block input[type=checkbox]').is(':checked')) {
+                if (!$('.glc-switcher.billing-address-same-as-shipping-block input[type=checkbox]').is(':checked')
+                    && !this.isNewAddressLinkVisible()) {
                     this.source.set('params.invalid', false);
                     this.source.trigger('shippingAddress.data.validate');
 
