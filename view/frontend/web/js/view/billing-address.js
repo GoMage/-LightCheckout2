@@ -139,9 +139,18 @@ define(
             },
 
             validate: function () {
-                var result = true;
+                var result, isCustomerHasAddresses = true;
 
-                if (!this.isNewAddressLinkVisible()) {
+                if (customer.isLoggedIn()) { // if customer is not logged in customer.customerData.addresses doesn't exist
+                    if (typeof customer.customerData.addresses.length !== 'undefined' &&
+                        customer.customerData.addresses.length === 0) {
+                        isCustomerHasAddresses = false;
+                    }
+                } else {
+                    isCustomerHasAddresses = false;
+                }
+
+                if (!this.isNewAddressLinkVisible() || !isCustomerHasAddresses) {
                     this.source.set('params.invalid', false);
                     this.source.trigger('billingAddress.data.validate');
 

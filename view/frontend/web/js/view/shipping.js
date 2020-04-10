@@ -164,11 +164,11 @@ define(
                 var shippingMethodValidationResult = true,
                     shippingAddressValidationResult = true,
                     loginFormSelector = 'form[data-role=email-with-possible-login]',
-                    emailValidationResult = customer.isLoggedIn();
+                    emailValidationResult = customer.isLoggedIn(),
+                    isCustomerHasAddresses = true;
 
                 if (!quote.shippingMethod()) {
                     this.errorValidationMessage('Please specify a shipping method.');
-
                     shippingMethodValidationResult = false;
                 }
 
@@ -177,30 +177,40 @@ define(
                     emailValidationResult = Boolean($(loginFormSelector + ' input[name=username]').valid());
                 }
 
-                if (!$('.glc-switcher.billing-address-same-as-shipping-block input[type=checkbox]').is(':checked')
-                    && !this.isNewAddressLinkVisible()) {
-                    this.source.set('params.invalid', false);
-                    this.source.trigger('shippingAddress.data.validate');
-
-                    if (this.source.get('shippingAddress.custom_attributes')) {
-                        this.source.trigger('shippingAddress.custom_attributes.data.validate');
+                if (customer.isLoggedIn()) { // if customer is not logged in customer.customerData.addresses doesn't exist
+                    if (typeof customer.customerData.addresses.length !== 'undefined' &&
+                        customer.customerData.addresses.length === 0) {
+                        isCustomerHasAddresses = false;
                     }
+                } else {
+                    isCustomerHasAddresses = false;
+                }
 
-                    if (this.source.get('params.invalid')) {
-                        shippingAddressValidationResult = false;
+                if (!$('.glc-switcher.billing-address-same-as-shipping-block input[type=checkbox]').is(':checked')) {
+                    if (!this.isNewAddressLinkVisible() || !isCustomerHasAddresses) {
+                        this.source.set('params.invalid', false);
+                        this.source.trigger('shippingAddress.data.validate');
+
+                        if (this.source.get('shippingAddress.custom_attributes')) {
+                            this.source.trigger('shippingAddress.custom_attributes.data.validate');
+                        }
+
+                        if (this.source.get('params.invalid')) {
+                            shippingAddressValidationResult = false;
+                        }
+
+                        var addressData = addressConverter.formAddressDataToQuoteAddress(
+                            this.source.get('shippingAddress')
+                        );
+
+                        if (customer.isLoggedIn() && this.addressOptions.length === 0) {
+                            this.saveInAddressBook = 1;
+                        }
+
+                        addressData['save_in_address_book'] = this.saveInAddressBook ? 1 : 0;
+
+                        selectShippingAddress(addressData);
                     }
-
-                    var addressData = addressConverter.formAddressDataToQuoteAddress(
-                        this.source.get('shippingAddress')
-                    );
-
-                    if (customer.isLoggedIn() && this.addressOptions.length === 0) {
-                        this.saveInAddressBook = 1;
-                    }
-
-                    addressData['save_in_address_book'] = this.saveInAddressBook ? 1 : 0;
-
-                    selectShippingAddress(addressData);
                 }
 
                 if (!emailValidationResult) {

@@ -51,9 +51,9 @@ define([
                 this.required(true);
             } else if (this.mandatorySetting === 'no_required') {
                 this.skipValidation = true;
-                return this._super(value);
+                this._super(value);
             } else if (this.mandatorySetting === 'use_magento_settings') {
-                return this._super(value);
+                this._super(value);
             }
         }
     });
