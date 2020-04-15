@@ -3,7 +3,6 @@
 namespace GoMage\LightCheckout\Model\SocialCustomer;
 
 use Magento\Framework\Url;
-use Magento\Store\Model\StoreManagerInterface;
 
 class BaseAuthUrlProvider
 {
@@ -34,6 +33,6 @@ class BaseAuthUrlProvider
                 'type' => $type,
             ]
         );
-        return $url;
+        return str_replace('/index.php', '', $url);
     }
 }

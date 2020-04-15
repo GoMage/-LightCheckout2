@@ -81,6 +81,7 @@ class Login extends Action
         } catch (\Exception $e) {
             $this->getResponse()->setBody(__('Error: ') . $e->getMessage());
 
+            // TODO: return right type (not this class)
             return $this;
         }
 

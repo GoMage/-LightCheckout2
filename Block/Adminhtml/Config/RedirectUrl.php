@@ -56,7 +56,10 @@ class RedirectUrl extends FormField
 
         if ($type == 'Facebook') {
             $param = 'hauth_done=' . $type;
+        } elseif ($type == 'Google') {
+            $param = '';
         } else {
+            // todo
             $param = 'hauth.done=' . $type;
         }
 

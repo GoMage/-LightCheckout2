@@ -26,13 +26,13 @@ class ApiDataProviderByType
      */
     public function get($type)
     {
-        $type = strtolower($type);
+        $typeInConfigData = strtolower($type);
         $data = [
-            "enabled" => $this->getIsEnabledByType($type),
+            "enabled" => $this->getIsEnabledByType($typeInConfigData),
             "keys" => [
-                'id' => $this->getAppIdByType($type),
-                'key' => $this->getAppIdByType($type),
-                'secret' => $this->getAppSecretByType($type),
+                'id' => $this->getAppIdByType($typeInConfigData),
+                'key' => $this->getAppIdByType($typeInConfigData),
+                'secret' => $this->getAppSecretByType($typeInConfigData),
             ]
         ];
 
