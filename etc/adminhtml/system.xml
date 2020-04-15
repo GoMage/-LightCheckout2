@@ -116,16 +116,16 @@
             <group id="checkout_address_fields_required" translate="label" type="text" sortOrder="170" showInDefault="1"
                    showInWebsite="1" showInStore="1">
                 <label> Address Fields Settings</label>
-                <field id="firstname" translate="label" type="select" sortOrder="20"
-                       showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>First Name</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="lastname" translate="label" type="select" sortOrder="30"
-                       showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Last Name</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
+<!--                <field id="firstname" translate="label" type="select" sortOrder="20"-->
+<!--                       showInDefault="1" showInWebsite="1" showInStore="1">-->
+<!--                    <label>First Name</label>-->
+<!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+<!--                </field>-->
+<!--                <field id="lastname" translate="label" type="select" sortOrder="30"-->
+<!--                       showInDefault="1" showInWebsite="1" showInStore="1">-->
+<!--                    <label>Last Name</label>-->
+<!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+<!--                </field>-->
                 <field id="company" translate="label" type="select" sortOrder="40"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Company</label>
@@ -136,16 +136,16 @@
                     <label>Country</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="city" translate="label" type="select" sortOrder="60"
-                       showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>City</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="street" translate="label" type="select" sortOrder="70"
-                       showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Street Address</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
+<!--                <field id="city" translate="label" type="select" sortOrder="60"-->
+<!--                       showInDefault="1" showInWebsite="1" showInStore="1">-->
+<!--                    <label>City</label>-->
+<!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+<!--                </field>-->
+<!--                <field id="street" translate="label" type="select" sortOrder="70"-->
+<!--                       showInDefault="1" showInWebsite="1" showInStore="1">-->
+<!--                    <label>Street Address</label>-->
+<!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+<!--                </field>-->
                 <field id="postcode" translate="label" type="select" sortOrder="80"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Zip/Postal Code</label>
