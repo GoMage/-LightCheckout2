@@ -9,7 +9,12 @@ use Magento\Customer\Model\Session;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\RawFactory;
+use Psr\Log\LoggerInterface;
 
+/**
+ * Class Login
+ * @package GoMage\LightCheckout\Controller\Social
+ */
 class Login extends Action
 {
     /**
@@ -33,7 +38,14 @@ class Login extends Action
     private $helper;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * Login constructor.
      * @param Context $context
+     * @param LoggerInterface $logger
      * @param Session $session
      * @param RawFactory $rawFactory
      * @param SocialManagement $socialManagement
@@ -41,13 +53,14 @@ class Login extends Action
      */
     public function __construct(
         Context $context,
+        LoggerInterface $logger,
         Session $session,
         RawFactory $rawFactory,
         SocialManagement $socialManagement,
         Data $helper
     ) {
         parent::__construct($context);
-
+        $this->logger = $logger;
         $this->session = $session;
         $this->resultRawFactory = $rawFactory;
         $this->socialManagement = $socialManagement;
@@ -55,7 +68,9 @@ class Login extends Action
     }
 
     /**
-     * @inheritdoc
+     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Raw|\Magento\Framework\Controller\ResultInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function execute()
     {
@@ -75,14 +90,13 @@ class Login extends Action
 
             if (!$userProfile->identifier) {
                 $this->messageManager->addErrorMessage(__('Please enter email in your %1 profile', $type));
-
                 return $this->_redirect('checkout');
             }
         } catch (\Exception $e) {
-            $this->getResponse()->setBody(__('Error: ') . $e->getMessage());
-
-            // TODO: return right type (not this class)
-            return $this;
+            $this->logger->critical($type . ' provider error: ', ['exception' => $e]);
+            /** @var \Magento\Framework\Controller\Result\Raw $resultRaw */
+            $resultRaw = $this->resultRawFactory->create();
+            return $resultRaw->setContents("<script>window.close();</script>");
         }
 
         $this->socialManagement->login($userProfile, $type);

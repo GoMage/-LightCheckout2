@@ -82,9 +82,8 @@ class ApiDataProviderByType
             'Facebook' => ['trustForwarded' => false, 'scope' => 'email, public_profile'],
             'Twitter' => ['include_email' => true],
             'Google' => [
-                'scope' => 'https://www.googleapis.com/auth/plus.login'
-                    . ' https://www.googleapis.com/auth/plus.me'
-                    . ' https://www.googleapis.com/auth/plus.profile.emails.read'
+                'scope' => 'profile email'
+                /* @see https://developers.google.com/identity/protocols/oauth2/scopes for "Google Sign-In" point */
             ]
         ];
 
