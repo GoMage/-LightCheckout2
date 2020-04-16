@@ -478,7 +478,7 @@
                 </field>
                 <field id="app_id_twitter" translate="label" type="text" sortOrder="95" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Twitter Consumer Key</label>
+                    <label>API key</label>
                     <validate>required-entry</validate>
                     <depends>
                         <field id="enable_twitter">1</field>
@@ -486,7 +486,7 @@
                 </field>
                 <field id="app_secret_twitter" translate="label" type="text" sortOrder="100" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Twitter Consumer Secret</label>
+                    <label>API secret key</label>
                     <validate>required-entry</validate>
                     <depends>
                         <field id="enable_twitter">1</field>
