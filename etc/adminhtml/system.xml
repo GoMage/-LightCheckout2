@@ -116,16 +116,16 @@
             <group id="checkout_address_fields_required" translate="label" type="text" sortOrder="170" showInDefault="1"
                    showInWebsite="1" showInStore="1">
                 <label>Address Fields Settings</label>
-<!--                <field id="firstname" translate="label" type="select" sortOrder="20"-->
-<!--                       showInDefault="1" showInWebsite="1" showInStore="1">-->
-<!--                    <label>First Name</label>-->
-<!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-<!--                </field>-->
-<!--                <field id="lastname" translate="label" type="select" sortOrder="30"-->
-<!--                       showInDefault="1" showInWebsite="1" showInStore="1">-->
-<!--                    <label>Last Name</label>-->
-<!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-<!--                </field>-->
+                <field id="firstname" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>First Name</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="lastname" translate="label" type="select" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Last Name</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="company" translate="label" type="select" sortOrder="40"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Company</label>
@@ -136,16 +136,16 @@
                     <label>Country</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-<!--                <field id="city" translate="label" type="select" sortOrder="60"-->
-<!--                       showInDefault="1" showInWebsite="1" showInStore="1">-->
-<!--                    <label>City</label>-->
-<!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-<!--                </field>-->
-<!--                <field id="street" translate="label" type="select" sortOrder="70"-->
-<!--                       showInDefault="1" showInWebsite="1" showInStore="1">-->
-<!--                    <label>Street Address</label>-->
-<!--                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-<!--                </field>-->
+                <field id="city" translate="label" type="select" sortOrder="60"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>City</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="street" translate="label" type="select" sortOrder="70"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Street Address</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="postcode" translate="label" type="select" sortOrder="80"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Zip/Postal Code</label>
@@ -474,11 +474,11 @@
                        showInWebsite="1" showInStore="1">
                     <label>Enable Twitter</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[Create app <a href="https://dev.twitter.com/apps" target="_bank">here</a>]]></comment>
+                    <comment><![CDATA[Create app <a href="https://developer.twitter.com/en/apps" target="_bank">here</a>]]></comment>
                 </field>
                 <field id="app_id_twitter" translate="label" type="text" sortOrder="95" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Twitter Consumer Key</label>
+                    <label>API key</label>
                     <validate>required-entry</validate>
                     <depends>
                         <field id="enable_twitter">1</field>
@@ -486,7 +486,7 @@
                 </field>
                 <field id="app_secret_twitter" translate="label" type="text" sortOrder="100" showInDefault="1"
                        showInWebsite="1" showInStore="1">
-                    <label>Twitter Consumer Secret</label>
+                    <label>API secret key</label>
                     <validate>required-entry</validate>
                     <depends>
                         <field id="enable_twitter">1</field>
