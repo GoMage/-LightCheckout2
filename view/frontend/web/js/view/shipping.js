@@ -46,6 +46,11 @@ define(
             return address.getType() == 'customer-address';
         });
         return Component.extend({
+            defaults: {
+                imports: {
+                    isPlaceOrderButtonClicked: 'checkout.sidebar.placeOrderButton:isPlaceOrderButtonClicked'
+                }
+            },
             addressOptions: addressOptions,
 
             /**
@@ -113,7 +118,7 @@ define(
                     var isMethodChange = ($.type(this.currentMethod) !== 'object') ? true : this.currentMethod.method_code;
                     if ($.type(newValue) === 'object' && (isMethodChange !== newValue.method_code)) {
                         setShippingInformationAction();
-                    } else {
+                    } else if (typeof this.isPlaceOrderButtonClicked !== 'undefined' && !this.isPlaceOrderButtonClicked) {
                         updateSectionAction();
                     }
                 }, this);

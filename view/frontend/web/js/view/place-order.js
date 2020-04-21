@@ -21,17 +21,23 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'GoMage_LightCheckout/form/place-order'
+                template: 'GoMage_LightCheckout/form/place-order',
+                isPlaceOrderButtonClicked: ko.observable(false)
             },
             placeOrderPaymentMethodSelector: '#co-payment-form .payment-method._active button.action.primary.checkout',
 
             placeOrder: function () {
                 var self = this;
+                self.isPlaceOrderButtonClicked(true);
 
                  if (additionalValidators.validate()) {
                      this.prepareToPlaceOrder().done(function () {
                          self._placeOrder();
+                     }).fail(function () {
+                         self.isPlaceOrderButtonClicked(false);
                      });
+                 } else {
+                     self.isPlaceOrderButtonClicked(false);
                  }
 
                 return this;
