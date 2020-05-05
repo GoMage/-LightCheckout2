@@ -502,7 +502,9 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
     {
         $isRequired = $field['validation']['required-entry'];
         if (!$isRequired) {
-            $field['label'] .= ' (' . __('Optional') . ')';
+            if (array_key_exists('label', $field)) {
+                $field['label'] .= ' (' . __('Optional') . ')';
+            }
         }
 
         return $field;

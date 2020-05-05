@@ -88,7 +88,9 @@ define(
 
 
                 quote.billingAddress.subscribe(function (newAddress) {
-                    if (self.isAddressSameAsShipping()) {
+                    if (self.isAddressSameAsShipping() && typeof self.isPlaceOrderButtonClicked !== 'undefined'
+                        && !self.isPlaceOrderButtonClicked)
+                    {
                         selectShippingAddress(newAddress);
                     }
                 });
