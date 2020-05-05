@@ -501,12 +501,9 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
     private function changeLabelIfRequired($field)
     {
         $isRequired = $field['validation']['required-entry'];
-        if (!$isRequired) {
-            if (array_key_exists('label', $field)) {
-                $field['label'] .= ' (' . __('Optional') . ')';
-            }
+        if (!$isRequired && array_key_exists('label', $field)) {
+            $field['label'] .= ' (' . __('Optional') . ')';
         }
-
         return $field;
     }
 
@@ -517,10 +514,9 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
      */
     private function changeLabelIfRequiredStateField($field)
     {
-        if ($field['mandatorySetting'] == 'no_required') {
+        if ($field['mandatorySetting'] == 'no_required' && array_key_exists('label', $field)) {
             $field['label'] .= ' (' . __('Optional') . ')';
         }
-
         return $field;
     }
 
@@ -533,11 +529,10 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
     {
         if (isset($field['children'][0]['validation']['required-entry'])) {
             $isRequired = $field['children'][0]['validation']['required-entry'];
-            if (!$isRequired) {
+            if (!$isRequired && array_key_exists('label', $field)) {
                 $field['label'] .= ' (' . __('Optional') . ')';
             }
         }
-
         return $field;
     }
 }
