@@ -88,9 +88,7 @@ define(
 
 
                 quote.billingAddress.subscribe(function (newAddress) {
-                    if (self.isAddressSameAsShipping() && typeof self.isPlaceOrderButtonClicked !== 'undefined'
-                        && !self.isPlaceOrderButtonClicked)
-                    {
+                    if (self.isAddressSameAsShipping()) {
                         selectShippingAddress(newAddress);
                     }
                 });
@@ -165,22 +163,26 @@ define(
                         this.source.trigger('billingAddress.custom_attributes.data.validate');
                     }
 
-                    var addressData = addressConverter.formAddressDataToQuoteAddress(
-                        this.source.get('billingAddress')
-                    );
-
-                    if (customer.isLoggedIn() && !this.customerHasAddresses) {
-                        this.saveInAddressBook(1);
-                    }
-
-                    addressData['save_in_address_book'] = this.saveInAddressBook() ? 1 : 0;
-                    addressData.saveInAddressBook = this.saveInAddressBook() ? 1 : 0;
-
-                    selectBillingAddress(addressData);
                     result = !this.source.get('params.invalid');
+                    if (result) {
+                        this.saveBillingAddress();
+                    }
                 }
 
                 return result;
+            },
+
+            saveBillingAddress: function() {
+                var addressFlat = uiRegistry.get('checkoutProvider').billingAddress;
+                var addressData = addressConverter.formAddressDataToQuoteAddress(addressFlat);
+
+                if (customer.isLoggedIn() && !this.customerHasAddresses) {
+                    this.saveInAddressBook(1);
+                }
+
+                addressData['save_in_address_book'] = this.saveInAddressBook() ? 1 : 0;
+                addressData.saveInAddressBook = this.saveInAddressBook() ? 1 : 0;
+                selectBillingAddress(addressData);
             },
 
             /**
@@ -282,12 +284,7 @@ define(
              * Convert form data to quote address and validate fields for shipping rates
              */
             validateFields: function () {
-                var addressFlat,
-                    address;
-
-                addressFlat = uiRegistry.get('checkoutProvider').billingAddress;
-                address = addressConverter.formAddressDataToQuoteAddress(addressFlat);
-                selectBillingAddress(address);
+                this.saveBillingAddress();
             },
 
             /**
