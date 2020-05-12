@@ -18,11 +18,11 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
  * Changelog:
- *  
+ *
  * 2010-07-14   GoMage (https://www.gomage.com)
- *              Changed for the GoMage LightCheckout Extension  
+ *              Changed for the GoMage LightCheckout Extension
  */
 
 namespace GoMage\LightCheckout\Model\GeoIp;
@@ -61,7 +61,7 @@ class Core
     const GEOIP_DIALUP_SPEED=1;
     const GEOIP_CABLEDSL_SPEED=2;
     const GEOIP_CORPORATE_SPEED=3;
-    
+
     public $flags;
     public $filehandle;
     public $memory_buffer;
@@ -239,7 +239,7 @@ class Core
     "SA", "SA", "SA", "AS", "OC", "OC", "OC", "AS", "AF", "EU",
     "AF", "AF", "EU", "AF", "--", "--", "--", "EU", "EU", "EU",
     "EU", "SA", "SA" ];
-    
+
     public function geoip_load_shared_mem($file)
     {
         $fp = fopen($file, "rb");
@@ -248,7 +248,7 @@ class Core
         }
         $s_array = fstat($fp);
         $size = $s_array['size'];
-        if ($shmid = @shmop_open(self::GEOIP_SHM_KEY, "w", 0, 0)) {
+        if ($shmid = shmop_open(self::GEOIP_SHM_KEY, "w", 0, 0)) {
             shmop_delete($shmid);
             shmop_close($shmid);
         }
@@ -262,12 +262,12 @@ class Core
         $gi->databaseType = self::GEOIP_COUNTRY_EDITION;
         $gi->record_length = self::STANDARD_RECORD_LENGTH;
         if ($gi->flags & self::GEOIP_SHARED_MEMORY) {
-            $offset = @shmop_size($gi->shmid) - 3;
+            $offset = shmop_size($gi->shmid) - 3;
             for ($i = 0; $i < self::STRUCTURE_INFO_MAX_SIZE; $i++) {
-                $delim = @shmop_read($gi->shmid, $offset, 3);
+                $delim = shmop_read($gi->shmid, $offset, 3);
                 $offset += 3;
                 if ($delim == (chr(255).chr(255).chr(255))) {
-                    $gi->databaseType = ord(@shmop_read($gi->shmid, $offset, 1));
+                    $gi->databaseType = ord(shmop_read($gi->shmid, $offset, 1));
                     $offset++;
 
                     if ($gi->databaseType == self::GEOIP_REGION_EDITION_REV0) {
@@ -280,7 +280,7 @@ class Core
                     || ($gi->databaseType == self::GEOIP_ISP_EDITION)
                     || ($gi->databaseType == self::GEOIP_ASNUM_EDITION)) {
                         $gi->databaseSegments = 0;
-                        $buf = @shmop_read($gi->shmid, $offset, self::SEGMENT_RECORD_LENGTH);
+                        $buf = shmop_read($gi->shmid, $offset, self::SEGMENT_RECORD_LENGTH);
                         for ($j = 0; $j < self::SEGMENT_RECORD_LENGTH; $j++) {
                             $gi->databaseSegments += (ord($buf[$j]) << ($j * 8));
                         }
@@ -352,7 +352,7 @@ class Core
             $gi = new Core;
             $gi->flags = $flags;
             if ($gi->flags & self::GEOIP_SHARED_MEMORY) {
-                $gi->shmid = @shmop_open(self::GEOIP_SHM_KEY, "a", 0, 0);
+                $gi->shmid = shmop_open(self::GEOIP_SHM_KEY, "a", 0, 0);
             } else {
                 $gi->filehandle = fopen($filename, "rb");
                 if (!$gi->filehandle) {
@@ -411,12 +411,12 @@ class Core
         $ipnum = ip2long($addr);
         return $this->_geoip_seek_country($gi, $ipnum) - self::GEOIP_COUNTRY_BEGIN;
     }
-    
+
     public function geoip_record_by_addr($addr)
     {
         return City::geoip_record_by_addr($this, $addr, $this);
     }
-    
+
     public function geoip_country_code_by_addr($addr)
     {
         $gi = $this;
@@ -466,7 +466,7 @@ class Core
 
                 mb_internal_encoding($enc);
             } elseif ($gi->flags & self::GEOIP_SHARED_MEMORY) {
-                $buf = @shmop_read(
+                $buf = shmop_read(
                     $gi->shmid,
                     2 * $gi->record_length * $offset,
                     2 * $gi->record_length
@@ -507,7 +507,7 @@ class Core
         }
         $record_pointer = $seek_org + (2 * $gi->record_length - 1) * $gi->databaseSegments;
         if ($gi->flags & self::GEOIP_SHARED_MEMORY) {
-            $org_buf = @shmop_read($gi->shmid, $record_pointer, self::MAX_ORG_RECORD_LENGTH);
+            $org_buf = shmop_read($gi->shmid, $record_pointer, self::MAX_ORG_RECORD_LENGTH);
         } else {
             fseek($gi->filehandle, $record_pointer, SEEK_SET);
             $org_buf = fread($gi->filehandle, self::MAX_ORG_RECORD_LENGTH);
@@ -532,8 +532,8 @@ class Core
 
     public function _get_region($gi, $ipnum)
     {
-        
-        
+
+
         if ($gi->databaseType == self::GEOIP_REGION_EDITION_REV0) {
             $seek_region = $this->_geoip_seek_country($gi, $ipnum) - self::GEOIP_STATE_BEGIN_REV0;
             if ($seek_region >= 1000) {
