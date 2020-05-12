@@ -62,7 +62,9 @@ define(
             defaults: {
                 imports: {
                     isPlaceOrderButtonClicked: 'checkout.sidebar.placeOrderButton:isPlaceOrderButtonClicked'
-                }
+                },
+                stickySelector: '#maincontent'
+
             },
             addressOptions: addressOptions,
 
@@ -346,7 +348,7 @@ define(
                     setTimeout(function () {
                         // again sticky as we have left block smaller
                         $('.glc-right-col').mage('sticky', {
-                            container: '#maincontent'
+                            container: this.stickySelector
                         });
                     }, 1000);
                 } else {
@@ -358,7 +360,7 @@ define(
                     setTimeout(function () {
                         // again sticky as we have left block larger
                         $('.glc-right-col').mage('sticky', {
-                            container: '#maincontent'
+                            container: this.stickySelector
                         });
                     }, 1000);
                 }
@@ -374,7 +376,7 @@ define(
 
                 // again sticky as we have left block larger
                 $('.glc-right-col').mage('sticky', {
-                    container: '#maincontent'
+                    container: this.stickySelector
                 });
             }
         });

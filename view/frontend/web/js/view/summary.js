@@ -10,6 +10,9 @@ define(
     function ($, Component) {
         'use strict';
         return Component.extend({
+            defaults: {
+                stickySelector: '#maincontent'
+            },
             optional: 'Optional',
 
             afterRenderSummary: function () {
@@ -19,7 +22,7 @@ define(
                 var checkExist = setInterval(function () {
                     if (!$(loaderElement).is(':visible')) {
                         $(summaryElement).mage('sticky', {
-                            container: '#maincontent'
+                            container: self.stickySelector
                         });
                         self.specialChangesFields();
                         clearInterval(checkExist);

@@ -49,8 +49,10 @@ define(
             defaults: {
                 imports: {
                     isPlaceOrderButtonClicked: 'checkout.sidebar.placeOrderButton:isPlaceOrderButtonClicked'
-                }
+                },
+                stickySelector: '#maincontent'
             },
+
             addressOptions: addressOptions,
 
             /**
@@ -255,7 +257,7 @@ define(
 
                 // again sticky as we have left block larger
                 $('.glc-right-col').mage('sticky', {
-                    container: '#maincontent'
+                    container: this.stickySelector
                 });
             }
         });
