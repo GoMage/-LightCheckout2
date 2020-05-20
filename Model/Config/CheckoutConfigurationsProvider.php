@@ -467,9 +467,9 @@ class CheckoutConfigurationsProvider
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_PHONE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
-    public function getAddressFieldsForm()
+    public function getAddressFieldsForm($storeId = null)
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM,\Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeId);
     }
 
     public function getAddressFieldsKeepInside()
