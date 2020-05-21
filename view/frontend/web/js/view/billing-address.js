@@ -125,19 +125,26 @@ define(
 
                 var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
 
+                // isAddressSameAsShipping for model lightCheckoutData
                 if (enableDifferentShippingAddress === 0 || enableDifferentShippingAddress === 1) {
-                    this.isAddressSameAsShipping(true);
+                    if (null === lightCheckoutData.getIsAddressSameAsShipping()) {
+                        lightCheckoutData.setIsAddressSameAsShipping(true);
+                    }
                 } else if (enableDifferentShippingAddress === 2) {
-                    this.isAddressSameAsShipping(false);
+                    if (null === lightCheckoutData.getIsAddressSameAsShipping()) {
+                        lightCheckoutData.setIsAddressSameAsShipping(true);
+                    }
                 }
 
-                //get if saved after page refreshed.
+                // get if saved after page refreshed.
                 var isAddressSameAsShipping = lightCheckoutData.getIsAddressSameAsShipping();
 
+                // isAddressSameAsShipping property for UI
                 if (isAddressSameAsShipping !== null) {
                     this.isAddressSameAsShipping(isAddressSameAsShipping)
                 }
 
+                // update lightCheckoutData model's isAddressSameAsShipping property
                 this.isAddressSameAsShipping.subscribe(function (newValue) {
                     lightCheckoutData.setIsAddressSameAsShipping(newValue);
                 });

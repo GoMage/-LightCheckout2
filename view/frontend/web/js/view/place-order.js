@@ -5,8 +5,10 @@ define(
         'ko',
         'uiComponent',
         'Magento_Checkout/js/model/payment/additional-validators',
-        'Magento_Checkout/js/action/set-shipping-information',
-        'GoMage_LightCheckout/js/action/save-additional-information'
+        'GoMage_LightCheckout/js/action/save-additional-information',
+        'GoMage_LightCheckout/js/light-checkout-data',
+        'Magento_Checkout/js/action/select-shipping-address',
+        'Magento_Checkout/js/model/quote'
     ],
     function (
         $,
@@ -14,8 +16,10 @@ define(
         ko,
         Component,
         additionalValidators,
-        setShippingInformation,
-        saveAdditionalInformation
+        saveAdditionalInformation,
+        lightCheckoutData,
+        selectShippingAddress,
+        quote
     ) {
         "use strict";
 
@@ -29,6 +33,10 @@ define(
             placeOrder: function () {
                 var self = this;
                 self.isPlaceOrderButtonClicked(false); // Save shipping address only 1 time on validation step
+
+                if (lightCheckoutData.getIsAddressSameAsShipping()) {
+                    selectShippingAddress(quote.billingAddress());
+                }
 
                  if (additionalValidators.validate()) {
                      self.isPlaceOrderButtonClicked(true);
@@ -49,10 +57,8 @@ define(
             },
 
             prepareToPlaceOrder: function () {
-                return $.when(setShippingInformation()).done(function () {
-                    $.when(saveAdditionalInformation()).done(function () {
-                        $("body").animate({scrollTop: 0}, "slow");
-                    });
+               return $.when(saveAdditionalInformation()).done(function () {
+                    $("body").animate({scrollTop: 0}, "slow");
                 });
             }
         });
