@@ -8,7 +8,9 @@ define(
         'GoMage_LightCheckout/js/action/save-additional-information',
         'GoMage_LightCheckout/js/light-checkout-data',
         'Magento_Checkout/js/action/select-shipping-address',
-        'Magento_Checkout/js/model/quote'
+        'Magento_Checkout/js/model/quote',
+        'Magento_Checkout/js/action/create-shipping-address',
+        'Magento_Checkout/js/checkout-data'
     ],
     function (
         $,
@@ -19,7 +21,9 @@ define(
         saveAdditionalInformation,
         lightCheckoutData,
         selectShippingAddress,
-        quote
+        quote,
+        createShippingAddress,
+        checkoutData
     ) {
         "use strict";
 
@@ -34,11 +38,14 @@ define(
                 var self = this;
                 self.isPlaceOrderButtonClicked(false); // Save shipping address only 1 time on validation step
 
-                if (lightCheckoutData.getIsAddressSameAsShipping()) {
-                    selectShippingAddress(quote.billingAddress());
-                }
+                // if (lightCheckoutData.getIsAddressSameAsShipping()) {
+                //     selectShippingAddress(quote.billingAddress());
+                // } else {
+                //     var addressData = checkoutData.getShippingAddressFromData();
+                //     selectShippingAddress(createShippingAddress(addressData));
+                // }
 
-                 if (additionalValidators.validate()) {
+                 if (additionalValidators.validate()) { // попробовать убрать эти условия
                      self.isPlaceOrderButtonClicked(true);
                      this.prepareToPlaceOrder().done(function () {
                          self._placeOrder();
@@ -57,7 +64,7 @@ define(
             },
 
             prepareToPlaceOrder: function () {
-               return $.when(saveAdditionalInformation()).done(function () {
+                return $.when(saveAdditionalInformation()).done(function () {
                     $("body").animate({scrollTop: 0}, "slow");
                 });
             }

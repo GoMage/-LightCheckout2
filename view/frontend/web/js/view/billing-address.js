@@ -125,14 +125,14 @@ define(
 
                 var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
 
-                // isAddressSameAsShipping for model lightCheckoutData
+                // set isAddressSameAsShipping for model lightCheckoutData
                 if (enableDifferentShippingAddress === 0 || enableDifferentShippingAddress === 1) {
                     if (null === lightCheckoutData.getIsAddressSameAsShipping()) {
                         lightCheckoutData.setIsAddressSameAsShipping(true);
                     }
                 } else if (enableDifferentShippingAddress === 2) {
                     if (null === lightCheckoutData.getIsAddressSameAsShipping()) {
-                        lightCheckoutData.setIsAddressSameAsShipping(true);
+                        lightCheckoutData.setIsAddressSameAsShipping(false);
                     }
                 }
 
@@ -340,7 +340,6 @@ define(
 
             useShippingAddress: function () {
                 if (this.isAddressSameAsShipping()) {
-                    $('#shipping').hide();
                     selectShippingAddress(quote.billingAddress());
 
                     if (window.checkoutConfig.reloadOnBillingAddress ||
@@ -356,7 +355,6 @@ define(
                         });
                     }, 1000);
                 } else {
-                    $('#shipping').show();
                     var addressData = this.source.get('shippingAddress');
 
                     selectShippingAddress(createShippingAddress(addressData));
