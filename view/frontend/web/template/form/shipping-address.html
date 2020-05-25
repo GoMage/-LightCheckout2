@@ -1,4 +1,4 @@
-<div id="shipping" class="glc-step glc-shipping-address checkout-shipping-address" data-bind="canUseShippingAddress()">
+<div id="shipping" class="glc-step glc-shipping-address checkout-shipping-address" data-bind="visible: canUseShippingAddress() && !isAddressSameAsShipping()">
     <div class="step-title" data-bind="i18n: 'Shipping Address'" data-role="title"></div>
     <div id="checkout-step-shipping"
          class="step-content"
@@ -12,5 +12,5 @@
 
         <div class="mp-clear"></div>
     </div>
-    <div data-bind="afterRender: afterRenderShipping"></div>
 </div>
+
