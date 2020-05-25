@@ -64,12 +64,6 @@
             <resource ref="anonymous" />
         </resources>
     </route>
-    <route url="/V1/light_checkout/get-address-by-zip-code" method="POST">
-        <service class="GoMage\LightCheckout\Api\GetAddressByPostCodeInterface" method="execute"/>
-        <resources>
-            <resource ref="anonymous" />
-        </resources>
-    </route>
     <route url="/V1/light_checkout/is-customer-subscribed-for-newsletter" method="POST">
         <service class="GoMage\LightCheckout\Api\IsCustomerSubscribedForNewsletterInterface" method="execute"/>
         <resources>

@@ -6,7 +6,7 @@ use GoMage\LightCheckout\Api\GetAddressByPostCodeInterface;
 use GoMage\LightCheckout\Model\Api\Factory;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\Config\Source\AutofillByZipCode\Mode;
-use GoMage\LightCheckout\Model\GetAddressByPostCode\ResponseDataInterfaceFactory;
+use GoMage\LightCheckout\Api\Data\GetAddressByPostCode\ResponseDataInterfaceFactory;
 use Magento\Framework\Json\Helper\Data as JsonHelper;
 
 class GetAddressByPostCode implements GetAddressByPostCodeInterface
