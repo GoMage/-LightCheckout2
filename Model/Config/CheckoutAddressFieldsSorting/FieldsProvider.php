@@ -4,11 +4,7 @@ namespace GoMage\LightCheckout\Model\Config\CheckoutAddressFieldsSorting;
 
 use GoMage\LightCheckout\Model\Config\AddressFieldsProvider;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
-use Magento\Framework\App\Area;
-use Magento\Framework\App\RequestInterface;
-use Magento\Framework\App\State;
-use Magento\Framework\Exception\LocalizedException;
-use Psr\Log\LoggerInterface;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class FieldsProvider
 {
@@ -28,55 +24,42 @@ class FieldsProvider
     private $fieldsDataTransferObjectFactory;
 
     /**
-     * @var State
+     * @var SerializerInterface
      */
-    private $state;
+    private $serializer;
 
     /**
-     * @var RequestInterface
-     */
-    private $request;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
+     * FieldsProvider constructor.
      * @param AddressFieldsProvider $addressFieldsProvider
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param FieldsDataTransferObjectFactory $fieldsDataTransferObjectFactory
-     * @param State $state
-     * @param RequestInterface $request
-     * @param LoggerInterface $logger
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         AddressFieldsProvider $addressFieldsProvider,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
         FieldsDataTransferObjectFactory $fieldsDataTransferObjectFactory,
-        State $state,
-        RequestInterface $request,
-        LoggerInterface $logger
+        SerializerInterface $serializer
     ) {
         $this->addressFieldsProvider = $addressFieldsProvider;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
         $this->fieldsDataTransferObjectFactory = $fieldsDataTransferObjectFactory;
-        $this->state = $state;
-        $this->request = $request;
-        $this->logger = $logger;
+        $this->serializer = $serializer;
     }
 
-    /**
-     * @return FieldsDataTransferObject
-     */
+
     public function get()
     {
         $fieldsDataTransferObject = $this->fieldsDataTransferObjectFactory->create();
         $visibleFields = [];
         $notVisibleFields = $this->addressFieldsProvider->get();
 
-        $storeId = $this->detectStoreId();
-        $fieldsConfig = json_decode($this->checkoutConfigurationsProvider->getAddressFieldsForm($storeId), true) ?: [];
+        try {
+            $fieldsConfig = $this->serializer->unserialize($this->checkoutConfigurationsProvider->getAddressFieldsForm());
+        } catch (\InvalidArgumentException $e) {
+            $fieldsConfig = [];
+        }
+
         $sortOrder = 1;
         $isNewRow = true;
         $lastWasWide = true;
@@ -119,23 +102,5 @@ class FieldsProvider
         }
 
         return $isNewRow;
-    }
-
-    /**
-     * @return int|null
-     * @throws LocalizedException
-     */
-    private function detectStoreId()
-    {
-        $storeId = null;
-        try {
-            if ($this->state->getAreaCode() === Area::AREA_ADMINHTML && (int)$this->request->getParam('store')) {
-                $storeId = (int)$this->request->getParam('store');
-            }
-        } catch (LocalizedException $e) {
-            $this->logger->warning((string)$e, ['module' => 'GoMage_LightCheckout']);
-        }
-
-        return $storeId;
     }
 }
