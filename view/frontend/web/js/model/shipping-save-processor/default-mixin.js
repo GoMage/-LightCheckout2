@@ -32,6 +32,8 @@ define([
          * @return {jQuery.Deferred}
          */
         originalObject.saveShippingInformation = function () {
+            if (!quote.shippingMethod()) return; // if shipping method is not needed
+
             var payload;
 
             if (!quote.billingAddress() && quote.shippingAddress().canUseForBilling()) {
