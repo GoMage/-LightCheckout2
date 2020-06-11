@@ -3,6 +3,9 @@
 namespace GoMage\LightCheckout\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Config\Block\System\Config\Form;
+use Magento\Framework\App\Area;
+use Magento\Framework\App\State;
 
 class CheckoutConfigurationsProvider
 {
@@ -193,7 +196,6 @@ class CheckoutConfigurationsProvider
     /**#@-*/
     // @codingStandardsIgnoreEnd
 
-
     /**#@+
      * Light Checkout configuration section.
      */
@@ -205,11 +207,30 @@ class CheckoutConfigurationsProvider
     private $scopeConfig;
 
     /**
-     * @param ScopeConfigInterface $scopeConfig
+     * @var Form
      */
-    public function __construct(ScopeConfigInterface $scopeConfig)
+    private $configForm;
+
+    /**
+     * @var State
+     */
+    private $state;
+
+    /**
+     * CheckoutConfigurationsProvider constructor.
+     * @param ScopeConfigInterface $scopeConfig
+     * @param Form $configForm
+     * @param State $state
+     */
+    public function __construct(
+        ScopeConfigInterface $scopeConfig,
+        Form $configForm,
+        State $state
+    )
     {
         $this->scopeConfig = $scopeConfig;
+        $this->configForm = $configForm;
+        $this->state = $state;
     }
 
     public function isLightCheckoutEnabled()
@@ -467,9 +488,13 @@ class CheckoutConfigurationsProvider
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_PHONE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
-    public function getAddressFieldsForm($storeId = null)
+    public function getAddressFieldsForm()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM,\Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeId);
+        if ($this->state->getAreaCode() === Area::AREA_FRONTEND) {
+            return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM,
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        }
+        return $this->configForm->getConfigValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM);
     }
 
     public function getAddressFieldsKeepInside()

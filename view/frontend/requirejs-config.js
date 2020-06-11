@@ -11,6 +11,9 @@ var config = {
             },
             'Magento_Checkout/js/model/shipping-save-processor/default': {
                 'GoMage_LightCheckout/js/model/shipping-save-processor/default-mixin': true
+            },
+            'Magento_Checkout/js/model/place-order': {
+                'GoMage_LightCheckout/js/model/place-order-mixin': true
             }
         }
     }

@@ -17,8 +17,16 @@
         </td>
         <td class="col col-option">
             <span class="customer-address-data" data-bind="text: option.firstname + ' ' + option.lastname"></span>
+            <!-- ko if: option.company -->
+            <span class="customer-address-data" data-bind="text: option.company"></span>
+            <!-- /ko -->
             <span class="customer-address-data" data-bind="text: option.street[0]"></span>
+            <!-- ko if: option.region -->
             <span class="customer-address-data" data-bind="text: option.region + ', ' + option.city + ' ' + option.postcode"></span>
+            <!-- /ko -->
+            <!-- ko ifnot: option.region -->
+            <span class="customer-address-data" data-bind="text: option.city + ' ' + option.postcode"></span>
+            <!-- /ko -->
             <span class="customer-address-data" data-bind="text: option.countryId"></span>
         </td>
     </tr>
