@@ -27,4 +27,18 @@
     <type name="Magento\Checkout\Controller\Cart\Index">
         <plugin name="gomage_light_checkout_checkout_controller_cart_index" type="GoMage\LightCheckout\Plugin\Checkout\Controller\Cart\Index"/>
     </type>
+    <type name="Magento\Framework\App\RouterList" shared="true">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="customUrl" xsi:type="array">
+                    <item name="class" xsi:type="string">GoMage\LightCheckout\Router\CustomUrl</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">27</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\UrlInterface">
+        <plugin name="gomage_light_checkout_custom_url" type="GoMage\LightCheckout\Plugin\CustomUrl"/>
+    </type>
 </config>

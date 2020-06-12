@@ -25,6 +25,7 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_GENERAL_ENABLE_DISCOUNT_CODES = 'gomage_light_checkout_configuration/general/enable_discount_codes';
     const XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_ORDER_SUMMARY_ON_SUCCESS_PAGE = 'gomage_light_checkout_configuration/general/show_order_summary_on_success_page';
     const XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_3_COLUMN_CHECKOUT = 'gomage_light_checkout_configuration/general/show_3_column_checkout';
+    const XML_PATH_LIGHT_CHECKOUT_GENERAL_URL = 'gomage_light_checkout_configuration/general/url';
 
     /**#@-*/
 
@@ -291,6 +292,11 @@ class CheckoutConfigurationsProvider
     public function getIsShown3ColumnCheckout()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_3_COLUMN_CHECKOUT,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    public function getLightCheckoutUrl()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_URL,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsShownOrderCommentBlock()

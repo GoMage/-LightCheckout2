@@ -67,6 +67,14 @@
                     <label>Show 3 Column Checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="url" translate="label" type="text" sortOrder="150" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Light Checkout URL Path</label>
+                    <comment><![CDATA[<strong style="color:red">Warning:</strong> Do not use URL that already exists
+                    (for example: cms/index/index, checkout/cart etc). <strong style="color:red">Note:</strong> The
+                    default checkout URL will be disabled.]]>
+                    </comment>
+                </field>
             </group>
             <group id="registration" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1"
                    showInStore="1">
