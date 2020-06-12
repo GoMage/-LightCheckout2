@@ -4,21 +4,24 @@ namespace GoMage\LightCheckout\Model;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\Config\Source\OperationSystemsForDevices;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 
 class IsEnableLightCheckoutForDevice
 {
     /**
-     * @var CheckoutConfigurationsProvider
+     * @var ScopeConfigInterface
      */
-    private $checkoutConfigurationsProvider;
+    private $scopeConfig;
 
     /**
-     * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     * IsEnableLightCheckoutForDevice constructor.
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
-        CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+        ScopeConfigInterface $scopeConfig
     ) {
-        $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -33,13 +36,22 @@ class IsEnableLightCheckoutForDevice
         $detect = new \Mobile_Detect();
 
         if (!$detect->isMobile()) {
-            return (bool)$this->checkoutConfigurationsProvider->isShowOnDesktopAndLaptop();
+            return (bool)$this->scopeConfig->getValue(
+                CheckoutConfigurationsProvider::XML_PATH_LIGHT_CHECKOUT_DEVICES_DESKTOP,
+                ScopeInterface::SCOPE_STORE
+            );
         }
 
         if ($detect->isTablet()) {
-            $devices = explode(',', $this->checkoutConfigurationsProvider->getShowOnTabletOperationSystems());
+            $devices = explode(',', (string) $this->scopeConfig->getValue(
+                CheckoutConfigurationsProvider::XML_PATH_LIGHT_CHECKOUT_DEVICES_TABLET,
+                ScopeInterface::SCOPE_STORE
+            ));
         } else {
-            $devices = explode(',', $this->checkoutConfigurationsProvider->getShowOnSmartphoneOperationSystems());
+            $devices = explode(',', (string) $this->scopeConfig->getValue(
+                CheckoutConfigurationsProvider::XML_PATH_LIGHT_CHECKOUT_DEVICES_TABLET,
+                ScopeInterface::SCOPE_STORE
+            ));
         }
 
         if ($detect->isAndroidOS()) {
