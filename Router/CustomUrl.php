@@ -77,7 +77,8 @@ class CustomUrl implements RouterInterface
         $identifier = trim($request->getPathInfo(), '/');
         $customUrl = $this->checkoutConfigurationsProvider->getLightCheckoutUrl();
 
-        if ($identifier == $customUrl && $this->helper->isA(InstallData::MODULE_NAME)
+        if ($identifier && $customUrl && $identifier === $customUrl
+            && $this->helper->isA(InstallData::MODULE_NAME)
             && $this->checkoutConfigurationsProvider->isLightCheckoutEnabled()
             && $this->isEnableLightCheckoutForDevice->execute()) {
             $request->setModuleName('lightcheckout');
