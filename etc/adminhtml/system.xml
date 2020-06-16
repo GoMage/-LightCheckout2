@@ -9,11 +9,11 @@
             <group id="general" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>General</label>
-                <field id="greetings" type="text" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\System\Config\Form\Greetings</frontend_model>
+                <field id="greetings" type="text" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\General\Greetings</frontend_model>
                 </field>
-                <field id="feedback" type="text" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\System\Config\Form\Feedback</frontend_model>
+                <field id="feedback" type="text" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\General\Feedback</frontend_model>
                 </field>
                 <field id="is_enabled" translate="label" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
