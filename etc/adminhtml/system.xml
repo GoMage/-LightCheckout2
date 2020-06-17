@@ -17,6 +17,7 @@
                 <field id="url" translate="label" type="text" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Light Checkout URL Path</label>
+                    <validate>validate-lightcheckout-url</validate>
                     <comment><![CDATA[<strong style="color:red">Warning:</strong> Do not use URL that already exists
                     (for example: cms/index/index, checkout/cart etc). <strong style="color:red">Note:</strong> The
                     default checkout URL will be disabled.]]>
