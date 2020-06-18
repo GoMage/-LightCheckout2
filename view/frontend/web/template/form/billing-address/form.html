@@ -14,7 +14,7 @@
     <form data-hasrequired="* Required Fields">
         <!-- ko if: (isCustomerLoggedIn) -->
         <div class="choice field glc-checkbox glc-checkbox-save-address"
-             data-bind="visible: !isNewAddressLinkVisible() || addressOptions.length == 0">
+             data-bind="visible: !isNewAddressLinkVisible()">
             <input type="checkbox" class="checkbox" id="billing-save-in-address-book" data-bind="checked: saveInAddressBook" />
             <label for="billing-save-in-address-book">
                 <span data-bind="i18n: 'Save New Address to Address Book'"></span>

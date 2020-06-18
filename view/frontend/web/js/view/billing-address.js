@@ -55,7 +55,7 @@ define(
             postcodeElement = null,
             postcodeElementName = 'postcode',
             addressOptions = addressList().filter(function (address) {
-                return address.getType() == 'customer-address';
+                return address.getType() === 'customer-address';
             });
 
         return Component.extend({
@@ -65,6 +65,7 @@ define(
                 }
             },
             addressOptions: addressOptions,
+            customerHasAddresses: addressOptions.length > 0,
 
             initialize: function () {
                 var self = this;
@@ -91,7 +92,10 @@ define(
                     if (self.isAddressSameAsShipping() && typeof self.isPlaceOrderButtonClicked !== 'undefined'
                         && !self.isPlaceOrderButtonClicked)
                     {
-                        selectShippingAddress(newAddress);
+                        var addressData = newAddress;
+                        addressData.saveInAddressBook = 0;
+                        addressData['save_in_address_book'] = 0;
+                        selectShippingAddress(addressData);
                     }
                 });
 
@@ -153,18 +157,9 @@ define(
             },
 
             validate: function () {
-                var result, isCustomerHasAddresses = true;
+                var result;
 
-                if (customer.isLoggedIn()) { // if customer is not logged in customer.customerData.addresses doesn't exist
-                    if (typeof customer.customerData.addresses.length !== 'undefined' &&
-                        customer.customerData.addresses.length === 0) {
-                        isCustomerHasAddresses = false;
-                    }
-                } else {
-                    isCustomerHasAddresses = false;
-                }
-
-                if (!this.isNewAddressLinkVisible() || !isCustomerHasAddresses) {
+                if (!this.isNewAddressLinkVisible() || !this.customerHasAddresses) {
                     this.source.set('params.invalid', false);
                     this.source.trigger('billingAddress.data.validate');
 
@@ -339,8 +334,13 @@ define(
             }),
 
             useShippingAddress: function () {
+                var addressData;
+
                 if (this.isAddressSameAsShipping()) {
-                    selectShippingAddress(quote.billingAddress());
+                    addressData = quote.billingAddress();
+                    addressData.saveInAddressBook = 0;
+                    addressData['save_in_address_book'] = 0;
+                    selectShippingAddress(addressData);
 
                     if (window.checkoutConfig.reloadOnBillingAddress ||
                         !window.checkoutConfig.displayBillingOnPaymentMethod
@@ -355,7 +355,7 @@ define(
                         });
                     }, 1000);
                 } else {
-                    var addressData = this.source.get('shippingAddress');
+                    addressData = this.source.get('shippingAddress');
 
                     selectShippingAddress(createShippingAddress(addressData));
 
