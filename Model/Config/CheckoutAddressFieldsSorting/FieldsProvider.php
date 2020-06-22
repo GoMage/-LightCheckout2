@@ -4,6 +4,7 @@ namespace GoMage\LightCheckout\Model\Config\CheckoutAddressFieldsSorting;
 
 use GoMage\LightCheckout\Model\Config\AddressFieldsProvider;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class FieldsProvider
 {
@@ -23,30 +24,42 @@ class FieldsProvider
     private $fieldsDataTransferObjectFactory;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
+     * FieldsProvider constructor.
      * @param AddressFieldsProvider $addressFieldsProvider
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param FieldsDataTransferObjectFactory $fieldsDataTransferObjectFactory
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         AddressFieldsProvider $addressFieldsProvider,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
-        FieldsDataTransferObjectFactory $fieldsDataTransferObjectFactory
+        FieldsDataTransferObjectFactory $fieldsDataTransferObjectFactory,
+        SerializerInterface $serializer
     ) {
         $this->addressFieldsProvider = $addressFieldsProvider;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
         $this->fieldsDataTransferObjectFactory = $fieldsDataTransferObjectFactory;
+        $this->serializer = $serializer;
     }
 
-    /**
-     * @return FieldsDataTransferObject
-     */
+
     public function get()
     {
         $fieldsDataTransferObject = $this->fieldsDataTransferObjectFactory->create();
         $visibleFields = [];
         $notVisibleFields = $this->addressFieldsProvider->get();
 
-        $fieldsConfig = json_decode($this->checkoutConfigurationsProvider->getAddressFieldsForm(), true) ?:[];
+        try {
+            $fieldsConfig = $this->serializer->unserialize($this->checkoutConfigurationsProvider->getAddressFieldsForm());
+        } catch (\InvalidArgumentException $e) {
+            $fieldsConfig = [];
+        }
+
         $sortOrder = 1;
         $isNewRow = true;
         $lastWasWide = true;

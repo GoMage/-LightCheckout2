@@ -28,17 +28,18 @@ define(
 
             placeOrder: function () {
                 var self = this;
-                self.isPlaceOrderButtonClicked(true);
+                self.isPlaceOrderButtonClicked(false); // Save shipping address only 1 time on validation step
 
-                 if (additionalValidators.validate()) {
-                     this.prepareToPlaceOrder().done(function () {
-                         self._placeOrder();
-                     }).fail(function () {
-                         self.isPlaceOrderButtonClicked(false);
-                     });
-                 } else {
-                     self.isPlaceOrderButtonClicked(false);
-                 }
+                if (additionalValidators.validate()) {
+                    self.isPlaceOrderButtonClicked(true);
+                    this.prepareToPlaceOrder().done(function () {
+                        self._placeOrder();
+                    }).fail(function () {
+                        self.isPlaceOrderButtonClicked(false);
+                    });
+                } else {
+                    self.isPlaceOrderButtonClicked(false);
+                }
 
                 return this;
             },

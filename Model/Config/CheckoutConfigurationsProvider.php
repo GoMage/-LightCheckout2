@@ -3,6 +3,9 @@
 namespace GoMage\LightCheckout\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Config\Block\System\Config\Form;
+use Magento\Framework\App\Area;
+use Magento\Framework\App\State;
 
 class CheckoutConfigurationsProvider
 {
@@ -22,6 +25,7 @@ class CheckoutConfigurationsProvider
     const XML_PATH_LIGHT_CHECKOUT_GENERAL_ENABLE_DISCOUNT_CODES = 'gomage_light_checkout_configuration/general/enable_discount_codes';
     const XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_ORDER_SUMMARY_ON_SUCCESS_PAGE = 'gomage_light_checkout_configuration/general/show_order_summary_on_success_page';
     const XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_3_COLUMN_CHECKOUT = 'gomage_light_checkout_configuration/general/show_3_column_checkout';
+    const XML_PATH_LIGHT_CHECKOUT_GENERAL_URL = 'gomage_light_checkout_configuration/general/url';
 
     /**#@-*/
 
@@ -193,7 +197,6 @@ class CheckoutConfigurationsProvider
     /**#@-*/
     // @codingStandardsIgnoreEnd
 
-
     /**#@+
      * Light Checkout configuration section.
      */
@@ -205,11 +208,30 @@ class CheckoutConfigurationsProvider
     private $scopeConfig;
 
     /**
-     * @param ScopeConfigInterface $scopeConfig
+     * @var Form
      */
-    public function __construct(ScopeConfigInterface $scopeConfig)
+    private $configForm;
+
+    /**
+     * @var State
+     */
+    private $state;
+
+    /**
+     * CheckoutConfigurationsProvider constructor.
+     * @param ScopeConfigInterface $scopeConfig
+     * @param Form $configForm
+     * @param State $state
+     */
+    public function __construct(
+        ScopeConfigInterface $scopeConfig,
+        Form $configForm,
+        State $state
+    )
     {
         $this->scopeConfig = $scopeConfig;
+        $this->configForm = $configForm;
+        $this->state = $state;
     }
 
     public function isLightCheckoutEnabled()
@@ -270,6 +292,11 @@ class CheckoutConfigurationsProvider
     public function getIsShown3ColumnCheckout()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_SHOW_3_COLUMN_CHECKOUT,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    public function getLightCheckoutUrl()
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_GENERAL_URL,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getIsShownOrderCommentBlock()
@@ -469,7 +496,11 @@ class CheckoutConfigurationsProvider
 
     public function getAddressFieldsForm()
     {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        if ($this->state->getAreaCode() === Area::AREA_FRONTEND) {
+            return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM,
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        }
+        return $this->configForm->getConfigValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM);
     }
 
     public function getAddressFieldsKeepInside()

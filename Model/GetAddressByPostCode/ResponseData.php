@@ -2,6 +2,8 @@
 
 namespace GoMage\LightCheckout\Model\GetAddressByPostCode;
 
+use GoMage\LightCheckout\Api\Data\GetAddressByPostCode\ResponseDataInterface;
+
 class ResponseData extends \Magento\Framework\DataObject implements ResponseDataInterface
 {
     /**

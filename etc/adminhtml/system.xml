@@ -9,60 +9,75 @@
             <group id="general" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
                    showInStore="1">
                 <label>General</label>
+                <field id="greetings" type="text" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\General\Greetings</frontend_model>
+                </field>
+                <field id="feedback" type="text" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\General\Feedback</frontend_model>
+                </field>
                 <field id="is_enabled" translate="label" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Enable GoMage Light Checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="default_shipping_method" translate="label" type="select" sortOrder="30"
+                <field id="url" translate="label" type="text" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Light Checkout URL Path</label>
+                    <validate>validate-lightcheckout-url</validate>
+                    <comment><![CDATA[<strong style="color:red">Warning:</strong> Do not use URL that already exists
+                    (for example: cms/index/index, checkout/cart etc). <strong style="color:red">Note:</strong> The
+                    default checkout URL will be disabled.]]>
+                    </comment>
+                </field>
+                <field id="default_shipping_method" translate="label" type="select" sortOrder="40"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Default Shipping Method</label>
                     <source_model>GoMage\LightCheckout\Model\Config\Source\ShippingMethods</source_model>
                 </field>
-                <field id="default_payment_method" translate="label" type="select" sortOrder="40"
+                <field id="default_payment_method" translate="label" type="select" sortOrder="50"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Default Payment Method</label>
                     <source_model>GoMage\LightCheckout\Model\Config\Source\PaymentMethods</source_model>
                 </field>
-                <field id="page_title" translate="label" type="text" sortOrder="50"
+                <field id="page_title" translate="label" type="text" sortOrder="60"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Page Title</label>
                 </field>
-                <field id="page_content" translate="label" type="textarea" sortOrder="60"
+                <field id="page_content" translate="label" type="textarea" sortOrder="70"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Page Content</label>
                 </field>
-                <field id="enable_different_shipping_address" translate="label" type="select" sortOrder="70"
+                <field id="enable_different_shipping_address" translate="label" type="select" sortOrder="80"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Different Shipping Address</label>
                     <source_model>GoMage\LightCheckout\Model\Config\Source\EnableCheckboxOptions</source_model>
                 </field>
-                <field id="allow_to_change_qty" translate="label" type="select" sortOrder="80"
+                <field id="allow_to_change_qty" translate="label" type="select" sortOrder="90"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Allow to change Qty</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="allow_to_remove_item_from_checkout" translate="label" type="select" sortOrder="90"
+                <field id="allow_to_remove_item_from_checkout" translate="label" type="select" sortOrder="100"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Allow to Remove Item from Checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="disable_cart" translate="label" type="select" sortOrder="100"
+                <field id="disable_cart" translate="label" type="select" sortOrder="110"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Disable Cart</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="enable_discount_codes" translate="label" type="select" sortOrder="110"
+                <field id="enable_discount_codes" translate="label" type="select" sortOrder="120"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Discount Codes</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="show_order_summary_on_success_page" translate="label" type="select" sortOrder="120"
+                <field id="show_order_summary_on_success_page" translate="label" type="select" sortOrder="130"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Show Order Summary on Success Page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="show_3_column_checkout" translate="label" type="select" sortOrder="130"
+                <field id="show_3_column_checkout" translate="label" type="select" sortOrder="140"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Show 3 Column Checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

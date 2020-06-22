@@ -3,7 +3,7 @@
      data-bind="visible: isNewAddressLinkVisible && addressOptions.length > 0">
                 <span class="action action-toggle" id="add-new-address" data-bind="click: addNewAddressClick">
                     <i class="material-icons">add</i>
-                    <span><!-- ko i18n: 'Add New Address'--><!-- /ko --></span>                    
+                    <span><!-- ko i18n: 'Add New Address'--><!-- /ko --></span>
                 </span>
 </div>
 <!-- /ko -->
@@ -13,7 +13,7 @@
         <!-- ko template: getTemplate() --><!-- /ko -->
     <!--/ko-->
     <!-- ko if: (isCustomerLoggedIn) -->
-    <div class="field choice glc-checkbox glc-checkbox-save-address" data-bind="visible: !isNewAddressLinkVisible() || addressOptions.length == 0">
+    <div class="field choice glc-checkbox glc-checkbox-save-address" data-bind="visible: !isNewAddressLinkVisible()">
         <input type="checkbox" class="checkbox" id="shipping-save-in-address-book" data-bind="checked: saveInAddressBook" />
         <label for="shipping-save-in-address-book">
             <span data-bind="i18n: 'Save New Address to Address Book'"></span>

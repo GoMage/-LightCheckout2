@@ -48,11 +48,15 @@ define(
         return Component.extend({
             defaults: {
                 imports: {
-                    isPlaceOrderButtonClicked: 'checkout.sidebar.placeOrderButton:isPlaceOrderButtonClicked'
+                    isPlaceOrderButtonClicked: 'checkout.sidebar.placeOrderButton:isPlaceOrderButtonClicked',
+                    isAddressSameAsShipping: 'checkout.billingAddress:isAddressSameAsShipping' // for update UI (shipping address block)
                 },
+                exports: {
+                    isAddressSameAsShipping: 'checkout.billingAddress:isAddressSameAsShipping' // for update UI (shipping address block)
+                },
+                isAddressSameAsShipping: ko.observable(),
                 stickySelector: '#maincontent'
             },
-
             addressOptions: addressOptions,
 
             /**
@@ -236,16 +240,6 @@ define(
                         selectShippingAddress(address);
                         this.isNewAddressLinkVisible(true);
                     }
-                }
-            },
-
-            afterRenderShipping: function () {
-                var isAddressSameAsShipping =  $('.glc-switcher.billing-address-same-as-shipping-block' +
-                    ' input[type=checkbox]').is(':checked');
-                if (isAddressSameAsShipping) {
-                    $('#shipping').hide();
-                } else {
-                    $('#shipping').show();
                 }
             },
 

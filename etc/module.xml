@@ -8,6 +8,7 @@
             <module name="Magento_Shipping"/>
             <module name="Magento_Tax"/>
             <module name="Magento_SalesRule"/>
+            <module name="Magento_Config"/>
             <module name="GoMage_Core"/>
         </sequence>
     </module>

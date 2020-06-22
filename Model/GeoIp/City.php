@@ -30,7 +30,7 @@
  * Changelog:
  *
  * 2010-07-14   GoMage (https://www.gomage.com)
- *              Changed for the GoMage LightCheckout Extension  
+ *              Changed for the GoMage LightCheckout Extension
  */
 
 
@@ -42,7 +42,7 @@ class City
     const FULL_RECORD_LENGTH = 50;
     static function getrecordwithdnsservice($str)
     {
-    
+
         $record = new Dnsrecord;
         $keyvalue = split(";", $str);
         foreach ($keyvalue as $keyvalue2) {
@@ -92,18 +92,18 @@ class City
         if ($seek_country == $gi->databaseSegments) {
             return null;
         }
-  
+
           // workaround php's broken substr, strpos, etc handling with
           // mbstring.func_overload and mbstring.internal_encoding
           $enc = mb_internal_encoding();
           mb_internal_encoding('ISO-8859-1');
 
           $record_pointer = $seek_country + (2 * $gi->record_length - 1) * $gi->databaseSegments;
-  
+
         if ($gi->flags & Core::GEOIP_MEMORY_CACHE) {
             $record_buf = substr($gi->memory_buffer, $record_pointer, self::FULL_RECORD_LENGTH);
         } elseif ($gi->flags & Core::GEOIP_SHARED_MEMORY) {
-            $record_buf = @shmop_read($gi->shmid, $record_pointer, self::FULL_RECORD_LENGTH);
+            $record_buf = shmop_read($gi->shmid, $record_pointer, self::FULL_RECORD_LENGTH);
         } else {
             fseek($gi->filehandle, $record_pointer, SEEK_SET);
             $record_buf = fread($gi->filehandle, self::FULL_RECORD_LENGTH);

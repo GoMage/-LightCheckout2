@@ -73,6 +73,19 @@ define([
         },
 
         /**
+         * Resolves an initial state of a login form.
+         *
+         * @returns {Boolean} - initial visibility state.
+         */
+        resolveInitialPasswordVisibility: function () {
+           if (checkoutData.getInputFieldEmailValue() !== '') {
+                return checkoutData.getInputFieldEmailValue() === checkoutData.getCheckedEmailValue();
+           }
+
+            return false;
+        },
+
+        /**
          * Check email existing.
          */
         checkEmailAvailability: function () {
