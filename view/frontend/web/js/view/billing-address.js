@@ -22,7 +22,8 @@ define(
         'Magento_Checkout/js/action/set-billing-address',
         'Magento_Checkout/js/action/create-shipping-address',
         'Magento_Customer/js/model/address-list',
-        'Magento_Checkout/js/action/create-billing-address'
+        'Magento_Checkout/js/action/create-billing-address',
+        './shipping-state'
     ],
     function (
         ko,
@@ -47,7 +48,8 @@ define(
         setBillingAddressAction,
         createShippingAddress,
         addressList,
-        createBillingAddress
+        createBillingAddress,
+        shippingState
     ) {
         'use strict';
 
@@ -328,12 +330,19 @@ define(
             /**
              * @inheritDoc
              */
-            canUseShippingAddress: ko.computed(function () {
+            calculateShippingState: ko.computed(function () {
                 var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
-
-                return !quote.isVirtual() && quote.shippingAddress() && quote.shippingAddress().canUseForBilling()
+                shippingState.canUseShippingAddress = !quote.isVirtual() && quote.shippingAddress()
+                    && quote.shippingAddress().canUseForBilling()
                     && enableDifferentShippingAddress;
             }),
+
+            /**
+             * @returns {boolean}
+             */
+            canUseShippingAddress: function () {
+                return shippingState.canUseShippingAddress;
+            },
 
             useShippingAddress: function () {
                 var addressData;

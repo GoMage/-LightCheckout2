@@ -8,7 +8,9 @@ define(
         'Magento_Checkout/js/model/payment-service',
         'Magento_Checkout/js/model/shipping-service',
         'GoMage_LightCheckout/js/model/resource-url-manager',
-        'Magento_Customer/js/customer-data'
+        'Magento_Customer/js/customer-data',
+        'GoMage_LightCheckout/js/view/shipping-state',
+        'uiRegistry'
     ],
     function (
         quote,
@@ -19,9 +21,16 @@ define(
         paymentService,
         shippingService,
         resourceUrlManager,
-        customerData
+        customerData,
+        shippingState,
+        registry
     ) {
         'use strict';
+
+        function updateShippingBlocks (component) {
+            component.visible(false);
+            shippingState.canUseShippingAddress = false;
+        }
 
         return function (itemId) {
             var serviceUrl = resourceUrlManager.getUrlForRemoveItem(quote.getQuoteId(), itemId);
@@ -39,8 +48,11 @@ define(
                     }
                     quote.setTotals(response.totals);
                     paymentService.setPaymentMethods(methodConverter(response.payment_methods));
-                    if (response.shipping_methods && !quote.isVirtual()) {
+                    var responseQuotetype = 'virtual';
+                    if (response.shipping_methods && responseQuotetype !== 'virtual') {
                         shippingService.setShippingRates(response.shipping_methods);
+                            } else if ( responseQuotetype === 'virtual') {
+                        registry.get("checkout.shippingAddress", updateShippingBlocks);
                     }
                 }
             ).fail(

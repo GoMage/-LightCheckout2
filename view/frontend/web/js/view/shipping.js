@@ -18,7 +18,8 @@ define(
         'GoMage_LightCheckout/js/action/update-sections',
         'GoMage_LightCheckout/js/model/address/auto-complete-register',
         'rjsResolver',
-        'Magento_Checkout/js/action/create-shipping-address'
+        'Magento_Checkout/js/action/create-shipping-address',
+        './shipping-state'
     ],
     function (
         ko,
@@ -39,7 +40,8 @@ define(
         updateSectionAction,
         autoCompleteRegister,
         rjsResolver,
-        createShippingAddress
+        createShippingAddress,
+        shippingState
     ) {
         'use strict';
         var addressOptions = addressList().filter(function (address) {
@@ -147,13 +149,10 @@ define(
             },
 
             /**
-             * @inheritDoc
+             * @returns {boolean}
              */
             canUseShippingAddress: ko.computed(function () {
-                var enableDifferentShippingAddress = parseInt(window.checkoutConfig.general.enableDifferentShippingAddress);
-
-                return !quote.isVirtual() && quote.shippingAddress() && quote.shippingAddress().canUseForBilling()
-                    && enableDifferentShippingAddress;
+                return shippingState.canUseShippingAddress;
             }),
 
             /**
