@@ -8,7 +8,9 @@ define(
         'Magento_Checkout/js/model/payment-service',
         'GoMage_LightCheckout/js/model/resource-url-manager',
         'Magento_Checkout/js/model/shipping-service',
-        'Magento_Customer/js/customer-data'
+        'Magento_Customer/js/customer-data',
+        '../view/shipping-state',
+        'uiRegistry'
     ],
     function (
         quote,
@@ -19,7 +21,9 @@ define(
         paymentService,
         resourceUrlManager,
         shippingService,
-        customerData
+        customerData,
+        shippingState,
+        registry
     ) {
         'use strict';
 
@@ -47,8 +51,10 @@ define(
                     }
                     quote.setTotals(response.totals);
                     paymentService.setPaymentMethods(methodConverter(response.payment_methods));
-                    if (response.shipping_methods && !quote.isVirtual()) {
+                    if (response.shipping_methods && response.quote_type !== 'virtual') {
                         shippingService.setShippingRates(response.shipping_methods);
+                    } else if (response.quote_type === 'virtual') {
+                        registry.get("checkout.shippingAddress", shippingState.updateShippingBlocks);
                     }
                 }
             ).fail(

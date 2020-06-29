@@ -167,7 +167,7 @@ define(
              * @returns {boolean}
              */
             validate: function () {
-                if (quote.isVirtual()) {
+                if (!shippingState.canUseShippingAddress) {
                     return true;
                 }
 

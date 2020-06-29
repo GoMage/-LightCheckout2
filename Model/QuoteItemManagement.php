@@ -172,6 +172,7 @@ class QuoteItemManagement implements QuoteItemManagementInterface
             }
             $responseData->setPaymentMethods($this->paymentMethodManagement->getList($quote->getId()));
             $responseData->setTotals($this->cartTotalsRepository->get($quote->getId()));
+            $responseData->setQuoteType($quote);
         }
 
         return $responseData;

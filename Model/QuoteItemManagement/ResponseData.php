@@ -3,6 +3,7 @@
 namespace GoMage\LightCheckout\Model\QuoteItemManagement;
 
 use GoMage\LightCheckout\Api\Data\QuoteItemManagement\ResponseDataInterface;
+use Magento\Quote\Model\Quote;
 
 /**
  * Response data for checkout after update the quote.
@@ -74,6 +75,14 @@ class ResponseData extends \Magento\Framework\DataObject implements ResponseData
     }
 
     /**
+     * @return mixed
+     */
+    public function getError()
+    {
+        return $this->getData(self::ERROR);
+    }
+
+    /**
      * @param $error
      * @return ResponseData|mixed
      */
@@ -84,10 +93,20 @@ class ResponseData extends \Magento\Framework\DataObject implements ResponseData
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getError()
+    public function getQuoteType()
     {
-        return $this->getData(self::ERROR);
+        return $this->getData(self::QUOTE_TYPE);
+    }
+
+    /**
+     * @param Quote $quote
+     * @return $this
+     */
+    public function setQuoteType(Quote $quote)
+    {
+        $quoteType = $quote->getData('is_virtual') ? 'virtual' : 'not-virtual';
+        return $this->setData(self::QUOTE_TYPE, $quoteType);
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Customer:etc/sections.xsd">
+    <action name="rest/*/V1/light_checkout/guest-carts/*/quote-items/*">
+        <section name="cart"/>
+    </action>
+    <action name="rest/*/V1/light_checkout/carts/mine/quote-items/*">
+        <section name="cart"/>
+    </action>
+    <action name="rest/*/V1/light_checkout/guest-carts/*/quote-items">
+        <section name="cart"/>
+    </action>
+    <action name="rest/*/V1/light_checkout/carts/mine/quote-items">
+        <section name="cart"/>
+    </action>
+    <action name="rest/*/V1/light_checkout/check-vat-number">
+        <section name="cart"/>
+    </action>
+    <action name="rest/*/V1/light_checkout/guest-carts/*/update-sections">
+        <section name="cart"/>
+    </action>
+    <action name="rest/*/V1/light_checkout/carts/mine/update-sections">
+        <section name="cart"/>
+    </action>
+    <action name="rest/*/V1/light_checkout/get-address-by-zip-code">
+        <section name="checkout-data"/>
+    </action>
+</config>

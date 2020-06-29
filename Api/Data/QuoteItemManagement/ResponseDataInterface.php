@@ -2,6 +2,8 @@
 
 namespace GoMage\LightCheckout\Api\Data\QuoteItemManagement;
 
+use Magento\Quote\Model\Quote;
+
 interface ResponseDataInterface
 {
     const SHIPPING_METHODS = 'shipping_methods';
@@ -9,6 +11,7 @@ interface ResponseDataInterface
     const TOTALS = 'totals';
     const REDIRECT_URL = 'redirect_url';
     const ERROR = 'error';
+    const QUOTE_TYPE = 'quote_type';
 
     /**
      * Get shipping methods.
@@ -75,13 +78,24 @@ interface ResponseDataInterface
     public function setRedirectUrl($url);
 
     /**
+     * @return mixed
+     */
+    public function getError();
+
+    /**
      * @param $error
      * @return mixed
      */
     public function setError($error);
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getError();
+    public function getQuoteType();
+
+    /**
+     * @param Quote $quote
+     * @return $this
+     */
+    public function setQuoteType(Quote $quote);
 }

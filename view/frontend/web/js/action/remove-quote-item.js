@@ -9,7 +9,7 @@ define(
         'Magento_Checkout/js/model/shipping-service',
         'GoMage_LightCheckout/js/model/resource-url-manager',
         'Magento_Customer/js/customer-data',
-        'GoMage_LightCheckout/js/view/shipping-state',
+        '../view/shipping-state',
         'uiRegistry'
     ],
     function (
@@ -27,11 +27,6 @@ define(
     ) {
         'use strict';
 
-        function updateShippingBlocks (component) {
-            component.visible(false);
-            shippingState.canUseShippingAddress = false;
-        }
-
         return function (itemId) {
             var serviceUrl = resourceUrlManager.getUrlForRemoveItem(quote.getQuoteId(), itemId);
 
@@ -47,12 +42,12 @@ define(
                         return;
                     }
                     quote.setTotals(response.totals);
-                    paymentService.setPaymentMethods(methodConverter(response.payment_methods));
-                    var responseQuotetype = 'virtual';
-                    if (response.shipping_methods && responseQuotetype !== 'virtual') {
+                    paymentService.setPaymentMethods(methodConverter(response.payment_methods)); // это вызывает ошибку
+                    // https://lc2.com/rest/default/V1/guest-carts/SYfaX0YeLyMgBab6VeK047M5qC7Kj32J/set-payment-information
+                    if (response.shipping_methods && response.quote_type !== 'virtual') {
                         shippingService.setShippingRates(response.shipping_methods);
-                            } else if ( responseQuotetype === 'virtual') {
-                        registry.get("checkout.shippingAddress", updateShippingBlocks);
+                    } else if (response.quote_type === 'virtual') {
+                        registry.get("checkout.shippingAddress", shippingState.updateShippingBlocks);
                     }
                 }
             ).fail(
