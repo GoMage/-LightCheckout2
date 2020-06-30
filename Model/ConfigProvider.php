@@ -5,14 +5,13 @@ namespace GoMage\LightCheckout\Model;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\DeliveryDateConfigProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\PasswordSettingProvider;
-use GoMage\LightCheckout\Model\ConfigProvider\PaymentMethodsListProvider;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Customer\Model\Url;
+use Magento\Directory\Helper\Data as DirectoryHelper;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Cart\ShippingMethodConverter;
-use Magento\Directory\Helper\Data as DirectoryHelper;
 use Magento\Quote\Model\Quote\TotalsCollector;
 
 class ConfigProvider implements ConfigProviderInterface
@@ -21,11 +20,6 @@ class ConfigProvider implements ConfigProviderInterface
      * @var CheckoutSession
      */
     private $checkoutSession;
-
-    /**
-     * @var PaymentMethodsListProvider
-     */
-    private $paymentMethodsListProvider;
 
     /**
      * @var CheckoutConfigurationsProvider
@@ -68,7 +62,7 @@ class ConfigProvider implements ConfigProviderInterface
     private $url;
 
     /**
-     * @param PaymentMethodsListProvider $paymentMethodsListProvider
+     * ConfigProvider constructor.
      * @param CheckoutSession $session
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param PaymentMethodManagementInterface $paymentMethodManagement
@@ -80,7 +74,6 @@ class ConfigProvider implements ConfigProviderInterface
      * @param Url $url
      */
     public function __construct(
-        PaymentMethodsListProvider $paymentMethodsListProvider,
         CheckoutSession $session,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
         PaymentMethodManagementInterface $paymentMethodManagement,
@@ -91,7 +84,6 @@ class ConfigProvider implements ConfigProviderInterface
         DeliveryDateConfigProvider $deliveryDateConfigProvider,
         Url $url
     ) {
-        $this->paymentMethodsListProvider = $paymentMethodsListProvider;
         $this->checkoutSession = $session;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
         $this->paymentMethodManagement = $paymentMethodManagement;
@@ -104,13 +96,12 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function getConfig()
     {
         $quoteId = $this->checkoutSession->getQuoteId();
         $config = [
-            'paymentMethods' => $this->paymentMethodsListProvider->get($quoteId),
             'general' => $this->getGeneralConfig(),
             'passwordSettings' => $this->passwordSettingProvider->get(),
             'registration' => $this->getRegistrationConfig(),
@@ -215,8 +206,7 @@ class ConfigProvider implements ConfigProviderInterface
     {
         return [
             'pageContent' => $this->checkoutConfigurationsProvider->getPageContent(),
-            'enableDifferentShippingAddress' =>
-                $this->checkoutConfigurationsProvider->getEnableDifferentShippingAddress(),
+            'enableDifferentShippingAddress' => $this->checkoutConfigurationsProvider->getEnableDifferentShippingAddress(),
             'defaultPaymentMethod' => $this->getDefaultPaymentMethod($this->checkoutSession->getQuote()),
             'defaultShippingMethod' => $this->getDefaultShippingMethod($this->checkoutSession->getQuote()),
         ];
