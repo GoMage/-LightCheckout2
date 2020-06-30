@@ -42,8 +42,7 @@ define(
                         return;
                     }
                     quote.setTotals(response.totals);
-                    paymentService.setPaymentMethods(methodConverter(response.payment_methods)); // это вызывает ошибку
-                    // https://lc2.com/rest/default/V1/guest-carts/SYfaX0YeLyMgBab6VeK047M5qC7Kj32J/set-payment-information
+                    paymentService.setPaymentMethods(methodConverter(response.payment_methods));
                     if (response.shipping_methods && response.quote_type !== 'virtual') {
                         shippingService.setShippingRates(response.shipping_methods);
                     } else if (response.quote_type === 'virtual') {
