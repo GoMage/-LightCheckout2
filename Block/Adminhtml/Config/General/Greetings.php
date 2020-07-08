@@ -26,7 +26,7 @@ class Greetings extends Field
     public function getModuleInfoHtml()
     {
         $message = 'Thank you for choosing <a href="https://www.gomage.com/" target="_blank" style="color:#57d68d;">
-                    <b>GoMage</b></a>! Our <a href="https://wiki.gomage.com/hc/en-us/" target="_blank" style="color:#57d68d;">
+                    <b>GoMage</b></a>! Our <a href="https://wiki.gomage.com/hc/en-us/categories/360001225231-LightCheckout-M2" target="_blank" style="color:#57d68d;">
                     <b>online documentation</b></a>  is ready to help you in your journey to success!';
 
         $html = '<tr><td class="label" colspan="4" style="text-align: left;">
