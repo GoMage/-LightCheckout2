@@ -62,6 +62,7 @@ define([
                         if (!placeOrderButton.isPlaceOrderButtonClicked()) {
                             quote.setTotals(response.totals);
                             paymentService.setPaymentMethods(methodConverter(response['payment_methods']));
+                            fullScreenLoader.stopLoader();
                         }
                         fullScreenLoader.stopLoader();
                     });
