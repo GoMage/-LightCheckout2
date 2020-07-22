@@ -31,50 +31,53 @@ define([
          *
          * @return {jQuery.Deferred}
          */
-        originalObject.saveShippingInformation = function () {
-            if (!quote.shippingMethod()) return; // if shipping method is not needed
 
-            var payload;
+        var isEnable = false;
+        if (isEnable) {
+            originalObject.saveShippingInformation = function () {
+                if (!quote.shippingMethod()) return; // if shipping method is not needed
 
-            if (!quote.billingAddress() && quote.shippingAddress().canUseForBilling()) {
-                selectBillingAddressAction(quote.shippingAddress());
-            }
+                var payload;
 
-            payload = {
-                addressInformation: {
-                    'shipping_address': quote.shippingAddress(),
-                    'billing_address': quote.billingAddress(),
-                    'shipping_method_code': quote.shippingMethod()['method_code'],
-                    'shipping_carrier_code': quote.shippingMethod()['carrier_code']
+                if (!quote.billingAddress() && quote.shippingAddress().canUseForBilling()) {
+                    selectBillingAddressAction(quote.shippingAddress());
                 }
-            };
 
-            payloadExtender(payload);
+                payload = {
+                    addressInformation: {
+                        'shipping_address': quote.shippingAddress(),
+                        'billing_address': quote.billingAddress(),
+                        'shipping_method_code': quote.shippingMethod()['method_code'],
+                        'shipping_carrier_code': quote.shippingMethod()['carrier_code']
+                    }
+                };
 
-            fullScreenLoader.startLoader();
+                payloadExtender(payload);
 
-            return storage.post(
-                resourceUrlManager.getUrlForSetShippingInformation(quote),
-                JSON.stringify(payload)
-            ).done(
-                function (response) {
-                    uiRegistry.get("checkout.sidebar.placeOrderButton", function (placeOrderButton) {
-                        if (!placeOrderButton.isPlaceOrderButtonClicked()) {
-                            quote.setTotals(response.totals);
-                            paymentService.setPaymentMethods(methodConverter(response['payment_methods']));
-                        }
+                fullScreenLoader.startLoader();
+
+                return storage.post(
+                    resourceUrlManager.getUrlForSetShippingInformation(quote),
+                    JSON.stringify(payload)
+                ).done(
+                    function (response) {
+                        uiRegistry.get("checkout.sidebar.placeOrderButton", function (placeOrderButton) {
+                            if (!placeOrderButton.isPlaceOrderButtonClicked()) {
+                                quote.setTotals(response.totals);
+                                paymentService.setPaymentMethods(methodConverter(response['payment_methods']));
+                            }
+                            fullScreenLoader.stopLoader();
+                        });
                         fullScreenLoader.stopLoader();
-                    });
-                    fullScreenLoader.stopLoader();
-                }
-            ).fail(
-                function (response) {
-                    errorProcessor.process(response);
-                    fullScreenLoader.stopLoader();
-                }
-            );
-        };
-
+                    }
+                ).fail(
+                    function (response) {
+                        errorProcessor.process(response);
+                        fullScreenLoader.stopLoader();
+                    }
+                );
+            };
+        }
         return originalObject;
     }
 });

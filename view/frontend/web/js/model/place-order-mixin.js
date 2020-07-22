@@ -7,15 +7,19 @@ define(
         'use strict';
 
         return function (placeOrderServiceFunction) {
-            return wrapper.wrap(placeOrderServiceFunction, function (
-                originalPlaceOrderServiceFunction, serviceUrl, payload, messageContainer
-            ) {
-                return originalPlaceOrderServiceFunction(serviceUrl, payload, messageContainer).fail(
-                    function (response) {
-                        fullScreenLoader.stopLoader();
-                    }
-                );
-            });
+            var isEnable = false;
+            if (isEnable) {
+                return wrapper.wrap(placeOrderServiceFunction, function (
+                    originalPlaceOrderServiceFunction, serviceUrl, payload, messageContainer
+                ) {
+                    return originalPlaceOrderServiceFunction(serviceUrl, payload, messageContainer).fail(
+                        function (response) {
+                            fullScreenLoader.stopLoader();
+                        }
+                    );
+                });
+            }
+            return placeOrderServiceFunction
         };
     }
 );
