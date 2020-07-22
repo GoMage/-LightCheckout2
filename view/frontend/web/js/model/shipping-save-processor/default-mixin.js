@@ -9,7 +9,8 @@ define([
     'Magento_Checkout/js/model/full-screen-loader',
     'Magento_Checkout/js/action/select-billing-address',
     'Magento_Checkout/js/model/shipping-save-processor/payload-extender',
-    'uiRegistry'
+    'uiRegistry',
+    'GoMage_LightCheckout/js/is-light-checkout-enable'
 ], function (
     ko,
     quote,
@@ -21,7 +22,8 @@ define([
     fullScreenLoader,
     selectBillingAddressAction,
     payloadExtender,
-    uiRegistry
+    uiRegistry,
+    isModuleEnable
 ) {
     'use strict';
 
@@ -31,8 +33,7 @@ define([
          *
          * @return {jQuery.Deferred}
          */
-
-        var isEnable = false;
+        var isEnable = Number(isModuleEnable.getIsLightCheckoutEnable);
         if (isEnable) {
             originalObject.saveShippingInformation = function () {
                 if (!quote.shippingMethod()) return; // if shipping method is not needed

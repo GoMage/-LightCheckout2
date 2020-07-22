@@ -1,13 +1,14 @@
 define(
     [
         'mage/utils/wrapper',
-        'Magento_Checkout/js/model/full-screen-loader'
+        'Magento_Checkout/js/model/full-screen-loader',
+        'GoMage_LightCheckout/js/is-light-checkout-enable'
     ],
-    function (wrapper, fullScreenLoader) {
+    function (wrapper, fullScreenLoader, isModuleEnable) {
         'use strict';
 
         return function (placeOrderServiceFunction) {
-            var isEnable = false;
+            var isEnable = Number(isModuleEnable.getIsLightCheckoutEnable);
             if (isEnable) {
                 return wrapper.wrap(placeOrderServiceFunction, function (
                     originalPlaceOrderServiceFunction, serviceUrl, payload, messageContainer

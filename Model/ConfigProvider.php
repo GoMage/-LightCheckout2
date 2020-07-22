@@ -111,6 +111,7 @@ class ConfigProvider implements ConfigProviderInterface
             'addressFields' => $this->getAddressFieldsConfig(),
             'mandatorySettings' => $this->getMandatorySettings(),
             'numberProductInCheckout' => $this->getProductNumberInCheckoutSettings(),
+            'isLightCheckoutEnable' => $this->isLightCheckoutEnable(),
         ];
 
         return $config;
@@ -276,5 +277,16 @@ class ConfigProvider implements ConfigProviderInterface
             'hideProducts' => (bool)$this->checkoutConfigurationsProvider->getIsHidedNumberOfProducts(),
             'numberOfProducts' => $this->checkoutConfigurationsProvider->getNumberOfProductsVisibleInCheckout(),
         ];
+    }
+
+    /**
+     * @return array
+     */
+    private function isLightCheckoutEnable()
+    {
+        return [
+            'enabled' => $this->checkoutConfigurationsProvider->isLightCheckoutEnabled(),
+        ];
+//        return $this->checkoutConfigurationsProvider->isLightCheckoutEnabled();
     }
 }

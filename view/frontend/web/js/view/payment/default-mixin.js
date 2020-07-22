@@ -1,13 +1,14 @@
 define(
     [
         'uiRegistry',
-        'underscore'
+        'underscore',
+        'GoMage_LightCheckout/js/is-light-checkout-enable'
     ],
-    function (uiRegistry, _) {
+    function (uiRegistry, _,isModuleEnable) {
         'use strict';
 
         return function (paymentDefault) {
-            var isEnable = false;
+            var isEnable = Number(isModuleEnable.getIsLightCheckoutEnable);
             if (isEnable) {
                 return paymentDefault.extend({
                     initChildren: function () {
