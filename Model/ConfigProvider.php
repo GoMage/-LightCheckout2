@@ -287,6 +287,5 @@ class ConfigProvider implements ConfigProviderInterface
         return [
             'enabled' => $this->checkoutConfigurationsProvider->isLightCheckoutEnabled(),
         ];
-//        return $this->checkoutConfigurationsProvider->isLightCheckoutEnabled();
     }
 }
