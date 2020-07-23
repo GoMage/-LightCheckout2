@@ -33,7 +33,7 @@ define([
          *
          * @return {jQuery.Deferred}
          */
-        var isEnable = Number(isModuleEnable.getIsLightCheckoutEnable);
+        var isEnable = isModuleEnable.getIsLightCheckoutEnable;
         if (isEnable) {
             originalObject.saveShippingInformation = function () {
                 if (!quote.shippingMethod()) return; // if shipping method is not needed

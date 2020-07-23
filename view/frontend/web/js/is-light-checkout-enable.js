@@ -1,6 +1,6 @@
 define([], function () {
     'use strict';
-    var isLightCheckoutEnable = window.checkoutConfig.isLightCheckoutEnable.enabled;
+    var isLightCheckoutEnable = window.checkoutConfig.isLightCheckoutEnable;
     return {
         getIsLightCheckoutEnable: isLightCheckoutEnable,
     }

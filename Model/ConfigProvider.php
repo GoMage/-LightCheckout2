@@ -13,6 +13,9 @@ use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Cart\ShippingMethodConverter;
 use Magento\Quote\Model\Quote\TotalsCollector;
+use GoMage\Core\Helper\Data as CoreHelper;
+use GoMage\LightCheckout\Model\IsEnableLightCheckoutForDevice;
+use GoMage\LightCheckout\Setup\InstallData;
 
 class ConfigProvider implements ConfigProviderInterface
 {
@@ -62,6 +65,16 @@ class ConfigProvider implements ConfigProviderInterface
     private $url;
 
     /**
+     * @var CoreHelper
+     */
+    private $helper;
+
+    /**
+     * @var IsEnableLightCheckoutForDevice
+     */
+    private $isEnableLightCheckoutForDevice;
+
+    /**
      * ConfigProvider constructor.
      * @param CheckoutSession $session
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
@@ -72,6 +85,8 @@ class ConfigProvider implements ConfigProviderInterface
      * @param PasswordSettingProvider $passwordSettingProvider
      * @param DeliveryDateConfigProvider $deliveryDateConfigProvider
      * @param Url $url
+     * @param CoreHelper $helper
+     * @param IsEnableLightCheckoutForDevice $isEnableLightCheckoutForDevice
      */
     public function __construct(
         CheckoutSession $session,
@@ -82,7 +97,9 @@ class ConfigProvider implements ConfigProviderInterface
         TotalsCollector $totalsCollector,
         PasswordSettingProvider $passwordSettingProvider,
         DeliveryDateConfigProvider $deliveryDateConfigProvider,
-        Url $url
+        Url $url,
+        CoreHelper $helper,
+        IsEnableLightCheckoutForDevice $isEnableLightCheckoutForDevice
     ) {
         $this->checkoutSession = $session;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
@@ -93,6 +110,8 @@ class ConfigProvider implements ConfigProviderInterface
         $this->passwordSettingProvider = $passwordSettingProvider;
         $this->deliveryDateConfigProvider = $deliveryDateConfigProvider;
         $this->url = $url;
+        $this->helper = $helper;
+        $this->isEnableLightCheckoutForDevice = $isEnableLightCheckoutForDevice;
     }
 
     /**
@@ -280,12 +299,18 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * @return array
+     * @return bool
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     private function isLightCheckoutEnable()
     {
-        return [
-            'enabled' => $this->checkoutConfigurationsProvider->isLightCheckoutEnabled(),
-        ];
+        return $this->helper->isA(InstallData::MODULE_NAME)
+            && $this->checkoutConfigurationsProvider->isLightCheckoutEnabled()
+            && $this->isEnableLightCheckoutForDevice->execute();
+
+//        return [
+//            'enabled' => $response,
+//        ];
     }
 }
