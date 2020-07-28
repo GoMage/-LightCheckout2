@@ -122,6 +122,7 @@ class ConfigProvider implements ConfigProviderInterface
                 'addressFields' => $this->getAddressFieldsConfig(),
                 'mandatorySettings' => $this->getMandatorySettings(),
                 'numberProductInCheckout' => $this->getProductNumberInCheckoutSettings(),
+                'isLightCheckoutEnable' => true,
             ];
         }
         return $config;

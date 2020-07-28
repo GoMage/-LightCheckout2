@@ -8,7 +8,7 @@ define(
         'use strict';
 
         return function (placeOrderServiceFunction) {
-            var isEnable = Number(isModuleEnable.getIsLightCheckoutEnable);
+            var isEnable = isModuleEnable.getIsLightCheckoutEnable;
             if (isEnable) {
                 return wrapper.wrap(placeOrderServiceFunction, function (
                     originalPlaceOrderServiceFunction, serviceUrl, payload, messageContainer

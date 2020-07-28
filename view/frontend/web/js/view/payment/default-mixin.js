@@ -8,7 +8,7 @@ define(
         'use strict';
 
         return function (paymentDefault) {
-            var isEnable = Number(isModuleEnable.getIsLightCheckoutEnable);
+            var isEnable = isModuleEnable.getIsLightCheckoutEnable;
             if (isEnable) {
                 return paymentDefault.extend({
                     initChildren: function () {

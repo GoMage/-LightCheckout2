@@ -2,6 +2,7 @@
 
 namespace GoMage\LightCheckout\Plugin\Quote;
 
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Customer\Api\AddressRepositoryInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Api\Data\AddressInterface;
@@ -21,15 +22,23 @@ class SaveShippingAddressBeforeEstimate
     private $addressRepository;
 
     /**
+     * @var IsEnableLightCheckout
+     */
+    private $isEnableLightCheckout;
+
+    /**
      * @param CartRepositoryInterface $quoteRepository
      * @param AddressRepositoryInterface $addressRepository
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      */
     public function __construct(
         CartRepositoryInterface $quoteRepository,
-        AddressRepositoryInterface $addressRepository
+        AddressRepositoryInterface $addressRepository,
+        IsEnableLightCheckout $isEnableLightCheckout
     ) {
         $this->quoteRepository = $quoteRepository;
         $this->addressRepository = $addressRepository;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
@@ -48,8 +57,9 @@ class SaveShippingAddressBeforeEstimate
         $cartId,
         EstimateAddressInterface $address
     ) {
-        $this->saveShippingAddress($cartId, $address);
-
+        if ($this->isEnableLightCheckout->execute()) {
+            $this->saveShippingAddress($cartId, $address);
+        }
         return $proceed($cartId, $address);
     }
 
@@ -69,8 +79,9 @@ class SaveShippingAddressBeforeEstimate
         $cartId,
         AddressInterface $address
     ) {
-        $this->saveShippingAddress($cartId, $address);
-
+        if ($this->isEnableLightCheckout->execute()) {
+            $this->saveShippingAddress($cartId, $address);
+        }
         return $proceed($cartId, $address);
     }
 
@@ -90,9 +101,10 @@ class SaveShippingAddressBeforeEstimate
         $cartId,
         $addressId
     ) {
-        $address = $this->addressRepository->getById($addressId);
-        $this->saveShippingAddress($cartId, $address);
-
+        if ($this->isEnableLightCheckout->execute()) {
+            $address = $this->addressRepository->getById($addressId);
+            $this->saveShippingAddress($cartId, $address);
+        }
         return $proceed($cartId, $addressId);
     }
 

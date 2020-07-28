@@ -3,6 +3,7 @@
 namespace GoMage\LightCheckout\Plugin\Quote;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Quote\Model\ChangeQuoteControl;
 use Magento\Quote\Model\Quote;
 
@@ -18,12 +19,19 @@ class SimulateIsAllowedWhenCreatingCustomer
     private $checkoutConfigurationsProvider;
 
     /**
+     * @var IsEnableLightCheckout
+     */
+    private $isEnableLightCheckout;
+
+    /**
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      */
     public function __construct(
-        CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+        CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
+        IsEnableLightCheckout $isEnableLightCheckout
     ) {
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
@@ -38,13 +46,14 @@ class SimulateIsAllowedWhenCreatingCustomer
         \Closure $proceed,
         Quote $quote
     ) {
-        $checkoutMode = (int)$this->checkoutConfigurationsProvider->getCheckoutMode();
-        $isLightCheckoutEnable = $this->checkoutConfigurationsProvider->isLightCheckoutEnabled();
+        if ($this->isEnableLightCheckout->execute()) {
+            $checkoutMode = (int)$this->checkoutConfigurationsProvider->getCheckoutMode();
+            $isLightCheckoutEnable = $this->checkoutConfigurationsProvider->isLightCheckoutEnabled();
 
-        if ($checkoutMode === 0 && $isLightCheckoutEnable) {
-            return true;
+            if ($checkoutMode === 0 && $isLightCheckoutEnable) {
+                return true;
+            }
         }
-
         return $proceed($quote);
     }
 }

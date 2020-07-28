@@ -3,6 +3,7 @@
 namespace GoMage\LightCheckout\Plugin\Customer\Model\Attribute\Data;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Customer\Model\Attribute\Data\Postcode;
 
 /**
@@ -17,13 +18,21 @@ class ValidatePostcode
     private $checkoutConfigurationsProvider;
 
     /**
+     * @var IsEnableLightCheckout
+     */
+    private $isEnableLightCheckout;
+
+    /**
      * ValidatePostcode constructor.
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      */
     public function __construct(
-        CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+        CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
+        IsEnableLightCheckout $isEnableLightCheckout
     ) {
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
@@ -38,18 +47,20 @@ class ValidatePostcode
         $result,
         $value
     ) {
-        $errors = [];
+        if ($this->isEnableLightCheckout->execute()) {
+            $errors = [];
 
-        $isZipRequired = (bool) $this->checkoutConfigurationsProvider->getIsRequiredAddressFieldZipPostalCode();
-        if ($isZipRequired && !\Zend_Validate::is($value, 'NotEmpty')
-        ) {
-            $errors[] = __('Please enter the zip/postal code.');
+            $isZipRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldZipPostalCode();
+            if ($isZipRequired && !\Zend_Validate::is($value, 'NotEmpty')
+            ) {
+                $errors[] = __('Please enter the zip/postal code.');
+            }
+
+            if (empty($errors)) {
+                return true;
+            }
+
+            return $errors;
         }
-
-        if (empty($errors)) {
-            return true;
-        }
-
-        return $errors;
     }
 }

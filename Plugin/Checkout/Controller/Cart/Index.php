@@ -2,9 +2,8 @@
 
 namespace GoMage\LightCheckout\Plugin\Checkout\Controller\Cart;
 
-use GoMage\Core\Helper\Data;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
-use GoMage\LightCheckout\Setup\InstallData;
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Checkout\Controller\Cart\Index as CartIndex;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
@@ -22,23 +21,23 @@ class Index
     private $checkoutConfigurationsProvider;
 
     /**
-     * @var Data
+     * @var IsEnableLightCheckout
      */
-    private $helper;
+    private $isEnableLightCheckout;
 
     /**
      * @param ResultFactory $resultFactory
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
-     * @param Data $helper
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      */
     public function __construct(
         ResultFactory $resultFactory,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
-        Data $helper
+        IsEnableLightCheckout $isEnableLightCheckout
     ) {
         $this->resultFactory = $resultFactory;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
-        $this->helper = $helper;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
@@ -52,8 +51,7 @@ class Index
      */
     public function aroundExecute(CartIndex $subject, \Closure $proceed)
     {
-        if ($this->helper->isA(InstallData::MODULE_NAME)
-            && $this->checkoutConfigurationsProvider->isLightCheckoutEnabled()
+        if ($this->isEnableLightCheckout->execute()
             && $this->checkoutConfigurationsProvider->getIsDisabledCart()
         ) {
             $resultForward = $this->resultFactory->create(ResultFactory::TYPE_FORWARD);
