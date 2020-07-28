@@ -4,6 +4,7 @@ namespace GoMage\LightCheckout\Observer;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\CustomerLoginByEmailAndPassword;
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Checkout\Model\Session;
 use Magento\Checkout\Model\Type\Onepage;
 use Magento\Customer\Api\AccountManagementInterface;
@@ -46,6 +47,11 @@ class CreateCustomerBeforeSubmitCheckout implements ObserverInterface
     private $customerLoginByEmailAndPassword;
 
     /**
+     * @var IsEnableLightCheckout
+     */
+    private $isEnableLightCheckout;
+
+    /**
      * @param Session $checkoutSession
      * @param AccountManagementInterface $accountManagement
      * @param \Magento\Quote\Model\CustomerManagement $customerManagement
@@ -53,6 +59,7 @@ class CreateCustomerBeforeSubmitCheckout implements ObserverInterface
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param CustomerLoginByEmailAndPassword $customerLoginByEmailAndPassword
      * @param CustomerRepository $customerRepository
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      */
     public function __construct(
         Session $checkoutSession,
@@ -61,7 +68,8 @@ class CreateCustomerBeforeSubmitCheckout implements ObserverInterface
         DataObjectHelper $dataObjectHelper,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
         CustomerLoginByEmailAndPassword $customerLoginByEmailAndPassword,
-        CustomerRepository $customerRepository
+        CustomerRepository $customerRepository,
+        IsEnableLightCheckout $isEnableLightCheckout
     ) {
         $this->checkoutSession = $checkoutSession;
         $this->accountManagement = $accountManagement;
@@ -69,6 +77,7 @@ class CreateCustomerBeforeSubmitCheckout implements ObserverInterface
         $this->dataObjectHelper = $dataObjectHelper;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
         $this->customerLoginByEmailAndPassword = $customerLoginByEmailAndPassword;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
@@ -78,41 +87,43 @@ class CreateCustomerBeforeSubmitCheckout implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        /** @var \Magento\Quote\Model\Quote $quote */
-        $quote = $observer->getEvent()->getQuote();
+        if ($this->isEnableLightCheckout->execute()) {
+            /** @var \Magento\Quote\Model\Quote $quote */
+            $quote = $observer->getEvent()->getQuote();
 
-        $additionalData = $this->checkoutSession->getAdditionalInformation();
+            $additionalData = $this->checkoutSession->getAdditionalInformation();
 
-        if (isset($additionalData['password']) && $additionalData['password']) {
-            $isEmailAvailable = $this->accountManagement->isEmailAvailable($quote->getBillingAddress()->getEmail());
-            $checkoutMode = (int)$this->checkoutConfigurationsProvider->getCheckoutMode();
+            if (isset($additionalData['password']) && $additionalData['password']) {
+                $isEmailAvailable = $this->accountManagement->isEmailAvailable($quote->getBillingAddress()->getEmail());
+                $checkoutMode = (int)$this->checkoutConfigurationsProvider->getCheckoutMode();
 
-            if (($checkoutMode === 1 || $checkoutMode === 0) && !$isEmailAvailable) {
-                $customer = $this->customerLoginByEmailAndPassword->execute(
-                    $quote->getBillingAddress()->getEmail(),
-                    $additionalData['password']
-                );
-                $quote->setCheckoutMethod(Onepage::METHOD_CUSTOMER);
+                if (($checkoutMode === 1 || $checkoutMode === 0) && !$isEmailAvailable) {
+                    $customer = $this->customerLoginByEmailAndPassword->execute(
+                        $quote->getBillingAddress()->getEmail(),
+                        $additionalData['password']
+                    );
+                    $quote->setCheckoutMethod(Onepage::METHOD_CUSTOMER);
 
-                $this->assignCustomerToQuote($quote, $customer, false, $additionalData['password']);
-            } elseif ($checkoutMode === 0 && $isEmailAvailable) {
-                $quote->setCheckoutMethod(Onepage::METHOD_REGISTER);
+                    $this->assignCustomerToQuote($quote, $customer, false, $additionalData['password']);
+                } elseif ($checkoutMode === 0 && $isEmailAvailable) {
+                    $quote->setCheckoutMethod(Onepage::METHOD_REGISTER);
 
-                $customer = $quote->getCustomer();
-                $dataArray = $quote->getBillingAddress()->getData();
-                //this is needed for M2.6.
-                unset($dataArray['id']);
+                    $customer = $quote->getCustomer();
+                    $dataArray = $quote->getBillingAddress()->getData();
+                    //this is needed for M2.6.
+                    unset($dataArray['id']);
 
-                $this->dataObjectHelper->populateWithArray(
-                    $customer,
-                    $dataArray,
-                    '\Magento\Customer\Api\Data\CustomerInterface'
-                );
+                    $this->dataObjectHelper->populateWithArray(
+                        $customer,
+                        $dataArray,
+                        '\Magento\Customer\Api\Data\CustomerInterface'
+                    );
 
-                $this->assignCustomerToQuote($quote, $customer, true, $additionalData['password']);
+                    $this->assignCustomerToQuote($quote, $customer, true, $additionalData['password']);
+                }
+
+                $this->checkoutSession->setAdditionalInformation(['password' => null]);
             }
-
-            $this->checkoutSession->setAdditionalInformation(['password' => null]);
         }
     }
 

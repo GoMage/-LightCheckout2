@@ -2,6 +2,7 @@
 
 namespace GoMage\LightCheckout\Observer;
 
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\Quote;
@@ -9,22 +10,39 @@ use Magento\Sales\Api\Data\OrderInterface;
 
 class DeliveryDateFromQuoteToOrder implements ObserverInterface
 {
+
+    /**
+     * @var IsEnableLightCheckout
+     */
+    private $isEnableLightCheckout;
+
+    /**
+     * @param IsEnableLightCheckout $isEnableLightCheckout
+     */
+    public function __construct(
+        IsEnableLightCheckout $isEnableLightCheckout
+    ) {
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
+    }
+
     /**
      * @inheritdoc
      */
     public function execute(Observer $observer)
     {
-        $event = $observer->getEvent();
+        if ($this->isEnableLightCheckout->execute()) {
+            $event = $observer->getEvent();
 
-        /** @var OrderInterface $order */
-        $order = $event->getOrder();
-        
-        /** @var Quote $quote */
-        $quote = $event->getQuote();
+            /** @var OrderInterface $order */
+            $order = $event->getOrder();
 
-        $order->setLcDeliveryDate($quote->getLcDeliveryDate());
-        $order->setLcDeliveryDateTime($quote->getLcDeliveryDateTime());
+            /** @var Quote $quote */
+            $quote = $event->getQuote();
 
-        return $this;
+            $order->setLcDeliveryDate($quote->getLcDeliveryDate());
+            $order->setLcDeliveryDateTime($quote->getLcDeliveryDateTime());
+
+            return $this;
+        }
     }
 }

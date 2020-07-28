@@ -3,7 +3,7 @@
 namespace GoMage\LightCheckout\Plugin\Checkout\Controller\Index;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
-use \GoMage\LightCheckout\Model\IsEnableLightCheckout;
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Checkout\Controller\Index\Index as CheckoutIndex;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;

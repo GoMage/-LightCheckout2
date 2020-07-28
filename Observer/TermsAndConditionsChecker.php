@@ -3,6 +3,7 @@
 namespace GoMage\LightCheckout\Observer;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\CheckoutAgreements\Model\AgreementsProvider;
 use Magento\Config\Model\ResourceModel\Config as ResourceModelConfig;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -22,15 +23,23 @@ class TermsAndConditionsChecker implements ObserverInterface
     private $checkoutConfigurationsProvider;
 
     /**
+     * @var IsEnableLightCheckout
+     */
+    private $isEnableLightCheckout;
+
+    /**
      * @param ResourceModelConfig $modelConfig
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      */
     public function __construct(
         ResourceModelConfig $modelConfig,
-        CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+        CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
+        IsEnableLightCheckout $isEnableLightCheckout
     ) {
         $this->modelConfig = $modelConfig;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
@@ -40,13 +49,15 @@ class TermsAndConditionsChecker implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        $isEnabledTAC = $this->checkoutConfigurationsProvider->getIsEnabledTermsAndConditions();
+        if ($this->isEnableLightCheckout->execute()) {
+            $isEnabledTAC = $this->checkoutConfigurationsProvider->getIsEnabledTermsAndConditions();
 
-        $this->modelConfig->saveConfig(
-            AgreementsProvider::PATH_ENABLED,
-            $isEnabledTAC,
-            ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
-            0
-        );
+            $this->modelConfig->saveConfig(
+                AgreementsProvider::PATH_ENABLED,
+                $isEnabledTAC,
+                ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
+                0
+            );
+        }
     }
 }
