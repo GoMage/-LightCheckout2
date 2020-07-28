@@ -5,6 +5,7 @@ namespace GoMage\LightCheckout\Model;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\DeliveryDateConfigProvider;
 use GoMage\LightCheckout\Model\ConfigProvider\PasswordSettingProvider;
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Customer\Model\Url;
@@ -13,9 +14,6 @@ use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Cart\ShippingMethodConverter;
 use Magento\Quote\Model\Quote\TotalsCollector;
-use GoMage\Core\Helper\Data as CoreHelper;
-use GoMage\LightCheckout\Model\IsEnableLightCheckoutForDevice;
-use GoMage\LightCheckout\Setup\InstallData;
 
 class ConfigProvider implements ConfigProviderInterface
 {
@@ -65,14 +63,9 @@ class ConfigProvider implements ConfigProviderInterface
     private $url;
 
     /**
-     * @var CoreHelper
+     * @var \GoMage\LightCheckout\Model\IsEnableLightCheckout
      */
-    private $helper;
-
-    /**
-     * @var IsEnableLightCheckoutForDevice
-     */
-    private $isEnableLightCheckoutForDevice;
+    private $isEnableLightCheckout;
 
     /**
      * ConfigProvider constructor.
@@ -85,8 +78,7 @@ class ConfigProvider implements ConfigProviderInterface
      * @param PasswordSettingProvider $passwordSettingProvider
      * @param DeliveryDateConfigProvider $deliveryDateConfigProvider
      * @param Url $url
-     * @param CoreHelper $helper
-     * @param IsEnableLightCheckoutForDevice $isEnableLightCheckoutForDevice
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      */
     public function __construct(
         CheckoutSession $session,
@@ -98,8 +90,7 @@ class ConfigProvider implements ConfigProviderInterface
         PasswordSettingProvider $passwordSettingProvider,
         DeliveryDateConfigProvider $deliveryDateConfigProvider,
         Url $url,
-        CoreHelper $helper,
-        IsEnableLightCheckoutForDevice $isEnableLightCheckoutForDevice
+        IsEnableLightCheckout $isEnableLightCheckout
     ) {
         $this->checkoutSession = $session;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
@@ -110,8 +101,7 @@ class ConfigProvider implements ConfigProviderInterface
         $this->passwordSettingProvider = $passwordSettingProvider;
         $this->deliveryDateConfigProvider = $deliveryDateConfigProvider;
         $this->url = $url;
-        $this->helper = $helper;
-        $this->isEnableLightCheckoutForDevice = $isEnableLightCheckoutForDevice;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
@@ -119,20 +109,21 @@ class ConfigProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        $quoteId = $this->checkoutSession->getQuoteId();
-        $config = [
-            'general' => $this->getGeneralConfig(),
-            'passwordSettings' => $this->passwordSettingProvider->get(),
-            'registration' => $this->getRegistrationConfig(),
-            'deliveryDate' => $this->deliveryDateConfigProvider->get(),
-            'vatTax' => $this->getVatTaxConfig(),
-            'autoCompleteStreet' => $this->getAutoCompleteStreetConfig(),
-            'addressFields' => $this->getAddressFieldsConfig(),
-            'mandatorySettings' => $this->getMandatorySettings(),
-            'numberProductInCheckout' => $this->getProductNumberInCheckoutSettings(),
-            'isLightCheckoutEnable' => $this->isLightCheckoutEnable(),
-        ];
-
+        $config = [];
+        if ($this->isEnableLightCheckout->execute()) {
+            $quoteId = $this->checkoutSession->getQuoteId();
+            $config = [
+                'general' => $this->getGeneralConfig(),
+                'passwordSettings' => $this->passwordSettingProvider->get(),
+                'registration' => $this->getRegistrationConfig(),
+                'deliveryDate' => $this->deliveryDateConfigProvider->get(),
+                'vatTax' => $this->getVatTaxConfig(),
+                'autoCompleteStreet' => $this->getAutoCompleteStreetConfig(),
+                'addressFields' => $this->getAddressFieldsConfig(),
+                'mandatorySettings' => $this->getMandatorySettings(),
+                'numberProductInCheckout' => $this->getProductNumberInCheckoutSettings(),
+            ];
+        }
         return $config;
     }
 
@@ -296,21 +287,5 @@ class ConfigProvider implements ConfigProviderInterface
             'hideProducts' => (bool)$this->checkoutConfigurationsProvider->getIsHidedNumberOfProducts(),
             'numberOfProducts' => $this->checkoutConfigurationsProvider->getNumberOfProductsVisibleInCheckout(),
         ];
-    }
-
-    /**
-     * @return bool
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
-    private function isLightCheckoutEnable()
-    {
-        return $this->helper->isA(InstallData::MODULE_NAME)
-            && $this->checkoutConfigurationsProvider->isLightCheckoutEnabled()
-            && $this->isEnableLightCheckoutForDevice->execute();
-
-//        return [
-//            'enabled' => $response,
-//        ];
     }
 }

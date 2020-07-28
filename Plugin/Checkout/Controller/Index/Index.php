@@ -2,10 +2,8 @@
 
 namespace GoMage\LightCheckout\Plugin\Checkout\Controller\Index;
 
-use GoMage\Core\Helper\Data;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
-use GoMage\LightCheckout\Model\IsEnableLightCheckoutForDevice;
-use GoMage\LightCheckout\Setup\InstallData;
+use \GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Checkout\Controller\Index\Index as CheckoutIndex;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
@@ -23,48 +21,34 @@ class Index
     private $checkoutConfigurationsProvider;
 
     /**
-     * @var IsEnableLightCheckoutForDevice
+     * @var IsEnableLightCheckout
      */
-    private $isEnableLightCheckoutForDevice;
+    private $isEnableLightCheckout;
 
     /**
-     * @var Data
-     */
-    private $helper;
-
-    /**
+     * Index constructor.
      * @param ResultFactory $resultFactory
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
-     * @param IsEnableLightCheckoutForDevice $isEnableLightCheckoutForDevice
-     * @param Data $helper
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      */
     public function __construct(
         ResultFactory $resultFactory,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
-        IsEnableLightCheckoutForDevice $isEnableLightCheckoutForDevice,
-        Data $helper
+        IsEnableLightCheckout $isEnableLightCheckout
     ) {
         $this->resultFactory = $resultFactory;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
-        $this->isEnableLightCheckoutForDevice = $isEnableLightCheckoutForDevice;
-        $this->helper = $helper;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
-     * Forward to Light Checkout if it is needed.
-     *
      * @param CheckoutIndex $subject
      * @param \Closure $proceed
-     *
-     * @return ResultInterface
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @return mixed
      */
     public function aroundExecute(CheckoutIndex $subject, \Closure $proceed)
     {
-        if ($this->helper->isA(InstallData::MODULE_NAME)
-            && $this->checkoutConfigurationsProvider->isLightCheckoutEnabled()
-            && $this->isEnableLightCheckoutForDevice->execute()
-        ) {
+        if ($this->isEnableLightCheckout->execute()) {
             $resultForward = $this->resultFactory->create(ResultFactory::TYPE_FORWARD);
             $result = $resultForward
                 ->setModule('lightcheckout')
