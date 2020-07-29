@@ -4,6 +4,7 @@ namespace GoMage\LightCheckout\Block\Checkout;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\Config\Source\NewsletterCheckbox;
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Newsletter\Model\Subscriber;
 use Magento\Newsletter\Model\SubscriberFactory;
@@ -31,11 +32,17 @@ class SubscribeToNewsletter extends \Magento\Framework\View\Element\Template
     private $subscriberFactory;
 
     /**
+     * @var IsEnableLightCheckout
+     */
+    private $isEnableLightCheckout;
+
+    /**
      * @param Context $context
      * @param \Magento\Checkout\Model\Session $checkoutSession
      * @param \Magento\Customer\Model\Session $customerSession
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param SubscriberFactory $subscriberFactory
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      * @param array $data
      */
     public function __construct(
@@ -44,6 +51,7 @@ class SubscribeToNewsletter extends \Magento\Framework\View\Element\Template
         \Magento\Customer\Model\Session $customerSession,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
         SubscriberFactory $subscriberFactory,
+        IsEnableLightCheckout $isEnableLightCheckout,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -52,6 +60,7 @@ class SubscribeToNewsletter extends \Magento\Framework\View\Element\Template
         $this->customerSession = $customerSession;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
         $this->subscriberFactory = $subscriberFactory;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
@@ -84,7 +93,8 @@ class SubscribeToNewsletter extends \Magento\Framework\View\Element\Template
         $isSubscribed = $this->subscriberFactory->create()->loadByCustomerId($customerId);
 
         if (
-            $isEnabled == NewsletterCheckbox::NEWSLETTER_CHECKBOX_DISABLE
+            !$this->isEnableLightCheckout->execute()
+            || $isEnabled == NewsletterCheckbox::NEWSLETTER_CHECKBOX_DISABLE
             || $isEnabled == NewsletterCheckbox::NEWSLETTER_CHECKBOX_ENABLE_IN_CHECKOUT
             || ($isCustomerLogin && $isSubscribed->getStatus() == Subscriber::STATUS_SUBSCRIBED)) {
 
