@@ -2,9 +2,8 @@
 
 namespace GoMage\LightCheckout\Controller\Index;
 
-use GoMage\Core\Helper\Data;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
-use GoMage\LightCheckout\Setup\InstallData;
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Checkout\Model\Session;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
@@ -23,9 +22,9 @@ class Index extends \Magento\Checkout\Controller\Onepage
     private $checkoutConfigurationsProvider;
 
     /**
-     * @var Data
+     * @var IsEnableLightCheckout
      */
-    private $helper;
+    private $isEnableLightCheckout;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
@@ -44,7 +43,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param Session $session
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
-     * @param Data $helper
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -63,7 +62,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         Session $session,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
-        Data $helper
+        IsEnableLightCheckout $isEnableLightCheckout
     ) {
         parent::__construct(
             $context,
@@ -84,7 +83,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
 
         $this->session = $session;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
-        $this->helper = $helper;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
@@ -92,7 +91,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
      */
     public function execute()
     {
-        if ($this->helper->isA(InstallData::MODULE_NAME)) {
+        if ($this->isEnableLightCheckout->execute()) {
             $quote = $this->getOnepage()->getQuote();
             if (!$quote->hasItems() || $quote->getHasError() || !$quote->validateMinimumAmount()) {
                 //redirect not to cart, because if cart is off in configuration it will come to endless redirect.

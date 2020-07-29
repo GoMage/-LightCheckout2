@@ -6,6 +6,7 @@ use GoMage\LightCheckout\Model\Block\LayoutProcessor\UpdateBlocksAccordingToConf
 use GoMage\LightCheckout\Model\Block\LayoutProcessor\PrepareAddressFieldsPositions;
 use GoMage\LightCheckout\Model\InitGeoIpSettingsForCheckout;
 use GoMage\LightCheckout\Model\Layout\FetchArgs;
+use GoMage\LightCheckout\Model\IsEnableLightCheckout;
 use Magento\Checkout\Block\Checkout\AttributeMerger;
 use Magento\Customer\Model\AttributeMetadataDataProvider;
 use Magento\Customer\Model\Options;
@@ -69,6 +70,11 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private $prepareAddressFieldsPositions;
 
     /**
+     * @var IsEnableLightCheckout
+     */
+    private $isEnableLightCheckout;
+
+    /**
      * @param AttributeMetadataDataProvider $attributeMetadataDataProvider
      * @param AttributeMapper $attributeMapper
      * @param AttributeMerger $merger
@@ -79,6 +85,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      * @param UpdateBlocksAccordingToConfigurationByJsLayout $updateBlocksAccordingToConfigurationByJsLayout
      * @param InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout
      * @param PrepareAddressFieldsPositions $prepareAddressFieldsPositions
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      */
     public function __construct(
         AttributeMetadataDataProvider $attributeMetadataDataProvider,
@@ -90,7 +97,8 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         Options $options,
         UpdateBlocksAccordingToConfigurationByJsLayout $updateBlocksAccordingToConfigurationByJsLayout,
         InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout,
-        PrepareAddressFieldsPositions $prepareAddressFieldsPositions
+        PrepareAddressFieldsPositions $prepareAddressFieldsPositions,
+        IsEnableLightCheckout $isEnableLightCheckout
     ) {
         $this->attributeMetadataDataProvider = $attributeMetadataDataProvider;
         $this->attributeMapper = $attributeMapper;
@@ -102,6 +110,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $this->updateBlocksAccordingToConfigurationByJsLayout = $updateBlocksAccordingToConfigurationByJsLayout;
         $this->initGeoIpSettingsForCheckout = $initGeoIpSettingsForCheckout;
         $this->prepareAddressFieldsPositions = $prepareAddressFieldsPositions;
+        $this->isEnableLightCheckout = $isEnableLightCheckout;
     }
 
     /**
@@ -173,91 +182,93 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      */
     public function process($jsLayout)
     {
-        $attributesToConvert = [
-            'prefix' => [$this->options, 'getNamePrefixOptions'],
-            'suffix' => [$this->options, 'getNameSuffixOptions'],
-        ];
+        if ($this->isEnableLightCheckout->execute()) {
+            $attributesToConvert = [
+                'prefix' => [$this->options, 'getNamePrefixOptions'],
+                'suffix' => [$this->options, 'getNameSuffixOptions'],
+            ];
 
-        $elements = $this->getAddressAttributes();
-        $elements = $this->convertElementsToSelect($elements, $attributesToConvert);
+            $elements = $this->getAddressAttributes();
+            $elements = $this->convertElementsToSelect($elements, $attributesToConvert);
 
-        if (isset($jsLayout['components']['checkout']['children']['configuration']['children']
-            ['shipping-rates-validation']['children'])) {
-            $jsLayout['components']['checkout']['children']['configuration']['children']
-            ['shipping-rates-validation']['children'] =
-                $this->processShippingRates(
-                    $jsLayout['components']['checkout']['children']['configuration']['children']
-                    ['shipping-rates-validation']['children']
+            if (isset($jsLayout['components']['checkout']['children']['configuration']['children']
+                ['shipping-rates-validation']['children'])) {
+                $jsLayout['components']['checkout']['children']['configuration']['children']
+                ['shipping-rates-validation']['children'] =
+                    $this->processShippingRates(
+                        $jsLayout['components']['checkout']['children']['configuration']['children']
+                        ['shipping-rates-validation']['children']
+                    );
+            }
+
+            if (isset($jsLayout['components']['checkout']['children']['shippingAddress']['children']
+                ['shipping-address-fieldset']['children'])) {
+                $fields = $jsLayout['components']['checkout']['children']['shippingAddress']['children']
+                ['shipping-address-fieldset']['children'];
+                $jsLayout['components']['checkout']['children']['shippingAddress']['children']
+                ['shipping-address-fieldset']['children'] = $this->merger->merge(
+                    $elements,
+                    'checkoutProvider',
+                    'shippingAddress',
+                    $fields
                 );
-        }
+            }
 
-        if (isset($jsLayout['components']['checkout']['children']['shippingAddress']['children']
-            ['shipping-address-fieldset']['children'])) {
-            $fields = $jsLayout['components']['checkout']['children']['shippingAddress']['children']
-            ['shipping-address-fieldset']['children'];
-            $jsLayout['components']['checkout']['children']['shippingAddress']['children']
-            ['shipping-address-fieldset']['children'] = $this->merger->merge(
-                $elements,
-                'checkoutProvider',
-                'shippingAddress',
-                $fields
-            );
-        }
+            if (isset($jsLayout['components']['checkout']['children']['billingAddress']['children']
+                ['billing-address-fieldset']['children'])) {
+                $fields = $jsLayout['components']['checkout']['children']['billingAddress']['children']
+                ['billing-address-fieldset']['children'];
+                $jsLayout['components']['checkout']['children']['billingAddress']['children']
+                ['billing-address-fieldset']['children'] = $this->merger->merge(
+                    $elements,
+                    'checkoutProvider',
+                    'billingAddress',
+                    $fields
+                );
+            }
 
-        if (isset($jsLayout['components']['checkout']['children']['billingAddress']['children']
-            ['billing-address-fieldset']['children'])) {
-            $fields = $jsLayout['components']['checkout']['children']['billingAddress']['children']
-            ['billing-address-fieldset']['children'];
-            $jsLayout['components']['checkout']['children']['billingAddress']['children']
-            ['billing-address-fieldset']['children'] = $this->merger->merge(
-                $elements,
-                'checkoutProvider',
-                'billingAddress',
-                $fields
-            );
-        }
-
-        $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
-            = $this->mergePaymentMethodsRenders(
+            $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
+                = $this->mergePaymentMethodsRenders(
                 $jsLayout['components']['checkout']['children']['payment']['children']['renders']['children']
             );
 
-        $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
-            = $this->mergePaymentAfterMethods(
+            $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
+                = $this->mergePaymentAfterMethods(
                 $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
             );
 
-        $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']['children']
-            = $this->mergeBeforePlaceOrder(
+            $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']['children']
+                = $this->mergeBeforePlaceOrder(
                 $jsLayout['components']['checkout']['children']['payment']['children']['payments-list']
                 ['children']['before-place-order']
             );
 
-        $jsLayout['components']['checkout']['children']['payment']['children']['additional-payment-validators']
-        ['children'] = $this->mergeAdditionalValidators(
-            $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
-        );
+            $jsLayout['components']['checkout']['children']['payment']['children']['additional-payment-validators']
+            ['children'] = $this->mergeAdditionalValidators(
+                $jsLayout['components']['checkout']['children']['payment']['children']['afterMethods']['children']
+            );
 
-        $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']['totals']
-        ['children'] = $this->mergeSummaryTotals(
-            $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']
+            $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']['totals']
+            ['children'] = $this->mergeSummaryTotals(
+                $jsLayout['components']['checkout']['children']['sidebar']['children']['summary']['children']
                 ['totals']['children']
-        );
+            );
 
-        if (isset($jsLayout['components']['checkout']['children']['deliveryDate']['children']
-            ['selectTime'])) {
-            $jsLayout['components']['checkout']['children']['deliveryDate']['children']
-            ['selectTime']['options'] = [];
+            if (isset($jsLayout['components']['checkout']['children']['deliveryDate']['children']
+                ['selectTime'])) {
+                $jsLayout['components']['checkout']['children']['deliveryDate']['children']
+                ['selectTime']['options'] = [];
+            }
+
+            $jsLayout = $this->updateTemplateForVatIdField($jsLayout);
+            $jsLayout = $this->updateBlocksAccordingToConfigurationByJsLayout->execute($jsLayout);
+            $jsLayout = $this->initGeoIpSettingsForCheckout->execute($jsLayout);
+
+            $jsLayout = $this->prepareAddressFieldsPositions->execute($jsLayout);
+            $jsLayout = $this->removeTermsAndConditionsFromPaymentMethods($jsLayout);
+            $jsLayout = $this->removeDiscountCodeFromPaymentMethods($jsLayout);
+
         }
-
-        $jsLayout = $this->updateTemplateForVatIdField($jsLayout);
-        $jsLayout = $this->updateBlocksAccordingToConfigurationByJsLayout->execute($jsLayout);
-        $jsLayout = $this->initGeoIpSettingsForCheckout->execute($jsLayout);
-
-        $jsLayout = $this->prepareAddressFieldsPositions->execute($jsLayout);
-        $jsLayout = $this->removeTermsAndConditionsFromPaymentMethods($jsLayout);
-        $jsLayout = $this->removeDiscountCodeFromPaymentMethods($jsLayout);
-
         return $jsLayout;
     }
 

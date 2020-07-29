@@ -27,6 +27,7 @@ class SocialNetworksOnRegistrationPopup extends \Magento\Framework\View\Element\
     /**
      * @param Context $context
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     * @param IsEnableLightCheckout $isEnableLightCheckout
      * @param array $data
      */
     public function __construct(
