@@ -98,6 +98,8 @@ class ChangeAddressValidationAccordingToConfiguration
             }
 
             return $errors;
+        } else {
+            return $result;
         }
     }
 }

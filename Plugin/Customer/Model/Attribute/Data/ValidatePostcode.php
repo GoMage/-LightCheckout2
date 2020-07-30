@@ -61,6 +61,8 @@ class ValidatePostcode
             }
 
             return $errors;
+        } else {
+            return $result;
         }
     }
 }
