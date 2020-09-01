@@ -14,6 +14,7 @@ use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Cart\ShippingMethodConverter;
 use Magento\Quote\Model\Quote\TotalsCollector;
+use \Magento\Customer\Model\Session;
 
 class ConfigProvider implements ConfigProviderInterface
 {
@@ -68,6 +69,11 @@ class ConfigProvider implements ConfigProviderInterface
     private $isEnableLightCheckout;
 
     /**
+     * @var Session
+     */
+    private $customerSession;
+
+    /**
      * ConfigProvider constructor.
      * @param CheckoutSession $session
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
@@ -79,6 +85,7 @@ class ConfigProvider implements ConfigProviderInterface
      * @param DeliveryDateConfigProvider $deliveryDateConfigProvider
      * @param Url $url
      * @param IsEnableLightCheckout $isEnableLightCheckout
+     * @param Session $customerSession
      */
     public function __construct(
         CheckoutSession $session,
@@ -90,7 +97,8 @@ class ConfigProvider implements ConfigProviderInterface
         PasswordSettingProvider $passwordSettingProvider,
         DeliveryDateConfigProvider $deliveryDateConfigProvider,
         Url $url,
-        IsEnableLightCheckout $isEnableLightCheckout
+        IsEnableLightCheckout $isEnableLightCheckout,
+        Session $customerSession
     ) {
         $this->checkoutSession = $session;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
@@ -102,6 +110,7 @@ class ConfigProvider implements ConfigProviderInterface
         $this->deliveryDateConfigProvider = $deliveryDateConfigProvider;
         $this->url = $url;
         $this->isEnableLightCheckout = $isEnableLightCheckout;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -137,7 +146,7 @@ class ConfigProvider implements ConfigProviderInterface
     {
         $defaultActivePaymentMethod = null;
 
-        if (!$quote->getPayment()->getMethod()) {
+        if (!$quote->getPayment()->getMethod()||$this->customerSession->isLoggedIn()) {
             $defaultPaymentMethod = $this->checkoutConfigurationsProvider->getDefaultPaymentMethod();
 
             $paymentMethods = $this->paymentMethodManagement->getList($quote->getId());
