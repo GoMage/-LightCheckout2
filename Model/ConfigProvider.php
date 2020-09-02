@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace GoMage\LightCheckout\Model;
 
@@ -64,7 +65,7 @@ class ConfigProvider implements ConfigProviderInterface
     private $url;
 
     /**
-     * @var \GoMage\LightCheckout\Model\IsEnableLightCheckout
+     * @var IsEnableLightCheckout
      */
     private $isEnableLightCheckout;
 
