@@ -6,6 +6,7 @@
             <item name="provider" xsi:type="string">checkout_fields_manager.checkout_fields_manager_data_source</item>
         </item>
         <item name="label" xsi:type="string" translate="true">Some UI</item>
+        <item name="template" xsi:type="string">templates/form/collapsible-mk</item>
     </argument>
     <settings>
         <dataScope>data</dataScope>
