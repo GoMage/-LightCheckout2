@@ -1,0 +1,442 @@
+<div data-bind="scope: 'product_form'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+{
+  "*": {
+    "Magento_Ui/js/core/app": {
+      "types": {
+        "html_content": {
+          "extends": "product_form",
+          "component": "Magento_Ui/js/form/components/html"
+        },
+        "select": {
+          "extends": "product_form"
+        },
+        "form.select": {
+          "extends": "select"
+        },
+        "checkbox": {
+          "extends": "product_form"
+        },
+        "form.checkbox": {
+          "extends": "checkbox"
+        },
+        "container": {
+          "extends": "product_form"
+        },
+        "input": {
+          "extends": "product_form"
+        },
+        "form.input": {
+          "extends": "input"
+        },
+        "fieldset": {
+          "component": "Magento_Ui/js/form/components/fieldset",
+          "extends": "product_form"
+        },
+        "actionDelete": {
+          "extends": "product_form"
+        },
+        "form.actionDelete": {
+          "extends": "actionDelete"
+        },
+        "date": {
+          "extends": "product_form"
+        },
+        "form.date": {
+          "extends": "date"
+        },
+        "multiselect": {
+          "extends": "product_form"
+        },
+        "form.multiselect": {
+          "extends": "multiselect"
+        },
+        "wysiwyg": {
+          "extends": "product_form"
+        },
+        "form.wysiwyg": {
+          "extends": "wysiwyg"
+        },
+        "textarea": {
+          "extends": "product_form"
+        },
+        "form.textarea": {
+          "extends": "textarea"
+        },
+        "hidden": {
+          "extends": "product_form"
+        },
+        "form.hidden": {
+          "extends": "hidden"
+        }
+      },
+
+
+      "components": {
+
+
+        "product_form": {
+          "name": "product_form",
+          "config": {
+            "component": "Magento_Ui/js/form/form",
+            "deps": [
+              "mk_data_source"
+            ],
+            "provider": "mk_data_source",
+            "namespace": "product_form"
+          },
+          "children": {
+
+            "product_bundle_container": {
+              "type": "fieldset",
+              "name": "product_bundle_container",
+              "children": {
+                "bundle_selections": {
+                  "type": "container",
+                  "name": "bundle_selections",
+                  "children": {
+                    "record": {
+                      "type": "container",
+                      "name": "record",
+                      "children": {
+                        "selection_id": {
+                          "type": "form.input",
+                          "name": "selection_id",
+                          "dataScope": "selection_id",
+                          "config": {
+                            "component": "Magento_Ui/js/form/element/abstract",
+                            "template": "ui/form/field",
+                            "componentType": "field",
+                            "dataType": "text",
+                            "formElement": "input",
+                            "visible": false,
+                            "additionalClasses": {
+                              "_hidden": true
+                            },
+                            "sortOrder": 10
+                          }
+                        },
+                        "option_id": {
+                          "type": "form.input",
+                          "name": "option_id",
+                          "dataScope": "option_id",
+                          "config": {
+                            "component": "Magento_Ui/js/form/element/abstract",
+                            "template": "ui/form/field",
+                            "componentType": "field",
+                            "dataType": "text",
+                            "formElement": "input",
+                            "visible": false,
+                            "additionalClasses": {
+                              "_hidden": true
+                            },
+                            "sortOrder": 20
+                          }
+                        },
+                        "product_id": {
+                          "type": "form.input",
+                          "name": "product_id",
+                          "dataScope": "product_id",
+                          "config": {
+                            "component": "Magento_Ui/js/form/element/abstract",
+                            "template": "ui/form/field",
+                            "componentType": "field",
+                            "dataType": "text",
+                            "formElement": "input",
+                            "visible": false,
+                            "additionalClasses": {
+                              "_hidden": true
+                            },
+                            "sortOrder": 30
+                          }
+                        },
+                        "delete": {
+                          "type": "form.input",
+                          "name": "delete",
+                          "dataScope": "delete",
+                          "config": {
+                            "component": "Magento_Ui/js/form/element/abstract",
+                            "template": "ui/form/field",
+                            "componentType": "field",
+                            "dataType": "text",
+                            "formElement": "input",
+                            "visible": false,
+                            "additionalClasses": {
+                              "_hidden": true
+                            },
+                            "sortOrder": 40
+                          }
+                        },
+                        "is_default": {
+                          "type": "form.checkbox",
+                          "name": "is_default",
+                          "dataScope": "is_default",
+                          "config": {
+                            "component": "Magento_Bundle/js/components/bundle-checkbox",
+                            "template": "ui/form/field",
+                            "formElement": "checkbox",
+                            "componentType": "field",
+                            "parentContainer": "product_bundle_container",
+                            "parentSelections": "bundle_selections",
+                            "changer": "option_info.type",
+                            "dataType": "boolean",
+                            "label": "Is Default",
+                            "prefer": "radio",
+                            "value": "0",
+                            "sortOrder": 50,
+                            "valueMap": {
+                              "false": "0",
+                              "true": "1"
+                            }
+                          }
+                        },
+                        "name": {
+                          "type": "form.input",
+                          "name": "name",
+                          "dataScope": "name",
+                          "config": {
+                            "component": "Magento_Ui/js/form/element/abstract",
+                            "template": "ui/form/field",
+                            "componentType": "field",
+                            "dataType": "text",
+                            "formElement": "input",
+                            "elementTmpl": "ui/dynamic-rows/cells/text",
+                            "label": "Name",
+                            "sortOrder": 60
+                          }
+                        },
+                        "sku": {
+                          "type": "form.input",
+                          "name": "sku",
+                          "dataScope": "sku",
+                          "config": {
+                            "component": "Magento_Ui/js/form/element/abstract",
+                            "template": "ui/form/field",
+                            "componentType": "field",
+                            "dataType": "text",
+                            "formElement": "input",
+                            "elementTmpl": "ui/dynamic-rows/cells/text",
+                            "label": "SKU",
+                            "sortOrder": 70
+                          }
+                        },
+                        "selection_price_value": {
+                          "type": "form.input",
+                          "name": "selection_price_value",
+                          "dataScope": "selection_price_value",
+                          "config": {
+                            "component": "Magento_Ui/js/form/element/abstract",
+                            "template": "ui/form/field",
+                            "componentType": "field",
+                            "dataType": "price",
+                            "formElement": "input",
+                            "label": "Price",
+                            "value": "0.00",
+                            "imports": {
+                              "visible": "!ns = ${ $.ns }, index = price_type:checked"
+                            },
+                            "sortOrder": 80
+                          }
+                        },
+                        "selection_price_type": {
+                          "type": "form.select",
+                          "name": "selection_price_type",
+                          "dataScope": "selection_price_type",
+                          "config": {
+                            "component": "Magento_Ui/js/form/element/select",
+                            "template": "ui/form/field",
+                            "componentType": "field",
+                            "dataType": "boolean",
+                            "formElement": "select",
+                            "label": "Price Type",
+                            "value": "0",
+                            "options": [
+                              {
+                                "label": "Fixed",
+                                "value": "0"
+                              },
+                              {
+                                "label": "Percent",
+                                "value": "1"
+                              }
+                            ],
+                            "imports": {
+                              "visible": "!ns = ${ $.ns }, index = price_type:checked"
+                            },
+                            "sortOrder": 90
+                          }
+                        },
+                        "selection_qty": {
+                          "type": "form.input",
+                          "name": "selection_qty",
+                          "dataScope": "selection_qty",
+                          "config": {
+                            "component": "Magento_Bundle/js/components/bundle-option-qty",
+                            "template": "ui/form/field",
+                            "formElement": "input",
+                            "componentType": "field",
+                            "dataType": "number",
+                            "label": "Default Quantity",
+                            "value": "1",
+                            "sortOrder": 100,
+                            "validation": {
+                              "required-entry": true,
+                              "validate-number": true,
+                              "validate-greater-than-zero": true
+                            },
+                            "imports": {
+                              "isInteger": "${ $.provider }:${ $.parentScope }.selection_qty_is_integer"
+                            }
+                          }
+                        },
+                        "selection_can_change_qty": {
+                          "type": "form.checkbox",
+                          "name": "selection_can_change_qty",
+                          "dataScope": "selection_can_change_qty",
+                          "config": {
+                            "component": "Magento_Bundle/js/components/bundle-user-defined-checkbox",
+                            "template": "ui/form/field",
+                            "componentType": "field",
+                            "formElement": "checkbox",
+                            "dataType": "price",
+                            "label": "User Defined",
+                            "value": "1",
+                            "valueMap": {
+                              "true": "1",
+                              "false": "0"
+                            },
+                            "sortOrder": 110,
+                            "imports": {
+                              "inputType": "${$.parentName}:inputType"
+                            }
+                          }
+                        },
+                        "position": {
+                          "type": "form.input",
+                          "name": "position",
+                          "dataScope": "position",
+                          "config": {
+                            "component": "Magento_Ui/js/form/element/abstract",
+                            "template": "ui/form/field",
+                            "componentType": "field",
+                            "dataType": "text",
+                            "formElement": "input",
+                            "visible": false,
+                            "additionalClasses": {
+                              "_hidden": true
+                            },
+                            "sortOrder": 120
+                          }
+                        },
+                        "action_delete": {
+                          "type": "actionDelete",
+                          "name": "action_delete",
+                          "config": {
+                            "component": "Magento_Ui/js/dynamic-rows/action-delete",
+                            "template": "ui/dynamic-rows/cells/action-delete",
+                            "componentType": "actionDelete",
+                            "dataType": "text",
+                            "label": "",
+                            "fit": true,
+                            "sortOrder": 130
+                          }
+                        }
+                      },
+                      "config": {
+                        "component": "Magento_Ui/js/dynamic-rows/record",
+                        "componentType": "container",
+                        "isTemplate": true,
+                        "is_collection": true,
+                        "imports": {
+                          "inputType": "${$.parentName}:inputType"
+                        },
+                        "exports": {
+                          "isDefaultValue": "${$.parentName}:isDefaultValue.${$.index}"
+                        }
+                      }
+                    }
+                  },
+                  "config": {
+                    "component": "Magento_Ui/js/dynamic-rows/dynamic-rows",
+                    "componentType": "container",
+                    "sortOrder": 50,
+                    "additionalClasses": "admin__field-wide",
+                    "template": "ui/dynamic-rows/templates/default",
+                    "provider": "mk_data_source",
+                    "identificationDRProperty": "product_id",
+                    "identificationProperty": "product_id",
+                    "map": {
+                      "product_id": "entity_id",
+                      "name": "name",
+                      "sku": "sku",
+                      "price": "price",
+                      "delete": "",
+                      "selection_can_change_qty": "",
+                      "selection_id": "",
+                      "selection_price_type": "",
+                      "selection_price_value": "",
+                      "selection_qty": ""
+                    }
+                  }
+                }
+              },
+              "config": {
+                "componentType": "fieldset",
+                "collapsible": false,
+                "label": "Some container 2",
+                "opened": true
+              }
+            }
+          }
+        },
+
+
+        "mk_data_source": {
+          "component": "Magento_Ui/js/form/provider",
+          "name": "mk_data_source",
+          "dataScope": "product_form",
+          "config": {
+            "data": {
+              "bundle_selections": [
+                {
+                  "selection_id": "1",
+                  "option_id": "1",
+                  "product_id": "26",
+                  "name": "some Custom 2",
+                  "sku": "24-WG081-blue",
+                  "is_default": "1",
+                  "selection_price_value": null,
+                  "selection_price_type": null,
+                  "selection_qty": 1,
+                  "selection_can_change_qty": "1",
+                  "selection_qty_is_integer": true,
+                  "position": "1",
+                  "delete": ""
+                },
+                {
+                  "selection_id": "1",
+                  "option_id": "1",
+                  "product_id": "26",
+                  "name": "some Custom",
+                  "sku": "24-WG081-blue",
+                  "is_default": "1",
+                  "selection_price_value": null,
+                  "selection_price_type": null,
+                  "selection_qty": 1,
+                  "selection_can_change_qty": "1",
+                  "selection_qty_is_integer": true,
+                  "position": "1",
+                  "delete": ""
+                }
+              ]
+            }
+          }
+        }
+        }
+      }
+    }
+}
+
+</script>

@@ -3,4 +3,9 @@
     <head>
         <css src="jquery/colorpicker/css/colorpicker.css"/>
     </head>
+    <body>
+        <referenceContainer name="js">
+            <uiComponent name="checkout_fields_manager"/>
+        </referenceContainer>
+    </body>
 </page>
