@@ -14,10 +14,11 @@ define([
             ) {
                 if (!customer.isLoggedIn()) {
                     if (quote.guestEmail) {
-                        originalSetPaymentInformationExtendedFunction(messageContainer, paymentData, skipBilling);
+                        return originalSetPaymentInformationExtendedFunction(messageContainer, paymentData, skipBilling);
                     }
+                    return;
                 } else {
-                    originalSetPaymentInformationExtendedFunction(messageContainer, paymentData, skipBilling);
+                    return originalSetPaymentInformationExtendedFunction(messageContainer, paymentData, skipBilling);
                 }
             });
         }
