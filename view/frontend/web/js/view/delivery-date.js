@@ -39,6 +39,7 @@ define(
                 this._super();
 
                 quote.shippingMethod.subscribe(function (newValue) {
+                    if (newValue === null) return;
                     var newShipping = newValue['carrier_code'] + '_' + newValue['method_code'];
                     if (window.checkoutConfig.deliveryDate.shippingMethods.indexOf(newShipping) === -1) {
                         self.useForShippingMethod(false);

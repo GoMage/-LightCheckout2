@@ -3,13 +3,15 @@ define([
     'Magento_Checkout/js/checkout-data',
     'Magento_Checkout/js/action/select-shipping-method',
     'underscore',
-    'GoMage_LightCheckout/js/is-light-checkout-enable'
+    'GoMage_LightCheckout/js/is-light-checkout-enable',
+    'mage/utils/wrapper'
 ], function (
     quote,
     checkoutData,
     selectShippingMethodAction,
     _,
-    isModuleEnable
+    isModuleEnable,
+    wrapper
 ) {
     'use strict';
 
@@ -19,52 +21,33 @@ define([
          * @param {Object} ratesData
          */
         var isEnable = isModuleEnable.getIsLightCheckoutEnable;
+        quote.shippingMethod.subscribe(function (newValue){
+            console.log(newValue);
+        });
         if (isEnable) {
-            originalObject.resolveShippingRates = function (ratesData) {
-                var selectedShippingRate = checkoutData.getSelectedShippingRate(),
-                    availableRate = false;
+            var configDefaultShippingRate = window.checkoutConfig.general.defaultShippingMethod;
 
-                if (ratesData.length === 1 && !quote.shippingMethod()) {
-                    //set shipping rate if we have only one available shipping rate
-                    selectShippingMethodAction(ratesData[0]);
+            originalObject.resolveShippingRates = wrapper.wrapSuper(originalObject.resolveShippingRates, function (ratesData) {
 
-                    return;
+                    if (configDefaultShippingRate){
+
+                       var availableRate = _.find(ratesData, function (rate) {
+
+                            return rate['carrier_code'] + '_' + rate['method_code'] === configDefaultShippingRate;
+                        });
+
+                        if (availableRate === undefined) {
+                            if (ratesData.length !== 1 && quote.shippingMethod()) {
+                                checkoutData.setSelectedShippingRate(null);
+                            }
+                        }else{
+                            checkoutData.setSelectedShippingRate(availableRate['carrier_code'] + '_' + availableRate['method_code']);
+                        }
+
                 }
 
-                if (quote.shippingMethod()) {
-                    availableRate = _.find(ratesData, function (rate) {
-                        return rate['carrier_code'] == quote.shippingMethod()['carrier_code'] && //eslint-disable-line
-                            rate['method_code'] == quote.shippingMethod()['method_code']; //eslint-disable-line eqeqeq
-                    });
-                }
-                if (availableRate === undefined) {
-                    //set shipping rate if we have shipping rate from config which is not available
-                    selectShippingMethodAction(ratesData[0]);
-
-                    return;
-                }
-                if (!availableRate && selectedShippingRate) {
-                    availableRate = _.find(ratesData, function (rate) {
-                        return rate['carrier_code'] + '_' + rate['method_code'] === selectedShippingRate;
-                    });
-                }
-
-                if (!availableRate && window.checkoutConfig.selectedShippingMethod) {
-                    availableRate = _.find(ratesData, function (rate) {
-                        var selectedShippingMethod = window.checkoutConfig.selectedShippingMethod;
-
-                        return rate['carrier_code'] == selectedShippingMethod['carrier_code'] && //eslint-disable-line
-                            rate['method_code'] == selectedShippingMethod['method_code']; //eslint-disable-line eqeqeq
-                    });
-                }
-
-                //Unset selected shipping method if not available
-                if (!availableRate) {
-                    selectShippingMethodAction(null);
-                } else {
-                    selectShippingMethodAction(availableRate);
-                }
-            }
+                this._super(ratesData);
+            });
         }
         return originalObject;
     }
