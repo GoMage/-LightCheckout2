@@ -67,10 +67,6 @@ define(
             initialize: function () {
                 var fieldsetName = 'checkout.shippingAddress.shipping-address-fieldset';
 
-                if (!checkoutData.getSelectedShippingRate() && window.checkoutConfig.general.defaultShippingMethod) {
-                    checkoutData.setSelectedShippingRate(window.checkoutConfig.general.defaultShippingMethod);
-                }
-
                 this._super();
 
                 registry.async('checkoutProvider')(function (checkoutProvider) {

@@ -250,10 +250,9 @@ define(
                     element.on('value', function () {
                         clearTimeout(self.validateAddressTimeout);
                         self.validateAddressTimeout = setTimeout(function () {
-                            self.postcodeValidation()
+                            self.postcodeValidation();
                             self.validateFields();
                         }, delay);
-
                     });
                     observedElements.push(element);
                 }

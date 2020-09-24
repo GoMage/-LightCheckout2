@@ -15,40 +15,46 @@ define([
 ) {
     'use strict';
 
+    /**
+     * Purpose of this mixin is adding additional logic to select default shipping method form LightCheckout configuration
+     * when checkout/cart page is initialized or ratesData is updated (f.e. when address is changed)
+     */
     return function (originalObject) {
 
-        /**
-         * @param {Object} ratesData
-         */
         var isEnable = isModuleEnable.getIsLightCheckoutEnable;
-        quote.shippingMethod.subscribe(function (newValue){
-            console.log(newValue);
-        });
+
         if (isEnable) {
-            var configDefaultShippingRate = window.checkoutConfig.general.defaultShippingMethod;
-
             originalObject.resolveShippingRates = wrapper.wrapSuper(originalObject.resolveShippingRates, function (ratesData) {
+                var configDefaultShippingRate = window.checkoutConfig.general.defaultShippingMethod,
+                    selectedShippingRate = checkoutData.getSelectedShippingRate();
 
-                    if (configDefaultShippingRate){
+                if (ratesData.length === 1 && quote.shippingMethod()) {
+                    selectShippingMethodAction(null);
+                }
 
-                       var availableRate = _.find(ratesData, function (rate) {
+                if (ratesData.length > 1 && quote.shippingMethod() && quote.shippingMethod()['carrier_code'] + '_' +
+                    quote.shippingMethod()['method_code'] !== selectedShippingRate) {
+                    selectShippingMethodAction(selectedShippingRate);
+                }
 
-                            return rate['carrier_code'] + '_' + rate['method_code'] === configDefaultShippingRate;
-                        });
+                // When checkout/cart page is load first time and localStorage's selected shipping method is empty
+                if (configDefaultShippingRate && !selectedShippingRate) {
+                   var availableRate = _.find(ratesData, function (rate) {
+                        // Find the default shipping method from LightCheckout configuration in the available shipping methods
+                        return rate['carrier_code'] + '_' + rate['method_code'] === configDefaultShippingRate;
+                   });
 
-                        if (availableRate === undefined) {
-                            if (ratesData.length !== 1 && quote.shippingMethod()) {
-                                checkoutData.setSelectedShippingRate(null);
-                            }
-                        }else{
-                            checkoutData.setSelectedShippingRate(availableRate['carrier_code'] + '_' + availableRate['method_code']);
-                        }
-
+                   if (availableRate === undefined) {
+                       checkoutData.setSelectedShippingRate(null);
+                   } else {
+                       checkoutData.setSelectedShippingRate(availableRate['carrier_code'] + '_' + availableRate['method_code']);
+                   }
                 }
 
                 this._super(ratesData);
             });
         }
+
         return originalObject;
     }
 });
