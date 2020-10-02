@@ -34,7 +34,7 @@
         <csp>
             <mode>
                 <storefront>
-                    <report_only>0</report_only>
+                    <report_uri>/_/csp-reports</report_uri>
                 </storefront>
             </mode>
         </csp>

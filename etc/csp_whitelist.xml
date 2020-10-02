@@ -13,8 +13,6 @@
         </policy>
         <policy id="img-src">
             <values>
-                <value id="cloudflare" type="host">*.cloudflare.com</value>
-                <value id="klarna-base" type="host">*.klarna.com</value>
                 <value id="googleadservices" type="host">*.googleadservices.com</value>
                 <value id="google-analytics" type="host">*.google-analytics.com</value>
                 <value id="paypal" type="host">*.paypal.com</value>
