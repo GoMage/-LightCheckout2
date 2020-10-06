@@ -216,7 +216,9 @@ define(
 
                         addressData['save_in_address_book'] = this.saveInAddressBook ? 1 : 0;
 
-                        selectShippingAddress(addressData);
+                        if (placeOrderActionAllowedState.isPlaceOrderActionAllowed) {
+                            selectShippingAddress(addressData);
+                        }
                     }
                 }
 

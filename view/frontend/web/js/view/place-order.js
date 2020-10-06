@@ -1,20 +1,16 @@
 define(
-    [// correct in the end of fix
+    [
         'jquery',
-        'underscore',
         'ko',
         'uiComponent',
-        'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Checkout/js/action/set-shipping-information',
         'GoMage_LightCheckout/js/action/save-additional-information',
         'GoMage_LightCheckout/js/view/payment/place-order-action-allowed-state'
     ],
     function (
         $,
-        _,
         ko,
         Component,
-        additionalValidators,
         setShippingInformation,
         saveAdditionalInformation,
         placeOrderActionAllowedState
