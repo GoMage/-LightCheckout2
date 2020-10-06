@@ -7,7 +7,7 @@ define(
         'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Checkout/js/action/set-shipping-information',
         'GoMage_LightCheckout/js/action/save-additional-information',
-        'GoMage_LightCheckout/js/light-checkout-data'
+        'GoMage_LightCheckout/js/view/payment/place-order-action-allowed-state'
     ],
     function (
         $,
@@ -17,7 +17,7 @@ define(
         additionalValidators,
         setShippingInformation,
         saveAdditionalInformation,
-        lightCheckoutData
+        placeOrderActionAllowedState
     ) {
         "use strict";
 
@@ -29,12 +29,15 @@ define(
 
             placeOrder: function () {
                 var self = this;
+                placeOrderActionAllowedState.isPlaceOrderActionAllowed = false;
 
                 this.prepareToPlaceOrder()
                     .done(function () {
                         self._placeOrder();
+                    })
+                    .always(function () {
+                        placeOrderActionAllowedState.isPlaceOrderActionAllowed = true;
                     });
-
 
                 return this;
             },

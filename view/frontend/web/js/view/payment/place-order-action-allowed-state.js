@@ -1,7 +1,7 @@
-define(['ko', 'Magento_Checkout/js/model/quote'], function (ko, quote) {
+define(['ko'], function (ko) {
     'use strict';
 
     return ko.track({
-        isPlaceOrderActionAllowed: quote.billingAddress() != null
+        isPlaceOrderActionAllowed: true
     });
 });
