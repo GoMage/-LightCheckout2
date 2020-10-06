@@ -1,12 +1,13 @@
 define(
-    [
+    [// correct in the end of fix
         'jquery',
         'underscore',
         'ko',
         'uiComponent',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Checkout/js/action/set-shipping-information',
-        'GoMage_LightCheckout/js/action/save-additional-information'
+        'GoMage_LightCheckout/js/action/save-additional-information',
+        'GoMage_LightCheckout/js/light-checkout-data'
     ],
     function (
         $,
@@ -15,31 +16,25 @@ define(
         Component,
         additionalValidators,
         setShippingInformation,
-        saveAdditionalInformation
+        saveAdditionalInformation,
+        lightCheckoutData
     ) {
         "use strict";
 
         return Component.extend({
             defaults: {
-                template: 'GoMage_LightCheckout/form/place-order',
-                isPlaceOrderButtonClicked: ko.observable(false)
+                template: 'GoMage_LightCheckout/form/place-order'
             },
             placeOrderPaymentMethodSelector: '#co-payment-form .payment-method._active button.action.primary.checkout',
 
             placeOrder: function () {
                 var self = this;
-                self.isPlaceOrderButtonClicked(false); // Save shipping address only 1 time on validation step
 
-                if (additionalValidators.validate()) {
-                    self.isPlaceOrderButtonClicked(true);
-                    this.prepareToPlaceOrder().done(function () {
+                this.prepareToPlaceOrder()
+                    .done(function () {
                         self._placeOrder();
-                    }).fail(function () {
-                        self.isPlaceOrderButtonClicked(false);
                     });
-                } else {
-                    self.isPlaceOrderButtonClicked(false);
-                }
+
 
                 return this;
             },

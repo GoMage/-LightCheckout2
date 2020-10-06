@@ -9,8 +9,8 @@ define([
     'Magento_Checkout/js/model/full-screen-loader',
     'Magento_Checkout/js/action/select-billing-address',
     'Magento_Checkout/js/model/shipping-save-processor/payload-extender',
-    'uiRegistry',
-    'GoMage_LightCheckout/js/is-light-checkout-enable'
+    'GoMage_LightCheckout/js/is-light-checkout-enable',
+    'GoMage_LightCheckout/js/view/payment/place-order-action-allowed-state'
 ], function (
     ko,
     quote,
@@ -22,8 +22,8 @@ define([
     fullScreenLoader,
     selectBillingAddressAction,
     payloadExtender,
-    uiRegistry,
-    isModuleEnable
+    isModuleEnable,
+    placeOrderActionAllowedState
 ) {
     'use strict';
 
@@ -62,13 +62,10 @@ define([
                     JSON.stringify(payload)
                 ).done(
                     function (response) {
-                        uiRegistry.get("checkout.sidebar.placeOrderButton", function (placeOrderButton) {
-                            if (!placeOrderButton.isPlaceOrderButtonClicked()) {
-                                quote.setTotals(response.totals);
-                                paymentService.setPaymentMethods(methodConverter(response['payment_methods']));
-                            }
-                            fullScreenLoader.stopLoader();
-                        });
+                        if (placeOrderActionAllowedState.isPlaceOrderActionAllowed) {
+                            quote.setTotals(response.totals);
+                            paymentService.setPaymentMethods(methodConverter(response['payment_methods']));
+                        }
                         fullScreenLoader.stopLoader();
                     }
                 ).fail(

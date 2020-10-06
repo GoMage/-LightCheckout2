@@ -23,7 +23,8 @@ define(
         'Magento_Checkout/js/action/create-shipping-address',
         'Magento_Customer/js/model/address-list',
         'Magento_Checkout/js/action/create-billing-address',
-        './shipping-state'
+        'GoMage_LightCheckout/js/view/shipping-state',
+        'GoMage_LightCheckout/js/view/payment/place-order-action-allowed-state'
     ],
     function (
         ko,
@@ -49,7 +50,8 @@ define(
         createShippingAddress,
         addressList,
         createBillingAddress,
-        shippingState
+        shippingState,
+        placeOrderActionAllowedState
     ) {
         'use strict';
 
@@ -62,9 +64,6 @@ define(
 
         return Component.extend({
             defaults: {
-                imports: {
-                    isPlaceOrderButtonClicked: 'checkout.sidebar.placeOrderButton:isPlaceOrderButtonClicked'
-                },
                 stickySelector: '#maincontent'
 
             },
@@ -93,8 +92,7 @@ define(
 
 
                 quote.billingAddress.subscribe(function (newAddress) {
-                    if (self.isAddressSameAsShipping() && typeof self.isPlaceOrderButtonClicked !== 'undefined'
-                        && !self.isPlaceOrderButtonClicked)
+                    if (self.isAddressSameAsShipping() && placeOrderActionAllowedState.isPlaceOrderActionAllowed)
                     {
                         var addressData = newAddress;
                         addressData.saveInAddressBook = 0;
