@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" component="Magento_InventoryShippingAdminUi/js/form/form" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"
+      component="Magento_InventoryShippingAdminUi/js/form/form" class="GoMage\LightCheckout\Ui\Component\Form">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">checkout_fields_manager.checkout_fields_manager_data_source</item>
@@ -18,8 +20,8 @@
     <dataSource name="checkout_fields_manager_data_source" component="Magento_Ui/js/form/provider">
         <dataProvider class="GoMage\LightCheckout\Ui\DataProvider\CheckoutFieldsManagerDataProvider" name="checkout_fields_manager_data_source">
             <settings>
-                <requestFieldName>order_id</requestFieldName>
-                <primaryFieldName>order_id</primaryFieldName>
+                <requestFieldName/>
+                <primaryFieldName/>
             </settings>
         </dataProvider>
     </dataSource>
@@ -28,7 +30,6 @@
             <dataScope />
             <label translate="true">Checkout Fields</label>
             <collapsible>false</collapsible>
-            <opened>true</opened>
         </settings>
         <dynamicRows name="items" component="Magento_Ui/js/dynamic-rows/dynamic-rows" sortOrder="20" template="ui/dynamic-rows/templates/grid">
             <argument name="data" xsi:type="array">
@@ -54,7 +55,7 @@
                 <identificationProperty>order_item_id</identificationProperty>
                 <columnsHeader>true</columnsHeader>
                 <dndConfig>
-                    <param name="enabled" xsi:type="boolean">false</param>
+                    <param name="enabled" xsi:type="boolean">true</param>
                 </dndConfig>
             </settings>
             <container name="record" component="Magento_Ui/js/dynamic-rows/record">
@@ -93,80 +94,78 @@
                         <labelVisible>false</labelVisible>
                     </settings>
                 </field>
-                <dynamicRows name="sources" sortOrder="40">
-                    <argument name="data" xsi:type="array">
-                        <item name="js_config" xsi:type="array">
-                            <item name="dataProvider" xsi:type="string">sources</item>
-                        </item>
-                    </argument>
-                    <settings>
-                        <label translate="true">Available Sources</label>
-                        <defaultRecord>false</defaultRecord>
-                        <addButton>false</addButton>
-                        <deleteProperty>false</deleteProperty>
-                        <recordTemplate>record</recordTemplate>
-                        <identificationProperty>sourceCode</identificationProperty>
-                        <dndConfig>
-                            <param name="enabled" xsi:type="boolean">false</param>
-                        </dndConfig>
-                        <columnsHeader>true</columnsHeader>
-                        <imports>
-                            <link name="reload">${ $.provider }:reInitSources</link>
-                        </imports>
-                    </settings>
-                    <container name="record" component="Magento_Ui/js/dynamic-rows/record">
-                        <argument name="data" xsi:type="array">
-                            <item name="config" xsi:type="array">
-                                <item name="isTemplate" xsi:type="boolean">true</item>
-                                <item name="is_collection" xsi:type="boolean">false</item>
-                                <item name="dataScope" xsi:type="string" />
-                            </item>
-                        </argument>
-                        <field name="sourceName" formElement="input" sortOrder="10">
-                            <settings>
-                                <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
-                                <dataType>text</dataType>
-                                <dataScope>sourceName</dataScope>
-                                <label translate="true">Source</label>
-                                <labelVisible>false</labelVisible>
-                            </settings>
-                        </field>
-                        <field name="qtyAvailable" formElement="input" sortOrder="20">
-                            <settings>
-                                <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
-                                <dataType>text</dataType>
-                                <dataScope>qtyAvailable</dataScope>
-                                <labelVisible>false</labelVisible>
-                                <label translate="true">Qty Available</label>
-                            </settings>
-                        </field>
-                        <field name="qtyToDeduct" formElement="input"
-                               component="Magento_InventoryShippingAdminUi/js/form/element/qty_to_deduct"
-                               sortOrder="30">
-                            <settings>
-                                <validation>
-                                    <rule name="validate-number" xsi:type="boolean">true</rule>
-                                    <rule name="validate-zero-or-greater" xsi:type="boolean">true</rule>
-                                    <rule name="less-than-equals-to" xsi:type="number">0</rule>
-                                </validation>
-                                <elementTmpl>ui/form/element/input</elementTmpl>
-                                <dataType>number</dataType>
-                                <dataScope>qtyToDeduct</dataScope>
-                                <label translate="true">Qty To Deduct</label>
-                                <imports>
-                                    <link name="sourceCode">${$.provider}:${ $.parentScope }.sourceCode</link>
-                                    <link name="qtyAvailable">${$.parentName}.qtyAvailable:value</link>
-                                    <link name="toggleDisable">ns = ${ $.ns }, index = sourceCode:value</link>
-                                </imports>
-                                <disabled>true</disabled>
-                                <labelVisible>false</labelVisible>
-                            </settings>
-                        </field>
-                    </container>
-                </dynamicRows>
+<!--                <dynamicRows name="sources" sortOrder="40">-->
+<!--                    <argument name="data" xsi:type="array">-->
+<!--                        <item name="js_config" xsi:type="array">-->
+<!--                            <item name="dataProvider" xsi:type="string">sources</item>-->
+<!--                        </item>-->
+<!--                    </argument>-->
+<!--                    <settings>-->
+<!--                        <label translate="true">Available Sources</label>-->
+<!--                        <defaultRecord>false</defaultRecord>-->
+<!--                        <addButton>false</addButton>-->
+<!--                        <deleteProperty>false</deleteProperty>-->
+<!--                        <recordTemplate>record</recordTemplate>-->
+<!--                        <identificationProperty>sourceCode</identificationProperty>-->
+<!--                        <dndConfig>-->
+<!--                            <param name="enabled" xsi:type="boolean">false</param>-->
+<!--                        </dndConfig>-->
+<!--                        <columnsHeader>true</columnsHeader>-->
+<!--                        <imports>-->
+<!--                            <link name="reload">${ $.provider }:reInitSources</link>-->
+<!--                        </imports>-->
+<!--                    </settings>-->
+<!--                    <container name="record" component="Magento_Ui/js/dynamic-rows/record">-->
+<!--                        <argument name="data" xsi:type="array">-->
+<!--                            <item name="config" xsi:type="array">-->
+<!--                                <item name="isTemplate" xsi:type="boolean">true</item>-->
+<!--                                <item name="is_collection" xsi:type="boolean">false</item>-->
+<!--                                <item name="dataScope" xsi:type="string" />-->
+<!--                            </item>-->
+<!--                        </argument>-->
+<!--                        <field name="sourceName" formElement="input" sortOrder="10">-->
+<!--                            <settings>-->
+<!--                                <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>-->
+<!--                                <dataType>text</dataType>-->
+<!--                                <dataScope>sourceName</dataScope>-->
+<!--                                <label translate="true">Source</label>-->
+<!--                                <labelVisible>false</labelVisible>-->
+<!--                            </settings>-->
+<!--                        </field>-->
+<!--                        <field name="qtyAvailable" formElement="input" sortOrder="20">-->
+<!--                            <settings>-->
+<!--                                <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>-->
+<!--                                <dataType>text</dataType>-->
+<!--                                <dataScope>qtyAvailable</dataScope>-->
+<!--                                <labelVisible>false</labelVisible>-->
+<!--                                <label translate="true">Qty Available</label>-->
+<!--                            </settings>-->
+<!--                        </field>-->
+<!--                        <field name="qtyToDeduct" formElement="input"-->
+<!--                               component="Magento_InventoryShippingAdminUi/js/form/element/qty_to_deduct"-->
+<!--                               sortOrder="30">-->
+<!--                            <settings>-->
+<!--                                <validation>-->
+<!--                                    <rule name="validate-number" xsi:type="boolean">true</rule>-->
+<!--                                    <rule name="validate-zero-or-greater" xsi:type="boolean">true</rule>-->
+<!--                                    <rule name="less-than-equals-to" xsi:type="number">0</rule>-->
+<!--                                </validation>-->
+<!--                                <elementTmpl>ui/form/element/input</elementTmpl>-->
+<!--                                <dataType>number</dataType>-->
+<!--                                <dataScope>qtyToDeduct</dataScope>-->
+<!--                                <label translate="true">Qty To Deduct</label>-->
+<!--                                <imports>-->
+<!--                                    <link name="sourceCode">${$.provider}:${ $.parentScope }.sourceCode</link>-->
+<!--                                    <link name="qtyAvailable">${$.parentName}.qtyAvailable:value</link>-->
+<!--                                    <link name="toggleDisable">ns = ${ $.ns }, index = sourceCode:value</link>-->
+<!--                                </imports>-->
+<!--                                <disabled>true</disabled>-->
+<!--                                <labelVisible>false</labelVisible>-->
+<!--                            </settings>-->
+<!--                        </field>-->
+<!--                    </container>-->
+<!--                </dynamicRows>-->
             </container>
         </dynamicRows>
     </fieldset>
 </form>
-
-

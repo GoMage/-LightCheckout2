@@ -9,7 +9,6 @@ use Magento\Ui\DataProvider\AbstractDataProvider;
 
 class CheckoutFieldsManagerDataProvider extends AbstractDataProvider
 {
-
     public function __construct(
         $name,
         $primaryFieldName,
@@ -37,8 +36,25 @@ class CheckoutFieldsManagerDataProvider extends AbstractDataProvider
      */
     public function getData()
     {
-        $data = [];
+        $myData = '{
+          "items": [
+            {
+              "sku": "24-WW5",
+              "product": "Push It Messenger Bag",
+              "qtyToShip": 1
+            },
+            {
+              "sku": "24-WB04",
+              "product": "Push It Messenger Bag for men",
+              "qtyToShip": 1
+            }
+          ]
+        }';
 
-        return $data;
+        $result = json_decode($myData, true);
+
+        return $result;
     }
+
+
 }
