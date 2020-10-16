@@ -18,7 +18,7 @@ define([
 
         /**
          *
-         * @inheritDoc
+         * @returns {boolean}
          */
         isItemsBlockExpanded: function () {
             return this.hideProducts === false
@@ -31,9 +31,12 @@ define([
 
         /**
          *
-         * @inheritDoc
+         * @param items
          */
         setItems: function (items) {
+            if (this.isItemsBlockExpanded() === true) {
+                items = items.slice(0, parseInt(this.numberOfProducts, 10));
+            }
             this.items(items);
         },
 
