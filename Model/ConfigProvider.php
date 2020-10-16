@@ -15,7 +15,7 @@ use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Cart\ShippingMethodConverter;
 use Magento\Quote\Model\Quote\TotalsCollector;
-use \Magento\Customer\Model\Session;
+use Magento\Customer\Model\Session;
 
 class ConfigProvider implements ConfigProviderInterface
 {
@@ -147,7 +147,7 @@ class ConfigProvider implements ConfigProviderInterface
     {
         $defaultActivePaymentMethod = null;
 
-        if (!$quote->getPayment()->getMethod()||$this->customerSession->isLoggedIn()) {
+        if (!$quote->getPayment()->getMethod() || $this->customerSession->isLoggedIn()) {
             $defaultPaymentMethod = $this->checkoutConfigurationsProvider->getDefaultPaymentMethod();
 
             $paymentMethods = $this->paymentMethodManagement->getList($quote->getId());
