@@ -36,7 +36,7 @@ define([
         var isEnable = isModuleEnable.getIsLightCheckoutEnable;
         if (isEnable) {
             originalObject.saveShippingInformation = function () {
-                if (!quote.shippingMethod()) return; // if shipping method is not needed
+                if (!quote.shippingMethod()) return this; // if there is not shipping method (e.g. product is virtual)
 
                 var payload;
 

@@ -5,7 +5,8 @@ define(
         'uiComponent',
         'Magento_Checkout/js/action/set-shipping-information',
         'GoMage_LightCheckout/js/action/save-additional-information',
-        'GoMage_LightCheckout/js/view/payment/place-order-action-allowed-state'
+        'GoMage_LightCheckout/js/view/payment/place-order-action-allowed-state',
+        'Magento_Checkout/js/model/quote'
     ],
     function (
         $,
@@ -13,7 +14,8 @@ define(
         Component,
         setShippingInformation,
         saveAdditionalInformation,
-        placeOrderActionAllowedState
+        placeOrderActionAllowedState,
+        quote
     ) {
         "use strict";
 
@@ -43,10 +45,15 @@ define(
             },
 
             prepareToPlaceOrder: function () {
-                return $.when(setShippingInformation()).done(function () {
-                    $.when(saveAdditionalInformation()).done(function () {
-                        $("body").animate({scrollTop: 0}, "slow");
+                if (quote.shippingMethod() !== null) {
+                    return $.when(setShippingInformation()).done(function () {
+                        $.when(saveAdditionalInformation()).done(function () {
+                            $("body").animate({scrollTop: 0}, "slow");
+                        });
                     });
+                }
+                return $.when(saveAdditionalInformation()).done(function () {
+                    $("body").animate({scrollTop: 0}, "slow");
                 });
             }
         });
