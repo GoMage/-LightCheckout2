@@ -72,7 +72,7 @@ class CustomUrl implements RouterInterface
             $request->setActionName('index');
             return $this->standardRouter->match($request);
         } elseif (('checkout' == $identifier || 'checkout/index' == $identifier || 'checkout/index/index' == $identifier)
-            && $customUrl) {
+            && $customUrl && $this->isEnableLightCheckout->execute()) {
             $this->defaultRouter->match($request);
         }
         return null;
