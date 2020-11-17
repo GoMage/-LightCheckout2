@@ -1,5 +1,6 @@
-<div class="block items-in-cart" data-bind="mageInit: {'collapsible':{'openedState': 'active', 'active': isItemsBlockExpanded()}}">
-<div class="title" data-role="title">
+<div class="block items-in-cart"
+     data-bind="mageInit: {'collapsible':{'openedState': 'active', 'active': isItemsBlockExpanded()}}">
+    <div class="title" data-role="title">
         <strong role="heading">
             <span class="heading-text" data-bind="i18n: 'Cart'"></span>
             <span class="heading-qty" data-bind="text: getTotals()"></span>
@@ -19,6 +20,13 @@
                 </li>
                 <!-- /ko -->
             </ol>
+        </div>
+    </div>
+    <div class="actions-toolbar" if="isViewCartLinkShowed() ">
+        <div class="secondary">
+            <a class="action viewcart" data-bind="attr: {href: cartUrl}">
+                <span data-bind="i18n: 'View and Edit Cart'"></span>
+            </a>
         </div>
     </div>
 </div>
