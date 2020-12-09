@@ -19,7 +19,8 @@ define(
         'GoMage_LightCheckout/js/model/address/auto-complete-register',
         'rjsResolver',
         'Magento_Checkout/js/action/create-shipping-address',
-        './shipping-state'
+        'GoMage_LightCheckout/js/view/shipping-state',
+        'GoMage_LightCheckout/js/view/payment/place-order-action-allowed-state'
     ],
     function (
         ko,
@@ -41,7 +42,8 @@ define(
         autoCompleteRegister,
         rjsResolver,
         createShippingAddress,
-        shippingState
+        shippingState,
+        placeOrderActionAllowedState
     ) {
         'use strict';
         var addressOptions = addressList().filter(function (address) {
@@ -50,7 +52,6 @@ define(
         return Component.extend({
             defaults: {
                 imports: {
-                    isPlaceOrderButtonClicked: 'checkout.sidebar.placeOrderButton:isPlaceOrderButtonClicked',
                     isAddressSameAsShipping: 'checkout.billingAddress:isAddressSameAsShipping' // for update UI (shipping address block)
                 },
                 exports: {
@@ -66,10 +67,6 @@ define(
              */
             initialize: function () {
                 var fieldsetName = 'checkout.shippingAddress.shipping-address-fieldset';
-
-                if (!checkoutData.getSelectedShippingRate() && window.checkoutConfig.general.defaultShippingMethod) {
-                    checkoutData.setSelectedShippingRate(window.checkoutConfig.general.defaultShippingMethod);
-                }
 
                 this._super();
 
@@ -126,7 +123,7 @@ define(
                     var isMethodChange = ($.type(this.currentMethod) !== 'object') ? true : this.currentMethod.method_code;
                     if ($.type(newValue) === 'object' && (isMethodChange !== newValue.method_code)) {
                         setShippingInformationAction();
-                    } else if (typeof this.isPlaceOrderButtonClicked !== 'undefined' && !this.isPlaceOrderButtonClicked) {
+                    } else if (placeOrderActionAllowedState.isPlaceOrderActionAllowed) {
                         updateSectionAction();
                     }
                 }, this);
@@ -219,7 +216,9 @@ define(
 
                         addressData['save_in_address_book'] = this.saveInAddressBook ? 1 : 0;
 
-                        selectShippingAddress(addressData);
+                        if (placeOrderActionAllowedState.isPlaceOrderActionAllowed) {
+                            selectShippingAddress(addressData);
+                        }
                     }
                 }
 

@@ -160,31 +160,13 @@ class ConfigProvider implements ConfigProviderInterface
      */
     private function getDefaultShippingMethod(CartInterface $quote)
     {
-        $defaultActiveShippingMethod = null;
-
-        /** @var \Magento\Quote\Model\Quote\Address $shippingAddress */
-        $shippingAddress = $quote->getShippingAddress();
-
-        if (!$shippingAddress->getCountryId()) {
-            $defaultCountryId = $this->directoryHelper->getDefaultCountry();
-            $shippingAddress->setCountryId($defaultCountryId)->setCollectShippingRates(true);
-        }
-
-        if (!$shippingAddress->getShippingMethod() && !$quote->getIsVirtual()) {
+        if (!$quote->getIsVirtual()) {
             $defaultShippingMethod = $this->checkoutConfigurationsProvider->getDefaultShippingMethod();
-
             if ($defaultShippingMethod) {
-                $this->totalsCollector->collectAddressTotals($quote, $shippingAddress);
-
-                $allowedShippingMethods = $this->getAllowedShippingMethodsByQuote($quote);
-
-                if (in_array($defaultShippingMethod, $allowedShippingMethods)) {
-                    $defaultActiveShippingMethod = $defaultShippingMethod;
-                }
+                return $defaultShippingMethod;
             }
         }
-
-        return $defaultActiveShippingMethod;
+        return null;
     }
 
     /**

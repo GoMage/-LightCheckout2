@@ -31,5 +31,12 @@
                 <title>Comment</title>
             </order_comment>
         </gomage_light_checkout_configuration>
+        <csp>
+            <mode>
+                <storefront>
+                    <report_uri>/_/csp-reports</report_uri>
+                </storefront>
+            </mode>
+        </csp>
     </default>
 </config>
