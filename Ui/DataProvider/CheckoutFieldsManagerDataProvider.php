@@ -39,14 +39,20 @@ class CheckoutFieldsManagerDataProvider extends AbstractDataProvider
         $myData = '{
           "items": [
             {
-              "sku": "24-WW5",
-              "product": "Push It Messenger Bag",
-              "qtyToShip": 1
+              "field": "First Name",
+              "label": "First Name",
+              "width": 50,
+              "is_enabled": {"config": {
+                "checked": true
+              }},
+              "is_required": 1
             },
             {
-              "sku": "24-WB04",
-              "product": "Push It Messenger Bag for men",
-              "qtyToShip": 1
+              "field": "Last Name",
+              "label": "Last Name",
+              "width": 100,
+              "is_enabled": 0,
+              "is_required": 1
             }
           ]
         }';
