@@ -13,6 +13,7 @@ use Magento\Customer\Model\Options;
 use Magento\Shipping\Model\Config;
 use Magento\Store\Api\StoreResolverInterface;
 use Magento\Ui\Component\Form\AttributeMapper;
+use GoMage\LightCheckout\Model\Config\AddressFieldsProvider;
 
 /**
  * Class LayoutProcessor
@@ -75,18 +76,11 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     private $isEnableLightCheckout;
 
     /**
-     * @param AttributeMetadataDataProvider $attributeMetadataDataProvider
-     * @param AttributeMapper $attributeMapper
-     * @param AttributeMerger $merger
-     * @param FetchArgs $fetchArgs
-     * @param Config $shippingConfig
-     * @param StoreResolverInterface $storeResolver
-     * @param Options $options
-     * @param UpdateBlocksAccordingToConfigurationByJsLayout $updateBlocksAccordingToConfigurationByJsLayout
-     * @param InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout
-     * @param PrepareAddressFieldsPositions $prepareAddressFieldsPositions
-     * @param IsEnableLightCheckout $isEnableLightCheckout
+     * @var AddressFieldsProvider
      */
+    private AddressFieldsProvider $addressFieldsProvider;
+
+
     public function __construct(
         AttributeMetadataDataProvider $attributeMetadataDataProvider,
         AttributeMapper $attributeMapper,
@@ -98,7 +92,8 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         UpdateBlocksAccordingToConfigurationByJsLayout $updateBlocksAccordingToConfigurationByJsLayout,
         InitGeoIpSettingsForCheckout $initGeoIpSettingsForCheckout,
         PrepareAddressFieldsPositions $prepareAddressFieldsPositions,
-        IsEnableLightCheckout $isEnableLightCheckout
+        IsEnableLightCheckout $isEnableLightCheckout,
+        AddressFieldsProvider $addressFieldsProvider
     ) {
         $this->attributeMetadataDataProvider = $attributeMetadataDataProvider;
         $this->attributeMapper = $attributeMapper;
@@ -111,33 +106,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         $this->initGeoIpSettingsForCheckout = $initGeoIpSettingsForCheckout;
         $this->prepareAddressFieldsPositions = $prepareAddressFieldsPositions;
         $this->isEnableLightCheckout = $isEnableLightCheckout;
-    }
-
-    /**
-     * @return array
-     */
-    private function getAddressAttributes()
-    {
-        /** @var \Magento\Eav\Api\Data\AttributeInterface[] $attributes */
-        $attributes = $this->attributeMetadataDataProvider->loadAttributesCollection(
-            'customer_address',
-            'customer_register_address'
-        );
-
-        $elements = [];
-        foreach ($attributes as $attribute) {
-            $code = $attribute->getAttributeCode();
-            if ($attribute->getIsUserDefined()) {
-                continue;
-            }
-            $elements[$code] = $this->attributeMapper->map($attribute);
-            if (isset($elements[$code]['label'])) {
-                $label = $elements[$code]['label'];
-                $elements[$code]['label'] = __($label);
-            }
-        }
-
-        return $elements;
+        $this->addressFieldsProvider = $addressFieldsProvider;
     }
 
     /**
@@ -188,7 +157,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
                 'suffix' => [$this->options, 'getNameSuffixOptions'],
             ];
 
-            $elements = $this->getAddressAttributes();
+            $elements = $this->addressFieldsProvider->getAddressAttributes();
             $elements = $this->convertElementsToSelect($elements, $attributesToConvert);
 
             if (isset($jsLayout['components']['checkout']['children']['configuration']['children']

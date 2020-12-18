@@ -5,6 +5,7 @@ namespace GoMage\LightCheckout\Model\Config;
 use Magento\Customer\Helper\Address;
 use Magento\Customer\Model\AttributeMetadataDataProvider;
 use Magento\Eav\Api\Data\AttributeInterface;
+use Magento\Ui\Component\Form\AttributeMapper;
 
 class AddressFieldsProvider
 {
@@ -19,17 +20,44 @@ class AddressFieldsProvider
     private $address;
 
     /**
-     * @param AttributeMetadataDataProvider $attributeMetadataDataProvider
-     * @param Address $address
+     * @var AttributeMapper
      */
+    private AttributeMapper $attributeMapper;
+
+
     public function __construct(
         AttributeMetadataDataProvider $attributeMetadataDataProvider,
-        Address $address
+        Address $address,
+        AttributeMapper $attributeMapper
     ) {
         $this->attributeMetadataDataProvider = $attributeMetadataDataProvider;
         $this->address = $address;
+        $this->attributeMapper = $attributeMapper;
     }
 
+    public function getAddressAttributes()
+    {
+        /** @var AttributeInterface[] $attributes */
+        $attributes = $this->attributeMetadataDataProvider->loadAttributesCollection(
+            'customer_address',
+            'customer_register_address'
+        );
+
+        $elements = [];
+        foreach ($attributes as $attribute) {
+            $code = $attribute->getAttributeCode();
+            if ($attribute->getIsUserDefined()) {
+                continue;
+            }
+            $elements[$code] = $this->attributeMapper->map($attribute);
+            if (isset($elements[$code]['label'])) {
+                $label = $elements[$code]['label'];
+                $elements[$code]['label'] = __($label);
+            }
+        }
+
+        return $elements;
+    }
     /**
      * @return array
      */

@@ -189,7 +189,7 @@
 <!--                    <label>Visibility and Sorting</label>-->
 <!--                    <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\CheckoutAddressFieldsSorting</frontend_model>-->
 <!--                </field>-->
-                <field id="fields_manager" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="fields_manager" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <frontend_model>GoMage\LightCheckout\Block\Adminhtml\Config\FieldsManager</frontend_model>
                 </field>
             </group>
