@@ -7,24 +7,42 @@ namespace GoMage\LightCheckout\Ui\DataProvider;
 use Magento\Framework\Api\Filter;
 use Magento\Ui\DataProvider\AbstractDataProvider;
 use GoMage\LightCheckout\Model\Config\AddressFieldsProvider;
+use Magento\Customer\Helper\Address as CustomerAddressHelper;
 
 class CheckoutFieldsManagerDataProvider extends AbstractDataProvider
 {
     /**
      * @var AddressFieldsProvider
      */
-    private AddressFieldsProvider $addressFieldsProvider;
+    private $addressFieldsProvider;
 
+    /**
+     * @var CustomerAddressHelper
+     */
+    private $customerAddressHelper;
+
+    /**
+     * CheckoutFieldsManagerDataProvider constructor.
+     * @param $name
+     * @param $primaryFieldName
+     * @param $requestFieldName
+     * @param AddressFieldsProvider $addressFieldsProvider
+     * @param CustomerAddressHelper $customerAddressHelper
+     * @param array $meta
+     * @param array $data
+     */
     public function __construct(
         $name,
         $primaryFieldName,
         $requestFieldName,
         AddressFieldsProvider $addressFieldsProvider,
+        CustomerAddressHelper $customerAddressHelper,
         array $meta = [],
         array $data = []
     ) {
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
         $this->addressFieldsProvider = $addressFieldsProvider;
+        $this->customerAddressHelper = $customerAddressHelper;
     }
 
     /**
@@ -40,25 +58,23 @@ class CheckoutFieldsManagerDataProvider extends AbstractDataProvider
     }
 
     /**
-     * @inheritdoc
+     * @return array[]
      */
     public function getData()
     {
-        $elements = $this->addressFieldsProvider->getAddressAttributes();
+        $attributes = $this->addressFieldsProvider->getGridAddressAttributes();
         $data = [];
-        foreach ($elements as $element) {
+        foreach ($attributes as $attribute) {
             $data[] = [
-                'field' => isset($element['label']) ? $element['label']->getText() : '',
-                'label' => isset($element['label']) ? $element['label']->getText() : '',
-                'width' => 50, // todo: read from module config and add here correct value
-                'is_enabled' => $element['visible'],
-                'is_required' => $element['required'],
+                'field' => $attribute->getFrontendLabel(),
+                'label' => $attribute->getStoreLabel(),
+                'width' => $attribute->getIsWide(),
+                'is_enabled' => ($attribute->getAttributeCode() === 'vat_id') ?
+                    $this->customerAddressHelper->isVatAttributeVisible() : $attribute->getIsVisible(),
+                'is_required' => $attribute->getIsRequired(),
             ];
         }
 
-
         return ['items' => $data];
     }
-
-
 }

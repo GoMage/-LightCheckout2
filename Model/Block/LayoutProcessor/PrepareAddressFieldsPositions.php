@@ -2,15 +2,15 @@
 
 namespace GoMage\LightCheckout\Model\Block\LayoutProcessor;
 
-use GoMage\LightCheckout\Model\Config\CheckoutAddressFieldsSorting\FieldsProvider;
+use GoMage\LightCheckout\Model\Config\AddressFieldsProvider;
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 
 class PrepareAddressFieldsPositions
 {
     /**
-     * @var FieldsProvider
+     * @var AddressFieldsProvider
      */
-    private $fieldsProvider;
+    private $addressFieldsProvider;
 
     /**
      * @var CheckoutConfigurationsProvider
@@ -18,14 +18,15 @@ class PrepareAddressFieldsPositions
     private $checkoutConfigurationsProvider;
 
     /**
-     * @param FieldsProvider $fieldsProvider
+     * PrepareAddressFieldsPositions constructor.
+     * @param AddressFieldsProvider $addressFieldsProvider
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      */
     public function __construct(
-        FieldsProvider $fieldsProvider,
+        AddressFieldsProvider $addressFieldsProvider,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider
     ) {
-        $this->fieldsProvider = $fieldsProvider;
+        $this->addressFieldsProvider = $addressFieldsProvider;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
     }
 
@@ -41,8 +42,9 @@ class PrepareAddressFieldsPositions
         $shippingFields = $jsLayout["components"]["checkout"]["children"]["shippingAddress"]["children"]
         ["shipping-address-fieldset"]["children"];
 
-        $preparedBillingFields = $this->prepareByAddressChildren($billingFields);
-        $preparedShippingFields = $this->prepareByAddressChildren($shippingFields);
+        $visibleAddressAttributes = $this->addressFieldsProvider->getVisibleAddressAttributes();
+        $preparedBillingFields = $this->prepareByAddressChildren($billingFields, $visibleAddressAttributes);
+        $preparedShippingFields = $this->prepareByAddressChildren($shippingFields, $visibleAddressAttributes);
 
         $jsLayout["components"]["checkout"]["children"]["billingAddress"]["children"]["billing-address-fieldset"]
         ["children"] = $preparedBillingFields;
@@ -53,18 +55,16 @@ class PrepareAddressFieldsPositions
     }
 
     /**
-     * @param array $fields
-     *
+     * @param $fields
+     * @param $visibleAddressAttributes
      * @return array
      */
-    private function prepareByAddressChildren($fields)
+    private function prepareByAddressChildren($fields, $visibleAddressAttributes)
     {
         $preparedFields = [];
-        $fieldsDataTransferObject = $this->fieldsProvider->get();
-        $visibleFields = $fieldsDataTransferObject->getVisibleFields();
 
         /** @var \Magento\Customer\Model\Attribute $visibleField */
-        foreach ($visibleFields as $visibleField) {
+        foreach ($visibleAddressAttributes as $visibleField) {
             if (isset($fields[$visibleField->getAttributeCode()])) {
                 $attributeCode = $visibleField->getAttributeCode();
                 $preparedFields[$attributeCode] = $fields[$attributeCode];

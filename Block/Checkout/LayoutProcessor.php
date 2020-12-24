@@ -78,7 +78,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
     /**
      * @var AddressFieldsProvider
      */
-    private AddressFieldsProvider $addressFieldsProvider;
+    private $addressFieldsProvider;
 
 
     public function __construct(
