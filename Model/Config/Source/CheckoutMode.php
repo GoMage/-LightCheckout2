@@ -12,8 +12,8 @@ class CheckoutMode implements OptionSourceInterface
     public function toOptionArray()
     {
         return [
-            ['value' => 0, 'label' => __('Registered and guest customers')],
-            ['value' => 1, 'label' => __('Only registered customers')],
+            ['value' => 1, 'label' => __('Registered and guest customers')],
+            ['value' => 0, 'label' => __('Only registered customers')],
         ];
     }
 }

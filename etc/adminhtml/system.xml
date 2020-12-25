@@ -89,6 +89,7 @@
                 <field id="checkout_mode" translate="label" type="select" sortOrder="20" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Checkout Mode</label>
+                    <config_path>checkout/options/guest_checkout</config_path>
                     <source_model>GoMage\LightCheckout\Model\Config\Source\CheckoutMode</source_model>
                 </field>
                 <field id="auto_registration" translate="label" type="select" sortOrder="30"
@@ -96,7 +97,7 @@
                     <label>Auto-Registration</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
-                        <field id="checkout_mode">0</field>
+                        <field id="checkout_mode">1</field>
                     </depends>
                 </field>
                 <field id="create_an_account_checkbox" translate="label" type="select" sortOrder="40"
@@ -104,8 +105,8 @@
                     <label>Create an Account checkbox</label>
                     <source_model>GoMage\LightCheckout\Model\Config\Source\CheckboxOptions</source_model>
                     <depends>
-                        <field id="auto_registration">0</field>
-                        <field id="checkout_mode">0</field>
+                        <field id="auto_registration">1</field>
+                        <field id="checkout_mode">1</field>
                     </depends>
                 </field>
             </group>

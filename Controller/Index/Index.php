@@ -91,13 +91,15 @@ class Index extends \Magento\Checkout\Controller\Onepage
      */
     public function execute()
     {
+
         if ($this->isEnableLightCheckout->execute()) {
             $quote = $this->getOnepage()->getQuote();
-            if (!$quote->hasItems() || $quote->getHasError() || !$quote->validateMinimumAmount()) {
+            $checkoutHelper = $this->_objectManager->get(\Magento\Checkout\Helper\Data::class);
+            if (!$this->_customerSession->isLoggedIn() && !$checkoutHelper->isAllowedGuestCheckout($quote) || !$quote->hasItems() || !$quote->validateMinimumAmount()) {
                 //redirect not to cart, because if cart is off in configuration it will come to endless redirect.
-                return $this->resultRedirectFactory->create()->setPath('');
+                $this->messageManager->addErrorMessage(__('Please sign in to make your purchase. Thank you!'));
+                return $this->resultRedirectFactory->create()->setPath('/');
             }
-
             $this->_customerSession->regenerateId();
             $this->session->setCartWasUpdated(false);
             $this->getOnepage()->initCheckout();
