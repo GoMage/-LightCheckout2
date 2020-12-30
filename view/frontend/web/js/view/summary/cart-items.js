@@ -12,8 +12,8 @@ define([
     'use strict';
 
     return Component.extend({
-        hideProducts: window.checkoutConfig.numberProductInCheckout.hideProducts,
-        numberOfProducts: window.checkoutConfig.numberProductInCheckout.numberOfProducts,
+        isItemsHidden: window.checkoutConfig.numberProductInCheckout.hideProducts,
+        numberOfItems: window.checkoutConfig.numberProductInCheckout.numberOfProducts,
         productClasses: 'product-item',
 
         /**
@@ -21,12 +21,11 @@ define([
          * @returns {boolean}
          */
         isItemsBlockExpanded: function () {
-            return this.hideProducts === false
-                || (this.hideProducts === true && this.getCartLineItemsCount() > this.numberOfProducts);
+            return !(this.isItemsHidden === true && (this.numberOfItems === "0" || this.numberOfItems === null))
         },
 
-        getTotals: ko.computed(function() {
-           return parseFloat(totals.totals()['items_qty']);
+        getTotals: ko.computed(function () {
+            return parseFloat(totals.totals()['items_qty']);
         }, this),
 
         /**
@@ -34,13 +33,29 @@ define([
          * @param items
          */
         setItems: function (items) {
-            if (this.isItemsBlockExpanded() === true) {
-                items = items.slice(0, parseInt(this.numberOfProducts, 10));
+            if (this.isCustomiseItems() === true) {
+                items = items.slice(0, parseInt(this.numberOfItems, 10));
             }
             this.items(items);
         },
 
-        getOrderTotal: ko.computed(function() {
+        /**
+         *
+         * @returns {boolean}
+         */
+        isCustomiseItems: function () {
+            return this.isItemsBlockExpanded() && this.isItemsHidden;
+        },
+
+        /**
+         *
+         * @returns {boolean}
+         */
+        isViewCartLinkShowed: function () {
+            return this.isCustomiseItems() === true && (this.getCartLineItemsCount() > this.numberOfItems);
+        },
+
+        getOrderTotal: ko.computed(function () {
             return grandTotal().getValue();
         }, this)
     });
