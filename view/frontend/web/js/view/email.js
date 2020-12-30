@@ -8,7 +8,8 @@ define([
     'Magento_Customer/js/model/customer',
     'uiRegistry',
     'GoMage_LightCheckout/js/action/check-is-subscribed',
-    'GoMage_LightCheckout/js/light-checkout-data'
+    'GoMage_LightCheckout/js/light-checkout-data',
+    'Magento_Checkout/js/model/quote',
 ], function (
     $,
     ko,
@@ -19,7 +20,8 @@ define([
     customer,
     uiRegistry,
     checkIsSubscribed,
-    lightCheckoutData
+    lightCheckoutData,
+    quote
 ) {
     'use strict';
 
@@ -70,6 +72,30 @@ define([
             if(!this.isNewsletterEnable()){
                 this.isSubscribeVisible(false);
             }
+        },
+
+        /**
+         * Callback on changing email property
+         */
+        emailHasChanged: function () {
+            var self = this;
+
+            clearTimeout(this.emailCheckTimeout);
+
+            if (self.validateEmail()) {
+                quote.guestEmail = self.email();
+                checkoutData.setValidatedEmailValue(self.email());
+            }
+            this.emailCheckTimeout = setTimeout(function () {
+                if (self.validateEmail()) {
+                    self.checkEmailAvailability();
+                } else {
+                    self.isPasswordVisible(false);
+                    uiRegistry.get('checkout.customer-email.createAccount').isCreateAccountVisible(true);
+                }
+            }, self.checkDelay);
+
+            checkoutData.setInputFieldEmailValue(self.email());
         },
 
         /**
