@@ -7,14 +7,13 @@ use Magento\Framework\Data\OptionSourceInterface;
 
 class CheckoutFields implements OptionSourceInterface
 {
-    /**#@+
+    /**
      * Checkout blocks where help message can be shown.
      */
     const SHIPPING_METHODS = 1;
     const DELIVERY_DATE = 2;
     const PAYMENT_METHOD = 3;
     const ORDER_SUMMARY = 4;
-    /**#@-*/
 
     /**
      * @var AddressFieldsProvider
@@ -22,6 +21,7 @@ class CheckoutFields implements OptionSourceInterface
     private $addressFieldsProvider;
 
     /**
+     * CheckoutFields constructor.
      * @param AddressFieldsProvider $addressFieldsProvider
      */
     public function __construct(
@@ -52,7 +52,7 @@ class CheckoutFields implements OptionSourceInterface
     private function getAddressFieldsToOptionArray()
     {
         $options = [];
-        $addressFields = $this->addressFieldsProvider->get();
+        $addressFields = $this->addressFieldsProvider->getAddressAttributesForAdminGrid();
 
         foreach ($addressFields as $addressField) {
             $options[] = [

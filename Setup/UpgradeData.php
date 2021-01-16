@@ -11,6 +11,8 @@ use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\Setup\UpgradeDataInterface;
 use Magento\Quote\Setup\QuoteSetupFactory;
 use Magento\Sales\Setup\SalesSetupFactory;
+use Magento\Framework\Serialize\SerializerInterface;
+use GoMage\LightCheckout\Model\Config\AddressFieldsProvider;
 
 class UpgradeData implements UpgradeDataInterface
 {
@@ -18,7 +20,6 @@ class UpgradeData implements UpgradeDataInterface
      * @var Config
      */
     private $config;
-
 
     /**
      * @var QuoteSetupFactory
@@ -31,19 +32,35 @@ class UpgradeData implements UpgradeDataInterface
     private $salesSetupFactory;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
+     * @var AddressFieldsProvider
+     */
+    private AddressFieldsProvider $addressFieldsProvider;
+
+    /**
      * UpgradeData constructor.
      * @param Config $config
      * @param QuoteSetupFactory $quoteSetupFactory
      * @param SalesSetupFactory $salesSetupFactory
+     * @param SerializerInterface $serializer
+     * @param AddressFieldsProvider $addressFieldsProvider
      */
     public function __construct(
         Config $config,
         QuoteSetupFactory $quoteSetupFactory,
-        SalesSetupFactory $salesSetupFactory
+        SalesSetupFactory $salesSetupFactory,
+        SerializerInterface $serializer,
+        AddressFieldsProvider $addressFieldsProvider
     ) {
         $this->quoteSetupFactory = $quoteSetupFactory;
         $this->salesSetupFactory = $salesSetupFactory;
         $this->config = $config;
+        $this->serializer = $serializer;
+        $this->addressFieldsProvider = $addressFieldsProvider;
     }
 
     /**
@@ -98,6 +115,24 @@ class UpgradeData implements UpgradeDataInterface
 
         if (version_compare($context->getVersion(), '1.0.1', '<')) {
             $this->updateTo101($setup);
+        }
+
+        if (version_compare($context->getVersion(), '1.0.2', '<')) {
+            $widthTrueSettingArray = ['street', 'telephone'];
+            $addressFields = [];
+            foreach ($this->addressFieldsProvider->getAddressAttributesForAdminGrid() as $attribute) {
+                $addressFields[] = [
+                    'attributeCode' => $attribute->getAttributeCode(),
+                    'label' => $attribute->getData('store_label'),
+                    'isWide' => in_array($attribute->getAttributeCode(), $widthTrueSettingArray),
+                    'is_enabled' => '0',
+                    'is_required' => '0'
+                ];
+            }
+            $this->config->saveConfig(
+                CheckoutConfigurationsProvider::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM,
+                $this->serializer->serialize($addressFields)
+            );
         }
 
         $setup->endSetup();

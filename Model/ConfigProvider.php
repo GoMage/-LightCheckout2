@@ -130,7 +130,6 @@ class ConfigProvider implements ConfigProviderInterface
                 'vatTax' => $this->getVatTaxConfig(),
                 'autoCompleteStreet' => $this->getAutoCompleteStreetConfig(),
                 'addressFields' => $this->getAddressFieldsConfig(),
-                'mandatorySettings' => $this->getMandatorySettings(),
                 'numberProductInCheckout' => $this->getProductNumberInCheckoutSettings(),
                 'isLightCheckoutEnable' => true,
             ];
@@ -258,16 +257,6 @@ class ConfigProvider implements ConfigProviderInterface
     {
         return [
             'keepInside' => $this->checkoutConfigurationsProvider->getAddressFieldsKeepInside(),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    private function getMandatorySettings()
-    {
-        return [
-          'isMandatory' => $this->checkoutConfigurationsProvider->getIsRequiredAddressFieldStateProvince()
         ];
     }
 
