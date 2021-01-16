@@ -7,14 +7,17 @@ use Magento\Customer\Model\AttributeMetadataDataProvider;
 use Magento\Eav\Api\Data\AttributeInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Ui\Component\Form\AttributeMapper;
+use Magento\Framework\App\RequestInterface;
 
-// make ideal
 class AddressFieldsProvider
 {
-    /**
-     * @var AddressFieldsProvider
-     */
-    private $addressFieldsProvider;
+    public static $requiredFields = [
+        "firstname", "lastname", "street", "city", "region_id", "country_id", "postcode"
+    ];
+
+    public static $allowToEditFields = [
+        "middlename", "prefix", "suffix", "company", "telephone", "fax", "vat_id"
+    ];
 
     /**
      * @var CheckoutConfigurationsProvider
@@ -41,20 +44,39 @@ class AddressFieldsProvider
      */
     private $attributeMapper;
 
+    /**
+     * @var RequestInterface
+     */
+    private RequestInterface $request;
+
+    /**
+     * AddressFieldsProvider constructor.
+     * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
+     * @param SerializerInterface $serializer
+     * @param AttributeMetadataDataProvider $attributeMetadataDataProvider
+     * @param CustomerAddressHelper $customerAddressHelper
+     * @param AttributeMapper $attributeMapper
+     * @param RequestInterface $request
+     */
     public function __construct(
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
         SerializerInterface $serializer,
         AttributeMetadataDataProvider $attributeMetadataDataProvider,
         CustomerAddressHelper $customerAddressHelper,
-        AttributeMapper $attributeMapper
+        AttributeMapper $attributeMapper,
+        RequestInterface $request
     ) {
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
         $this->serializer = $serializer;
         $this->attributeMetadataDataProvider = $attributeMetadataDataProvider;
         $this->customerAddressHelper = $customerAddressHelper;
         $this->attributeMapper = $attributeMapper;
+        $this->request = $request;
     }
 
+    /**
+     * @return array
+     */
     public function getVisibleAddressAttributes()
     {
         $addressAttributes = $this->getAddressAttributesForFrontend();
@@ -64,9 +86,9 @@ class AddressFieldsProvider
         $isNewRow = true;
         $lastWasWide = true;
         $visibleFields = [];
-        foreach ($configAddressAttributes as $configAddressAttributeCode => $configAddressAttribute) {
+        foreach ($configAddressAttributes as $configAddressAttribute) {
             foreach ($addressAttributes as $key => $addressAttribute) {
-                if ($configAddressAttributeCode === $addressAttribute->getAttributeCode() &&
+                if ($configAddressAttribute['attributeCode'] === $addressAttribute->getAttributeCode() &&
                     $addressAttribute->getIsVisible()) {
                     $isNewRow = $this->getIsNewRow($lastWasWide, $isNewRow);
                     $addressAttribute
@@ -84,6 +106,9 @@ class AddressFieldsProvider
         return $visibleFields;
     }
 
+    /**
+     * @return array
+     */
     public function getAddressAttributesForFrontend()
     {
         $addressFields = [];
@@ -126,15 +151,18 @@ class AddressFieldsProvider
         return $isNewRow;
     }
 
+    /**
+     * @return array
+     */
     public function getGridAddressAttributes()
     {
         $addressAttributes = $this->getAddressAttributesForAdminGrid();
         $configAddressAttributes = $this->getAddressAttributesFromConfiguration();
 
         $availableConfigFields = [];
-        foreach ($configAddressAttributes as $configAddressAttributeCode => $configAddressAttribute) {
+        foreach ($configAddressAttributes as $configAddressAttribute) {
             foreach ($addressAttributes as $key => $addressAttribute) {
-                if ($configAddressAttributeCode === $addressAttribute->getAttributeCode()) {
+                if ($configAddressAttribute['attributeCode'] === $addressAttribute->getAttributeCode()) {
                     $addressAttribute->setIsWide($configAddressAttribute['isWide'])
                         ->setStoreLabel($configAddressAttribute['label']);
                     $availableConfigFields[] = $addressAttribute;
@@ -147,6 +175,9 @@ class AddressFieldsProvider
         return array_merge($availableConfigFields, $addressAttributes);
     }
 
+    /**
+     * @return array
+     */
     public function getAddressAttributesForAdminGrid()
     {
         $addressFields = [];
@@ -168,7 +199,9 @@ class AddressFieldsProvider
         return $addressFields;
     }
 
-    // добавляем лэйблы
+    /*
+     * Add labels to checkout fields
+     */
     public function getAddressAttributes()
     {
         /** @var AttributeInterface[] $attributes */
@@ -184,8 +217,12 @@ class AddressFieldsProvider
             if ($attribute->getIsUserDefined()) {
                 continue;
             }
-            if (!empty($configAddressAttributes[$code]['label'])) {
-                $attribute->setData('store_label', $configAddressAttributes[$code]['label']);
+            foreach ($configAddressAttributes as $configAddressAttribute) {
+                if ($configAddressAttribute['attributeCode'] === $code) {
+                    if (!empty($configAddressAttribute['label'])) {
+                        $attribute->setData('store_label', $configAddressAttribute['label']);
+                    }
+                }
             }
             $elements[$code] = $this->attributeMapper->map($attribute);
             if (isset($elements[$code]['label'])) {
@@ -197,13 +234,15 @@ class AddressFieldsProvider
         return $elements;
     }
 
+    /**
+     * @return array|bool|float|int|string
+     */
     public function getAddressAttributesFromConfiguration()
     {
+        $websiteId = $this->request->getParam('website');
         try {
-            $config = '{"prefix":{"sortOrder":"10","label":"Name Prefix mk","isWide":true},"firstname":{"sortOrder":"40","label":"First Name","isWide":false},"middlename":{"sortOrder":"30","label":"Middle Name\/Initial","isWide":true},"lastname":{"sortOrder":"40","label":"Last Name","isWide":false},"suffix":{"sortOrder":"50","label":"Name Suffix","isWide":true},"company":{"sortOrder":"60","label":"Company","isWide":true},"street":{"sortOrder":"70","label":"Street Address Custom","isWide":true},"country_id":{"sortOrder":"80","label":"Country","isWide":false},"region":{"sortOrder":"90","label":"State\/Province","isWide":true},"region_id":{"sortOrder":"90","label":"State ha-ha Province","isWide":false},"city":{"sortOrder":"100","label":"City","isWide":false},"postcode":{"sortOrder":"110","label":"Zip\/Postal Code","isWide":false},"telephone":{"sortOrder":"120","label":"Phone Number ha-ha","isWide":true},"fax":{"sortOrder":"130","label":"Fax","isWide":true},"vat_id":{"sortOrder":"140","label":"VAT Number mk-mkm-mk","isWide":true}}';
             $configAddressAttributes = $this->serializer->unserialize(
-//                $this->checkoutConfigurationsProvider->getAddressFieldsForm()
-                $config
+                $this->checkoutConfigurationsProvider->getAddressFieldsForm($websiteId)
             );
         } catch (\InvalidArgumentException $e) {
             $configAddressAttributes = [];

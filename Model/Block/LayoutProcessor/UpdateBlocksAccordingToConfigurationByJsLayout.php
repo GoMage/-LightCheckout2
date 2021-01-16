@@ -3,7 +3,6 @@
 namespace GoMage\LightCheckout\Model\Block\LayoutProcessor;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
-use GoMage\LightCheckout\Model\Config\Source\AddressFieldStateOptions;
 use GoMage\LightCheckout\Model\Config\Source\CheckoutFields;
 use GoMage\LightCheckout\Model\Config\Source\NewsletterCheckbox;
 use GoMage\LightCheckout\Model\Config\Source\TrustSealsWhereToShow;
@@ -73,7 +72,6 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
         $jsLayout = $this->addTrustSealsAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->addSocialNetworksAccordingToTheConfiguration($jsLayout);
         $jsLayout = $this->updateSubscribeToNewsletterAccordingToTheConfiguration($jsLayout);
-        $jsLayout = $this->updateRequiredFields($jsLayout);
 
         return $jsLayout;
     }
@@ -385,97 +383,6 @@ class UpdateBlocksAccordingToConfigurationByJsLayout
             $jsLayout['components']['checkout']['children']['customer-email']['children']
             ['subscribeNewsletter']['config']['checked'] = $isChecked;
         }
-        return $jsLayout;
-    }
-
-    /**
-     * @param array $jsLayout
-     *
-     * @return array
-     */
-    private function updateRequiredFields($jsLayout)
-    {
-        $isFirstNameRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldFirstName();
-        $isLastNameRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldLastName();
-        $isStreetRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldStreetAddress();
-        $isCityRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldCity();
-        $isPhoneRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldPhoneNumber();
-        $isZipRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldZipPostalCode();
-        $isCountryRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldCountry();
-        $mandatoryStateSetting = $this->checkoutConfigurationsProvider->getIsRequiredAddressFieldStateProvince();
-        if ($mandatoryStateSetting == AddressFieldStateOptions::NO_REQUIRED) {
-            $mandatoryStateSetting = 'no_required';
-        } elseif ($mandatoryStateSetting == AddressFieldStateOptions::REQUIRED) {
-            $mandatoryStateSetting = 'required';
-        } elseif ($mandatoryStateSetting == AddressFieldStateOptions::USE_MAGENTO_SETTINGS) {
-            $mandatoryStateSetting = 'use_magento_settings';
-        }
-        $isCompanyRequired = (bool)$this->checkoutConfigurationsProvider->getIsRequiredAddressFieldCompany();
-
-        $shippingAddressFieldset = $jsLayout['components']['checkout']['children']['shippingAddress']['children']
-        ['shipping-address-fieldset']['children'];
-
-        $billingAddressFieldset = $jsLayout['components']['checkout']['children']['billingAddress']['children']
-        ['billing-address-fieldset']['children'];
-
-        $shippingAddressFieldset['firstname']['validation']['required-entry'] = $isFirstNameRequired;
-        $shippingAddressFieldset['lastname']['validation']['required-entry'] = $isLastNameRequired;
-        if (isset($shippingAddressFieldset['street']['children'][0])) {
-            $shippingAddressFieldset['street']['children'][0]['validation']['required-entry'] = $isStreetRequired;
-        }
-        $shippingAddressFieldset['city']['validation']['required-entry'] = $isCityRequired;
-        $shippingAddressFieldset['telephone']['validation']['required-entry'] = $isPhoneRequired;
-        $shippingAddressFieldset['postcode']['validation']['required-entry'] = $isZipRequired;
-        $shippingAddressFieldset['country_id']['validation']['required-entry'] = $isCountryRequired;
-        $shippingAddressFieldset['region_id']['mandatorySetting'] = $mandatoryStateSetting;
-        $shippingAddressFieldset['company']['validation']['required-entry'] = $isCompanyRequired;
-
-        $shippingAddressFieldset['firstname'] = $this->changeLabelIfRequired($shippingAddressFieldset['firstname']);
-        $shippingAddressFieldset['lastname'] = $this->changeLabelIfRequired($shippingAddressFieldset['lastname']);
-        $shippingAddressFieldset['street'] = $this->changeLabelIfStreetRequired($shippingAddressFieldset['street']);
-        $shippingAddressFieldset['city'] = $this->changeLabelIfRequired($shippingAddressFieldset['city']);
-        $shippingAddressFieldset['telephone'] = $this->changeLabelIfRequired($shippingAddressFieldset['telephone']);
-        $shippingAddressFieldset['postcode'] = $this->changeLabelIfRequired($shippingAddressFieldset['postcode']);
-        $shippingAddressFieldset['country_id'] = $this->changeLabelIfRequired($shippingAddressFieldset['country_id']);
-        $shippingAddressFieldset['region_id'] = $this->changeLabelIfRequiredStateField($shippingAddressFieldset['region_id']);
-        $shippingAddressFieldset['company'] = $this->changeLabelIfRequired($shippingAddressFieldset['company']);
-
-        if (isset($shippingAddressFieldset['vat_id']) && isset($shippingAddressFieldset['vat_id']['label'])) {
-            $shippingAddressFieldset['vat_id']['label'] .= ' (' . __('Optional') . ')';
-        }
-
-        $billingAddressFieldset['firstname']['validation']['required-entry'] = $isFirstNameRequired;
-        $billingAddressFieldset['lastname']['validation']['required-entry'] = $isLastNameRequired;
-        if (isset($billingAddressFieldset['street']['children'][0])) {
-            $billingAddressFieldset['street']['children'][0]['validation']['required-entry'] = $isStreetRequired;
-        }
-        $billingAddressFieldset['city']['validation']['required-entry'] = $isCityRequired;
-        $billingAddressFieldset['telephone']['validation']['required-entry'] = $isPhoneRequired;
-        $billingAddressFieldset['postcode']['validation']['required-entry'] = $isZipRequired;
-        $billingAddressFieldset['country_id']['validation']['required-entry'] = $isCountryRequired;
-        $billingAddressFieldset['region_id']['mandatorySetting'] = $mandatoryStateSetting;
-        $billingAddressFieldset['company']['validation']['required-entry'] = $isCompanyRequired;
-
-        $billingAddressFieldset['firstname'] = $this->changeLabelIfRequired($billingAddressFieldset['firstname']);
-        $billingAddressFieldset['lastname'] = $this->changeLabelIfRequired($billingAddressFieldset['lastname']);
-        $billingAddressFieldset['street'] = $this->changeLabelIfStreetRequired($billingAddressFieldset['street']);
-        $billingAddressFieldset['city'] = $this->changeLabelIfRequired($billingAddressFieldset['city']);
-        $billingAddressFieldset['telephone'] = $this->changeLabelIfRequired($billingAddressFieldset['telephone']);
-        $billingAddressFieldset['postcode'] = $this->changeLabelIfRequired($billingAddressFieldset['postcode']);
-        $billingAddressFieldset['country_id'] = $this->changeLabelIfRequired($billingAddressFieldset['country_id']);
-        $billingAddressFieldset['region_id'] = $this->changeLabelIfRequiredStateField($billingAddressFieldset['region_id']);
-        $billingAddressFieldset['company'] = $this->changeLabelIfRequired($billingAddressFieldset['company']);
-
-        if (isset($billingAddressFieldset['vat_id']) && isset($billingAddressFieldset['vat_id']['label'])) {
-            $billingAddressFieldset['vat_id']['label'] .= ' (' . __('Optional') . ')';
-        }
-
-        $jsLayout['components']['checkout']['children']['shippingAddress']['children']
-        ['shipping-address-fieldset']['children'] = $shippingAddressFieldset;
-
-        $jsLayout['components']['checkout']['children']['billingAddress']['children']
-        ['billing-address-fieldset']['children'] = $billingAddressFieldset;
-
         return $jsLayout;
     }
 

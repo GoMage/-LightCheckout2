@@ -40,24 +40,8 @@
             <argument name="checkoutConverterDomFlat" xsi:type="object">LightCheckoutConverterDomFlat</argument>
         </arguments>
     </type>
-    <type name="Magento\Customer\Model\Address\CompositeValidator">
-        <plugin name="gomage_light_checkout_validator"
-                type="GoMage\LightCheckout\Plugin\Customer\Model\Address\ChangeAddressValidationAccordingToConfiguration"/>
-    </type>
-    <type name="Magento\Customer\Model\Attribute\Data\Postcode">
-        <plugin name="gomage_light_checkout_validator_postcode"
-                type="GoMage\LightCheckout\Plugin\Customer\Model\Attribute\Data\ValidatePostcode"/>
-    </type>
     <type name="Magento\Quote\Api\ChangeQuoteControlInterface">
         <plugin name="gomage_light_checkout_simulate_is_allowed_when_creating_customer"
                 type="GoMage\LightCheckout\Plugin\Quote\SimulateIsAllowedWhenCreatingCustomer"/>
     </type>
-<!--    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">-->
-<!--        <arguments>-->
-<!--            <argument name="collections" xsi:type="array">-->
-<!--                <item name="design_config_listing_data_source" xsi:type="string">Magento\Theme\Model\ResourceModel\Design\Config\Grid\Collection</item>-->
-<!--                <item name="design_theme_listing_data_source" xsi:type="string">Magento\Theme\Ui\Component\Theme\DataProvider\SearchResult</item>-->
-<!--            </argument>-->
-<!--        </arguments>-->
-<!--    </type>-->
 </config>

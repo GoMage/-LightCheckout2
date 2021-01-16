@@ -90,23 +90,9 @@ class CheckoutConfigurationsProvider
     /**#@-*/
 
     /**#@+
-     * Light Checkout configuration Address Fields Required.
-     */
-    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_FIRST_NAME = 'gomage_light_checkout_configuration/checkout_address_fields_required/firstname';
-    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_LAST_NAME = 'gomage_light_checkout_configuration/checkout_address_fields_required/lastname';
-    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COMPANY = 'gomage_light_checkout_configuration/checkout_address_fields_required/company';
-    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COUNTRY = 'gomage_light_checkout_configuration/checkout_address_fields_required/country_id';
-    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_CITY = 'gomage_light_checkout_configuration/checkout_address_fields_required/city';
-    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STREET_ADDRESS = 'gomage_light_checkout_configuration/checkout_address_fields_required/street';
-    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_ZIPCODE = 'gomage_light_checkout_configuration/checkout_address_fields_required/postcode';
-    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STATE = 'gomage_light_checkout_configuration/checkout_address_fields_required/region_id';
-    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_PHONE = 'gomage_light_checkout_configuration/checkout_address_fields_required/telephone';
-    /**#@-*/
-
-    /**#@+
      * Light Checkout configuration Address Fields Form.
      */
-    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM = 'gomage_light_checkout_configuration/checkout_address_fields_sorting/fields_form';
+    const XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM = 'gomage_light_checkout_configuration/checkout_address_fields_sorting/fields_manager';
     const XML_PATH_LIGHT_CHECKOUT_ADDRESS_KEEP_FIELDS_INSIDE = 'gomage_light_checkout_configuration/checkout_address_fields_sorting/keep_field_names_inside';
     /**#@-*/
 
@@ -449,58 +435,17 @@ class CheckoutConfigurationsProvider
         return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_VAT_TAX_TEXT_UNDER_VAT_TAX_FIELD,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
-    public function getIsRequiredAddressFieldFirstName()
-    {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_FIRST_NAME,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    public function getIsRequiredAddressFieldLastName()
-    {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_LAST_NAME,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    public function getIsRequiredAddressFieldCompany()
-    {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COMPANY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    public function getIsRequiredAddressFieldCountry()
-    {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_COUNTRY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    public function getIsRequiredAddressFieldCity()
-    {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_CITY,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    public function getIsRequiredAddressFieldStreetAddress()
-    {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STREET_ADDRESS,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    public function getIsRequiredAddressFieldZipPostalCode()
-    {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_ZIPCODE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    public function getIsRequiredAddressFieldStateProvince()
-    {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_STATE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    public function getIsRequiredAddressFieldPhoneNumber()
-    {
-        return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_REQUIRED_PHONE,\Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    public function getAddressFieldsForm()
+    public function getAddressFieldsForm($websiteId = null)
     {
         if ($this->state->getAreaCode() === Area::AREA_FRONTEND) {
             return $this->scopeConfig->getValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM,
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         }
-        return $this->configForm->getConfigValue(self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM);
+        return $this->scopeConfig->getValue(
+            self::XML_PATH_LIGHT_CHECKOUT_ADDRESS_FIELDS_FORM,
+            $websiteId ? \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE : ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
+            $websiteId ?: null
+        );
     }
 
     public function getAddressFieldsKeepInside()

@@ -12,7 +12,10 @@ class FieldsManager extends Field
      */
     protected $_template = 'GoMage_LightCheckout::config/fields-manager.phtml';
 
-
+    /**
+     * @param AbstractElement $element
+     * @return string
+     */
     protected function _getElementHtml(AbstractElement $element)
     {
         return $this->_toHtml();

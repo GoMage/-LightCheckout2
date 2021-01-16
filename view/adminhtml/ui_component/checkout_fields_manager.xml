@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"
-      component="Magento_Ui/js/form/form" class="GoMage\LightCheckout\Ui\Component\Form">
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"
+           class="GoMage\LightCheckout\Ui\Component\Container"
+           component="GoMage_LightCheckout/js/components/checkout-fields-manager">
     <argument name="data" xsi:type="array">
-        <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">checkout_fields_manager.checkout_fields_manager_data_source</item>
-        </item>
-<!--        <item name="label" xsi:type="string" translate="true">Some UI</item>-->
-        <item name="template" xsi:type="string">templates/form/collapsible-extended</item>
+        <item name="template" xsi:type="string">templates/container/default-extended</item>
     </argument>
-    <settings>
-        <dataScope>data</dataScope><!--array key in \GoMage\LightCheckout\Ui\Component\Form::getDataSourceData method-->
-        <namespace>checkout_fields_manager</namespace>
-        <deps>
-            <dep>checkout_fields_manager.checkout_fields_manager_data_source</dep>
-        </deps>
-    </settings>
     <dataSource name="checkout_fields_manager_data_source" component="Magento_Ui/js/form/provider">
         <dataProvider class="GoMage\LightCheckout\Ui\DataProvider\CheckoutFieldsManagerDataProvider" name="checkout_fields_manager_data_source">
             <settings>
@@ -25,41 +15,38 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <dynamicRows name="items" component="Magento_Ui/js/dynamic-rows/dynamic-rows"
+    <dynamicRows name="fields" component="Magento_Ui/js/dynamic-rows/dynamic-rows-grid"
                  template="GoMage_LightCheckout/dynamic-rows/templates/grid">
-<!--        <argument name="data" xsi:type="array">-->
-<!--            <item name="config" xsi:type="array">-->
-<!--                <item name="identificationDRProperty" xsi:type="string">orderItemId</item>-->
-<!--                <item name="dataProvider" xsi:type="string">items</item>-->
-<!--                <item name="map" xsi:type="array">-->
-<!--                    <item name="sku" xsi:type="string">sku</item>-->
-<!--                    <item name="qty" xsi:type="string">qty</item>-->
-<!--                    <item name="orderItemId" xsi:type="string">orderItemId</item>-->
-<!--                </item>-->
-<!--            </item>-->
-<!--        </argument>-->
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="map" xsi:type="array">
+                    <item name="field" xsi:type="string">field</item>
+                </item>
+                <item name="dataProvider" xsi:type="string">${ $.provider }</item>
+                <item name="identificationDRProperty" xsi:type="string">position</item>
+            </item>
+        </argument>
         <settings>
-<!--            <additionalClasses>-->
-<!--                <class name="swatch-visual-options-container">true</class>-->
-<!--                <class name="admin__field-wide">true</class>-->
-<!--            </additionalClasses>-->
-<!--            <defaultRecord>false</defaultRecord>-->
+            <fallbackResetTpl>GoMage_LightCheckout/form/element/helper/not-found-records</fallbackResetTpl>
+            <deps>
+                <dep>checkout_fields_manager.checkout_fields_manager_data_source</dep>
+            </deps>
+            <additionalClasses/>
+            <defaultRecord>false</defaultRecord>
             <addButton>false</addButton>
-<!--            <deleteProperty>false</deleteProperty>-->
-<!--            <recordTemplate>record</recordTemplate>-->
-<!--            <identificationProperty>order_item_id</identificationProperty>-->
-<!--            <columnsHeader>true</columnsHeader>-->
-<!--            <dndConfig>-->
-<!--                <param name="enabled" xsi:type="boolean">true</param>-->
-<!--            </dndConfig>-->
+            <dndConfig>
+                <param name="enabled" xsi:type="boolean">true</param>
+            </dndConfig>
+            <recordTemplate>record</recordTemplate>
+            <dataScope>data</dataScope>
+            <identificationProperty>position</identificationProperty>
         </settings>
         <container name="record" component="Magento_Ui/js/dynamic-rows/record">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="isTemplate" xsi:type="boolean">true</item>
-<!--                    <item name="is_collection" xsi:type="boolean">true</item>-->
-<!--                    <item name="dataScope" xsi:type="string"/>-->
-<!--                    <item name="positionProvider" xsi:type="string">orderItemId</item>-->
+                    <item name="is_collection" xsi:type="boolean">true</item>
+                    <item name="componentType" xsi:type="string">container</item>
                 </item>
             </argument>
             <field name="field" formElement="input" sortOrder="10">
@@ -77,7 +64,10 @@
                     <dataType>text</dataType>
                     <dataScope>label</dataScope>
                     <label translate="true">Label</label>
-                    <labelVisible>false</labelVisible>
+                    <labelVisible>true</labelVisible>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
                 </settings>
             </field>
             <field name="width" formElement="select" sortOrder="30">
@@ -91,11 +81,11 @@
                         <settings>
                             <options>
                                 <option name="50" xsi:type="array">
-                                    <item name="value" xsi:type="number">50</item>
+                                    <item name="value" xsi:type="boolean">false</item>
                                     <item name="label" xsi:type="string" translate="true">50</item>
                                 </option>
                                 <option name="100" xsi:type="array">
-                                    <item name="value" xsi:type="number">100</item>
+                                    <item name="value" xsi:type="boolean">true</item>
                                     <item name="label" xsi:type="string" translate="true">100</item>
                                 </option>
                             </options>
@@ -105,11 +95,13 @@
             </field>
             <field name="is_enabled" formElement="checkbox" sortOrder="40">
                 <settings>
-                    <elementTmpl>GoMage_LightCheckout/form/element/checkbox</elementTmpl>
-<!--                    <dataType>text</dataType>-->
+                    <dataType>text</dataType>
                     <dataScope>is_enabled</dataScope>
                     <label translate="true">Enabled</label>
-<!--                    <disabled>true</disabled>-->
+                    <links>
+                        <link name="disabled">${ $.provider }:${ $.parentScope }.is_enabled.disabled</link>
+                        <link name="value">${ $.provider }:${ $.parentScope }.is_enabled.value</link>
+                    </links>
                 </settings>
                 <formElements>
                     <checkbox>
@@ -122,11 +114,18 @@
                     </checkbox>
                 </formElements>
             </field>
-            <field name="is_required" formElement="checkbox" sortOrder="50">
+            <field name="is_required" formElement="checkbox" sortOrder="50"
+                   component="GoMage_LightCheckout/js/components/form/element/single-checkbox">
                 <settings>
                     <elementTmpl>GoMage_LightCheckout/form/element/checkbox</elementTmpl>
+                    <dataType>text</dataType>
                     <dataScope>is_required</dataScope>
                     <label translate="true">Required</label>
+                    <links>
+                        <link name="disabled">${ $.provider }:${ $.parentScope }.is_required.disabled</link>
+                        <link name="value">${ $.provider }:${ $.parentScope }.is_required.value</link>
+                        <link name="attributeCode">${ $.provider }:${ $.parentScope }.attributeCode</link>
+                    </links>
                 </settings>
                 <formElements>
                     <checkbox>
@@ -138,7 +137,23 @@
                         </settings>
                     </checkbox>
                 </formElements>
+            </field>
+            <field name="position" formElement="input" sortOrder="60">
+                <settings>
+                    <componentType>field</componentType>
+                    <dataType>text</dataType>
+                    <dataScope>position</dataScope>
+                    <visible>false</visible>
+                </settings>
+            </field>
+            <field name="attributeCode" formElement="input" sortOrder="70">
+                <settings>
+                    <componentType>field</componentType>
+                    <dataType>text</dataType>
+                    <dataScope>attributeCode</dataScope>
+                    <visible>false</visible>
+                </settings>
             </field>
         </container>
     </dynamicRows>
-</form>
+</container>
