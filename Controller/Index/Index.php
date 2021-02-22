@@ -4,6 +4,7 @@ namespace GoMage\LightCheckout\Controller\Index;
 
 use GoMage\LightCheckout\Model\Config\CheckoutConfigurationsProvider;
 use GoMage\LightCheckout\Model\IsEnableLightCheckout;
+use Magento\Checkout\Helper\Data;
 use Magento\Checkout\Model\Session;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
@@ -25,8 +26,13 @@ class Index extends \Magento\Checkout\Controller\Onepage
      * @var IsEnableLightCheckout
      */
     private $isEnableLightCheckout;
+    /**
+     * @var CheckoutHelper
+     */
+    public $checkoutHelperData;
 
     /**
+     * Index constructor.
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Customer\Model\Session $customerSession
      * @param CustomerRepositoryInterface $customerRepository
@@ -44,6 +50,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
      * @param Session $session
      * @param CheckoutConfigurationsProvider $checkoutConfigurationsProvider
      * @param IsEnableLightCheckout $isEnableLightCheckout
+     * @param Data $checkoutHelperData
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -62,7 +69,8 @@ class Index extends \Magento\Checkout\Controller\Onepage
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         Session $session,
         CheckoutConfigurationsProvider $checkoutConfigurationsProvider,
-        IsEnableLightCheckout $isEnableLightCheckout
+        IsEnableLightCheckout $isEnableLightCheckout,
+        Data $checkoutHelperData
     ) {
         parent::__construct(
             $context,
@@ -84,6 +92,7 @@ class Index extends \Magento\Checkout\Controller\Onepage
         $this->session = $session;
         $this->checkoutConfigurationsProvider = $checkoutConfigurationsProvider;
         $this->isEnableLightCheckout = $isEnableLightCheckout;
+        $this->checkoutHelperData = $checkoutHelperData;
     }
 
     /**
@@ -93,11 +102,13 @@ class Index extends \Magento\Checkout\Controller\Onepage
     {
         if ($this->isEnableLightCheckout->execute()) {
             $quote = $this->getOnepage()->getQuote();
-            if (!$quote->hasItems() || $quote->getHasError() || !$quote->validateMinimumAmount()) {
+            $checkoutHelper = $this->checkoutHelperData;
+            if (!$this->_customerSession->isLoggedIn() && !$checkoutHelper->isAllowedGuestCheckout($quote)
+                || !$quote->hasItems() || !$quote->validateMinimumAmount()) {
                 //redirect not to cart, because if cart is off in configuration it will come to endless redirect.
-                return $this->resultRedirectFactory->create()->setPath('');
+                $this->messageManager->addErrorMessage(__('Please sign in to make your purchase. Thank you!'));
+                return $this->resultRedirectFactory->create()->setPath('/');
             }
-
             $this->_customerSession->regenerateId();
             $this->session->setCartWasUpdated(false);
             $this->getOnepage()->initCheckout();
