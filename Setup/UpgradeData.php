@@ -39,7 +39,7 @@ class UpgradeData implements UpgradeDataInterface
     /**
      * @var AddressFieldsProvider
      */
-    private AddressFieldsProvider $addressFieldsProvider;
+    private $addressFieldsProvider;
 
     /**
      * UpgradeData constructor.
@@ -56,9 +56,9 @@ class UpgradeData implements UpgradeDataInterface
         SerializerInterface $serializer,
         AddressFieldsProvider $addressFieldsProvider
     ) {
+        $this->config = $config;
         $this->quoteSetupFactory = $quoteSetupFactory;
         $this->salesSetupFactory = $salesSetupFactory;
-        $this->config = $config;
         $this->serializer = $serializer;
         $this->addressFieldsProvider = $addressFieldsProvider;
     }

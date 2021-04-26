@@ -24,22 +24,22 @@ class CheckoutFieldsManager extends Value
     /**
      * @var SerializerInterface
      */
-    private SerializerInterface $serializer;
+    private $serializer;
 
     /**
      * @var StoreManagerInterface
      */
-    private StoreManagerInterface $storeManager;
+    private $storeManager;
 
     /**
      * @var Config
      */
-    private Config $eavConfig;
+    private $eavConfig;
 
     /**
      * @var ConfigurationSettings
      */
-    private ConfigurationSettings $configurationSettings;
+    private $configurationSettings;
 
     /**
      * CheckoutFieldsManager constructor.

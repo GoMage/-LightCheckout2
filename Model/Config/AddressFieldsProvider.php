@@ -47,7 +47,7 @@ class AddressFieldsProvider
     /**
      * @var RequestInterface
      */
-    private RequestInterface $request;
+    private $request;
 
     /**
      * AddressFieldsProvider constructor.

@@ -105,7 +105,7 @@
                     <label>Create an Account checkbox</label>
                     <source_model>GoMage\LightCheckout\Model\Config\Source\CheckboxOptions</source_model>
                     <depends>
-                        <field id="auto_registration">1</field>
+                        <field id="auto_registration">0</field>
                         <field id="checkout_mode">1</field>
                     </depends>
                 </field>
