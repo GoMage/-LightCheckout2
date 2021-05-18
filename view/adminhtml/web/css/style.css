@@ -146,3 +146,16 @@ html[class*="ie"] .accordion .config[id*="gomage_light_checkout"] .label{
 .accordion .config[id*="gomage_light_checkout"] .label{
     -ms-hyphens: none;
 }
+
+.section-config #gomage_light_checkout_configuration_checkout_address_fields_sorting td.value {
+    width: 66%;
+}
+
+.section-config #gomage_light_checkout_configuration_checkout_address_fields_sorting td.value tr.data-row td {
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.section-config #gomage_light_checkout_configuration_checkout_address_fields_sorting td.value tr.data-row td .admin__field-value {
+    padding: 0;
+}
