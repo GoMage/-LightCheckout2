@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace GoMage\LightCheckout\Block\Checkout;
 
@@ -50,6 +51,7 @@ class Summary extends \Magento\Sales\Block\Order\Items
 
         if ($lastRealOrderId) {
             $order = $this->orderFactory->create()->loadByIncrementId($lastRealOrderId);
+            $this->_coreRegistry->unregister('current_order');
             $this->_coreRegistry->register('current_order', $order);
         }
 

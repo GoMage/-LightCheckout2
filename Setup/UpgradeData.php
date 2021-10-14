@@ -39,7 +39,7 @@ class UpgradeData implements UpgradeDataInterface
     /**
      * @var AddressFieldsProvider
      */
-    private AddressFieldsProvider $addressFieldsProvider;
+    private $addressFieldsProvider;
 
     /**
      * UpgradeData constructor.

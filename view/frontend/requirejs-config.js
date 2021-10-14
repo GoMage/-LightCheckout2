@@ -15,6 +15,9 @@ var config = {
             'Magento_Checkout/js/model/place-order': {
                 'GoMage_LightCheckout/js/model/place-order-mixin': true
             },
+            'Magento_Checkout/js/model/shipping-rates-validation-rules': {
+                'GoMage_LightCheckout/js/model/shipping-rates-validation-rules-mixin': false
+            },
             'Magento_Checkout/js/action/set-payment-information-extended': {
                 'GoMage_LightCheckout/js/action/set-payment-information-extended-mixin': true
             },
