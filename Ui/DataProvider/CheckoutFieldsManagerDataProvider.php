@@ -34,12 +34,12 @@ class CheckoutFieldsManagerDataProvider extends AbstractDataProvider
     /**
      * @var StoreManagerInterface
      */
-    private StoreManagerInterface $storeManager;
+    private $storeManager;
 
     /**
      * @var RequestInterface
      */
-    private RequestInterface $request;
+    private $request;
 
     /**
      * CheckoutFieldsManagerDataProvider constructor.
