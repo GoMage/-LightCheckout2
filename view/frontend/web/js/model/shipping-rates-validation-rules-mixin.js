@@ -12,6 +12,7 @@ define(
 
             observableFields.push('telephone');
             observableFields.push('street');
+            observableFields.push('city');
 
             return observableFields;
         }
