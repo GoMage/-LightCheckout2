@@ -176,7 +176,8 @@
     opacity: 1;
 }
 
-.glc .field._error .control input{
+.glc .field._error .control input,
+.glc input.input-text.mage-error {
     border-color: #f4531c;
     border-width: 2px;
     padding: 0 7px;
