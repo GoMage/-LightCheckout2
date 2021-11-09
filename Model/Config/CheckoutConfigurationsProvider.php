@@ -3,7 +3,6 @@
 namespace GoMage\LightCheckout\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Config\Block\System\Config\Form;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
 
@@ -194,11 +193,6 @@ class CheckoutConfigurationsProvider
     private $scopeConfig;
 
     /**
-     * @var Form
-     */
-    private $configForm;
-
-    /**
      * @var State
      */
     private $state;
@@ -206,17 +200,14 @@ class CheckoutConfigurationsProvider
     /**
      * CheckoutConfigurationsProvider constructor.
      * @param ScopeConfigInterface $scopeConfig
-     * @param Form $configForm
      * @param State $state
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        Form $configForm,
         State $state
     )
     {
         $this->scopeConfig = $scopeConfig;
-        $this->configForm = $configForm;
         $this->state = $state;
     }
 
