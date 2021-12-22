@@ -15,12 +15,12 @@ define([
             if (this.attributeCode === 'postcode') {
                 return $t('To configure ZIP/Postal requirement, go to Stores > Configuration > General ' +
                     '> General > State Options');
-            } else if (this.attributeCode === 'region_id') {
+            }
+            if (this.attributeCode === 'region_id') {
                 return $t('To configure State/Province requirement, go to Stores > Configuration > General ' +
                     '> General > Country Options');
-            } else {
-                return '';
             }
+            return '';
         }
     });
 });
